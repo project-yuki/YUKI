@@ -2,7 +2,7 @@
 
 ## Warning
 
-The Yagt Project is more like a propose than an actual working progress. Since I'm not a professor in either NodeJS or C++, this project can be in ugly slow progress ¯\_(ツ)_/¯
+The Yagt Project is more like a propose than an actual working progress. Since I'm not a professor in either NodeJS or C++, this project can be in ugly slow progress ¯\\_(ツ)_/¯
 
 However, if you're interested in the same idea, forks and PRs are sincerely welcomed ╰(*°▽°*)╯
 
