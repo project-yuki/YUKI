@@ -31,12 +31,12 @@ So, using Electron as frontend and traditional Windows API (Text Hooker wrapped 
 
 ## TODO
 
-1. Technical feasibility assessment
-2. Wrap Text Hooker as a native Node module
-3. Basic UI Design
-4. UI implementation
-5. Online translator API call
-6. ...
+- [x] Technical feasibility assessment
+- [x] Wrapping Text Hooker as a native Node module
+- [ ] Text Hooker module Refactor
+- [ ] Basic UI Design
+- [ ] UI implementation
+- [ ] Online translator API call
 
 ## License
 
