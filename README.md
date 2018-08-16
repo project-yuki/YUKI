@@ -2,9 +2,9 @@
 
 ## Warning
 
-The Yagt Project is more like a propose than an actual working progress. Since I'm not a professor in either NodeJS or C++, this project can be in ugly slow progress ¯\\_(ツ)_/¯
+The Yagt Project is more like a propose than an actual working progress. Since I'm not a professor in either NodeJS or C++, this project can be in ugly slow progress ¯\\\_(ツ)\_/¯
 
-However, if you're interested in the same idea, forks and PRs are sincerely welcomed ╰(*°▽°*)╯
+However, if you're interested in the same idea, forks and PRs are sincerely welcomed ╰(\*°▽°\*)╯
 
 ## Motivation
 
@@ -37,6 +37,7 @@ So, using Electron as frontend and traditional Windows API (Text Hooker wrapped 
 - [ ] Basic UI Design
 - [ ] UI implementation
 - [ ] Online translator API call
+- [ ] JBeijing translator DLL access
 
 ## License
 
