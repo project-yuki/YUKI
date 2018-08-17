@@ -7,6 +7,8 @@ const hooker = require('../../nexthooker')
 
 let hookerStarted
 
+console.log(__dirname)
+
 /**
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
@@ -34,7 +36,8 @@ function createWindow () {
         serif: 'Microsoft Yahei UI',
         sansSerif: 'Microsoft Yahei UI'
       }
-    }
+    },
+    icon: './build/icons/icon.png'
   })
 
   mainWindow.loadURL(winURL)
