@@ -14,23 +14,23 @@ localeChanger:
     exec: D:\ntleas046_x64\x86\ntleas.exe %GAME_EXEC%
 
 onlineApis:
-  - name: 'baidu'
+  - name: baidu
     enabled: false
-    url: ''
+    url: http://fanyi.baidu.com/transapi
     needSession: false
-    requestBodyFormat: '{"": %TEXT%}'
-    responseBodyPattern: '%RESPONSE%.text'
+    method: POST
+    requestBodyFormat: 'X^{"query": %TEXT%, "from": "jp", "to": "zh"}'
+    responseBodyPattern: 'O^%RESPONSE%.data[0].dst'
 
-  - name: 'google'
+  - name: googleCN
     enabled: false
-    url: ''
+    url: https://translate.google.cn/m
     needSession: false
-    requestBodyFormat: '{"": %TEXT%}'
-    responseBodyPattern: '%RESPONSE%.text'
+    method: POST
+    requestBodyFormat: 'X^{"q": %TEXT%, "sl": "ja", "hl": "zh-CN"}'
+    responseBodyPattern: 'R^/class="t0">(.*)</'
 
-  - name: 'youdao'
+  - name: youdao
     enabled: false
-    url: ''
-    needSession: false
-    requestBodyFormat: '{"": %TEXT%}'
-    responseBodyPattern: '%RESPONSE%.text'
+    external: true
+    jsFile: config\youdaoApi.js
