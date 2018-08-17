@@ -32,12 +32,19 @@ So, using Electron as frontend and traditional Windows API (Text Hooker wrapped 
 ## TODO
 
 - [x] Technical feasibility assessment
-- [x] Wrapping Text Hooker as a native Node module
-- [ ] Text Hooker module Refactor
+- [x] Wrapping text hooker as a native Node module
+- [ ] Text hooker module Refactor
 - [ ] Basic UI Design
 - [ ] UI implementation
 - [ ] Online translator API call
 - [ ] JBeijing translator DLL access
+
+## Usage
+
+    git clone https://github.com/Yagt/Yagt.git
+    cd yagt
+    npm install
+    npm run dev
 
 ## License
 
