@@ -1,0 +1,36 @@
+pid: 10171
+
+translators:
+  jBeijing:
+    enabled: false
+    path: D:\Visual Novel Reader V2\JBeijing7
+
+localeChanger:
+  localeEmulator:
+    enabled: true
+    exec: D:\LocaleEmulator\LEProc.exe %GAME_EXEC%
+  ntleas:
+    enabled: false
+    exec: D:\ntleas046_x64\x86\ntleas.exe %GAME_EXEC%
+
+onlineApis:
+  - name: 'baidu'
+    enabled: false
+    url: ''
+    needSession: false
+    requestBodyFormat: '{"": %TEXT%}'
+    responseBodyPattern: '%RESPONSE%.text'
+
+  - name: 'google'
+    enabled: false
+    url: ''
+    needSession: false
+    requestBodyFormat: '{"": %TEXT%}'
+    responseBodyPattern: '%RESPONSE%.text'
+
+  - name: 'youdao'
+    enabled: false
+    url: ''
+    needSession: false
+    requestBodyFormat: '{"": %TEXT%}'
+    responseBodyPattern: '%RESPONSE%.text'

@@ -1,13 +1,22 @@
 'use strict'
 
-import constants from '../constants'
+import { app, BrowserWindow, ipcMain, dialog } from 'electron'
 
-import { app, BrowserWindow, ipcMain } from 'electron'
 const hooker = require('../../nexthooker')
 
 let hookerStarted
 
-console.log(__dirname)
+import fs from 'fs'
+import yaml from 'js-yaml'
+
+let config
+try {
+  config = yaml.safeLoad(fs.readFileSync('config/config.yml', 'utf8'))
+  console.log(`config loaded: ${config}`)
+} catch (e) {
+  dialog.showErrorBox('配置文件载入失败', '请确认config/config.yml文件存在')
+  process.exit(1)
+}
 
 /**
  * Set `__static` path to static files in production
@@ -62,9 +71,9 @@ function createWindow () {
         }
       )
       hooker.open()
-      console.log(`injecting process ${constants.PID}...`)
-      hooker.injectProcess(constants.PID)
-      console.log(`process ${constants.PID} injected`)
+      console.log(`injecting process ${config.pid}...`)
+      hooker.injectProcess(config.pid)
+      console.log(`process ${config.pid} injected`)
 
       hookerStarted = true
     }
