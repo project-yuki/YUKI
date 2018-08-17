@@ -1,53 +1,57 @@
-# Yagt - Yet Another Galgame Translator
+# Yagt - 另一个Galgame翻译器
 
-## Warning
+[English](https://github.com/Yagt/Yagt/blob/master/docs/README_EN.md)
 
-The Yagt Project is more like a propose than an actual working progress. Since I'm not a professor in either NodeJS or C++, this project can be in ugly slow progress ¯\\\_(ツ)\_/¯
+## 警告！
 
-However, if you're interested in the same idea, forks and PRs are sincerely welcomed ╰(\*°▽°\*)╯
+与实际正在推进的项目相比，Yagt更像是一个倡议。因为我本人并不是Node.js或者C++方面的专家，所以本项目很可能只会以极其缓慢的进度向前推进... ¯\\\_(ツ)\_/¯
 
-## Motivation
+但是，如果你和我一样对本项目感兴趣，欢迎各种fork和PR！ ╰(\*°▽°\*)╯
 
-We already have Visual Novel Reader (VNR), so why another galgame translator?
+## 挖坑的动力
 
-Well, there are three reasons:
+我们已经有Visual Novel Reader (VNR)了，为什么还要再开发一个Galgame翻译器？
 
-1. VNR uses Python (even Python 2) for UI generation, which is extremely slow and unnecessary.
-2. sakuradite.com is down, seems there is no official maintenance for VNR.
-3. VNR has so many features (I mean, Python scripts), which can cause desperation when trying to modify/add one.
+嗯...有以下三个原因：
 
-However, if using Qt5, it can be such an annoy thing to manage memory/i18n/configuration manually.
+1. VNR用Python（甚至是Python 2）来渲染Web UI（细心点的小伙伴可以明显发现，所有页面都是用IE+网页渲染出来的，而不是原生Qt），这导致了极端的卡顿，并且完全没有必要；
+2. sakuradite.com（VNR官网）挂了，似乎现在并没有针对VNR的官方维护，只剩下贴吧零零散散的BUG修复与改进；
+3. VNR的功能（也可以说脚本）太多了，想添加/修改一个功能要读很久的源码，十分费劲。
 
-So, using Electron as frontend and traditional Windows API (Text Hooker wrapped as a native Node module) as backend seems a good idea.
+但是，如果要用Qt5重写的话，手动管理内存、配置、国际化什么的又显得太麻烦了。
 
-## Features
+因此，用Electron作为用户交互的前端，而用原始的Windows API作为后端（比如文本提取），不失为一种比较好的选择。
 
-* Real-time text extractor from running Galgame
-* Get translation from dictionary: JBeijing, etc.
-* Get translation from online translator API: Google, Baidu, Youdao, etc.
-* Show on floating window on top of game window
-* Custom online API settings: URL, request format, response regex parser
-* Support extension
+## 功能
 
-## TODO
+* 从正在运行的Galgame里即时提取文本
+* 从离线字典中获取翻译，如J北京等
+* 从在线翻译API中获取翻译，如谷歌、百度、有道等
+* 在游戏窗口上方浮动显示原文+翻译（就像VNR一样）
+* 自定义在线API翻译获取方式: URL、请求方法、请求报头格式、响应的解析方式等
+* 支持扩展
 
-- [x] Technical feasibility assessment
-- [x] Wrapping text hooker as a native Node module
-- [ ] Text hooker module Refactor
-- [ ] Basic UI Design
-- [ ] UI implementation
-- [ ] Online translator API call
-- [ ] JBeijing translator DLL access
+## 计划
 
-## Usage
+- [x] 技术可行性评估
+- [x] 把文本提取器包装成Node.js原生组件
+- [ ] 文本提取器模块重构
+- [ ] 基本UI设计
+- [ ] UI实现
+- [ ] 在线翻译API调用
+- [ ] J北京翻译DLL调用
+
+## 尝个鲜？
+
+随便找个文件夹，运行以下代码：
 
     git clone https://github.com/Yagt/Yagt.git
     cd yagt
     npm install
     npm run dev
 
-## License
+## 许可证
 
-Yagt is licensed under GPLv3.
+Yagt使用GPLv3许可证开源。
 
-I'd like to use MIT license, but the upstream softwares (Text Hooker for example) are licensed under GPL, so, no choice.
+我本来是想用MIT的，但是由于上游依赖（如文本提取器）用的是GPL，所以我也很为难啊。
