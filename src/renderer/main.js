@@ -6,14 +6,12 @@ import router from './router'
 import store from './store'
 
 
-import MuseUI from 'muse-ui';
 import 'muse-ui/dist/muse-ui.css';
-Vue.use(MuseUI)
+import 'muse-ui-message/dist/muse-ui-message.css'
 import './resources/material-icons/material-icons.css'
 
-import Message from 'muse-ui-message';
-Vue.use(Message);
-import 'muse-ui-message/dist/muse-ui-message.css';
+import MuseUI from 'muse-ui'
+Vue.use(MuseUI)
 
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))

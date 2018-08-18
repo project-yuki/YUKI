@@ -1,17 +1,25 @@
 <template>
-<transition name="el-fade-in">
-  <el-card :class="{ chosen: isChosen }">
-    <p>{{hook.name}} ({{hook.hcode}})</p>
-    <el-input type="textarea" :value="hook.text" :rows="8" placeholder="等待文本获取..." />
-    <el-row type="flex" justify="end" class="function-buttons-row">
-      <el-button type="success" icon="el-icon-check" circle 
-        @click="chooseAsDisplay"
-        v-show="!isChosen"></el-button>
-      <el-button type="danger" icon="el-icon-delete" circle 
-        @click="removeHook" />
-    </el-row>
-  </el-card>
-</transition>
+<mu-scale-transition>
+  <mu-paper :z-depth="zIndex">
+    <mu-card>
+      <mu-card-header :title="hook.name" :sub-title="hook.hcode" />
+      <mu-text-field multi-line full-width :value="hook.text" :rows="8" placeholder="等待文本获取..." class="hooker-textarea" />
+      <mu-flex justify-content="end">
+        <mu-button fab small color="success" @click="chooseAsDisplay" v-show="!isChosen">
+          <mu-icon value="done"></mu-icon>
+        </mu-button>
+        <mu-button fab small color="error" @click="openConfirmDialog" style="margin-left: 8px;">
+          <mu-icon value="delete"></mu-icon>
+        </mu-button>
+        <mu-dialog title="Dialog" width="360" :open.sync="openConfirm">
+          确认卸载钩子？
+          <mu-button slot="actions" flat @click="closeConfirmDialog">否</mu-button>
+          <mu-button slot="actions" flat color="primary" @click="removeHook">是</mu-button>
+        </mu-dialog>
+      </mu-flex>
+    </mu-card>
+  </mu-paper>
+</mu-scale-transition>
 </template>
 
 <script>
@@ -20,15 +28,25 @@ export default {
     'hook',
     'isChosen'
   ],
+  data() {
+    return {
+      openConfirm: false
+    }
+  },
+  computed: {
+    zIndex() {
+      return this.isChosen ? 5 : 1
+    }
+  },
   methods: {
+    openConfirmDialog() {
+      this.openConfirm = true
+    },
+    closeConfirmDialog() {
+      this.openConfirm = false
+    },
     removeHook() {
-      this.$confirm('确认卸载钩子?', '提示', {
-        confirmButtonText: '是',
-        cancelButtonText: '否',
-        type: 'warning'
-      }).then(() => {
-        this.$store.dispatch('removeHook', this.hook)
-      })
+      this.$store.dispatch('removeHook', this.hook)
     },
     chooseAsDisplay() {
       this.$store.dispatch('chooseHookAsDisplay', this.hook.num)
@@ -38,12 +56,7 @@ export default {
 </script>
 
 <style scoped>
-.chosen {
-  background-color: #BADBFD;
-  transition: background-color 0.5s;
-}
-
-.function-buttons-row {
-  padding-top: 1em;
+.hooker-textarea {
+  padding: 8px;
 }
 </style>

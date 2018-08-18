@@ -4,7 +4,7 @@ import { app, BrowserWindow, ipcMain, dialog } from 'electron'
 
 const hooker = require('../../nexthooker')
 
-let hookerStarted
+let hookerStarted = false
 
 import fs from 'fs'
 import yaml from 'js-yaml'
@@ -12,7 +12,8 @@ import yaml from 'js-yaml'
 let config
 try {
   config = yaml.safeLoad(fs.readFileSync('config/config.yml', 'utf8'))
-  console.log(`config loaded: ${config}`)
+  console.log(`config loaded: `)
+  console.log(config)
 } catch (e) {
   dialog.showErrorBox('配置文件载入失败', '请确认config/config.yml文件存在')
   process.exit(1)
@@ -46,7 +47,8 @@ function createWindow () {
         sansSerif: 'Microsoft Yahei UI'
       }
     },
-    icon: './build/icons/icon.png'
+    icon: './build/icons/icon.png',
+    frame: false
   })
 
   mainWindow.loadURL(winURL)
@@ -62,11 +64,12 @@ function createWindow () {
       hooker.start()
       hooker.onThreadCreate(
         (tt) => {
-          // console.log(tt)
+          console.log('thread created: ')
+          console.log(tt)
           mainWindow.webContents.send('add-hook', tt)
         },
         (tt, text) => {
-          // console.log(`${tt.num}: ${text}`)
+          console.log(`${tt.num}: ${text}`)
           mainWindow.webContents.send('get-hook-text', tt, text)
         }
       )
@@ -80,11 +83,16 @@ function createWindow () {
   })
 
   ipcMain.on('insert-hook', (event, code) => {
-    hooker.insertHook(constants.PID, code)
+    hooker.insertHook(config.pid, code)
   })
 
   ipcMain.on('remove-hook', (event, hook) => {
-    hooker.removeHook(constants.PID, hook.hook)
+    hooker.removeHook(config.pid, hook.hook)
+  })
+
+  ipcMain.on('app-exit', (event) => {
+    //TODO: save configuratino to file
+    app.exit(0)
   })
 }
 
