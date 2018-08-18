@@ -9,9 +9,11 @@ import store from './store'
 // import 'iview/dist/styles/iview.css';
 // Vue.use(iView)
 
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
-Vue.use(ElementUI)
+import MuseUI from 'muse-ui';
+import 'muse-ui/dist/muse-ui.css';
+Vue.use(MuseUI)
+import './resources/material-icons/material-icons.css'
+
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.http = Vue.prototype.$http = axios
