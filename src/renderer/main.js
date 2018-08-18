@@ -5,14 +5,15 @@ import App from './App'
 import router from './router'
 import store from './store'
 
-// import iView from 'iview';
-// import 'iview/dist/styles/iview.css';
-// Vue.use(iView)
 
 import MuseUI from 'muse-ui';
 import 'muse-ui/dist/muse-ui.css';
 Vue.use(MuseUI)
 import './resources/material-icons/material-icons.css'
+
+import Message from 'muse-ui-message';
+Vue.use(Message);
+import 'muse-ui-message/dist/muse-ui-message.css';
 
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
