@@ -3,30 +3,36 @@ import fs from 'fs'
 import yaml from 'js-yaml'
 import logger from '../../common/logger'
 
-
-let config = null
-
-function load() {
-  try {
-    config = yaml.safeLoad(fs.readFileSync('config/config.yml', 'utf8'))
-    logger.debug(`config loaded: `)
-    logger.debug(config)
-  } catch (e) {
-    dialog.showErrorBox('配置文件载入失败', '请确认config/config.yml文件存在')
-    process.exit(1)
+export default class Config {
+  constructor(filename) {
+    this.filename = filename
+    this._config = null
+    this.load()
   }
-}
 
-function get() {
-  return config
-}
+  load() {
+    try {
+      this._config = yaml.safeLoad(fs.readFileSync(this.filename, 'utf8'))
+      logger.debug(`config loaded: `)
+      logger.debug(this._config)
+    } catch (e) {
+      let err = new Error(`config file ${this.filename} load failed`)
+      logger.error(err)
+    }
+  }
 
-function set(cfg) {
-  config = Object.assign({}, config, cfg)
-}
+  save() {
+    try {
+      fs.writeFileSync(this.filename, yaml.safeDump(this._config), 'utf8')
+      logger.debug(`config saved: `)
+      logger.debug(this._config)
+    } catch (e) {
+      logger.error(`config file ${this.filename} save failed`)
+      logger.error(e)
+    }
+  }
 
-export default {
-  load,
-  get,
-  set
+  get() {
+    return this._config
+  }
 }

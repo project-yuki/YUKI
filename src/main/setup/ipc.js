@@ -3,7 +3,7 @@ import types from '../../common/ipcTypes'
 import logger from '../../common/logger'
 import config from '../setup/config'
 
-config.load()
+config.load('config/config.yml')
 
 const hooker = require('../../../nexthooker')
 
