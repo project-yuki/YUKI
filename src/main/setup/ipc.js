@@ -1,9 +1,9 @@
 import { app, ipcMain } from 'electron'
 import types from '../../common/ipcTypes'
 import logger from '../../common/logger'
-import config from '../setup/config'
+import Config from '../setup/config'
 
-config.load('config/config.yml')
+let config = new Config('config/config.yml')
 
 const hooker = require('../../../nexthooker')
 
