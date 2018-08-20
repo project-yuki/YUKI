@@ -21,6 +21,7 @@ import {
 } from 'electron'
 
 import GtHookInfo from '@/components/HookSettingsHookInfo'
+import ipcTypes from '../../common/ipcTypes.js'
 
 export default {
   name: 'hook-settings-page',
@@ -61,7 +62,7 @@ export default {
     }
   },
   mounted() {
-    ipcRenderer.send('load-finished')
+    ipcRenderer.send(ipcTypes.MAIN_PAGE_LOAD_FINISHED)
   },
 }
 </script>

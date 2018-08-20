@@ -27,10 +27,11 @@ new Vue({
 }).$mount('#app')
 
 import { ipcRenderer } from 'electron'
- 
-ipcRenderer.on('add-hook', (event, hook) => {
+import types from '../common/ipcTypes'
+
+ipcRenderer.on(types.ADD_HOOK, (event, hook) => {
   store.dispatch('addHook', hook)
 })
-ipcRenderer.on('get-hook-text', (event, hook, text) => {
+ipcRenderer.on(types.GET_HOOK_TEXT, (event, hook, text) => {
   store.dispatch('getHookText', { hook, text })
 })

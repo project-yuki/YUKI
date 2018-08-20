@@ -1,4 +1,5 @@
 import { ipcRenderer } from 'electron'
+import ipcTypes from '../../../common/ipcTypes'
 import Vue from 'vue'
 
 const state = {
@@ -17,7 +18,7 @@ const mutations = {
     )
   },
   REMOVE_HOOK (state, payload) {
-    ipcRenderer.send('remove-hook', payload.hook)
+    ipcRenderer.send(ipcTypes.REMOVE_HOOK, payload.hook)
     state.hooks = state.hooks.filter((h) => h.num !== payload.hook.num)
   },
   GET_HOOK_TEXT (state, payload) {
