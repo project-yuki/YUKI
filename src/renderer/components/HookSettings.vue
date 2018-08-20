@@ -24,7 +24,7 @@ import GtHookInfo from '@/components/HookSettingsHookInfo'
 import ipcTypes from '../../common/ipcTypes.js'
 
 export default {
-  name: 'hook-settings-page',
+  name: 'hook-settings',
   components: {
     GtHookInfo
   },
@@ -37,7 +37,7 @@ export default {
   },
   computed: {
     hooks() {
-      return this.$store.state.Hooks.hooks
+      return this.$store.state.Hooks.hookInfos
     }
   },
   methods: {

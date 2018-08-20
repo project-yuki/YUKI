@@ -1,9 +1,7 @@
 import { app, ipcMain } from 'electron'
 import types from '../../common/ipcTypes'
 import logger from '../../common/logger'
-import Config from '../setup/config'
-
-let config = new Config('config/config.yml')
+import defaultConfig from '../config/default'
 
 const hooker = require('../../../nexthooker')
 
@@ -23,27 +21,27 @@ export default function (mainWindow) {
         },
         (tt, text) => {
           logger.debug(`get text [${tt.num}]: ${text}`)
-          mainWindow.webContents.send(types.GET_HOOK_TEXT, tt, text)
+          mainWindow.webContents.send(types.HAS_HOOK_TEXT, tt, text)
         }
       )
       hooker.open()
-      logger.debug(`injecting process ${config.get().pid}...`)
-      hooker.injectProcess(config.get().pid)
-      logger.debug(`process ${config.get().pid} injected`)
+      logger.debug(`injecting process ${defaultConfig.get().pid}...`)
+      hooker.injectProcess(defaultConfig.get().pid)
+      logger.debug(`process ${defaultConfig.get().pid} injected`)
 
       hookerStarted = true
     }
   })
 
   ipcMain.on(types.INSERT_HOOK, (event, code) => {
-    logger.debug(`inserting hook ${code} to process ${config.get().pid}...`)
-    hooker.insertHook(config.get().pid, code)
+    logger.debug(`inserting hook ${code} to process ${defaultConfig.get().pid}...`)
+    hooker.insertHook(defaultConfig.get().pid, code)
     logger.debug(`hook ${code} inserted`)
   })
 
   ipcMain.on(types.REMOVE_HOOK, (event, hook) => {
-    logger.debug(`removing hook ${hook.hook} from process ${config.get().pid}...`)
-    hooker.removeHook(config.get().pid, hook.hook)
+    logger.debug(`removing hook ${hook.hook} from process ${defaultConfig.get().pid}...`)
+    hooker.removeHook(defaultConfig.get().pid, hook.hook)
     logger.debug(`hook ${hook.hook} removed`)
   })
 

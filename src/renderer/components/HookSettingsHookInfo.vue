@@ -3,7 +3,7 @@
   <mu-paper :z-depth="zIndex">
     <mu-card>
       <mu-card-header :title="hook.name" :sub-title="hook.hcode" />
-      <mu-text-field multi-line full-width :value="hook.text" :rows="8" placeholder="等待文本获取..." class="hooker-textarea" />
+      <mu-text-field multi-line full-width :value="hookText" :rows="8" placeholder="等待文本获取..." class="hooker-textarea" />
       <mu-flex justify-content="end">
         <mu-button fab small color="success" @click="chooseAsDisplay" v-show="!isChosen">
           <mu-icon value="done"></mu-icon>
@@ -36,6 +36,9 @@ export default {
   computed: {
     zIndex() {
       return this.isChosen ? 5 : 1
+    },
+    hookText() {
+      return this.$store.state.Hooks.texts[this.hook.num].join('\n')
     }
   },
   methods: {

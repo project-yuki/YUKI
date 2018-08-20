@@ -4,5 +4,7 @@ export default {
   REMOVE_HOOK: 'remove-hook',
   APP_EXIT: 'app-exit',
   ADD_HOOK: 'add-hook',
-  GET_HOOK_TEXT: 'get-hook-text'
+  HAS_HOOK_TEXT: 'has-hook-text',
+  REQUEST_DEFAULT_CONFIG: 'request-default-config',
+  HAS_DEFAULT_CONFIG: 'has-default-config'
 }

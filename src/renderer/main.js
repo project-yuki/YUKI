@@ -32,6 +32,6 @@ import types from '../common/ipcTypes'
 ipcRenderer.on(types.ADD_HOOK, (event, hook) => {
   store.dispatch('addHook', hook)
 })
-ipcRenderer.on(types.GET_HOOK_TEXT, (event, hook, text) => {
-  store.dispatch('getHookText', { hook, text })
+ipcRenderer.on(types.HAS_HOOK_TEXT, (event, hook, text) => {
+  store.dispatch('setHookText', { hook, text })
 })
