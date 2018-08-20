@@ -38,3 +38,6 @@ ipcRenderer.on(types.HAS_REMOVED_HOOK, (event, hook) => {
 ipcRenderer.on(types.HAS_HOOK_TEXT, (event, hook, text) => {
   store.dispatch('setHookText', { hook, text })
 })
+ipcRenderer.on(types.HAS_CONFIG, (event, name, cfgs) => {
+  store.dispatch('setConfig', { name, cfgs })
+})

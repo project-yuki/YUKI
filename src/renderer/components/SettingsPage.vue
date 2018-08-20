@@ -1,18 +1,22 @@
 <template>
 <div>
   <gt-page-header title="应用设置" />
-  <gt-hook-settings />
+  <gt-page-content>
+    <gt-locale-changer-settings />
+  </gt-page-content>
 </div>
 </template>
 
 <script>
 import GtPageHeader from '@/components/PageHeader'
-import GtHookSettings from '@/components/HookSettings'
+import GtPageContent from '@/components/PageContent'
+import GtLocaleChangerSettings from '@/components/LocaleChangerSettings'
 
 export default {
   components: {
     GtPageHeader,
-    GtHookSettings
+    GtPageContent,
+    GtLocaleChangerSettings
   }
 }
 </script>

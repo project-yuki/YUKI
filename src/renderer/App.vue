@@ -8,6 +8,9 @@
 <script>
 import GtAppSidebar from '@/components/AppSidebar'
 
+import { ipcRenderer } from 'electron'
+import ipcTypes from '../common/ipcTypes.js'
+
 export default {
   name: 'main-page',
   components: {
@@ -20,7 +23,7 @@ export default {
 
   },
   mounted() {
-
+    ipcRenderer.send(ipcTypes.REQUEST_CONFIG, 'default')
   },
 }
 </script>
@@ -40,6 +43,10 @@ body,
 
 .text-h2 {
   font-size: 1.5em;
+}
+
+.text-h3 {
+  font-size: 1.2em;
 }
 
 .no-margin {
