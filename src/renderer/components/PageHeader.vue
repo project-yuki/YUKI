@@ -9,12 +9,13 @@
 
 <script>
 import { ipcRenderer } from 'electron'
+import ipcTypes from '../../common/ipcTypes.js'
 
 export default {
   props: ['title'],
   methods: {
     closeWindow() {
-      ipcRenderer.send('app-exit')
+      ipcRenderer.send(ipcTypes.APP_EXIT)
     }
   }
 }

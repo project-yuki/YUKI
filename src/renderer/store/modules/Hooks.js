@@ -16,8 +16,7 @@ const mutations = {
     })
   },
   REMOVE_HOOK (state, payload) {
-    ipcRenderer.send(ipcTypes.REMOVE_HOOK, payload.hook)
-    state.hooks = state.hooks.filter((h) => h.num !== payload.hook.num)
+    state.hookInfos = state.hookInfos.filter((h) => h.num !== payload.hook.num)
     Vue.delete(state.texts, payload.hook.num)
   },
   SET_HOOK_TEXT (state, payload) {

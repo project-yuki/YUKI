@@ -51,7 +51,7 @@ export default {
     },
     addHook() {
       if (new RegExp(/\/H\w+/).test(this.hookCode)) {
-        ipcRenderer.send('insert-hook', this.hookCode)
+        ipcRenderer.send(ipcTypes.REQUEST_INSERT_HOOK, this.hookCode)
         this.closeInputHookDialog()
       } else {
         this.errorText = '特殊码格式不正确'

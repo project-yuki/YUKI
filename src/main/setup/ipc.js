@@ -17,11 +17,18 @@ export default function (mainWindow) {
         (tt) => {
           logger.debug('thread created: ')
           logger.debug(tt)
-          mainWindow.webContents.send(types.ADD_HOOK, tt)
+          mainWindow.webContents.send(types.HAS_INSERTED_HOOK, tt)
         },
         (tt, text) => {
           logger.debug(`get text [${tt.num}]: ${text}`)
           mainWindow.webContents.send(types.HAS_HOOK_TEXT, tt, text)
+        }
+      )
+      hooker.onThreadRemove(
+        (tt) => {
+          logger.debug('thread removed: ')
+          logger.debug(tt)
+          mainWindow.webContents.send(types.HAS_REMOVED_HOOK, tt)
         }
       )
       hooker.open()
@@ -33,13 +40,13 @@ export default function (mainWindow) {
     }
   })
 
-  ipcMain.on(types.INSERT_HOOK, (event, code) => {
+  ipcMain.on(types.REQUEST_INSERT_HOOK, (event, code) => {
     logger.debug(`inserting hook ${code} to process ${defaultConfig.get().pid}...`)
     hooker.insertHook(defaultConfig.get().pid, code)
     logger.debug(`hook ${code} inserted`)
   })
 
-  ipcMain.on(types.REMOVE_HOOK, (event, hook) => {
+  ipcMain.on(types.REQUEST_REMOVE_HOOK, (event, hook) => {
     logger.debug(`removing hook ${hook.hook} from process ${defaultConfig.get().pid}...`)
     hooker.removeHook(defaultConfig.get().pid, hook.hook)
     logger.debug(`hook ${hook.hook} removed`)

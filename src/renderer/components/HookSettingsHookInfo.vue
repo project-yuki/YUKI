@@ -23,6 +23,9 @@
 </template>
 
 <script>
+import { ipcRenderer } from 'electron'
+import ipcTypes from '../../common/ipcTypes.js'
+
 export default {
   props: [
     'hook',
@@ -49,7 +52,8 @@ export default {
       this.openConfirm = false
     },
     removeHook() {
-      this.$store.dispatch('removeHook', this.hook)
+      ipcRenderer.send(ipcTypes.REQUEST_REMOVE_HOOK, this.hook)
+      this.closeConfirmDialog()
     },
     chooseAsDisplay() {
       this.$store.dispatch('chooseHookAsDisplay', this.hook.num)

@@ -1,10 +1,17 @@
 export default {
   MAIN_PAGE_LOAD_FINISHED: 'main-page-load-finished',
-  INSERT_HOOK: 'insert-hook',
-  REMOVE_HOOK: 'remove-hook',
-  APP_EXIT: 'app-exit',
-  ADD_HOOK: 'add-hook',
+
+  REQUEST_INSERT_HOOK: 'request-insert-hook',
+  HAS_INSERTED_HOOK: 'has-inserted-hook',
+  REQUEST_REMOVE_HOOK: 'request-remove-hook',
+  HAS_REMOVED_HOOK: 'has-removed-hook',
+
   HAS_HOOK_TEXT: 'has-hook-text',
-  REQUEST_DEFAULT_CONFIG: 'request-default-config',
-  HAS_DEFAULT_CONFIG: 'has-default-config'
+
+  REQUEST_CONFIG: 'request-config',
+  HAS_CONFIG: 'has-config',
+  REQUEST_SAVE_CONFIG: 'request-save-config',
+  HAS_SAVED_CONFIG: 'has-saved-config',
+
+  APP_EXIT: 'app-exit'
 }
