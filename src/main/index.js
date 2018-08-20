@@ -1,23 +1,9 @@
 'use strict'
 
-import { app, BrowserWindow, ipcMain, dialog } from 'electron'
+import { app, BrowserWindow } from 'electron'
 
-const hooker = require('../../nexthooker')
+import setupIpc from './setup/ipc'
 
-let hookerStarted = false
-
-import fs from 'fs'
-import yaml from 'js-yaml'
-
-let config
-try {
-  config = yaml.safeLoad(fs.readFileSync('config/config.yml', 'utf8'))
-  console.log(`config loaded: `)
-  console.log(config)
-} catch (e) {
-  dialog.showErrorBox('配置文件载入失败', '请确认config/config.yml文件存在')
-  process.exit(1)
-}
 
 /**
  * Set `__static` path to static files in production
@@ -57,43 +43,7 @@ function createWindow () {
     mainWindow = null
   })
 
-  ipcMain.on('load-finished', () => {
-    if (!hookerStarted) {
-      console.log(`load finished.`)
-
-      hooker.start()
-      hooker.onThreadCreate(
-        (tt) => {
-          console.log('thread created: ')
-          console.log(tt)
-          mainWindow.webContents.send('add-hook', tt)
-        },
-        (tt, text) => {
-          console.log(`${tt.num}: ${text}`)
-          mainWindow.webContents.send('get-hook-text', tt, text)
-        }
-      )
-      hooker.open()
-      console.log(`injecting process ${config.pid}...`)
-      hooker.injectProcess(config.pid)
-      console.log(`process ${config.pid} injected`)
-
-      hookerStarted = true
-    }
-  })
-
-  ipcMain.on('insert-hook', (event, code) => {
-    hooker.insertHook(config.pid, code)
-  })
-
-  ipcMain.on('remove-hook', (event, hook) => {
-    hooker.removeHook(config.pid, hook.hook)
-  })
-
-  ipcMain.on('app-exit', (event) => {
-    //TODO: save configuratino to file
-    app.exit(0)
-  })
+  setupIpc(mainWindow)
 }
 
 app.on('ready', createWindow)
