@@ -52,9 +52,46 @@ export default function (mainWindow) {
     logger.debug(`hook ${hook.hook} removed`)
   })
 
+  ipcMain.on(types.REQUEST_CONFIG, (event, name) => {
+    let configFileName = `config/${name}.yml`
+    logger.debug(`request config ${configFileName}`)
+    switch (name) {
+      case 'default':
+        mainWindow.send(types.HAS_CONFIG, name, defaultConfig.get())
+        break;
+      case 'games':
+        //TODO: set games config
+        break;
+      default:
+        logger.error(`invalid config name: ${payload.name}`)
+        break;
+    }
+  })
+
+  ipcMain.on(types.REQUEST_SAVE_CONFIG, (event, name, cfg) => {
+    let configFileName = `config/${name}.yml`
+    logger.debug(`request saving config ${configFileName}: `)
+    logger.debug(cfg)
+    
+    switch (name) {
+      case 'default':
+        defaultConfig.set(cfg)
+        defaultConfig.save()
+        logger.debug(`config ${configFileName} saved`)
+        mainWindow.send(types.HAS_CONFIG, name, defaultConfig.get())
+        break;
+      case 'games':
+        //TODO: set games config
+        break;
+      default:
+        logger.error(`invalid config name: ${payload.name}`)
+        break;
+    }
+  })
+
   ipcMain.on(types.APP_EXIT, (event) => {
     logger.debug('saving configurtion to file...')
-    //TODO: save configuratino to file
+    //TODO: save configuration to file
     logger.info('app exited')
     app.exit(0)
   })

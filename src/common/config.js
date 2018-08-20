@@ -34,4 +34,8 @@ export default class Config {
   get() {
     return this._config
   }
+
+  set(cfg) {
+    this._config = cfg
+  }
 }

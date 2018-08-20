@@ -1,36 +1,31 @@
-pid: 12012
-
-translators:
-  jBeijing:
-    enabled: false
-    path: D:\Visual Novel Reader V2\JBeijing7
-
 localeChanger:
   localeEmulator:
     enabled: true
-    exec: D:\LocaleEmulator\LEProc.exe %GAME_EXEC%
+    exec: 'D:\LocaleEmulator\LEProc.exe %GAME_EXEC%'
   ntleas:
     enabled: false
-    exec: D:\ntleas046_x64\x86\ntleas.exe %GAME_EXEC%
-
+    exec: 'D:\ntleas046_x64\x86\ntleas.exe %GAME_EXEC%'
 onlineApis:
-  - name: baidu
-    enabled: false
-    url: http://fanyi.baidu.com/transapi
-    needSession: false
+  - enabled: false
     method: POST
+    name: baidu
+    needSession: false
     requestBodyFormat: 'X^{"query": %TEXT%, "from": "jp", "to": "zh"}'
     responseBodyPattern: 'O^%RESPONSE%.data[0].dst'
-
-  - name: googleCN
-    enabled: false
-    url: https://translate.google.cn/m
-    needSession: false
+    url: 'http://fanyi.baidu.com/transapi'
+  - enabled: false
     method: POST
+    name: googleCN
+    needSession: false
     requestBodyFormat: 'X^{"q": %TEXT%, "sl": "ja", "hl": "zh-CN"}'
-    responseBodyPattern: 'R^/class="t0">(.*)</'
-
-  - name: youdao
-    enabled: false
+    responseBodyPattern: R^/class="t0">(.*)</
+    url: 'https://translate.google.cn/m'
+  - enabled: false
     external: true
     jsFile: config\youdaoApi.js
+    name: youdao
+pid: 19992
+translators:
+  jBeijing:
+    enabled: false
+    path: 'D:\Visual Novel Reader V2\JBeijing7'
