@@ -1,7 +1,7 @@
 <template>
 <div id="app">
   <gt-app-sidebar></gt-app-sidebar>
-  <router-view style="padding-left: 240px;"></router-view>
+  <router-view style="margin-left: 240px;"></router-view>
 </div>
 </template>
 

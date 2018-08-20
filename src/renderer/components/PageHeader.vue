@@ -1,5 +1,5 @@
 <template>
-<mu-appbar class="header" color="primary">
+<mu-appbar class="app-header" color="primary">
   {{title}}
   <mu-button icon color="secondary" slot="right" class="exit-button" @click="closeWindow">
     <mu-icon value="close"></mu-icon>
@@ -22,8 +22,11 @@ export default {
 </script>
 
 <style scoped>
-.header {
-  width: 100%;
+.app-header {
+  top: 0;
+  left: 240px;
+  right: 0;
+  position: fixed;
   -webkit-app-region: drag;
 }
 
