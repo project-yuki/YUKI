@@ -19,8 +19,10 @@ let mainConfig = {
     rules: [
       {
         test: /\.tsx?$/,
-        loader: 'ts-loader',
-        options: { appendTsSuffixTo: [/\.vue$/] }
+        use: {
+          loader: 'ts-loader',
+          options: { appendTsSuffixTo: [/\.vue$/] }
+        }
       },
       {
         test: /\.js$/,
