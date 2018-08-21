@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Router, { RouteConfig } from 'vue-router'
+import * as Router from 'vue-router'
 
 import GamesPage from '@/components/GamesPage.vue'
 import FavoritePage from '@/components/FavoritePage.vue'
@@ -8,7 +8,7 @@ import AboutPage from '@/components/AboutPage.vue'
 
 Vue.use(Router)
 
-let routes = <RouteConfig[]>[
+let routes = <Router.RouteConfig[]>[
   { path: '', component: GamesPage },
   { path: '/games', name: 'Games', component: GamesPage },
   { path: '/favorite', name: 'Favorite', component: FavoritePage },
