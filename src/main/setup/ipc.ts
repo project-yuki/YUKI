@@ -3,6 +3,22 @@ import types from '../../common/ipcTypes'
 import logger from '../../common/logger'
 import defaultConfig from '../config/default'
 
+
+interface RemovedTextThread {
+  num: number
+  pid: number
+  hook: number
+  retn: number
+  spl: number
+}
+
+interface TextThread extends RemovedTextThread {
+  name: string
+  hcode: string
+  str: string
+}
+
+
 const hooker = require('../../../nexthooker')
 
 let hookerStarted = false
@@ -14,18 +30,18 @@ export default function (mainWindow: Electron.BrowserWindow) {
 
       hooker.start()
       hooker.onThreadCreate(
-        (tt: any) => {
+        (tt: TextThread) => {
           logger.debug('thread created: ')
           logger.debug(tt)
           mainWindow.webContents.send(types.HAS_INSERTED_HOOK, tt)
         },
-        (tt: any, text: string) => {
+        (tt: TextThread, text: string) => {
           logger.debug(`get text [${tt.num}]: ${text}`)
           mainWindow.webContents.send(types.HAS_HOOK_TEXT, tt, text)
         }
       )
       hooker.onThreadRemove(
-        (tt: any) => {
+        (tt: RemovedTextThread) => {
           logger.debug('thread removed: ')
           logger.debug(tt)
           mainWindow.webContents.send(types.HAS_REMOVED_HOOK, tt)
@@ -46,7 +62,7 @@ export default function (mainWindow: Electron.BrowserWindow) {
     logger.debug(`hook ${code} inserted`)
   })
 
-  ipcMain.on(types.REQUEST_REMOVE_HOOK, (event: Electron.Event, hook: any) => {
+  ipcMain.on(types.REQUEST_REMOVE_HOOK, (event: Electron.Event, hook: TextThread) => {
     logger.debug(`removing hook ${hook.hook} from process ${defaultConfig.get().pid}...`)
     hooker.removeHook(defaultConfig.get().pid, hook.hook)
     logger.debug(`hook ${hook.hook} removed`)
