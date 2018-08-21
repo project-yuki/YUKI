@@ -1,7 +1,4 @@
-import { ipcRenderer } from 'electron'
-import ipcTypes from '../../../common/ipcTypes'
 import logger from '../../../common/logger'
-import Vue from 'vue'
 
 const state = {
   default: {},
