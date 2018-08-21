@@ -6,25 +6,23 @@
 </template>
 
 <script>
+import Vue from 'vue'
+import Component from 'vue-class-component'
+
 import GtAppSidebar from '@/components/AppSidebar'
 
 import { ipcRenderer } from 'electron'
 import ipcTypes from '../common/ipcTypes'
 
-export default {
-  name: 'main-page',
+@Component({
   components: {
     GtAppSidebar
-  },
-  computed: {
-
-  },
-  methods: {
-
-  },
+  }
+})
+export default class App extends Vue {
   mounted() {
     ipcRenderer.send(ipcTypes.REQUEST_CONFIG, 'default')
-  },
+  }
 }
 </script>
 
