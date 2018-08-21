@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import axios from 'axios'
 
-import App from './App'
+import App from './App.vue'
 import router from './router'
 import store from './store'
 
@@ -14,8 +14,10 @@ import MuseUI from 'muse-ui'
 Vue.use(MuseUI)
 
 
-if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
-Vue.http = Vue.prototype.$http = axios
+if (!process.env.IS_WEB) {
+  Vue.use(require('vue-electron'))
+}
+(<any>Vue).http = Vue.prototype.$http = axios
 Vue.config.productionTip = false
 
 new Vue({

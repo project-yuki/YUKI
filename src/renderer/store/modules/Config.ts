@@ -12,10 +12,10 @@ const mutations = {
   SET_CONFIG (state, payload) {
     switch (payload.name) {
       case 'default':
-        state.default = Object.assign({}, state.default, payload.cfgs)
+        state.default = {...state.default, ...payload.cfgs}
         break;
       case 'games':
-        state.games = Object.assign({}, state.games, payload.cfgs)
+        state.games = {...state.games, ...payload.cfgs}
         break;
       default:
         logger.error(`invalid config name: ${payload.name}`)

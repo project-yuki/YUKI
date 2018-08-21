@@ -1,5 +1,5 @@
-import * as fs from 'fs'
-import * as yaml from 'js-yaml'
+import fs from 'fs'
+import yaml from 'js-yaml'
 import logger from './logger'
 
 export default class Config {

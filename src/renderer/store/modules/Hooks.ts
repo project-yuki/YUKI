@@ -11,9 +11,7 @@ const state = {
 const mutations = {
   ADD_HOOK (state, payload) {
     state.hookInfos.push(payload.hook)
-    state.texts = Object.assign({}, state.texts, {
-      [payload.hook.num]: []
-    })
+    state.texts = {...state.texts, [payload.hook.num]: []}
   },
   REMOVE_HOOK (state, payload) {
     state.hookInfos = state.hookInfos.filter((h) => h.num !== payload.hook.num)

@@ -10,7 +10,7 @@ import setupIpc from './setup/ipc'
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
  */
 if (process.env.NODE_ENV !== 'development') {
-  (global as any).__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
+  (<any>global).__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
 }
 
 let mainWindow: Electron.BrowserWindow | null
