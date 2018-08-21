@@ -1,9 +1,12 @@
-import fs from 'fs'
-import yaml from 'js-yaml'
+import * as fs from 'fs'
+import * as yaml from 'js-yaml'
 import logger from './logger'
 
 export default class Config {
-  constructor(filename) {
+  filename: string
+  _config: any
+
+  constructor(filename: string) {
     this.filename = filename
     this._config = null
     this.load()
@@ -35,7 +38,7 @@ export default class Config {
     return this._config
   }
 
-  set(cfg) {
+  set(cfg: any) {
     this._config = cfg
   }
 }

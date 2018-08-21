@@ -21,7 +21,7 @@ import {
 } from 'electron'
 
 import GtHookInfo from '@/components/HookSettingsHookInfo'
-import ipcTypes from '../../common/ipcTypes.js'
+import ipcTypes from '../../common/ipcTypes'
 
 export default {
   name: 'hook-settings',

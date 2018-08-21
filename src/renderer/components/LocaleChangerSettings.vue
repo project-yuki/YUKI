@@ -22,7 +22,7 @@
 
 <script>
 import { ipcRenderer } from 'electron'
-import ipcTypes from '../../common/ipcTypes.js'
+import ipcTypes from '../../common/ipcTypes'
 
 export default {
   name: 'locale-changer-settings',
