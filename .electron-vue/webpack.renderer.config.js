@@ -31,11 +31,16 @@ let rendererConfig = {
   module: {
     rules: [
       {
+        test: /\.d\.ts$/,
+        use: 'ignore-loader'
+      },
+      {
         test: /\.tsx?$/,
         use: {
           loader: 'ts-loader',
           options: { appendTsSuffixTo: [/\.vue$/] }  
-        }
+        },
+        exclude: /node_modules|\.d\.ts$/
       },
       {
         test: /\.css$/,
