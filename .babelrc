@@ -16,7 +16,8 @@
           "targets": { "node": 7 }
         }],
         "stage-0"
-      ]
+      ],
+      "plugins": ["transform-decorators-legacy"]
     },
     "renderer": {
       "presets": [
@@ -33,7 +34,8 @@
           "modules": false
         }],
         "stage-0"
-      ]
+      ],
+      "plugins": ["transform-decorators-legacy"]
     }
   }
 }
