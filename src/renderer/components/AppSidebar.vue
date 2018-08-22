@@ -1,5 +1,5 @@
 <template>
-<mu-drawer :z-depth="5" class="nav-list" docked open>
+<mu-drawer :z-depth="5" class="nav-list full-height" docked open>
   <mu-card-header title="另一个Galgame翻译器" sub-title="">
     <mu-avatar slot="avatar" color="white">
       <img src="../assets/icon.png">
@@ -12,11 +12,11 @@
       </mu-list-item-action>
       <mu-list-item-title>我的游戏</mu-list-item-title>
     </mu-list-item>
-    <mu-list-item button :to="{'name': 'Favorite'}">
+    <mu-list-item button :to="{'name': 'AddGame'}">
       <mu-list-item-action>
-        <mu-icon value="grade"></mu-icon>
+        <mu-icon value="library_add"></mu-icon>
       </mu-list-item-action>
-      <mu-list-item-title>我的收藏</mu-list-item-title>
+      <mu-list-item-title>添加游戏</mu-list-item-title>
     </mu-list-item>
     <mu-list-item button :to="{'name': 'Settings'}">
       <mu-list-item-action>
@@ -48,7 +48,6 @@ export default class AppSidebar extends Vue {
 <style>
 .nav-list {
   background-color: white;
-  height: 100%;
   width: 240px;
   position: fixed;
   z-index: 5;

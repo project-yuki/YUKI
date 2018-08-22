@@ -1,4 +1,4 @@
-import { app, ipcMain } from 'electron'
+import { app, ipcMain, dialog } from 'electron'
 import types from '../../common/ipcTypes'
 import logger from '../../common/logger'
 import defaultConfig from '../config/default'
@@ -56,7 +56,7 @@ export default function (mainWindow: Electron.BrowserWindow) {
     logger.debug(`request config ${configFileName}`)
     switch (name) {
       case 'default':
-        mainWindow.webContents.send(types.HAS_CONFIG, name, defaultConfig.get())
+        event.sender.send(types.HAS_CONFIG, name, defaultConfig.get())
         break;
       case 'games':
         //TODO: set games config
@@ -77,7 +77,7 @@ export default function (mainWindow: Electron.BrowserWindow) {
         defaultConfig.set(cfg)
         defaultConfig.save()
         logger.debug(`config ${configFileName} saved`)
-        mainWindow.webContents.send(types.HAS_CONFIG, name, defaultConfig.get())
+        event.sender.send(types.HAS_CONFIG, name, defaultConfig.get())
         break;
       case 'games':
         //TODO: set games config
@@ -86,6 +86,19 @@ export default function (mainWindow: Electron.BrowserWindow) {
         logger.error(`invalid config name: ${name}`)
         break;
     }
+  })
+
+  ipcMain.on(types.REQUEST_NEW_GAME_PATH, (event: Electron.Event) => {
+    dialog.showOpenDialog({
+      properties: ['openFile'],
+      filters: [
+        {name: '可执行文件', extensions: ['exe']}
+      ]
+    }, (files) => {
+      if (files[0]) {
+        event.sender.send(types.HAS_NEW_GAME_PATH, files[0])
+      }
+    })
   })
 
   ipcMain.on(types.APP_EXIT, (event: Electron.Event) => {

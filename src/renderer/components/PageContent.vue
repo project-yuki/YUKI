@@ -1,5 +1,5 @@
 <template>
-<div class="app-content">
+<div class="app-content full-height">
   <slot></slot>
 </div>
 </template>

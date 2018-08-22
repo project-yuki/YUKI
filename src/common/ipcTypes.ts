@@ -13,5 +13,8 @@ export default {
   REQUEST_SAVE_CONFIG: 'request-save-config',
   HAS_SAVED_CONFIG: 'has-saved-config',
 
+  REQUEST_NEW_GAME_PATH: 'request-new-game-path',
+  HAS_NEW_GAME_PATH: 'has-new-game-path',
+
   APP_EXIT: 'app-exit'
 }

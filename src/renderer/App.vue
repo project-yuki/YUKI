@@ -1,7 +1,7 @@
 <template>
 <div id="app">
   <gt-app-sidebar></gt-app-sidebar>
-  <router-view style="margin-left: 240px;"></router-view>
+  <router-view class="full-height" style="margin-left: 240px;"></router-view>
 </div>
 </template>
 
@@ -54,5 +54,14 @@ body,
 
 .app-container {
   margin: 24px;
+}
+
+.full-height {
+  height: 100%;
+}
+
+.full {
+  width: 100%;
+  height: 100%;
 }
 </style>
