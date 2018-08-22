@@ -24,7 +24,6 @@ import { ipcRenderer } from 'electron'
 
 import GtHookInfo from '@/components/HookSettingsHookInfo.vue'
 import ipcTypes from '../../common/ipcTypes'
-import { TextThread } from '../../common/hooker';
 
 @Component({
   components: {

@@ -1,24 +1,6 @@
 import { ipcRenderer } from 'electron'
 import ipcTypes from '../../../common/ipcTypes'
 import Vue from 'vue'
-import { TextThread } from '../../../common/hooker'
-
-export interface Texts {
-  [num: number]: string[]
-}
-
-interface HooksState {
-  hookInfos: TextThread[]
-  texts: Texts
-  currentDisplayHookIndex: number
-}
-
-interface HooksMutations {
-  ADD_HOOK: (state: HooksState, payload: { hook: TextThread }) => void
-  REMOVE_HOOK: (state: HooksState, payload: { hook: TextThread }) => void
-  SET_HOOK_TEXT: (state: HooksState, payload: { hookNum: number, text: string }) => void
-  CHOOSE_HOOK_AS_DISPLAY: (state: HooksState, payload: { hookNum: number }) => void
-}
 
 const state: HooksState = {
   hookInfos: [],

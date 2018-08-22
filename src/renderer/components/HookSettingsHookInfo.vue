@@ -29,8 +29,6 @@ import { State, namespace } from 'vuex-class'
 
 import { ipcRenderer } from 'electron'
 import ipcTypes from '../../common/ipcTypes'
-import { TextThread } from '../../common/hooker'
-import { Texts } from '../store/modules/Hooks'
 
 @Component
 export default class HookSettingsHookInfo extends Vue {

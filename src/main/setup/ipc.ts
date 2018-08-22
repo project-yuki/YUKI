@@ -2,7 +2,7 @@ import { app, ipcMain } from 'electron'
 import types from '../../common/ipcTypes'
 import logger from '../../common/logger'
 import defaultConfig from '../config/default'
-import { hooker, TextThread, RemovedTextThread } from '../../common/hooker'
+import { hooker } from '../../common/hooker'
 
 let hookerStarted = false
 
