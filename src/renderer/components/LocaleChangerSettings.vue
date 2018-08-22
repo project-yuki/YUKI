@@ -20,47 +20,45 @@
 </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
+import { Component } from 'vue-property-decorator'
+import { State, namespace } from 'vuex-class'
+
 import { ipcRenderer } from 'electron'
 import ipcTypes from '../../common/ipcTypes'
 
-export default {
-  name: 'locale-changer-settings',
-  components: {
-  },
-  data() {
-    return {
-      selected: '',
-      localeEmulatorInput: '',
-      ntleasInput: ''
-    }
-  },
-  computed: {
-  },
-  methods: {
-    saveSettings() {
-      let savingConfig = JSON.parse(JSON.stringify(this.$store.state.Config.default))
-      savingConfig.localeChanger.localeEmulator.exec = this.localeEmulatorInput
-      savingConfig.localeChanger.ntleas.exec = this.ntleasInput
-      for (let key in this.$store.state.Config.default.localeChanger) {
-        if (key === this.selected) {
-          savingConfig.localeChanger[key].enabled = true
-        } else {
-          savingConfig.localeChanger[key].enabled = false
-        }
+@Component
+export default class localeChangerSettings extends Vue {
+  selected = ''
+  localeEmulatorInput = ''
+  ntleasInput = ''
+
+  @namespace('Config').State('default') defaultConfig
+
+  saveSettings() {
+    let savingConfig = JSON.parse(JSON.stringify(this.defaultConfig))
+    savingConfig.localeChanger.localeEmulator.exec = this.localeEmulatorInput
+    savingConfig.localeChanger.ntleas.exec = this.ntleasInput
+    for (let key in this.defaultConfig.localeChanger) {
+      if (key === this.selected) {
+        savingConfig.localeChanger[key].enabled = true
+      } else {
+        savingConfig.localeChanger[key].enabled = false
       }
-      ipcRenderer.send(ipcTypes.REQUEST_SAVE_CONFIG, 'default', savingConfig)
-    },
-    resetSettings() {
-      for (let key in this.$store.state.Config.default.localeChanger) {
-        if (this.$store.state.Config.default.localeChanger[key].enabled === true) {
-          this.selected = key
-        }
-      }
-      this.localeEmulatorInput = this.$store.state.Config.default.localeChanger.localeEmulator.exec
-      this.ntleasInput = this.$store.state.Config.default.localeChanger.ntleas.exec
     }
-  },
+    ipcRenderer.send(ipcTypes.REQUEST_SAVE_CONFIG, 'default', savingConfig)
+  }
+  resetSettings() {
+    for (let key in this.defaultConfig.localeChanger) {
+      if (this.defaultConfig.localeChanger[key].enabled === true) {
+        this.selected = key
+      }
+    }
+    this.localeEmulatorInput = this.defaultConfig.localeChanger.localeEmulator.exec
+    this.ntleasInput = this.defaultConfig.localeChanger.ntleas.exec
+  }
+
   mounted() {
     this.resetSettings()
   }

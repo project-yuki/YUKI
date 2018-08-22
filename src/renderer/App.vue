@@ -5,11 +5,11 @@
 </div>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from 'vue'
-import Component from 'vue-class-component'
+import { Component } from 'vue-property-decorator'
 
-import GtAppSidebar from '@/components/AppSidebar'
+import GtAppSidebar from '@/components/AppSidebar.vue'
 
 import { ipcRenderer } from 'electron'
 import ipcTypes from '../common/ipcTypes'

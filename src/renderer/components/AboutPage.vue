@@ -7,18 +7,26 @@
 </div>
 </template>
 
-<script>
-import GtPageHeader from '@/components/PageHeader'
-import GtPageContent from '@/components/PageContent'
-import GtHookSettings from '@/components/HookSettings'
+<script lang="ts">
+import Vue from 'vue'
+import { Component } from 'vue-property-decorator'
 
-export default {
+import GtPageHeader from '@/components/PageHeader.vue'
+import GtPageContent from '@/components/PageContent.vue'
+import GtHookSettings from '@/components/HookSettings.vue'
+
+@Component({
   components: {
     GtPageHeader,
     GtPageContent,
     GtHookSettings
   }
+})
+export default class FavoritePage extends Vue {
+
 }
+
+
 </script>
 
 <style>

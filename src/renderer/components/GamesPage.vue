@@ -4,13 +4,19 @@
 </div>
 </template>
 
-<script>
-import GtPageHeader from '@/components/PageHeader'
+<script lang="ts">
+import Vue from 'vue'
+import { Component } from 'vue-property-decorator'
 
-export default {
+import GtPageHeader from '@/components/PageHeader.vue'
+
+@Component({
   components: {
     GtPageHeader
   }
+})
+export default class GamesPage extends Vue {
+
 }
 </script>
 

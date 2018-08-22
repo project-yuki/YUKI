@@ -22,42 +22,44 @@
 </mu-scale-transition>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
+import { Component, Prop } from 'vue-property-decorator'
+import { State, namespace } from 'vuex-class'
+
 import { ipcRenderer } from 'electron'
 import ipcTypes from '../../common/ipcTypes'
+import { TextThread } from '../../common/hooker'
+import { Texts } from '../store/modules/Hooks'
 
-export default {
-  props: [
-    'hook',
-    'isChosen'
-  ],
-  data() {
-    return {
-      openConfirm: false
-    }
-  },
-  computed: {
-    zIndex() {
-      return this.isChosen ? 5 : 1
-    },
-    hookText() {
-      return this.$store.state.Hooks.texts[this.hook.num].join('\n')
-    }
-  },
-  methods: {
-    openConfirmDialog() {
-      this.openConfirm = true
-    },
-    closeConfirmDialog() {
-      this.openConfirm = false
-    },
-    removeHook() {
-      ipcRenderer.send(ipcTypes.REQUEST_REMOVE_HOOK, this.hook)
-      this.closeConfirmDialog()
-    },
-    chooseAsDisplay() {
-      this.$store.dispatch('chooseHookAsDisplay', this.hook.num)
-    }
+@Component
+export default class HookSettingsHookInfo extends Vue {
+  @Prop(Object) hook!: TextThread
+  @Prop(Boolean) isChosen!: boolean
+
+  @namespace('Hooks').State('texts') texts!: Texts
+
+  openConfirm = false
+
+  get zIndex() {
+    return this.isChosen ? 5 : 1
+  }
+  get hookText() {
+    return this.texts[this.hook.num].join('\n')
+  }
+
+  openConfirmDialog() {
+    this.openConfirm = true
+  }
+  closeConfirmDialog() {
+    this.openConfirm = false
+  }
+  removeHook() {
+    ipcRenderer.send(ipcTypes.REQUEST_REMOVE_HOOK, this.hook)
+    this.closeConfirmDialog()
+  }
+  chooseAsDisplay() {
+    this.$store.dispatch('Hooks/chooseHookAsDisplay', this.hook.num)
   }
 }
 </script>

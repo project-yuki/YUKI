@@ -1,22 +1,13 @@
 {
   "compilerOptions": {
-    // 是否包含可以用于 debug 的 sourceMap
     "sourceMap": true,
-    // 以严格模式解析
-    "strict": false,
-    // 编译输出目标 ES 版本
+    "strict": true,
     "target": "es5",
-    // 启用装饰器
     "experimentalDecorators": true,
-    // 启用设计类型元数据（用于反射）
     "emitDecoratorMetadata": true,
-    // 在表达式和声明上有隐含的any类型时报错
     "noImplicitAny": false,
-    // 不是函数的所有返回路径都有返回值时报错。
     "noImplicitReturns": true,
-    // 编译过程中打印文件名
-    "listFiles": true,
-    // 移除注释
+    "noImplicitThis": true,
     "removeComments": true,
     "suppressImplicitAnyIndexErrors": true,
   },

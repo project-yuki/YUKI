@@ -1,11 +1,20 @@
 import logger from '../../../common/logger'
 
+interface ConfigState {
+  default: Object
+  games: Object
+}
+
+interface ConfigMutations {
+  SET_CONFIG: (state: ConfigState, payload: { name: string, cfgs: Object }) => void
+}
+
 const state = {
   default: {},
   games: {}
 }
 
-const mutations = {
+const mutations: ConfigMutations = {
   SET_CONFIG (state, payload) {
     switch (payload.name) {
       case 'default':

@@ -31,14 +31,14 @@ import { ipcRenderer } from 'electron'
 import types from '../common/ipcTypes'
 
 ipcRenderer.on(types.HAS_INSERTED_HOOK, (event, hook) => {
-  store.dispatch('addHook', hook)
+  store.dispatch('Hooks/addHook', hook)
 })
 ipcRenderer.on(types.HAS_REMOVED_HOOK, (event, hook) => {
-  store.dispatch('removeHook', hook)
+  store.dispatch('Hooks/removeHook', hook)
 })
 ipcRenderer.on(types.HAS_HOOK_TEXT, (event, hook, text) => {
-  store.dispatch('setHookText', { hook, text })
+  store.dispatch('Hooks/setHookText', { hook, text })
 })
 ipcRenderer.on(types.HAS_CONFIG, (event, name, cfgs) => {
-  store.dispatch('setConfig', { name, cfgs })
+  store.dispatch('Config/setConfig', { name, cfgs })
 })

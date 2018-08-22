@@ -15,55 +15,53 @@
 </div>
 </template>
 
-<script>
-import {
-  ipcRenderer
-} from 'electron'
+<script lang="ts">
+import Vue from 'vue'
+import { Component } from 'vue-property-decorator'
+import { State, namespace } from 'vuex-class'
 
-import GtHookInfo from '@/components/HookSettingsHookInfo'
+import { ipcRenderer } from 'electron'
+
+import GtHookInfo from '@/components/HookSettingsHookInfo.vue'
 import ipcTypes from '../../common/ipcTypes'
+import { TextThread } from '../../common/hooker';
 
-export default {
-  name: 'hook-settings',
+@Component({
   components: {
     GtHookInfo
-  },
-  data() {
-    return {
-      openInputHook: false,
-      errorText: '',
-      hookCode: ''
+  }
+})
+export default class HookSettings extends Vue {
+  openInputHook = false
+  errorText = ''
+  hookCode = ''
+
+  @namespace('Hooks').State('hookInfos') hooks!: TextThread[]
+  @namespace('Hooks').State('currentDisplayHookIndex') currentIndex!: number
+
+  openInputHookDialog() {
+    this.openInputHook = true;
+  }
+  closeInputHookDialog() {
+    this.openInputHook = false;
+    this.hookCode = ''
+    this.errorText = ''
+  }
+  addHook() {
+    if (new RegExp(/\/H\w+/).test(this.hookCode)) {
+      ipcRenderer.send(ipcTypes.REQUEST_INSERT_HOOK, this.hookCode)
+      this.closeInputHookDialog()
+    } else {
+      this.errorText = '特殊码格式不正确'
     }
-  },
-  computed: {
-    hooks() {
-      return this.$store.state.Hooks.hookInfos
-    }
-  },
-  methods: {
-    openInputHookDialog() {
-      this.openInputHook = true;
-    },
-    closeInputHookDialog() {
-      this.openInputHook = false;
-      this.hookCode = ''
-      this.errorText = ''
-    },
-    addHook() {
-      if (new RegExp(/\/H\w+/).test(this.hookCode)) {
-        ipcRenderer.send(ipcTypes.REQUEST_INSERT_HOOK, this.hookCode)
-        this.closeInputHookDialog()
-      } else {
-        this.errorText = '特殊码格式不正确'
-      }
-    },
-    isChosen(num) {
-      return this.$store.state.Hooks.currentDisplayHookIndex === num
-    }
-  },
+  }
+  isChosen(num: number) {
+    return this.currentIndex === num
+  }
+
   mounted() {
     ipcRenderer.send(ipcTypes.MAIN_PAGE_LOAD_FINISHED)
-  },
+  }
 }
 </script>
 

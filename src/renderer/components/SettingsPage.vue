@@ -7,17 +7,22 @@
 </div>
 </template>
 
-<script>
-import GtPageHeader from '@/components/PageHeader'
-import GtPageContent from '@/components/PageContent'
-import GtLocaleChangerSettings from '@/components/LocaleChangerSettings'
+<script lang="ts">
+import Vue from 'vue'
+import { Component } from 'vue-property-decorator'
 
-export default {
+import GtPageHeader from '@/components/PageHeader.vue'
+import GtPageContent from '@/components/PageContent.vue'
+import GtLocaleChangerSettings from '@/components/LocaleChangerSettings.vue'
+
+@Component({
   components: {
     GtPageHeader,
     GtPageContent,
     GtLocaleChangerSettings
   }
+})
+export default class PageContent extends Vue {
 }
 </script>
 

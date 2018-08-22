@@ -5,8 +5,11 @@
 </template>
 
 <script>
-export default {
-  props: ['title']
+import Vue from 'vue'
+import { Component, Prop } from 'vue-property-decorator'
+
+@Component
+export default class PageContent extends Vue {
 }
 </script>
 

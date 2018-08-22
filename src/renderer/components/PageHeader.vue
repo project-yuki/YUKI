@@ -7,16 +7,19 @@
 </mu-appbar>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
+import { Component, Prop } from 'vue-property-decorator'
+
 import { ipcRenderer } from 'electron'
 import ipcTypes from '../../common/ipcTypes'
 
-export default {
-  props: ['title'],
-  methods: {
-    closeWindow() {
-      ipcRenderer.send(ipcTypes.APP_EXIT)
-    }
+@Component
+export default class PageContent extends Vue {
+  @Prop(String) title!: string
+
+  closeWindow() {
+    ipcRenderer.send(ipcTypes.APP_EXIT)
   }
 }
 </script>
