@@ -1,12 +1,13 @@
 import logger from '../../../common/logger'
+import { Commit } from 'vuex'
 
-const state = {
+const state: ConfigState = {
   default: {},
   games: {}
 }
 
-const mutations: ConfigMutations = {
-  SET_CONFIG (state, payload) {
+const mutations = {
+  SET_CONFIG (state: ConfigState, payload: { name: string, cfgs: Object }) {
     switch (payload.name) {
       case 'default':
         state.default = {...state.default, ...payload.cfgs}
@@ -22,7 +23,7 @@ const mutations: ConfigMutations = {
 }
 
 const actions = {
-  setConfig ({ commit }, { name, cfgs }) {
+  setConfig ({ commit }: { commit: Commit }, { name, cfgs }: { name: string, cfgs: object }) {
     commit('SET_CONFIG', { name, cfgs })
   }
 }

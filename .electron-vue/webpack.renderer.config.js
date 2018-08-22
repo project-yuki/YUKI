@@ -36,10 +36,15 @@ let rendererConfig = {
       },
       {
         test: /\.tsx?$/,
-        use: {
-          loader: 'ts-loader',
-          options: { appendTsSuffixTo: [/\.vue$/] }  
-        },
+        loaders: [
+          { 
+            loader: 'babel-loader' 
+          }, 
+          { 
+            loader: 'ts-loader',
+            options: { appendTsSuffixTo: [/\.vue$/] }
+          }
+        ],
         exclude: /node_modules|\.d\.ts$/
       },
       {

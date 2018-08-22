@@ -29,15 +29,15 @@ new Vue({
 import { ipcRenderer } from 'electron'
 import types from '../common/ipcTypes'
 
-ipcRenderer.on(types.HAS_INSERTED_HOOK, (event, hook) => {
+ipcRenderer.on(types.HAS_INSERTED_HOOK, (event: Electron.Event, hook: TextThread) => {
   store.dispatch('Hooks/addHook', hook)
 })
-ipcRenderer.on(types.HAS_REMOVED_HOOK, (event, hook) => {
+ipcRenderer.on(types.HAS_REMOVED_HOOK, (event: Electron.Event, hook: TextThread) => {
   store.dispatch('Hooks/removeHook', hook)
 })
-ipcRenderer.on(types.HAS_HOOK_TEXT, (event, hook, text) => {
+ipcRenderer.on(types.HAS_HOOK_TEXT, (event: Electron.Event, hook: TextThread, text: string) => {
   store.dispatch('Hooks/setHookText', { hook, text })
 })
-ipcRenderer.on(types.HAS_CONFIG, (event, name, cfgs) => {
+ipcRenderer.on(types.HAS_CONFIG, (event: Electron.Event, name: string, cfgs: object) => {
   store.dispatch('Config/setConfig', { name, cfgs })
 })

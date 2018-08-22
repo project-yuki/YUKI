@@ -2,10 +2,11 @@
   "compilerOptions": {
     "sourceMap": true,
     "strict": true,
-    "target": "es5",
+    "target": "es6",
+    "moduleResolution": "node",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "noImplicitAny": false,
+    "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "removeComments": true,

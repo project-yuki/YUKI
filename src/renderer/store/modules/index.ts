@@ -6,7 +6,7 @@
 const files = (<any>require).context('.', false, /\.ts$/)
 const modules = {}
 
-files.keys().forEach(key => {
+files.keys().forEach((key: string) => {
   if (key === './index.ts') return
   modules[key.replace(/(\.\/|\.ts)/g, '')] = files(key).default
   modules[key.replace(/(\.\/|\.ts)/g, '')].namespaced = true

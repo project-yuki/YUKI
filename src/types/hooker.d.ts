@@ -6,7 +6,7 @@ declare interface RemovedTextThread {
   spl: number
 }
 
-declare interface TextThread extends RemovedTextThread {
+declare interface TextThread extends RemovedTextThread, Object {
   name: string
   hcode: string
   str: string

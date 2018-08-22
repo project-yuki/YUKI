@@ -34,7 +34,7 @@ export default class localeChangerSettings extends Vue {
   localeEmulatorInput = ''
   ntleasInput = ''
 
-  @namespace('Config').State('default') defaultConfig
+  @namespace('Config').State('default') defaultConfig!: ConfigState['default']
 
   saveSettings() {
     let savingConfig = JSON.parse(JSON.stringify(this.defaultConfig))

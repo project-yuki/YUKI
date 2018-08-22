@@ -35,7 +35,8 @@ export default class HookSettingsHookInfo extends Vue {
   @Prop(Object) hook!: TextThread
   @Prop(Boolean) isChosen!: boolean
 
-  @namespace('Hooks').State('texts') texts!: Texts
+  // @namespace('Hooks').State('texts') texts!: HooksState['texts']
+  @namespace('Hooks').Getter(`getTextById`) getTextById!: (id: number) => string[]
 
   openConfirm = false
 
@@ -43,7 +44,7 @@ export default class HookSettingsHookInfo extends Vue {
     return this.isChosen ? 5 : 1
   }
   get hookText() {
-    return this.texts[this.hook.num].join('\n')
+    return this.getTextById(this.hook.num).join('\n')
   }
 
   openConfirmDialog() {
