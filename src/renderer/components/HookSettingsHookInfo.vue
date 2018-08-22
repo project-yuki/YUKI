@@ -36,7 +36,10 @@ export default class HookSettingsHookInfo extends Vue {
   @Prop(Boolean) isChosen!: boolean
 
   // @namespace('Hooks').State('texts') texts!: HooksState['texts']
-  @namespace('Hooks').Getter(`getTextById`) getTextById!: (id: number) => string[]
+  @namespace('Hooks').Getter('getTextById') 
+  getTextById!: (id: number) => string[]
+  @namespace('Hooks').Action('chooseHookAsDisplay') 
+  chooseHookAsDisplayAction!: (id: number) => void
 
   openConfirm = false
 
@@ -58,7 +61,7 @@ export default class HookSettingsHookInfo extends Vue {
     this.closeConfirmDialog()
   }
   chooseAsDisplay() {
-    this.$store.dispatch('Hooks/chooseHookAsDisplay', this.hook.num)
+    this.chooseHookAsDisplayAction(this.hook.num)
   }
 }
 </script>
