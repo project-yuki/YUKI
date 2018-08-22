@@ -2,24 +2,7 @@ import { app, ipcMain } from 'electron'
 import types from '../../common/ipcTypes'
 import logger from '../../common/logger'
 import defaultConfig from '../config/default'
-
-
-interface RemovedTextThread {
-  num: number
-  pid: number
-  hook: number
-  retn: number
-  spl: number
-}
-
-interface TextThread extends RemovedTextThread {
-  name: string
-  hcode: string
-  str: string
-}
-
-
-const hooker = require('../../../nexthooker')
+import { hooker, TextThread, RemovedTextThread } from '../../common/hooker'
 
 let hookerStarted = false
 
