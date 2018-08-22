@@ -51,4 +51,8 @@ body,
   width: 100%;
   margin: 0;
 }
+
+.app-container {
+  margin: 24px;
+}
 </style>

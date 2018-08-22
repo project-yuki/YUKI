@@ -1,5 +1,5 @@
 <template>
-<div class="one-col">
+<div class="app-container">
   <mu-button color="primary" @click="saveSettings">保存</mu-button>
   <mu-button color="warning" @click="resetSettings">重置</mu-button>
   <p class="text-h1">区域转换器设置</p>
@@ -66,9 +66,6 @@ export default class localeChangerSettings extends Vue {
 </script>
 
 <style scoped>
-.one-col {
-  margin: 24px;
-}
 
 .mu-button {
   margin: 8px;

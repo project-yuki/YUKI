@@ -1,5 +1,5 @@
 <template>
-<div class="one-col">
+<div class="app-container">
   <p class="text-h1">文本钩子设置</p>
   <mu-button type="primary" @click="openInputHookDialog">加载钩子</mu-button>
   <mu-dialog title="请输入特殊码" :open.sync="openInputHook">
@@ -66,10 +66,6 @@ export default class HookSettings extends Vue {
 </script>
 
 <style scoped>
-.one-col {
-  margin: 24px;
-}
-
 .margin-top {
   margin-top: 1em;
 }
