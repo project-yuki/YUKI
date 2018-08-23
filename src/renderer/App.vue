@@ -52,10 +52,6 @@ body,
   margin: 0;
 }
 
-.app-container {
-  margin: 24px;
-}
-
 .full-height {
   height: 100%;
 }

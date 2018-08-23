@@ -1,5 +1,5 @@
 <template>
-<div class="app-container">
+<div>
   <mu-button color="primary" @click="saveSettings">保存</mu-button>
   <mu-button color="warning" @click="resetSettings">重置</mu-button>
   <p class="text-h1">区域转换器设置</p>

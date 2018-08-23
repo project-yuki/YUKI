@@ -1,5 +1,5 @@
 <template>
-<div class="app-container">
+<div>
   <p class="text-h1">文本钩子设置</p>
   <mu-button type="primary" @click="openInputHookDialog">加载钩子</mu-button>
   <mu-dialog title="请输入特殊码" :open.sync="openInputHook">

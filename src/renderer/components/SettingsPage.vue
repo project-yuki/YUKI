@@ -2,13 +2,9 @@
 <div>
   <gt-page-header title="应用设置" />
   <gt-page-content>
-    <mu-row class="full-height">
-      <mu-col span="2"></mu-col>
-      <mu-col span="8" class="full-height">
-        <gt-locale-changer-settings />
-      </mu-col>
-      <mu-col span="2"></mu-col>
-    </mu-row>
+    <gt-one-column>
+      <gt-locale-changer-settings />
+    </gt-one-column>
   </gt-page-content>
 </div>
 </template>
@@ -22,12 +18,14 @@ import {
 import GtPageHeader from '@/components/PageHeader.vue'
 import GtPageContent from '@/components/PageContent.vue'
 import GtLocaleChangerSettings from '@/components/LocaleChangerSettings.vue'
+import GtOneColumn from '@/components/OneColumn.vue'
 
 @Component({
   components: {
     GtPageHeader,
     GtPageContent,
-    GtLocaleChangerSettings
+    GtLocaleChangerSettings,
+    GtOneColumn
   }
 })
 export default class PageContent extends Vue {}

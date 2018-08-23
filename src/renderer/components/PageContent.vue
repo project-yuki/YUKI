@@ -1,5 +1,5 @@
 <template>
-<div class="app-content full-height">
+<div class="app-content">
   <slot></slot>
 </div>
 </template>
@@ -15,6 +15,11 @@ export default class PageContent extends Vue {
 
 <style scoped>
 .app-content {
-  padding-top: 64px;
+  position: absolute;
+  top: 88px;
+  bottom: 24px;
+  left: 264px;
+  right: 24px;
+  /* padding: 88px 24px 24px 24px; */
 }
 </style>

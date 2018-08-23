@@ -2,7 +2,7 @@
 <div>
   <gt-page-header title="关于Yagt" />
   <gt-page-content>
-    <mu-button class="app-container" color="primary" @click="toggleDevTools">切换开发人员工具</mu-button>
+    <mu-button color="primary" @click="toggleDevTools">切换开发人员工具</mu-button>
     <gt-hook-settings />
   </gt-page-content>
 </div>
