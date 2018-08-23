@@ -15,7 +15,7 @@ export default class Config {
   load() {
     try {
       this._config = yaml.safeLoad(fs.readFileSync(this._filename, "utf8"));
-      logger.debug(`config loaded: `);
+      logger.debug(`config ${this._filename} loaded: `);
       logger.debug(this._config);
     } catch (e) {
       let err = new Error(`config file ${this._filename} load failed`);

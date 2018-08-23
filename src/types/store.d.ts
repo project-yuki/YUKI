@@ -1,12 +1,19 @@
-declare interface HooksState {
-  hookInfos: TextThread[];
-  texts: {
-    [num: number]: string[];
-  };
-  currentDisplayHookIndex: number;
-}
+declare namespace Yagt {
+  export interface HooksState {
+    hookInfos: TextThread[];
+    texts: {
+      [num: number]: string[];
+    };
+    currentDisplayHookIndex: number;
+  }
 
-declare interface ConfigState {
-  default: any;
-  games: any;
+  export interface Game {
+    name: string;
+    path: string;
+    code: string;
+  }
+  export interface ConfigState {
+    default: any;
+    games: Game[];
+  }
 }

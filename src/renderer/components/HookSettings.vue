@@ -35,7 +35,7 @@ export default class HookSettings extends Vue {
   errorText = "";
   hookCode = "";
 
-  @namespace("Hooks").State("hookInfos") hooks!: TextThread[];
+  @namespace("Hooks").State("hookInfos") hooks!: Yagt.TextThread[];
   @namespace("Hooks").State("currentDisplayHookIndex") currentIndex!: number;
 
   openInputHookDialog() {
@@ -58,9 +58,7 @@ export default class HookSettings extends Vue {
     return this.currentIndex === num;
   }
 
-  mounted() {
-    ipcRenderer.send(ipcTypes.MAIN_PAGE_LOAD_FINISHED);
-  }
+  mounted() {}
 }
 </script>
 

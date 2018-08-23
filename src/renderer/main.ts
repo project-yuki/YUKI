@@ -30,19 +30,19 @@ import types from "../common/ipcTypes";
 
 ipcRenderer.on(
   types.HAS_INSERTED_HOOK,
-  (event: Electron.Event, hook: TextThread) => {
+  (event: Electron.Event, hook: Yagt.TextThread) => {
     store.dispatch("Hooks/addHook", hook);
   }
 );
 ipcRenderer.on(
   types.HAS_REMOVED_HOOK,
-  (event: Electron.Event, hook: TextThread) => {
+  (event: Electron.Event, hook: Yagt.TextThread) => {
     store.dispatch("Hooks/removeHook", hook);
   }
 );
 ipcRenderer.on(
   types.HAS_HOOK_TEXT,
-  (event: Electron.Event, hook: TextThread, text: string) => {
+  (event: Electron.Event, hook: Yagt.TextThread, text: string) => {
     store.dispatch("Hooks/setHookText", { hook, text });
   }
 );
