@@ -1,4 +1,4 @@
-let winston = require("winston");
+import * as winston from "winston";
 
 let logger = winston.createLogger({
   format: winston.format.combine(
@@ -12,14 +12,12 @@ let logger = winston.createLogger({
     new winston.transports.File({
       level: "error",
       filename: "logs/error.log",
-      handleExceptions: true,
-      colorize: false
+      handleExceptions: true
     }),
     new winston.transports.File({
       level: "info",
       filename: "logs/info.log",
-      handleExceptions: true,
-      colorize: false
+      handleExceptions: true
     }),
     new winston.transports.Console({
       level: "debug",

@@ -1,30 +1,29 @@
 localeChanger:
   localeEmulator:
     enabled: true
-    exec: 'D:\LocaleEmulator\LEProc.exe %GAME_EXEC%'
+    exec: 'D:\LocaleEmulator\LEProc.exe %GAME_PATH%'
   ntleas:
     enabled: false
-    exec: 'D:\ntleas046_x64\x86\ntleas.exe %GAME_EXEC%'
+    exec: 'D:\ntleas046_x64\x86\ntleas.exe %GAME_PATH%'
 onlineApis:
   - enabled: false
     method: POST
     name: baidu
     needSession: false
     requestBodyFormat: 'X^{"query": %TEXT%, "from": "jp", "to": "zh"}'
-    responseBodyPattern: 'O^%RESPONSE%.data[0].dst'
-    url: 'http://fanyi.baidu.com/transapi'
+    responseBodyPattern: "O^%RESPONSE%.data[0].dst"
+    url: "http://fanyi.baidu.com/transapi"
   - enabled: false
     method: POST
     name: googleCN
     needSession: false
     requestBodyFormat: 'X^{"q": %TEXT%, "sl": "ja", "hl": "zh-CN"}'
     responseBodyPattern: R^/class="t0">(.*)</
-    url: 'https://translate.google.cn/m'
+    url: "https://translate.google.cn/m"
   - enabled: false
     external: true
     jsFile: config\youdaoApi.js
     name: youdao
-pid: 19992
 translators:
   jBeijing:
     enabled: false

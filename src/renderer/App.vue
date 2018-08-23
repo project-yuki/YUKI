@@ -22,6 +22,8 @@ import ipcTypes from "../common/ipcTypes";
 export default class App extends Vue {
   mounted() {
     ipcRenderer.send(ipcTypes.REQUEST_CONFIG, "default");
+    ipcRenderer.send(ipcTypes.REQUEST_CONFIG, "games");
+    ipcRenderer.send(ipcTypes.MAIN_PAGE_LOAD_FINISHED);
   }
 }
 </script>
