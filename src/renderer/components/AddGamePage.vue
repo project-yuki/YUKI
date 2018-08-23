@@ -49,18 +49,14 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import {
-  ipcRenderer
-} from 'electron'
-import ipcTypes from '../../common/ipcTypes'
-import {
-  Component
-} from 'vue-property-decorator'
+import Vue from "vue";
+import { ipcRenderer } from "electron";
+import ipcTypes from "../../common/ipcTypes";
+import { Component } from "vue-property-decorator";
 
-import GtPageHeader from '@/components/PageHeader.vue'
-import GtPageContent from '@/components/PageContent.vue'
-import GtOneColumn from '@/components/OneColumn.vue'
+import GtPageHeader from "@/components/PageHeader.vue";
+import GtPageContent from "@/components/PageContent.vue";
+import GtOneColumn from "@/components/OneColumn.vue";
 
 @Component({
   components: {
@@ -70,49 +66,52 @@ import GtOneColumn from '@/components/OneColumn.vue'
   }
 })
 export default class FavoritePage extends Vue {
-  activeStep: number = -1
-  gameName: string = ''
-  gamePath: string = ''
-  gameCode: string = ''
+  activeStep: number = -1;
+  gameName: string = "";
+  gamePath: string = "";
+  gameCode: string = "";
 
   get showStepOne() {
-    return this.activeStep === 0
+    return this.activeStep === 0;
   }
   get showStepTwo() {
-    return this.activeStep === 1
+    return this.activeStep === 1;
   }
   get finished() {
     return this.activeStep > 1;
   }
 
+  handleFinish() {}
   handleNext() {
-    this.activeStep++
-      if (this.finished) {
-
-      }
+    this.activeStep++;
+    if (this.finished) {
+      this.handleFinish();
+    }
   }
   handlePrev() {
-    this.activeStep--
+    this.activeStep--;
   }
   handleRequestGamePath() {
-    ipcRenderer.once(ipcTypes.HAS_NEW_GAME_PATH, (event: Electron.Event, gamePath: string) => {
-      this.gamePath = gamePath
-      if (this.gameName === '') {
-        this.gameName = gamePath.substring(
-          gamePath.lastIndexOf('\\') + 1,
-          gamePath.lastIndexOf('.exe')
-        )
+    ipcRenderer.once(
+      ipcTypes.HAS_NEW_GAME_PATH,
+      (event: Electron.Event, gamePath: string) => {
+        this.gamePath = gamePath;
+        if (this.gameName === "") {
+          this.gameName = gamePath.substring(
+            gamePath.lastIndexOf("\\") + 1,
+            gamePath.lastIndexOf(".exe")
+          );
+        }
       }
-    })
-    ipcRenderer.send(ipcTypes.REQUEST_NEW_GAME_PATH)
+    );
+    ipcRenderer.send(ipcTypes.REQUEST_NEW_GAME_PATH);
   }
 
   mounted() {
-    this.activeStep = 0
+    this.activeStep = 0;
   }
 }
 </script>
 
 <style scoped>
-
 </style>

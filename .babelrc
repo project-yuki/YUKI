@@ -3,36 +3,48 @@
   "env": {
     "test": {
       "presets": [
-        ["env", {
-          "targets": { "node": 7 }
-        }],
+        [
+          "env",
+          {
+            "targets": { "node": 7 }
+          }
+        ],
         "stage-0"
       ],
       "plugins": ["istanbul"]
     },
     "main": {
       "presets": [
-        ["env", {
-          "targets": { "node": 7 }
-        }],
+        [
+          "env",
+          {
+            "targets": { "node": 7 }
+          }
+        ],
         "stage-0"
       ],
       "plugins": ["transform-decorators-legacy"]
     },
     "renderer": {
       "presets": [
-        ["env", {
-          "modules": false
-        }],
+        [
+          "env",
+          {
+            "modules": false
+          }
+        ],
         "stage-0"
       ],
       "plugins": ["transform-decorators-legacy"]
     },
     "web": {
       "presets": [
-        ["env", {
-          "modules": false
-        }],
+        [
+          "env",
+          {
+            "modules": false
+          }
+        ],
         "stage-0"
       ],
       "plugins": ["transform-decorators-legacy"]

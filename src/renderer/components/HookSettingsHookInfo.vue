@@ -23,45 +23,45 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { Component, Prop } from 'vue-property-decorator'
-import { State, namespace } from 'vuex-class'
+import Vue from "vue";
+import { Component, Prop } from "vue-property-decorator";
+import { State, namespace } from "vuex-class";
 
-import { ipcRenderer } from 'electron'
-import ipcTypes from '../../common/ipcTypes'
+import { ipcRenderer } from "electron";
+import ipcTypes from "../../common/ipcTypes";
 
 @Component
 export default class HookSettingsHookInfo extends Vue {
-  @Prop(Object) hook!: TextThread
-  @Prop(Boolean) isChosen!: boolean
+  @Prop(Object) hook!: TextThread;
+  @Prop(Boolean) isChosen!: boolean;
 
   // @namespace('Hooks').State('texts') texts!: HooksState['texts']
-  @namespace('Hooks').Getter('getTextById') 
-  getTextById!: (id: number) => string[]
-  @namespace('Hooks').Action('chooseHookAsDisplay') 
-  chooseHookAsDisplayAction!: (id: number) => void
+  @namespace("Hooks").Getter("getTextById")
+  getTextById!: (id: number) => string[];
+  @namespace("Hooks").Action("chooseHookAsDisplay")
+  chooseHookAsDisplayAction!: (id: number) => void;
 
-  openConfirm = false
+  openConfirm = false;
 
   get zIndex() {
-    return this.isChosen ? 5 : 1
+    return this.isChosen ? 5 : 1;
   }
   get hookText() {
-    return this.getTextById(this.hook.num).join('\n')
+    return this.getTextById(this.hook.num).join("\n");
   }
 
   openConfirmDialog() {
-    this.openConfirm = true
+    this.openConfirm = true;
   }
   closeConfirmDialog() {
-    this.openConfirm = false
+    this.openConfirm = false;
   }
   removeHook() {
-    ipcRenderer.send(ipcTypes.REQUEST_REMOVE_HOOK, this.hook)
-    this.closeConfirmDialog()
+    ipcRenderer.send(ipcTypes.REQUEST_REMOVE_HOOK, this.hook);
+    this.closeConfirmDialog();
   }
   chooseAsDisplay() {
-    this.chooseHookAsDisplayAction(this.hook.num)
+    this.chooseHookAsDisplayAction(this.hook.num);
   }
 }
 </script>

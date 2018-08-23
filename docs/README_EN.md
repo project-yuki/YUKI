@@ -24,12 +24,12 @@ So, using Electron as frontend and traditional Windows API (Text Hooker wrapped 
 
 ## Features
 
-* Real-time text extractor from running Galgame
-* Get translation from dictionary: JBeijing, etc.
-* Get translation from online translator API: Google, Baidu, Youdao, etc.
-* Show on floating window on top of game window
-* Custom online API settings: URL, request format, response regex parser
-* Support extension
+- Real-time text extractor from running Galgame
+- Get translation from dictionary: JBeijing, etc.
+- Get translation from online translator API: Google, Baidu, Youdao, etc.
+- Show on floating window on top of game window
+- Custom online API settings: URL, request format, response regex parser
+- Support extension
 
 ## TODO
 

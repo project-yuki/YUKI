@@ -21,52 +21,51 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { Component } from 'vue-property-decorator'
-import { State, namespace } from 'vuex-class'
+import Vue from "vue";
+import { Component } from "vue-property-decorator";
+import { State, namespace } from "vuex-class";
 
-import { ipcRenderer } from 'electron'
-import ipcTypes from '../../common/ipcTypes'
+import { ipcRenderer } from "electron";
+import ipcTypes from "../../common/ipcTypes";
 
 @Component
 export default class localeChangerSettings extends Vue {
-  selected = ''
-  localeEmulatorInput = ''
-  ntleasInput = ''
+  selected = "";
+  localeEmulatorInput = "";
+  ntleasInput = "";
 
-  @namespace('Config').State('default') defaultConfig!: ConfigState['default']
+  @namespace("Config").State("default") defaultConfig!: ConfigState["default"];
 
   saveSettings() {
-    let savingConfig = JSON.parse(JSON.stringify(this.defaultConfig))
-    savingConfig.localeChanger.localeEmulator.exec = this.localeEmulatorInput
-    savingConfig.localeChanger.ntleas.exec = this.ntleasInput
+    let savingConfig = JSON.parse(JSON.stringify(this.defaultConfig));
+    savingConfig.localeChanger.localeEmulator.exec = this.localeEmulatorInput;
+    savingConfig.localeChanger.ntleas.exec = this.ntleasInput;
     for (let key in this.defaultConfig.localeChanger) {
       if (key === this.selected) {
-        savingConfig.localeChanger[key].enabled = true
+        savingConfig.localeChanger[key].enabled = true;
       } else {
-        savingConfig.localeChanger[key].enabled = false
+        savingConfig.localeChanger[key].enabled = false;
       }
     }
-    ipcRenderer.send(ipcTypes.REQUEST_SAVE_CONFIG, 'default', savingConfig)
+    ipcRenderer.send(ipcTypes.REQUEST_SAVE_CONFIG, "default", savingConfig);
   }
   resetSettings() {
     for (let key in this.defaultConfig.localeChanger) {
       if (this.defaultConfig.localeChanger[key].enabled === true) {
-        this.selected = key
+        this.selected = key;
       }
     }
-    this.localeEmulatorInput = this.defaultConfig.localeChanger.localeEmulator.exec
-    this.ntleasInput = this.defaultConfig.localeChanger.ntleas.exec
+    this.localeEmulatorInput = this.defaultConfig.localeChanger.localeEmulator.exec;
+    this.ntleasInput = this.defaultConfig.localeChanger.ntleas.exec;
   }
 
   mounted() {
-    this.resetSettings()
+    this.resetSettings();
   }
 }
 </script>
 
 <style scoped>
-
 .mu-button {
   margin: 8px;
 }

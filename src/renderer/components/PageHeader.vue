@@ -8,18 +8,18 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { Component, Prop } from 'vue-property-decorator'
+import Vue from "vue";
+import { Component, Prop } from "vue-property-decorator";
 
-import { ipcRenderer } from 'electron'
-import ipcTypes from '../../common/ipcTypes'
+import { ipcRenderer } from "electron";
+import ipcTypes from "../../common/ipcTypes";
 
 @Component
 export default class PageContent extends Vue {
-  @Prop(String) title!: string
+  @Prop(String) title!: string;
 
   closeWindow() {
-    ipcRenderer.send(ipcTypes.APP_EXIT)
+    ipcRenderer.send(ipcTypes.APP_EXIT);
   }
 }
 </script>

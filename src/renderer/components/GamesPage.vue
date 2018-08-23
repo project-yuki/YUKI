@@ -5,21 +5,18 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { Component } from 'vue-property-decorator'
+import Vue from "vue";
+import { Component } from "vue-property-decorator";
 
-import GtPageHeader from '@/components/PageHeader.vue'
+import GtPageHeader from "@/components/PageHeader.vue";
 
 @Component({
   components: {
     GtPageHeader
   }
 })
-export default class GamesPage extends Vue {
-
-}
+export default class GamesPage extends Vue {}
 </script>
 
 <style>
-
 </style>

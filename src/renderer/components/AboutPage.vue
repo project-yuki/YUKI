@@ -9,13 +9,13 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { Component } from 'vue-property-decorator'
-import { remote } from 'electron'
+import Vue from "vue";
+import { Component } from "vue-property-decorator";
+import { remote } from "electron";
 
-import GtPageHeader from '@/components/PageHeader.vue'
-import GtPageContent from '@/components/PageContent.vue'
-import GtHookSettings from '@/components/HookSettings.vue'
+import GtPageHeader from "@/components/PageHeader.vue";
+import GtPageContent from "@/components/PageContent.vue";
+import GtHookSettings from "@/components/HookSettings.vue";
 
 @Component({
   components: {
@@ -26,13 +26,10 @@ import GtHookSettings from '@/components/HookSettings.vue'
 })
 export default class FavoritePage extends Vue {
   toggleDevTools() {
-    remote.getCurrentWebContents().toggleDevTools()
+    remote.getCurrentWebContents().toggleDevTools();
   }
 }
-
-
 </script>
 
 <style>
-
 </style>

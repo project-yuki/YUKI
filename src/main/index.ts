@@ -1,24 +1,24 @@
-'use strict'
+import { app, BrowserWindow } from "electron";
 
-import { app, BrowserWindow } from 'electron'
-
-import setupIpc from './setup/ipc'
-
+import setupIpc from "./setup/ipc";
 
 /**
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
  */
-if (process.env.NODE_ENV !== 'development') {
-  (<any>global).__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
+if (process.env.NODE_ENV !== "development") {
+  (<any>global).__static = require("path")
+    .join(__dirname, "/static")
+    .replace(/\\/g, "\\\\");
 }
 
-let mainWindow: Electron.BrowserWindow | null
-const winURL = process.env.NODE_ENV === 'development'
-  ? `http://localhost:9080`
-  : `file://${__dirname}/index.html`
+let mainWindow: Electron.BrowserWindow | null;
+const winURL =
+  process.env.NODE_ENV === "development"
+    ? `http://localhost:9080`
+    : `file://${__dirname}/index.html`;
 
-function createWindow () {
+function createWindow() {
   /**
    * Initial window options
    */
@@ -28,37 +28,37 @@ function createWindow () {
     width: 1280,
     webPreferences: {
       defaultFontFamily: {
-        standard: 'Microsoft Yahei UI',
-        serif: 'Microsoft Yahei UI',
-        sansSerif: 'Microsoft Yahei UI'
+        standard: "Microsoft Yahei UI",
+        serif: "Microsoft Yahei UI",
+        sansSerif: "Microsoft Yahei UI"
       }
     },
-    icon: './build/icons/icon.png',
+    icon: "./build/icons/icon.png",
     frame: false
-  })
+  });
 
-  mainWindow.loadURL(winURL)
+  mainWindow.loadURL(winURL);
 
-  mainWindow.on('closed', () => {
-    mainWindow = null
-  })
+  mainWindow.on("closed", () => {
+    mainWindow = null;
+  });
 
-  setupIpc(mainWindow)
+  setupIpc(mainWindow);
 }
 
-app.on('ready', createWindow)
+app.on("ready", createWindow);
 
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit()
+app.on("window-all-closed", () => {
+  if (process.platform !== "darwin") {
+    app.quit();
   }
-})
+});
 
-app.on('activate', () => {
+app.on("activate", () => {
   if (mainWindow === null) {
-    createWindow()
+    createWindow();
   }
-})
+});
 
 /**
  * Auto Updater

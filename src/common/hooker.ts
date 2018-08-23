@@ -1,1 +1,1 @@
-export const hooker = require('../../nexthooker')
+export const hooker = require("../../nexthooker");

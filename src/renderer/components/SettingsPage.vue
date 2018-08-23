@@ -10,15 +10,13 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import {
-  Component
-} from 'vue-property-decorator'
+import Vue from "vue";
+import { Component } from "vue-property-decorator";
 
-import GtPageHeader from '@/components/PageHeader.vue'
-import GtPageContent from '@/components/PageContent.vue'
-import GtLocaleChangerSettings from '@/components/LocaleChangerSettings.vue'
-import GtOneColumn from '@/components/OneColumn.vue'
+import GtPageHeader from "@/components/PageHeader.vue";
+import GtPageContent from "@/components/PageContent.vue";
+import GtLocaleChangerSettings from "@/components/LocaleChangerSettings.vue";
+import GtOneColumn from "@/components/OneColumn.vue";
 
 @Component({
   components: {
@@ -32,5 +30,4 @@ export default class PageContent extends Vue {}
 </script>
 
 <style>
-
 </style>

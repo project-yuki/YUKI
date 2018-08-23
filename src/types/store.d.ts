@@ -1,12 +1,12 @@
 declare interface HooksState {
-  hookInfos: TextThread[]
+  hookInfos: TextThread[];
   texts: {
-    [num: number]: string[]
-  }
-  currentDisplayHookIndex: number
+    [num: number]: string[];
+  };
+  currentDisplayHookIndex: number;
 }
 
 declare interface ConfigState {
-  default: any
-  games: any
+  default: any;
+  games: any;
 }

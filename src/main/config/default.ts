@@ -1,5 +1,5 @@
-import Config from '../../common/config'
+import Config from "../../common/config";
 
-let defaultConfig = new Config('config/config.yml')
+let defaultConfig = new Config("config/config.yml");
 
-export default defaultConfig
+export default defaultConfig;
