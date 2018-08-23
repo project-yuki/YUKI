@@ -5,11 +5,14 @@ import logger from "../../common/logger";
 import defaultConfig from "../config/default";
 import gamesConfig from "../config/games";
 import { hooker } from "../../common/hooker";
+import { registerProcessExitCallback } from "../../common/win32";
 const tasklist = require("tasklist");
+import * as iconv from "iconv-lite";
+import * as child_process from "child_process";
 
 let hookerStarted = false;
 
-let runningGame: any = {};
+let runningGamePid = -1;
 
 export default function(mainWindow: Electron.BrowserWindow) {
   ipcMain.on(types.MAIN_PAGE_LOAD_FINISHED, () => {
@@ -59,45 +62,47 @@ export default function(mainWindow: Electron.BrowserWindow) {
       logger.debug(`exec string: ${execString}`);
 
       exec(execString);
+      let gameExeName = game.path.substring(game.path.lastIndexOf("\\") + 1);
+      logger.debug(`finding ${gameExeName}...`);
       let tryGetProcess = setInterval(() => {
-        tasklist().then((tasks: any) => {
-          let gameProcess = tasks.find(
-            (task: any) =>
-              task.imageName ===
-              game.path.substring(game.path.lastIndexOf("\\") + 1)
-          );
-          if (gameProcess !== undefined) {
-            clearInterval(tryGetProcess);
-            //get process, inject it!
-            runningGame = gameProcess;
-            logger.debug(`get running game: ${JSON.stringify(runningGame)}`);
-            logger.debug(`injecting process ${runningGame.pid}...`);
-            hooker.injectProcess(runningGame.pid);
-            logger.debug(`process ${runningGame.pid} injected`);
+        child_process.exec(
+          `tasklist /nh /fo csv /fi "imagename eq ${gameExeName}"`,
+          (err, stdout, stderr) => {
+            if (stdout.startsWith('"')) {
+              clearInterval(tryGetProcess);
+              //get process, inject it!
+              runningGamePid = parseInt(stdout.replace(/"/g, "").split(",")[1]);
+              logger.debug(`injecting process ${runningGamePid}...`);
+              hooker.injectProcess(runningGamePid);
+              logger.debug(`process ${runningGamePid} injected`);
 
-            if (game.code !== "") {
-              logger.debug(
-                `inserting hook ${game.code} to process ${runningGame.pid}...`
-              );
-              hooker.insertHook(runningGame.pid, game.code);
-              logger.debug(`hook ${game.code} inserted`);
+              if (game.code !== "") {
+                logger.debug(
+                  `inserting hook ${game.code} to process ${runningGamePid}...`
+                );
+                hooker.insertHook(runningGamePid, game.code);
+                logger.debug(`hook ${game.code} inserted`);
+              }
+
+              // registerProcessExitCallback(runningGamePid, () => {
+              //   logger.debug(`detaching process ${runningGamePid}...`);
+              //   hooker.detachProcess(runningGamePid);
+              //   logger.debug(`process ${runningGamePid} detached`);
+              //   logger.debug(`game [${runningGamePid}] exited`);
+              //   runningGamePid = -1;
+              // });
             }
           }
-        });
-        // logger.debug(`detaching process ${runningGame.pid}...`);
-        // hooker.detachProcess(runningGame.pid);
-        // logger.debug(`process ${runningGame.pid} detached`);
-        // logger.debug(`game [${runningGame.pid}] exited`);
-        // runningGame.pid = -1;
-      }, 500);
+        );
+      }, 1000);
     }
   );
 
   ipcMain.on(
     types.REQUEST_INSERT_HOOK,
     (event: Electron.Event, code: string) => {
-      logger.debug(`inserting hook ${code} to process ${runningGame.pid}...`);
-      hooker.insertHook(runningGame.pid, code);
+      logger.debug(`inserting hook ${code} to process ${runningGamePid}...`);
+      hooker.insertHook(runningGamePid, code);
       logger.debug(`hook ${code} inserted`);
     }
   );
@@ -106,9 +111,9 @@ export default function(mainWindow: Electron.BrowserWindow) {
     types.REQUEST_REMOVE_HOOK,
     (event: Electron.Event, thread: Yagt.TextThread) => {
       logger.debug(
-        `removing hook ${thread.hook} from process ${runningGame.pid}...`
+        `removing hook ${thread.hook} from process ${runningGamePid}...`
       );
-      hooker.removeHook(runningGame.pid, thread.hook);
+      hooker.removeHook(runningGamePid, thread.hook);
       logger.debug(`hook ${thread.hook} removed`);
     }
   );
