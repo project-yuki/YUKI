@@ -6,8 +6,6 @@ import defaultConfig from "../config/default";
 import gamesConfig from "../config/games";
 import { hooker } from "../../common/hooker";
 import { registerProcessExitCallback } from "../../common/win32";
-const tasklist = require("tasklist");
-import * as iconv from "iconv-lite";
 import * as child_process from "child_process";
 
 let hookerStarted = false;
@@ -72,6 +70,7 @@ export default function(mainWindow: Electron.BrowserWindow) {
               clearInterval(tryGetProcess);
               //get process, inject it!
               runningGamePid = parseInt(stdout.replace(/"/g, "").split(",")[1]);
+
               logger.debug(`injecting process ${runningGamePid}...`);
               hooker.injectProcess(runningGamePid);
               logger.debug(`process ${runningGamePid} injected`);
@@ -84,13 +83,13 @@ export default function(mainWindow: Electron.BrowserWindow) {
                 logger.debug(`hook ${game.code} inserted`);
               }
 
-              // registerProcessExitCallback(runningGamePid, () => {
-              //   logger.debug(`detaching process ${runningGamePid}...`);
-              //   hooker.detachProcess(runningGamePid);
-              //   logger.debug(`process ${runningGamePid} detached`);
-              //   logger.debug(`game [${runningGamePid}] exited`);
-              //   runningGamePid = -1;
-              // });
+              registerProcessExitCallback(runningGamePid, () => {
+                logger.debug(`detaching process ${runningGamePid}...`);
+                hooker.detachProcess(runningGamePid);
+                logger.debug(`process ${runningGamePid} detached`);
+                logger.debug(`game [${runningGamePid}] exited`);
+                runningGamePid = -1;
+              });
             }
           }
         );
