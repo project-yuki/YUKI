@@ -42,6 +42,8 @@ export default function(mainWindow: Electron.BrowserWindow) {
   ipcMain.on(
     types.REQUEST_RUN_GAME,
     (event: Electron.Event, game: Yagt.Game) => {
+      mainWindow.hide();
+
       let execString = "";
       const localeChangers = defaultConfig.get().localeChanger;
       for (let key in localeChangers) {
@@ -89,6 +91,8 @@ export default function(mainWindow: Electron.BrowserWindow) {
                 logger.debug(`process ${runningGamePid} detached`);
                 logger.debug(`game [${runningGamePid}] exited`);
                 runningGamePid = -1;
+
+                mainWindow.show();
               });
             }
           }
