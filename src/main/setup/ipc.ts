@@ -185,9 +185,6 @@ export default function(mainWindow: Electron.BrowserWindow) {
   });
 
   ipcMain.on(types.APP_EXIT, (event: Electron.Event) => {
-    logger.debug("saving configurtion to file...");
-    //TODO: save configuration to file
-    logger.info("app exited");
-    app.exit(0);
+    app.quit();
   });
 }

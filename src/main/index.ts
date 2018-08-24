@@ -1,6 +1,7 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, Tray, Menu } from "electron";
 
 import setupIpc from "./setup/ipc";
+import logger from "../common/logger";
 
 /**
  * Set `__static` path to static files in production
@@ -13,10 +14,22 @@ if (process.env.NODE_ENV !== "development") {
 }
 
 let mainWindow: Electron.BrowserWindow | null;
+let tray: Electron.Tray | null;
+
 const winURL =
   process.env.NODE_ENV === "development"
     ? `http://localhost:9080`
     : `file://${__dirname}/index.html`;
+
+const iconPath = "./build/icons/icon.png";
+
+function openWindow() {
+  if (!mainWindow) {
+    createWindow();
+  } else if (!mainWindow.isVisible()) {
+    mainWindow.show();
+  }
+}
 
 function createWindow() {
   /**
@@ -33,7 +46,7 @@ function createWindow() {
         sansSerif: "Microsoft Yahei UI"
       }
     },
-    icon: "./build/icons/icon.png",
+    icon: iconPath,
     frame: false
   });
 
@@ -43,19 +56,42 @@ function createWindow() {
     mainWindow = null;
   });
 
+  tray = new Tray(iconPath);
+  const contextMenu = Menu.buildFromTemplate([
+    {
+      label: "打开主界面",
+      type: "normal",
+      click: () => {
+        openWindow();
+      }
+    },
+    {
+      label: "退出",
+      type: "normal",
+      click: () => {
+        app.quit();
+      }
+    }
+  ]);
+  tray.setToolTip("Yagt");
+  tray.setContextMenu(contextMenu);
+  tray.on("click", () => {
+    openWindow();
+  });
+
   setupIpc(mainWindow);
 }
 
 app.on("ready", createWindow);
 
-app.on("window-all-closed", () => {
-  if (process.platform !== "darwin") {
-    app.quit();
-  }
+app.on("before-quit", () => {
+  logger.debug("saving configurtion to file...");
+  //TODO: save configuration to file
+  logger.info("app quited");
 });
 
 app.on("activate", () => {
-  if (mainWindow === null) {
+  if (!mainWindow) {
     createWindow();
   }
 });

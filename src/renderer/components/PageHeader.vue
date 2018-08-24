@@ -1,7 +1,11 @@
 <template>
 <mu-appbar class="app-header" color="primary">
   {{title}}
-  <mu-button icon color="secondary" slot="right" class="exit-button" @click="closeWindow">
+
+  <mu-button icon slot="right" class="manipulate-button" @click="minimizeWindow">
+    <mu-icon value="remove"></mu-icon>
+  </mu-button>
+  <mu-button icon slot="right" class="manipulate-button" @click="closeWindow">
     <mu-icon value="close"></mu-icon>
   </mu-button>
 </mu-appbar>
@@ -11,13 +15,16 @@
 import Vue from "vue";
 import { Component, Prop } from "vue-property-decorator";
 
-import { ipcRenderer } from "electron";
+import { ipcRenderer, remote } from "electron";
 import ipcTypes from "../../common/ipcTypes";
 
 @Component
 export default class PageContent extends Vue {
   @Prop(String) title!: string;
 
+  minimizeWindow() {
+    remote.getCurrentWindow().hide();
+  }
   closeWindow() {
     ipcRenderer.send(ipcTypes.APP_EXIT);
   }
@@ -33,7 +40,7 @@ export default class PageContent extends Vue {
   -webkit-app-region: drag;
 }
 
-.exit-button {
+.manipulate-button {
   -webkit-app-region: no-drag;
 }
 </style>
