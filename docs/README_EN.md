@@ -35,9 +35,10 @@ So, using Electron as frontend and traditional Windows API (Text Hooker wrapped 
 
 - [x] Technical feasibility assessment
 - [x] Wrapping text hooker as a native Node module
-- [ ] Text hooker module Refactor
-- [ ] Basic UI Design
-- [ ] UI implementation
+- [x] Main window UI Design
+- [ ] Main window UI implementation
+- [ ] Text window UI Design
+- [ ] Text window UI implementation
 - [ ] Online translator API call
 - [ ] JBeijing translator DLL access
 
