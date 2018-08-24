@@ -1,17 +1,29 @@
-import { app, BrowserWindow, Tray, Menu } from "electron";
+import { app, BrowserWindow, Tray, Menu, nativeImage } from "electron";
+import * as path from "path";
 
 import setupIpc from "./setup/ipc";
 import logger from "../common/logger";
 
-/**
- * Set `__static` path to static files in production
- * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
- */
+// to make TypeScript happy :)
+declare global {
+  namespace NodeJS {
+    export interface Global {
+      __static: string;
+      __baseDir: string;
+    }
+  }
+}
+
 if (process.env.NODE_ENV !== "development") {
-  (<any>global).__static = require("path")
+  global.__static = require("path")
     .join(__dirname, "/static")
     .replace(/\\/g, "\\\\");
 }
+
+global.__baseDir = path.join(__dirname, "../..");
+logger.debug(`basePath: ${global.__baseDir}`);
+
+const iconPath = path.join(global.__baseDir, "build/icons/icon.png");
 
 let mainWindow: Electron.BrowserWindow | null;
 let tray: Electron.Tray | null;
@@ -20,8 +32,6 @@ const winURL =
   process.env.NODE_ENV === "development"
     ? `http://localhost:9080`
     : `file://${__dirname}/index.html`;
-
-const iconPath = "./build/icons/icon.png";
 
 function openWindow() {
   if (!mainWindow) {

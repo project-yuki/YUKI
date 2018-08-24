@@ -122,13 +122,13 @@ export default function(mainWindow: Electron.BrowserWindow) {
   );
 
   ipcMain.on(types.REQUEST_CONFIG, (event: Electron.Event, name: string) => {
-    let configFileName = `config/${name}.yml`;
-    logger.debug(`request config ${configFileName}`);
     switch (name) {
       case "default":
+        logger.debug(`request config ${defaultConfig.fileName()}`);
         event.sender.send(types.HAS_CONFIG, name, defaultConfig.get());
         break;
       case "games":
+        logger.debug(`request config ${gamesConfig.fileName()}`);
         event.sender.send(types.HAS_CONFIG, name, gamesConfig.get().games);
         break;
       default:

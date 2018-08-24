@@ -41,4 +41,8 @@ export default class Config {
   set(cfg: any) {
     this._config = cfg;
   }
+
+  fileName() {
+    return this._filename;
+  }
 }
