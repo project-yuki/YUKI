@@ -1,18 +1,18 @@
 import Config from "../../common/config";
 
 let defaultObject = {
-  localeChangers: [
-    {
+  localeChangers: {
+    localeEmulator: {
       name: "Locale Emulator",
       enabled: false,
       exec: ""
     },
-    {
+    ntleas: {
       name: "Ntleas",
       enabled: false,
       exec: ""
     }
-  ],
+  },
   onlineApis: [],
   translators: {
     jBeijing: {
