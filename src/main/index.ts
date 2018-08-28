@@ -1,7 +1,7 @@
-import { app, BrowserWindow, Tray, Menu, nativeImage } from "electron";
+import { app, BrowserWindow, Tray, Menu } from "electron";
 import * as path from "path";
+import * as fs from "fs";
 
-import setupIpc from "./setup/ipc";
 import logger from "../common/logger";
 
 // to make TypeScript happy :)
@@ -11,6 +11,14 @@ declare global {
       __static: string;
       __baseDir: string;
     }
+  }
+}
+
+// check & make ./logs folder
+{
+  if (!fs.existsSync("logs")) {
+    fs.mkdirSync("logs");
+    logger.debug("created ./logs folder");
   }
 }
 
@@ -24,6 +32,8 @@ global.__baseDir = path.join(__dirname, "../..");
 logger.debug(`basePath: ${global.__baseDir}`);
 
 const iconPath = path.join(global.__baseDir, "build/icons/icon.png");
+
+import setupIpc from "./setup/ipc";
 
 let mainWindow: Electron.BrowserWindow | null;
 let tray: Electron.Tray | null;

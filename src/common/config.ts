@@ -6,10 +6,19 @@ export default class Config {
   private _filename: string;
   private _config: any;
 
-  constructor(filename: string) {
+  constructor(filename: string, defaultObject?: any) {
     this._filename = filename;
-    this._config = null;
-    this.load();
+    if (!fs.existsSync(filename)) {
+      // check & make ./config folder
+      if (!fs.existsSync("config")) {
+        fs.mkdirSync("config");
+        logger.debug("created ./config folder");
+      }
+      this._config = defaultObject;
+      this.save();
+    } else {
+      this.load();
+    }
   }
 
   load() {

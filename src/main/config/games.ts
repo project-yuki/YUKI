@@ -1,5 +1,7 @@
 import Config from "../../common/config";
 
-let gamesConfig = new Config("config/games.yml");
+let defaultObject = {
+  games: []
+};
 
-export default gamesConfig;
+export default new Config("config/games.yml", defaultObject);
