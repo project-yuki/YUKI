@@ -45,17 +45,13 @@ export default function(mainWindow: Electron.BrowserWindow) {
       mainWindow.hide();
 
       let execString = "";
-      const localeChangers = defaultConfig.get().localeChanger;
+      const localeChangers = defaultConfig.get().localeChangers;
       for (let key in localeChangers) {
         if (localeChangers[key].enabled === true) {
           execString = localeChangers[key].exec;
           logger.debug(`choose ${key} as locale changer`);
           break;
         }
-      }
-      if (execString === "") {
-        logger.error("no valid locale changer");
-        return;
       }
 
       execString = execString.replace("%GAME_PATH%", `"${game.path}"`);

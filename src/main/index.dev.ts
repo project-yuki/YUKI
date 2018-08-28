@@ -13,8 +13,7 @@ require("electron-debug")({ showDevTools: true });
 
 // Install `vue-devtools`
 require("electron").app.on("ready", () => {
-  // RUN NEXT LINE FIRST TIME SETTING UP VUE-DEVTOOLS!!!
-  // require('vue-devtools').install()
+  require("vue-devtools").install();
 });
 
 // Require `main` process to boot app

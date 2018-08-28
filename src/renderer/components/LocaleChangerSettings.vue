@@ -4,19 +4,19 @@
   <mu-button color="warning" @click="resetSettings">重置</mu-button>
   <p class="text-h1">区域转换器设置</p>
   <p class="text-h2">区域转换器选择</p>
-  <mu-radio value="localeEmulator" v-model="selected" label="Locale Emulator"></mu-radio>
-  <mu-radio value="ntleas" v-model="selected" label="Ntleas"></mu-radio>
-  <p class="text-h2">Locale Emulator</p>
-  <p class="text-h3">执行方式</p>
-  <mu-text-field v-model="localeEmulatorInput" multi-line full-width :rows-max="10"></mu-text-field>
-  <p>参数</p>
-  <p>%GAME_PATH% - 游戏所在路径</p>
-  <mu-divider></mu-divider>
-  <p class="text-h2">Ntleas</p>
-  <p class="text-h3">执行方式</p>
-  <mu-text-field v-model="ntleasInput" multi-line full-width :rows-max="10"></mu-text-field>
-  <p>参数</p>
-  <p>%GAME_PATH% - 游戏所在路径</p>
+  <mu-radio 
+    v-for="(value, key) in defaultConfig.localeChangers"
+    :key="'choose-'+key"
+    :value="key" 
+    v-model="selected" 
+    :label="value.name" />
+  
+  <gt-locale-changer-info 
+    v-for="(value, key) in defaultConfig.localeChangers"
+    :key="key"
+    :changer="value"
+    ref="changerInfos"
+  />
 </div>
 </template>
 
@@ -25,39 +25,64 @@ import Vue from "vue";
 import { Component } from "vue-property-decorator";
 import { State, namespace } from "vuex-class";
 
+import GtLocaleChangerInfo from "@/components/LocaleChangerInfo.vue";
+
 import { ipcRenderer } from "electron";
 import ipcTypes from "../../common/ipcTypes";
 
-@Component
+@Component({
+  components: {
+    GtLocaleChangerInfo
+  }
+})
 export default class localeChangerSettings extends Vue {
   selected = "";
-  localeEmulatorInput = "";
-  ntleasInput = "";
 
   @namespace("Config").State("default")
   defaultConfig!: Yagt.ConfigState["default"];
 
   saveSettings() {
     let savingConfig = JSON.parse(JSON.stringify(this.defaultConfig));
-    savingConfig.localeChanger.localeEmulator.exec = this.localeEmulatorInput;
-    savingConfig.localeChanger.ntleas.exec = this.ntleasInput;
-    for (let key in this.defaultConfig.localeChanger) {
+    for (let key in this.defaultConfig.localeChangers) {
       if (key === this.selected) {
-        savingConfig.localeChanger[key].enabled = true;
+        savingConfig.localeChangers[key].enabled = true;
       } else {
-        savingConfig.localeChanger[key].enabled = false;
+        savingConfig.localeChangers[key].enabled = false;
+      }
+      for (let index in this.$refs.changerInfos) {
+        if (
+          this.$refs.changerInfos[index].changer.name ===
+          this.defaultConfig.localeChangers[key].name
+        ) {
+          savingConfig.localeChangers[key].exec = this.$refs.changerInfos[
+            index
+          ].execInput;
+        }
       }
     }
     ipcRenderer.send(ipcTypes.REQUEST_SAVE_CONFIG, "default", savingConfig);
   }
   resetSettings() {
-    for (let key in this.defaultConfig.localeChanger) {
-      if (this.defaultConfig.localeChanger[key].enabled === true) {
+    let hasSelected = false;
+    for (let key in this.defaultConfig.localeChangers) {
+      if (this.defaultConfig.localeChangers[key].enabled === true) {
         this.selected = key;
+        hasSelected = true;
+      }
+      for (let index in this.$refs.changerInfos) {
+        if (
+          this.$refs.changerInfos[index].changer.name ===
+          this.defaultConfig.localeChangers[key].name
+        ) {
+          this.$refs.changerInfos[
+            index
+          ].execInput = this.defaultConfig.localeChangers[key].exec;
+        }
       }
     }
-    this.localeEmulatorInput = this.defaultConfig.localeChanger.localeEmulator.exec;
-    this.ntleasInput = this.defaultConfig.localeChanger.ntleas.exec;
+    if (!hasSelected) {
+      this.selected = "";
+    }
   }
 
   mounted() {
