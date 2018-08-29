@@ -1,1 +1,7 @@
-games: []
+games:
+  - code: ''
+    name: 処女はお姉さまに恋してる３
+    path: 'D:\Program Files\処女はお姉さまに恋してる３\処女はお姉さまに恋してる３.exe'
+  - code: '/HWN-4@83AAB:mahoXroba.exe'
+    name: まほ×ろば -Witches spiritual home-
+    path: 'D:\Program Files\あかべぇそふとすりぃ\まほ×ろば -Witches spiritual home-\mahoXroba.exe'

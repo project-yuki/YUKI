@@ -37,6 +37,18 @@
       ],
       "plugins": ["transform-decorators-legacy"]
     },
+    "translator": {
+      "presets": [
+        [
+          "env",
+          {
+            "modules": false
+          }
+        ],
+        "stage-0"
+      ],
+      "plugins": ["transform-decorators-legacy"]
+    },
     "web": {
       "presets": [
         [

@@ -36,12 +36,19 @@ const iconPath = path.join(global.__baseDir, "build/icons/icon.png");
 import setupIpc from "./setup/ipc";
 
 let mainWindow: Electron.BrowserWindow | null;
+let textWindow: Electron.BrowserWindow | null;
+
 let tray: Electron.Tray | null;
 
-const winURL =
+const mainWinURL =
   process.env.NODE_ENV === "development"
     ? `http://localhost:9080`
     : `file://${__dirname}/index.html`;
+
+const translatorWinURL =
+  process.env.NODE_ENV === "development"
+    ? `http://localhost:9081/translator.html`
+    : `file://${__dirname}/translator.html`;
 
 function openWindow() {
   if (!mainWindow) {
@@ -53,7 +60,7 @@ function openWindow() {
 
 function createWindow() {
   /**
-   * Initial window options
+   * Initial main window options
    */
   mainWindow = new BrowserWindow({
     height: 720,
@@ -70,7 +77,7 @@ function createWindow() {
     frame: false
   });
 
-  mainWindow.loadURL(winURL);
+  mainWindow.loadURL(mainWinURL);
 
   mainWindow.on("closed", () => {
     mainWindow = null;
@@ -100,6 +107,29 @@ function createWindow() {
   });
 
   setupIpc(mainWindow);
+
+  /**
+   * Initial text window options
+   */
+  // textWindow = new BrowserWindow({
+  //   height: 240,
+  //   useContentSize: true,
+  //   width: 1080,
+  //   webPreferences: {
+  //     defaultFontFamily: {
+  //       standard: "Microsoft Yahei UI",
+  //       serif: "Microsoft Yahei UI",
+  //       sansSerif: "Microsoft Yahei UI"
+  //     }
+  //   },
+  //   icon: iconPath
+  // });
+
+  // textWindow.loadURL(translatorWinURL);
+
+  // textWindow.on("closed", () => {
+  //   mainWindow = null;
+  // });
 }
 
 app.on("ready", createWindow);

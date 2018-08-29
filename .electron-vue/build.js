@@ -11,6 +11,7 @@ const Multispinner = require("multispinner");
 
 const mainConfig = require("./webpack.main.config");
 const rendererConfig = require("./webpack.renderer.config");
+const translatorConfig = require("./webpack.translator.config");
 const webConfig = require("./webpack.web.config");
 
 const doneLog = chalk.bgGreen.white(" DONE ") + " ";
@@ -33,7 +34,7 @@ function build() {
 
   del.sync(["dist/electron/*", "!.gitkeep"]);
 
-  const tasks = ["main", "renderer"];
+  const tasks = ["main", "renderer", "translator"];
   const m = new Multispinner(tasks, {
     preText: "building",
     postText: "process"
@@ -70,6 +71,18 @@ function build() {
     .catch(err => {
       m.error("renderer");
       console.log(`\n  ${errorLog}failed to build renderer process`);
+      console.error(`\n${err}\n`);
+      process.exit(1);
+    });
+
+  pack(translatorConfig)
+    .then(result => {
+      results += result + "\n\n";
+      m.success("translator");
+    })
+    .catch(err => {
+      m.error("translator");
+      console.log(`\n  ${errorLog}failed to build translator process`);
       console.error(`\n${err}\n`);
       process.exit(1);
     });

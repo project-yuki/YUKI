@@ -11,10 +11,12 @@ const webpackHotMiddleware = require("webpack-hot-middleware");
 
 const mainConfig = require("./webpack.main.config");
 const rendererConfig = require("./webpack.renderer.config");
+const translatorConfig = require("./webpack.translator.config");
 
 let electronProcess = null;
 let manualRestart = false;
 let hotMiddleware;
+let translatorHotMiddleware;
 
 function logStats(proc, data) {
   let log = "";
@@ -49,24 +51,24 @@ function startRenderer() {
       rendererConfig.entry.renderer
     );
 
-    const compiler = webpack(rendererConfig);
-    hotMiddleware = webpackHotMiddleware(compiler, {
+    const rendererCompiler = webpack(rendererConfig);
+    hotMiddleware = webpackHotMiddleware(rendererCompiler, {
       log: false,
       heartbeat: 2500
     });
 
-    compiler.plugin("compilation", compilation => {
+    rendererCompiler.plugin("compilation", compilation => {
       compilation.plugin("html-webpack-plugin-after-emit", (data, cb) => {
         hotMiddleware.publish({ action: "reload" });
         cb();
       });
     });
 
-    compiler.plugin("done", stats => {
+    rendererCompiler.plugin("done", stats => {
       logStats("Renderer", stats);
     });
 
-    const server = new WebpackDevServer(compiler, {
+    const rendererServer = new WebpackDevServer(rendererCompiler, {
       contentBase: path.join(__dirname, "../"),
       quiet: true,
       before(app, ctx) {
@@ -77,7 +79,45 @@ function startRenderer() {
       }
     });
 
-    server.listen(9080);
+    rendererServer.listen(9080);
+  });
+}
+
+function startTranslator() {
+  return new Promise((resolve, reject) => {
+    translatorConfig.entry.translator = [
+      path.join(__dirname, "dev-client")
+    ].concat(translatorConfig.entry.translator);
+
+    const translatorCompiler = webpack(translatorConfig);
+    translatorHotMiddleware = webpackHotMiddleware(translatorCompiler, {
+      log: false,
+      heartbeat: 2500
+    });
+
+    translatorCompiler.plugin("compilation", compilation => {
+      compilation.plugin("html-webpack-plugin-after-emit", (data, cb) => {
+        translatorHotMiddleware.publish({ action: "reload" });
+        cb();
+      });
+    });
+
+    translatorCompiler.plugin("done", stats => {
+      logStats("Translator", stats);
+    });
+
+    const translatorServer = new WebpackDevServer(translatorCompiler, {
+      contentBase: path.join(__dirname, "../"),
+      quiet: true,
+      before(app, ctx) {
+        app.use(translatorHotMiddleware);
+        ctx.middleware.waitUntilValid(() => {
+          resolve();
+        });
+      }
+    });
+
+    translatorServer.listen(9081);
   });
 }
 
@@ -92,6 +132,7 @@ function startMain() {
     compiler.plugin("watch-run", (compilation, done) => {
       logStats("Main", chalk.white.bold("compiling..."));
       hotMiddleware.publish({ action: "compiling" });
+      translatorHotMiddleware.publish({ action: "compiling" });
       done();
     });
 
@@ -172,7 +213,7 @@ function greeting() {
 function init() {
   greeting();
 
-  Promise.all([startRenderer(), startMain()])
+  Promise.all([startTranslator(), startRenderer(), startMain()])
     .then(() => {
       startElectron();
     })
