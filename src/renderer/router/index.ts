@@ -1,5 +1,5 @@
 import Vue from "vue";
-import * as Router from "vue-router";
+import Router from "vue-router";
 
 import GamesPage from "@/components/GamesPage.vue";
 import AddGamePage from "@/components/AddGamePage.vue";
@@ -8,7 +8,7 @@ import AboutPage from "@/components/AboutPage.vue";
 
 Vue.use(Router);
 
-let routes = <Router.RouteConfig[]>[
+let routes = [
   { path: "", component: GamesPage },
   { path: "/games", name: "Games", component: GamesPage },
   { path: "/addgame", name: "AddGame", component: AddGamePage },
