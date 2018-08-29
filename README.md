@@ -48,7 +48,8 @@
 
     git clone https://github.com/Yagt/Yagt.git
     cd yagt
-    npm install
+    npm install (或 yarn)
+    npm run rebuild
     npm run dev
 
 ## 许可证

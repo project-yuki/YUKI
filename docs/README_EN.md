@@ -46,7 +46,8 @@ So, using Electron as frontend and traditional Windows API (Text Hooker wrapped 
 
     git clone https://github.com/Yagt/Yagt.git
     cd yagt
-    npm install
+    npm install (or yarn)
+    npm run rebuild
     npm run dev
 
 ## License
