@@ -1,10 +1,10 @@
 localeChangers:
   localeEmulator:
-    enabled: false
+    enabled: true
     exec: 'D:\LocaleEmulator\LEProc.exe %GAME_PATH%'
     name: Locale Emulator
   noChanger:
-    enabled: true
+    enabled: false
     exec: '%GAME_PATH%'
     name: 不转换
   ntleas:

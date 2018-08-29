@@ -170,6 +170,18 @@ export default function(mainWindow: Electron.BrowserWindow) {
     }
   );
 
+  ipcMain.on(
+    types.REQUEST_REMOVE_GAME,
+    (event: Electron.Event, game: Yagt.Game) => {
+      gamesConfig.set({
+        games: gamesConfig
+          .get()
+          .games.filter((item: Yagt.Game) => item.name !== game.name)
+      });
+      event.sender.send(types.HAS_CONFIG, "games", gamesConfig.get().games);
+    }
+  );
+
   ipcMain.on(types.REQUEST_NEW_GAME_PATH, (event: Electron.Event) => {
     dialog.showOpenDialog(
       {

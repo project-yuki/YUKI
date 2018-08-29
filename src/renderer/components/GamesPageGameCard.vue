@@ -7,7 +7,7 @@
     </mu-card-text>
     <mu-card-actions>
       <mu-button color="primary" @click="handleRunGame">运行</mu-button>
-      <mu-button color="error" @click="handleDeleteGame">删除</mu-button>
+      <mu-button color="error" @click="handleOpenConfirm">删除</mu-button>
     </mu-card-actions>
     <mu-dialog title="Dialog" width="360" :open.sync="openConfirm">
       确认删除？
@@ -40,7 +40,10 @@ export default class HookSettingsHookInfo extends Vue {
   handleRunGame() {
     ipcRenderer.send(ipcTypes.REQUEST_RUN_GAME, this.game);
   }
-  handleDeleteGame() {}
+  handleDeleteGame() {
+    this.openConfirm = false;
+    ipcRenderer.send(ipcTypes.REQUEST_REMOVE_GAME, this.game);
+  }
 }
 </script>
 

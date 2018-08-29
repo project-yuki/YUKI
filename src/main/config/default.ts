@@ -22,4 +22,6 @@ let defaultObject = {
   }
 };
 
-export default new Config("config/config.yml", defaultObject);
+let defaultConfig = new Config("config/config.yml", defaultObject);
+
+export default defaultConfig;

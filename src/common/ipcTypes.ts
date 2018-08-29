@@ -18,6 +18,8 @@ export default {
 
   REQUEST_ADD_GAME: "request-add-game",
   HAS_ADDED_GAME: "has-added-game",
+  REQUEST_REMOVE_GAME: "request-remove-game",
+  HAS_REMOVED_GAME: "has-removed-game",
 
   REQUEST_RUN_GAME: "request-run-game",
 

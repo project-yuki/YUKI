@@ -49,6 +49,7 @@ export default class Config {
 
   set(cfg: any) {
     this._config = cfg;
+    this.save();
   }
 
   fileName() {

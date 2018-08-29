@@ -4,4 +4,6 @@ let defaultObject = {
   games: []
 };
 
-export default new Config("config/games.yml", defaultObject);
+let gamesConfig = new Config("config/games.yml", defaultObject);
+
+export default gamesConfig;
