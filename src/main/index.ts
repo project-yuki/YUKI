@@ -36,7 +36,7 @@ const iconPath = path.join(global.__baseDir, "build/icons/icon.png");
 import setupIpc from "./setup/ipc";
 
 let mainWindow: Electron.BrowserWindow | null;
-let textWindow: Electron.BrowserWindow | null;
+let translatorWindow: Electron.BrowserWindow | null;
 
 let tray: Electron.Tray | null;
 
@@ -109,34 +109,32 @@ function createWindow() {
   setupIpc(mainWindow);
 
   /**
-   * Initial text window options
+   * Initial translator window options
    */
-  // textWindow = new BrowserWindow({
-  //   height: 240,
-  //   useContentSize: true,
-  //   width: 1080,
-  //   webPreferences: {
-  //     defaultFontFamily: {
-  //       standard: "Microsoft Yahei UI",
-  //       serif: "Microsoft Yahei UI",
-  //       sansSerif: "Microsoft Yahei UI"
-  //     }
-  //   },
-  //   icon: iconPath
-  // });
+  translatorWindow = new BrowserWindow({
+    height: 240,
+    useContentSize: true,
+    width: 1080,
+    webPreferences: {
+      defaultFontFamily: {
+        standard: "Microsoft Yahei UI",
+        serif: "Microsoft Yahei UI",
+        sansSerif: "Microsoft Yahei UI"
+      }
+    },
+    icon: iconPath
+  });
 
-  // textWindow.loadURL(translatorWinURL);
+  translatorWindow.loadURL(translatorWinURL);
 
-  // textWindow.on("closed", () => {
-  //   mainWindow = null;
-  // });
+  translatorWindow.on("closed", () => {
+    mainWindow = null;
+  });
 }
 
 app.on("ready", createWindow);
 
 app.on("before-quit", () => {
-  logger.debug("saving configurtion to file...");
-  //TODO: save configuration to file
   logger.info("app quited");
 });
 

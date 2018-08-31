@@ -4,39 +4,18 @@ import types from "../../common/ipcTypes";
 import logger from "../../common/logger";
 import defaultConfig from "../config/default";
 import gamesConfig from "../config/games";
-import { hooker } from "../../common/hooker";
+import hooker from "../../common/hooker";
 import { registerProcessExitCallback } from "../../common/win32";
 import * as child_process from "child_process";
-
-let hookerStarted = false;
 
 let runningGamePid = -1;
 
 export default function(mainWindow: Electron.BrowserWindow) {
   ipcMain.on(types.MAIN_PAGE_LOAD_FINISHED, () => {
-    if (!hookerStarted) {
-      logger.info(`main page load finished.`);
-
-      hooker.start();
-      hooker.onThreadCreate(
-        (tt: Yagt.TextThread) => {
-          logger.debug("thread created: ");
-          logger.debug(tt);
-          mainWindow.webContents.send(types.HAS_INSERTED_HOOK, tt);
-        },
-        (tt: Yagt.TextThread, text: string) => {
-          logger.debug(`get text [${tt.num}]: ${text}`);
-          mainWindow.webContents.send(types.HAS_HOOK_TEXT, tt, text);
-        }
-      );
-      hooker.onThreadRemove((tt: Yagt.RemovedTextThread) => {
-        logger.debug("thread removed: ");
-        logger.debug(tt);
-        mainWindow.webContents.send(types.HAS_REMOVED_HOOK, tt);
-      });
-      hooker.open();
-      hookerStarted = true;
-    }
+    logger.info(`main page load finished.`);
+    hooker.subscribe("thread-create", mainWindow.webContents);
+    hooker.subscribe("thread-remove", mainWindow.webContents);
+    hooker.subscribe("thread-output", mainWindow.webContents);
   });
 
   ipcMain.on(
@@ -143,13 +122,11 @@ export default function(mainWindow: Electron.BrowserWindow) {
       switch (name) {
         case "default":
           defaultConfig.set(cfg);
-          defaultConfig.save();
           logger.debug(`config ${configFileName} saved`);
           event.sender.send(types.HAS_CONFIG, name, defaultConfig.get());
           break;
         case "games":
           gamesConfig.set(cfg);
-          gamesConfig.save();
           logger.debug(`config ${configFileName} saved`);
           event.sender.send(types.HAS_CONFIG, name, gamesConfig.get());
           break;
@@ -189,7 +166,7 @@ export default function(mainWindow: Electron.BrowserWindow) {
         filters: [{ name: "可执行文件", extensions: ["exe"] }]
       },
       files => {
-        if (files[0]) {
+        if (files) {
           event.sender.send(types.HAS_NEW_GAME_PATH, files[0]);
         }
       }
