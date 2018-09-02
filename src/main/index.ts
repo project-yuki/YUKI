@@ -36,7 +36,6 @@ const iconPath = path.join(global.__baseDir, "build/icons/icon.png");
 import setupIpc from "./setup/ipc";
 
 let mainWindow: Electron.BrowserWindow | null;
-let translatorWindow: Electron.BrowserWindow | null;
 
 let tray: Electron.Tray | null;
 
@@ -44,11 +43,6 @@ const mainWinURL =
   process.env.NODE_ENV === "development"
     ? `http://localhost:9080`
     : `file://${__dirname}/index.html`;
-
-const translatorWinURL =
-  process.env.NODE_ENV === "development"
-    ? `http://localhost:9081/translator.html`
-    : `file://${__dirname}/translator.html`;
 
 function openWindow() {
   if (!mainWindow) {
@@ -107,29 +101,6 @@ function createWindow() {
   });
 
   setupIpc(mainWindow);
-
-  /**
-   * Initial translator window options
-   */
-  // translatorWindow = new BrowserWindow({
-  //   height: 240,
-  //   useContentSize: true,
-  //   width: 1080,
-  //   webPreferences: {
-  //     defaultFontFamily: {
-  //       standard: "Microsoft Yahei UI",
-  //       serif: "Microsoft Yahei UI",
-  //       sansSerif: "Microsoft Yahei UI"
-  //     }
-  //   },
-  //   icon: iconPath
-  // });
-
-  // translatorWindow.loadURL(translatorWinURL);
-
-  // translatorWindow.on("closed", () => {
-  //   mainWindow = null;
-  // });
 }
 
 app.on("ready", createWindow);

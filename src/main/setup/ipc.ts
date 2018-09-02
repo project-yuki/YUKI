@@ -7,8 +7,11 @@ import gamesConfig from "../config/games";
 import hooker from "../../common/hooker";
 import { registerProcessExitCallback } from "../../common/win32";
 import * as child_process from "child_process";
+import createTranslatorWindow from "./translatorWindow";
 
 let runningGamePid = -1;
+
+let translatorWindow: Electron.BrowserWindow;
 
 export default function(mainWindow: Electron.BrowserWindow) {
   ipcMain.on(types.MAIN_PAGE_LOAD_FINISHED, () => {
@@ -60,6 +63,8 @@ export default function(mainWindow: Electron.BrowserWindow) {
                 logger.debug(`hook ${game.code} inserted`);
               }
 
+              translatorWindow = createTranslatorWindow();
+
               registerProcessExitCallback(runningGamePid, () => {
                 logger.debug(`detaching process ${runningGamePid}...`);
                 hooker.detachProcess(runningGamePid);
@@ -67,6 +72,7 @@ export default function(mainWindow: Electron.BrowserWindow) {
                 logger.debug(`game [${runningGamePid}] exited`);
                 runningGamePid = -1;
 
+                if (!translatorWindow.isDestroyed()) translatorWindow.close();
                 mainWindow.show();
               });
             }
