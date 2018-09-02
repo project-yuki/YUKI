@@ -38,7 +38,7 @@ let translatorConfig = {
       },
       {
         test: /\.tsx?$/,
-        loaders: [
+        use: [
           {
             loader: "babel-loader"
           },

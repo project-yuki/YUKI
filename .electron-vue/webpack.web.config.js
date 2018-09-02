@@ -23,7 +23,7 @@ let webConfig = {
       },
       {
         test: /\.tsx?$/,
-        loaders: [
+        use: [
           {
             loader: "babel-loader"
           },

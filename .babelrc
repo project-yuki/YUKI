@@ -11,7 +11,7 @@
         ],
         "stage-0"
       ],
-      "plugins": ["istanbul"]
+      "plugins": [["istanbul"], ["transform-decorators-legacy"]]
     },
     "main": {
       "presets": [

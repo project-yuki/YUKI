@@ -21,7 +21,7 @@ let mainConfig = {
       },
       {
         test: /\.tsx?$/,
-        loaders: [
+        use: [
           {
             loader: "babel-loader"
           },

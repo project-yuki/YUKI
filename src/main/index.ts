@@ -111,25 +111,25 @@ function createWindow() {
   /**
    * Initial translator window options
    */
-  translatorWindow = new BrowserWindow({
-    height: 240,
-    useContentSize: true,
-    width: 1080,
-    webPreferences: {
-      defaultFontFamily: {
-        standard: "Microsoft Yahei UI",
-        serif: "Microsoft Yahei UI",
-        sansSerif: "Microsoft Yahei UI"
-      }
-    },
-    icon: iconPath
-  });
+  // translatorWindow = new BrowserWindow({
+  //   height: 240,
+  //   useContentSize: true,
+  //   width: 1080,
+  //   webPreferences: {
+  //     defaultFontFamily: {
+  //       standard: "Microsoft Yahei UI",
+  //       serif: "Microsoft Yahei UI",
+  //       sansSerif: "Microsoft Yahei UI"
+  //     }
+  //   },
+  //   icon: iconPath
+  // });
 
-  translatorWindow.loadURL(translatorWinURL);
+  // translatorWindow.loadURL(translatorWinURL);
 
-  translatorWindow.on("closed", () => {
-    mainWindow = null;
-  });
+  // translatorWindow.on("closed", () => {
+  //   mainWindow = null;
+  // });
 }
 
 app.on("ready", createWindow);

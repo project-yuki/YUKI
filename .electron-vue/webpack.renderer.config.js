@@ -38,7 +38,7 @@ let rendererConfig = {
       },
       {
         test: /\.tsx?$/,
-        loaders: [
+        use: [
           {
             loader: "babel-loader"
           },
