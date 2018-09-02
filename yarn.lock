@@ -5684,11 +5684,7 @@ multispinner@^0.2.1:
     lodash.merge "^3.3.2"
     log-update "^1.0.2"
 
-muse-ui-message@^0.2.0:
-  version "0.2.0"
-  resolved "http://registry.npm.taobao.org/muse-ui-message/download/muse-ui-message-0.2.0.tgz#1b6f4999b93238fc897d1d5a3ebcf52f4c729d6c"
-
-muse-ui@^3.0.0-rc.7:
+muse-ui@^3.0.0:
   version "3.0.0"
   resolved "http://registry.npm.taobao.org/muse-ui/download/muse-ui-3.0.0.tgz#903d78c9520c132f88440465e85b74e72722e7f8"
   dependencies:
