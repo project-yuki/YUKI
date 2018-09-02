@@ -1,5 +1,4 @@
 import "muse-ui/dist/muse-ui.css";
-import "muse-ui-message/dist/muse-ui-message.css";
 import "../resources/material-icons/material-icons.css";
 
 import Vue from "vue";
