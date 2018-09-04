@@ -1,11 +1,9 @@
 import { app, ipcMain, dialog } from "electron";
-import { exec } from "child_process";
 import types from "../../common/ipcTypes";
 import logger from "../../common/logger";
 import config from "../config";
 import hooker from "../../common/hooker";
-import { registerProcessExitCallback } from "../../common/win32";
-import * as child_process from "child_process";
+import Game from "../game";
 import createTranslatorWindow from "./translatorWindow";
 
 let runningGamePid = -1;
@@ -25,59 +23,16 @@ export default function(mainWindow: Electron.BrowserWindow) {
     (event: Electron.Event, game: Yagt.Game) => {
       mainWindow.hide();
 
-      let execString = "";
-      const localeChangers = config.default.get().localeChangers;
-      for (let key in localeChangers) {
-        if (localeChangers[key].enabled === true) {
-          execString = localeChangers[key].exec;
-          logger.debug(`choose ${key} as locale changer`);
-          break;
-        }
-      }
-
-      execString = execString.replace("%GAME_PATH%", `"${game.path}"`);
-      logger.debug(`exec string: ${execString}`);
-
-      exec(execString);
-      let gameExeName = game.path.substring(game.path.lastIndexOf("\\") + 1);
-      logger.debug(`finding ${gameExeName}...`);
-      let tryGetProcess = setInterval(() => {
-        child_process.exec(
-          `tasklist /nh /fo csv /fi "imagename eq ${gameExeName}"`,
-          (err, stdout, stderr) => {
-            if (stdout.startsWith('"')) {
-              clearInterval(tryGetProcess);
-              //get process, inject it!
-              runningGamePid = parseInt(stdout.replace(/"/g, "").split(",")[1]);
-
-              logger.debug(`injecting process ${runningGamePid}...`);
-              hooker.injectProcess(runningGamePid);
-              logger.debug(`process ${runningGamePid} injected`);
-
-              if (game.code !== "") {
-                logger.debug(
-                  `inserting hook ${game.code} to process ${runningGamePid}...`
-                );
-                hooker.insertHook(runningGamePid, game.code);
-                logger.debug(`hook ${game.code} inserted`);
-              }
-
-              translatorWindow = createTranslatorWindow();
-
-              registerProcessExitCallback(runningGamePid, () => {
-                logger.debug(`detaching process ${runningGamePid}...`);
-                hooker.detachProcess(runningGamePid);
-                logger.debug(`process ${runningGamePid} detached`);
-                logger.debug(`game [${runningGamePid}] exited`);
-                runningGamePid = -1;
-
-                if (!translatorWindow.isDestroyed()) translatorWindow.close();
-                mainWindow.show();
-              });
-            }
-          }
-        );
-      }, 1000);
+      let runningGame = new Game(game);
+      runningGame.on("started", () => {
+        translatorWindow = createTranslatorWindow();
+      });
+      runningGame.on("exited", () => {
+        runningGame.removeAllListeners();
+        if (!translatorWindow.isDestroyed()) translatorWindow.close();
+        mainWindow.show();
+      });
+      runningGame.start();
     }
   );
 
