@@ -2,8 +2,7 @@ import { app, ipcMain, dialog } from "electron";
 import { exec } from "child_process";
 import types from "../../common/ipcTypes";
 import logger from "../../common/logger";
-import defaultConfig from "../config/default";
-import gamesConfig from "../config/games";
+import config from "../config";
 import hooker from "../../common/hooker";
 import { registerProcessExitCallback } from "../../common/win32";
 import * as child_process from "child_process";
@@ -27,7 +26,7 @@ export default function(mainWindow: Electron.BrowserWindow) {
       mainWindow.hide();
 
       let execString = "";
-      const localeChangers = defaultConfig.get().localeChangers;
+      const localeChangers = config.default.get().localeChangers;
       for (let key in localeChangers) {
         if (localeChangers[key].enabled === true) {
           execString = localeChangers[key].exec;
@@ -105,12 +104,12 @@ export default function(mainWindow: Electron.BrowserWindow) {
   ipcMain.on(types.REQUEST_CONFIG, (event: Electron.Event, name: string) => {
     switch (name) {
       case "default":
-        logger.debug(`request config ${defaultConfig.getFileName()}`);
-        event.sender.send(types.HAS_CONFIG, name, defaultConfig.get());
+        logger.debug(`request config ${config.default.getFileName()}`);
+        event.sender.send(types.HAS_CONFIG, name, config.default.get());
         break;
       case "games":
-        logger.debug(`request config ${gamesConfig.getFileName()}`);
-        event.sender.send(types.HAS_CONFIG, name, gamesConfig.get().games);
+        logger.debug(`request config ${config.games.getFileName()}`);
+        event.sender.send(types.HAS_CONFIG, name, config.games.get().games);
         break;
       default:
         logger.error(`invalid config name: ${name}`);
@@ -127,14 +126,14 @@ export default function(mainWindow: Electron.BrowserWindow) {
 
       switch (name) {
         case "default":
-          defaultConfig.set(cfg);
+          config.default.set(cfg);
           logger.debug(`config ${configFileName} saved`);
-          event.sender.send(types.HAS_CONFIG, name, defaultConfig.get());
+          event.sender.send(types.HAS_CONFIG, name, config.default.get());
           break;
         case "games":
-          gamesConfig.set(cfg);
+          config.games.set(cfg);
           logger.debug(`config ${configFileName} saved`);
-          event.sender.send(types.HAS_CONFIG, name, gamesConfig.get());
+          event.sender.send(types.HAS_CONFIG, name, config.games.get());
           break;
         default:
           logger.error(`invalid config name: ${name}`);
@@ -146,9 +145,9 @@ export default function(mainWindow: Electron.BrowserWindow) {
   ipcMain.on(
     types.REQUEST_ADD_GAME,
     (event: Electron.Event, game: Yagt.Game) => {
-      gamesConfig.get().games.push(game);
-      gamesConfig.save();
-      event.sender.send(types.HAS_CONFIG, "games", gamesConfig.get().games);
+      config.games.get().games.push(game);
+      config.games.save();
+      event.sender.send(types.HAS_CONFIG, "games", config.games.get().games);
       event.sender.send(types.HAS_ADDED_GAME);
     }
   );
@@ -156,12 +155,12 @@ export default function(mainWindow: Electron.BrowserWindow) {
   ipcMain.on(
     types.REQUEST_REMOVE_GAME,
     (event: Electron.Event, game: Yagt.Game) => {
-      gamesConfig.set({
-        games: gamesConfig
+      config.games.set({
+        games: config.games
           .get()
           .games.filter((item: Yagt.Game) => item.name !== game.name)
       });
-      event.sender.send(types.HAS_CONFIG, "games", gamesConfig.get().games);
+      event.sender.send(types.HAS_CONFIG, "games", config.games.get().games);
     }
   );
 
