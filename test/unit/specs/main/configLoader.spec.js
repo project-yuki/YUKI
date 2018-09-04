@@ -1,4 +1,4 @@
-import Config from "../../../src/common/config";
+import Config from "../../../../src/common/config";
 
 describe("ConfigLoader", () => {
   it("loads correct contents from yaml file", () => {

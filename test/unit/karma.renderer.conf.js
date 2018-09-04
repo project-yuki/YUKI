@@ -46,9 +46,9 @@ module.exports = config => {
       }
     },
     frameworks: ["mocha", "chai"],
-    files: ["./index.js"],
+    files: ["./renderer.js"],
     preprocessors: {
-      "./index.js": ["webpack", "sourcemap"]
+      "./renderer.js": ["webpack", "sourcemap"]
     },
     reporters: ["spec", "coverage"],
     singleRun: true,

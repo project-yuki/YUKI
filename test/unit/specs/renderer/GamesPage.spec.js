@@ -39,7 +39,7 @@ describe("GamesPage.vue", () => {
       "処女はお姉さまに恋してる３"
     );
     expect(vm.$el.querySelector(".mu-card-text").textContent).to.contain(
-      "処女はお姉さまに恋してる３"
+      "D:\\Program Files\\処女はお姉さまに恋してる３\\処女はお姉さまに恋してる３.exe"
     );
   });
 });
