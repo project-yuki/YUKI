@@ -2,49 +2,49 @@ import types from "../common/ipcTypes";
 import logger from "../common/logger";
 
 class HookerPublisher {
-  private _subscribers: Electron.WebContents[] = [];
-  private _type: string;
+  private subscribers: Electron.WebContents[] = [];
+  private type: string;
   constructor(type: string) {
-    this._type = type;
+    this.type = type;
   }
 
   public subscribe(webContents: Electron.WebContents) {
-    if (this._subscribers.find(value => value === webContents)) {
-      logger.debug(
+    if (this.subscribers.find(value => value === webContents)) {
+      logger.error(
         `HookerPublisher: webContents [${webContents.getTitle()}] already subscribed type [${
-          this._type
+          this.type
         }]`
       );
     } else {
-      this._subscribers.push(webContents);
+      this.subscribers.push(webContents);
       logger.debug(
         `HookerPublisher: webContents [${webContents.getTitle()}] successfully subscribed type [${
-          this._type
+          this.type
         }]`
       );
     }
   }
 
   public unsubscribe(webContents: Electron.WebContents) {
-    if (!this._subscribers.find(value => value === webContents)) {
-      logger.debug(
+    if (!this.subscribers.find(value => value === webContents)) {
+      logger.error(
         `HookerPublisher: webContents [${webContents.getTitle()}] hasn't subscribed type [${
-          this._type
+          this.type
         }]`
       );
     } else {
-      this._subscribers.filter(subscriber => subscriber !== webContents);
+      this.subscribers.filter(subscriber => subscriber !== webContents);
       logger.debug(
         `HookerPublisher: webContents [${webContents.getTitle()}] successfully unsubscribed type [${
-          this._type
+          this.type
         }]`
       );
     }
   }
 
   public publish(...args: any[]) {
-    for (let subscriber of this._subscribers) {
-      subscriber.send(this._type, ...args);
+    for (let subscriber of this.subscribers) {
+      subscriber.send(this.type, ...args);
     }
   }
 }
@@ -56,73 +56,73 @@ interface PublisherMap {
 }
 
 class Hooker {
-  private _hooker: Yagt.Hooker = require("../../nexthooker");
+  private hooker: Yagt.Hooker = require("../../nexthooker");
 
-  private _threadCreatePublisher = new HookerPublisher(types.HAS_INSERTED_HOOK);
-  private _threadRemovePublisher = new HookerPublisher(types.HAS_REMOVED_HOOK);
-  private _threadOutputPublisher = new HookerPublisher(types.HAS_HOOK_TEXT);
+  private threadCreatePublisher = new HookerPublisher(types.HAS_INSERTED_HOOK);
+  private threadRemovePublisher = new HookerPublisher(types.HAS_REMOVED_HOOK);
+  private threadOutputPublisher = new HookerPublisher(types.HAS_HOOK_TEXT);
 
   constructor() {
-    this._hooker.start();
-    this._initHookerCallbacks();
-    this._hooker.open();
+    this.hooker.start();
+    this.initHookerCallbacks();
+    this.hooker.open();
   }
 
-  private _initHookerCallbacks() {
-    this._hooker.onThreadCreate(
+  private initHookerCallbacks() {
+    this.hooker.onThreadCreate(
       (tt: Yagt.TextThread) => {
         logger.debug("hooker: thread created");
         logger.debug(tt);
-        this._threadCreatePublisher.publish(tt);
+        this.threadCreatePublisher.publish(tt);
       },
       (tt: Yagt.TextThread, text: string) => {
         logger.debug(`hooker: [${tt.num}]: ${text}`);
-        this._threadOutputPublisher.publish(tt, text);
+        this.threadOutputPublisher.publish(tt, text);
       }
     );
-    this._hooker.onThreadRemove((tt: Yagt.RemovedTextThread) => {
+    this.hooker.onThreadRemove((tt: Yagt.RemovedTextThread) => {
       logger.debug("hooker: thread removed");
       logger.debug(tt);
-      this._threadRemovePublisher.publish(tt);
+      this.threadRemovePublisher.publish(tt);
     });
   }
 
-  private _publisherMap: PublisherMap = {
-    ["thread-create"]: this._threadCreatePublisher,
-    ["thread-remove"]: this._threadRemovePublisher,
-    ["thread-output"]: this._threadOutputPublisher
+  private publisherMap: PublisherMap = {
+    "thread-create": this.threadCreatePublisher,
+    "thread-remove": this.threadRemovePublisher,
+    "thread-output": this.threadOutputPublisher
   };
 
   public subscribe(on: keyof PublisherMap, webContents: Electron.WebContents) {
-    if (!this._publisherMap[on]) {
-      logger.debug(`hooker: trying to register unknown event ${on}`);
+    if (!this.publisherMap[on]) {
+      logger.error(`hooker: trying to register unknown event ${on}`);
     } else {
-      this._publisherMap[on].subscribe(webContents);
+      this.publisherMap[on].subscribe(webContents);
     }
   }
 
   public unsubscribe(on: string, webContents: Electron.WebContents) {
-    if (!this._publisherMap[on]) {
-      logger.debug(`hooker: trying to unregister unknown event ${on}`);
+    if (!this.publisherMap[on]) {
+      logger.error(`hooker: trying to unregister unknown event ${on}`);
     } else {
-      this._publisherMap[on].unsubscribe(webContents);
+      this.publisherMap[on].unsubscribe(webContents);
     }
   }
 
   public injectProcess(pid: number) {
-    this._hooker.injectProcess(pid);
+    this.hooker.injectProcess(pid);
   }
 
   public detachProcess(pid: number) {
-    this._hooker.detachProcess(pid);
+    this.hooker.detachProcess(pid);
   }
 
   public insertHook(pid: number, code: string) {
-    this._hooker.insertHook(pid, code);
+    this.hooker.insertHook(pid, code);
   }
 
   public removeHook(pid: number, hook: number) {
-    this._hooker.removeHook(pid, hook);
+    this.hooker.removeHook(pid, hook);
   }
 }
 
