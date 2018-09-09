@@ -33,7 +33,9 @@ class HookerPublisher {
         }]`
       );
     } else {
-      this.subscribers.filter(subscriber => subscriber !== webContents);
+      this.subscribers = this.subscribers.filter(
+        subscriber => subscriber !== webContents
+      );
       logger.debug(
         `HookerPublisher: webContents [${webContents.getTitle()}] successfully unsubscribed type [${
           this.type
