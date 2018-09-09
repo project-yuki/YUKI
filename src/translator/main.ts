@@ -24,7 +24,14 @@ new Vue({
   template: "<App/>"
 }).$mount("#app");
 
-import { ipcRenderer } from "electron";
+import { ipcRenderer, remote } from "electron";
 import types from "../common/ipcTypes";
 
-//TODO: add ipc responses
+ipcRenderer.on(
+  types.HAS_HOOK_TEXT,
+  (event: Electron.Event, hook: Yagt.TextThread, text: string) => {
+    if (!remote.getCurrentWindow().isVisible()) {
+      remote.getCurrentWindow().show();
+    }
+  }
+);

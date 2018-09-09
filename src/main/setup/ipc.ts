@@ -4,18 +4,16 @@ import logger from "../../common/logger";
 import config from "../config";
 import hooker from "../../common/hooker";
 import Game from "../game";
-import createTranslatorWindow from "./translatorWindow";
+import TranslatorWindow from "./translatorWindow";
 
 let runningGamePid = -1;
 
-let translatorWindow: Electron.BrowserWindow;
+let runningGame: Game;
+let translatorWindow: TranslatorWindow;
 
 export default function(mainWindow: Electron.BrowserWindow) {
   ipcMain.on(types.MAIN_PAGE_LOAD_FINISHED, () => {
     logger.info(`main page load finished.`);
-    hooker.subscribe("thread-create", mainWindow.webContents);
-    hooker.subscribe("thread-remove", mainWindow.webContents);
-    hooker.subscribe("thread-output", mainWindow.webContents);
   });
 
   ipcMain.on(
@@ -23,13 +21,14 @@ export default function(mainWindow: Electron.BrowserWindow) {
     (event: Electron.Event, game: Yagt.Game) => {
       mainWindow.hide();
 
-      let runningGame = new Game(game);
+      runningGame = new Game(game);
       runningGame.on("started", () => {
-        translatorWindow = createTranslatorWindow();
+        translatorWindow = new TranslatorWindow();
+        translatorWindow.setGame(runningGame);
       });
       runningGame.on("exited", () => {
         runningGame.removeAllListeners();
-        if (!translatorWindow.isDestroyed()) translatorWindow.close();
+        translatorWindow.close();
         mainWindow.show();
       });
       runningGame.start();
