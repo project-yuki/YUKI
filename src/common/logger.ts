@@ -1,13 +1,15 @@
 import * as winston from "winston";
 
+let simpleFormatWithJsObject = winston.format.printf(info => {
+  return `${info.level.toUpperCase()} ${JSON.stringify(
+    info.message,
+    null,
+    "  "
+  )}`;
+});
+
 let logger = winston.createLogger({
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json({
-      replacer: null,
-      space: "  "
-    })
-  ),
+  format: winston.format.combine(simpleFormatWithJsObject),
   transports: [
     new winston.transports.File({
       level: "error",
