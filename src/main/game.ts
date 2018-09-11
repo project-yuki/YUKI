@@ -32,6 +32,7 @@ export default class Game extends EventEmitter {
   private execGameProcess() {
     this.getRawExecStringOrDefault();
     this.replaceExecStringTokensWithActualValues();
+    logger.debug(`game: exec string: ${this.execString}`);
     exec(this.execString);
   }
 
@@ -44,6 +45,7 @@ export default class Game extends EventEmitter {
           `game: choose ${localeChangers[key].name} as locale changer`
         );
         this.execString = localeChangers[key].exec;
+        return;
       }
     }
     logger.warn("game: no locale changer chosed. use default");
