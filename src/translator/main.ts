@@ -1,6 +1,8 @@
 import "muse-ui/dist/muse-ui.css";
 import "../resources/material-icons/material-icons.css";
 
+import "./class-component-hooks";
+
 import Vue from "vue";
 import axios from "axios";
 
@@ -28,10 +30,23 @@ import { ipcRenderer, remote } from "electron";
 import types from "../common/ipcTypes";
 
 ipcRenderer.on(
+  types.HAS_INSERTED_HOOK,
+  (event: Electron.Event, hook: Yagt.TextThread) => {
+    store.dispatch("Hooks/addHook", hook);
+  }
+);
+ipcRenderer.on(
+  types.HAS_REMOVED_HOOK,
+  (event: Electron.Event, hook: Yagt.TextThread) => {
+    store.dispatch("Hooks/removeHook", hook);
+  }
+);
+ipcRenderer.on(
   types.HAS_HOOK_TEXT,
   (event: Electron.Event, hook: Yagt.TextThread, text: string) => {
     if (!remote.getCurrentWindow().isVisible()) {
       remote.getCurrentWindow().show();
     }
+    store.dispatch("Hooks/setHookText", { hook, text });
   }
 );

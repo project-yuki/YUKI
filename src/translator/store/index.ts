@@ -2,7 +2,7 @@ import Vue from "vue";
 import * as Vuex from "vuex";
 import modules from "./modules";
 
-Vue.use(<any>Vuex);
+Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules,

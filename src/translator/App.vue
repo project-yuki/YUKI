@@ -1,8 +1,8 @@
 <template>
 <div id="app">
-  <p>I'm a translator~!</p>
-  <router-link :to="{name: 'blank'}">Nothing</router-link>
-  <router-link :to="{name: 'hooks'}">Hook Settings</router-link>
+  <p class="text-h1">{{currentOriginText}}</p> 
+  <router-link :to="{name: 'blank'}">返回</router-link>
+  <router-link :to="{name: 'hooks'}">文本钩子设置</router-link>
   <router-view></router-view>
 </div>
 </template>
@@ -10,23 +10,32 @@
 <script lang="ts">
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
-
-import { ipcRenderer } from "electron";
-import ipcTypes from "../common/ipcTypes";
+import { namespace } from "vuex-class";
 
 @Component
 export default class App extends Vue {
-  mounted() {}
+  @namespace("Hooks").Getter("getTextById")
+  getTextById!: (id: number) => string[];
+
+  @namespace("Hooks").State("currentDisplayHookIndex") currentIndex!: number;
+
+  get currentOriginText() {
+    let texts = this.getTextById(this.currentIndex);
+    if (texts) {
+      return texts[texts.length - 1];
+    }
+    return "";
+  }
 }
 </script>
 
 <style>
 html,
-body,
 #app {
-  width: 100%;
-  height: 100%;
+  min-width: 100%;
+  min-height: 100%;
   margin: 0;
+  padding: 0;
 }
 
 .text-h1 {
@@ -53,5 +62,9 @@ body,
 .full {
   width: 100%;
   height: 100%;
+}
+
+.div {
+  margin: 0;
 }
 </style>
