@@ -10,6 +10,10 @@
   version "0.0.6"
   resolved "http://registry.npm.taobao.org/7zip/download/7zip-0.0.6.tgz#9cafb171af82329490353b4816f03347aa150a30"
 
+"@types/caseless@*":
+  version "0.12.1"
+  resolved "http://registry.npm.taobao.org/@types/caseless/download/@types/caseless-0.12.1.tgz#9794c69c8385d0192acc471a540d1f8e0d16218a"
+
 "@types/ffi@^0.2.0":
   version "0.2.0"
   resolved "http://registry.npm.taobao.org/@types/ffi/download/@types/ffi-0.2.0.tgz#5c70fd9b5795888f51da8592e9d257771e448687"
@@ -17,6 +21,12 @@
     "@types/node" "*"
     "@types/ref" "*"
     "@types/ref-struct" "*"
+
+"@types/form-data@*":
+  version "2.2.1"
+  resolved "http://registry.npm.taobao.org/@types/form-data/download/@types/form-data-2.2.1.tgz#ee2b3b8eaa11c0938289953606b745b738c54b1e"
+  dependencies:
+    "@types/node" "*"
 
 "@types/js-yaml@^3.11.2":
   version "3.11.2"
@@ -41,6 +51,19 @@
   resolved "http://registry.npm.taobao.org/@types/ref/download/@types/ref-0.0.28.tgz#15a61253ed1259038b47499de1c9b0cbca57f55c"
   dependencies:
     "@types/node" "*"
+
+"@types/request@^2.47.1":
+  version "2.47.1"
+  resolved "http://registry.npm.taobao.org/@types/request/download/@types/request-2.47.1.tgz#25410d3afbdac04c91a94ad9efc9824100735824"
+  dependencies:
+    "@types/caseless" "*"
+    "@types/form-data" "*"
+    "@types/node" "*"
+    "@types/tough-cookie" "*"
+
+"@types/tough-cookie@*":
+  version "2.3.3"
+  resolved "http://registry.npm.taobao.org/@types/tough-cookie/download/@types/tough-cookie-2.3.3.tgz#7f226d67d654ec9070e755f46daebf014628e9d9"
 
 abbrev@1:
   version "1.1.1"
@@ -7086,7 +7109,7 @@ repeating@^2.0.0:
   dependencies:
     is-finite "^1.0.0"
 
-request@^2.45.0, request@^2.81.0, request@^2.83.0, request@^2.87.0:
+request@^2.45.0, request@^2.81.0, request@^2.83.0, request@^2.87.0, request@^2.88.0:
   version "2.88.0"
   resolved "http://registry.npm.taobao.org/request/download/request-2.88.0.tgz#9c2fca4f7d35b592efe57c7f0a55e81052124fef"
   dependencies:
