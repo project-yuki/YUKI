@@ -24,7 +24,7 @@ onlineApis:
     name: googleCN
     needSession: false
     requestBodyFormat: 'X{"q": %TEXT%, "sl": "ja", "hl": "zh-CN"}'
-    responseBodyPattern: Rclass="t0">(.*)<
+    responseBodyPattern: Rclass="t0">([^<]*)<
     url: https://translate.google.cn/m
   - enabled: false
     external: true
