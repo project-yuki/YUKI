@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import * as yaml from "js-yaml";
-import logger from "../logger";
+import logger from "../../common/logger";
 
 export default class Config {
   private filename: string;

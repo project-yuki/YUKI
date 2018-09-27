@@ -1,6 +1,6 @@
 import { app, ipcMain, dialog } from "electron";
 import types from "../../common/ipcTypes";
-import logger from "../logger";
+import logger from "../../common/logger";
 import config from "../config";
 import hooker from "../hooker";
 import Game from "../game";

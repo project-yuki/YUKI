@@ -1,5 +1,5 @@
 import types from "../common/ipcTypes";
-import logger from "./logger";
+import logger from "../common/logger";
 
 class HookerPublisher {
   private subscribers: Electron.WebContents[] = [];

@@ -1,5 +1,5 @@
 import { exec } from "child_process";
-import logger from "./logger";
+import logger from "../common/logger";
 import config from "./config";
 import { registerProcessExitCallback } from "./win32";
 import hooker from "./hooker";
