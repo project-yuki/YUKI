@@ -1,6 +1,6 @@
-const Win32Injector = require("inject-loader!../../../../src/common/win32");
+const Win32Injector = require("inject-loader!../../../../src/main/win32");
 
-describe("Config", () => {
+describe("Win32", () => {
   let callbackCalled;
 
   beforeEach(() => {

@@ -1,4 +1,4 @@
-const ConfigInjector = require("inject-loader!../../../../src/common/config");
+const ConfigInjector = require("inject-loader!../../../../src/main/config/config");
 
 describe("Config", () => {
   let fileWritten;

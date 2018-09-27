@@ -1,8 +1,8 @@
 import ipcTypes from "../../../../src/common/ipcTypes";
 
-const HookerInjector = require("inject-loader!../../../../src/common/hooker");
+const HookerInjector = require("inject-loader!../../../../src/main/hooker");
 
-describe("Config", () => {
+describe("Hooker", () => {
   let sendedCount;
   let hookerCallback;
 
