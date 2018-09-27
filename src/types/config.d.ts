@@ -6,7 +6,15 @@ declare namespace Yagt {
       exec: string;
     }
 
-    interface OnlineApiItem {}
+    interface OnlineApiItem {
+      name: string;
+      enabled: boolean;
+      url: string;
+      method: string;
+      needSession: boolean;
+      requestBodyFormat: string;
+      responseBodyPattern: string;
+    }
 
     export interface Default {
       localeChangers: LocaleChangerItem[];

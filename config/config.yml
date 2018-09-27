@@ -5,7 +5,7 @@ localeChangers:
     name: Locale Emulator
   noChanger:
     enabled: false
-    exec: '%GAME_PATH%'
+    exec: "%GAME_PATH%"
     name: 不转换
   ntleas:
     enabled: false
@@ -16,16 +16,16 @@ onlineApis:
     method: POST
     name: baidu
     needSession: false
-    requestBodyFormat: 'X^{"query": %TEXT%, "from": "jp", "to": "zh"}'
-    responseBodyPattern: 'O^%RESPONSE%.data[0].dst'
-    url: 'http://fanyi.baidu.com/transapi'
+    requestBodyFormat: 'X{"query": %TEXT%, "from": "jp", "to": "zh"}'
+    responseBodyPattern: J%RESPONSE%.data[0].dst
+    url: https://fanyi.baidu.com/transapi
   - enabled: false
-    method: POST
+    method: GET
     name: googleCN
     needSession: false
-    requestBodyFormat: 'X^{"q": %TEXT%, "sl": "ja", "hl": "zh-CN"}'
-    responseBodyPattern: R^/class="t0">(.*)</
-    url: 'https://translate.google.cn/m'
+    requestBodyFormat: 'X{"q": %TEXT%, "sl": "ja", "hl": "zh-CN"}'
+    responseBodyPattern: Rclass="t0">(.*)<
+    url: https://translate.google.cn/m
   - enabled: false
     external: true
     jsFile: config\youdaoApi.js
