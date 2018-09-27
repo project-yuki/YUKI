@@ -1,4 +1,4 @@
-import Config from "../../common/config";
+import Config from "./config";
 
 let defaultObject = {
   localeChangers: {

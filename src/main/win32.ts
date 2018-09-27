@@ -1,4 +1,3 @@
-import * as ref from "ref";
 import * as ffi from "ffi";
 import logger from "./logger";
 

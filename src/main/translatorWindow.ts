@@ -1,7 +1,7 @@
 import { BrowserWindow } from "electron";
 const electron = require("electron");
-import hooker from "../../common/hooker";
-import Game from "../game";
+import hooker from "./hooker";
+import Game from "./game";
 
 export default class TranslatorWindow {
   private readonly URL =

@@ -1,6 +1,6 @@
 import defaultConfig from "./default";
 import gamesConfig from "./games";
-import Config from "../../common/config";
+import Config from "./config";
 
 interface Configs {
   default: Config;

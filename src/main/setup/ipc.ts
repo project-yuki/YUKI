@@ -1,10 +1,10 @@
 import { app, ipcMain, dialog } from "electron";
 import types from "../../common/ipcTypes";
-import logger from "../../common/logger";
+import logger from "../logger";
 import config from "../config";
-import hooker from "../../common/hooker";
+import hooker from "../hooker";
 import Game from "../game";
-import TranslatorWindow from "./translatorWindow";
+import TranslatorWindow from "../translatorWindow";
 
 let runningGamePid = -1;
 

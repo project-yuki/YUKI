@@ -2,7 +2,7 @@ import { app, BrowserWindow, Tray, Menu } from "electron";
 import * as path from "path";
 import * as fs from "fs";
 
-import logger from "../common/logger";
+import logger from "./logger";
 
 // to make TypeScript happy :)
 declare global {
