@@ -1,19 +1,17 @@
 const request = require("request");
 import { Options, RequestCallback } from "request";
-import { EventEmitter } from "events";
 
-export default class Api extends EventEmitter {
+export default class Api implements Yagt.Api {
   private config: Yagt.Config.OnlineApiItem;
   private requestOptions: Options;
 
   constructor(config: Yagt.Config.OnlineApiItem) {
-    super();
     this.config = config;
     this.requestOptions = { url: "" };
     this.initRequestOptions();
   }
 
-  initRequestOptions() {
+  private initRequestOptions() {
     this.requestOptions = {
       url: this.config.url,
       method: this.config.method,
@@ -87,5 +85,13 @@ export default class Api extends EventEmitter {
 
   isEnabled() {
     return this.config.enabled;
+  }
+
+  setEnabled(isEnabled: boolean) {
+    this.config.enabled = isEnabled;
+  }
+
+  getName() {
+    return this.config.name;
   }
 }
