@@ -41,6 +41,10 @@ describe("Config", () => {
       },
       "js-yaml": {
         safeLoad: () => expected
+      },
+      "../../common/logger": {
+        debug: () => {},
+        error: () => {}
       }
     }).default;
 
@@ -66,6 +70,10 @@ describe("Config", () => {
       },
       "js-yaml": {
         safeDump: () => {}
+      },
+      "../../common/logger": {
+        debug: () => {},
+        error: () => {}
       }
     }).default;
 
@@ -94,6 +102,10 @@ describe("Config", () => {
         safeDump: obj => {
           expect(obj).to.deep.equal(expected);
         }
+      },
+      "../../common/logger": {
+        debug: () => {},
+        error: () => {}
       }
     }).default;
 
@@ -134,6 +146,10 @@ describe("Config", () => {
         safeDump: obj => {
           expect(obj).to.deep.equal(expectedModified);
         }
+      },
+      "../../common/logger": {
+        debug: () => {},
+        error: () => {}
       }
     }).default;
 });

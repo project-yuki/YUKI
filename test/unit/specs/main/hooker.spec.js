@@ -33,6 +33,10 @@ describe("Hooker", () => {
         start() {},
         open() {},
         onThreadCreate() {}
+      },
+      "../common/logger": {
+        debug: () => {},
+        error: () => {}
       }
     }).default;
 
@@ -126,6 +130,10 @@ describe("Hooker", () => {
           hookerCallback({ test: 0 });
         },
         onThreadCreate() {}
+      },
+      "../common/logger": {
+        debug: () => {},
+        error: () => {}
       }
     }).default;
 
@@ -152,6 +160,10 @@ describe("Hooker", () => {
           hookerCallback({ test: 0 });
         },
         onThreadCreate() {}
+      },
+      "../common/logger": {
+        debug: () => {},
+        error: () => {}
       }
     }).default;
 
@@ -176,6 +188,10 @@ describe("Hooker", () => {
           hookerCallback({ test: 0 });
         },
         onThreadCreate() {}
+      },
+      "../common/logger": {
+        debug: () => {},
+        error: () => {}
       }
     }).default;
 
@@ -200,6 +216,10 @@ describe("Hooker", () => {
           hookerCallback({ test: 0 });
         },
         onThreadCreate() {}
+      },
+      "../common/logger": {
+        debug: () => {},
+        error: () => {}
       }
     }).default;
 });
