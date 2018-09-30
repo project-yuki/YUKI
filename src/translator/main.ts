@@ -58,7 +58,7 @@ ipcRenderer.on(
 );
 ipcRenderer.on(
   types.HAS_TRANSLATION,
-  (event: Electron.Event, translations: Yagt.Translations) => {
-    store.dispatch("Hooks/setTranslation", translations);
+  (event: Electron.Event, translation: Yagt.Translations["translations"]) => {
+    store.dispatch("Hooks/mergeTranslation", translation);
   }
 );

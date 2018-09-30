@@ -51,6 +51,23 @@ const mutations = {
     payload: { translations: Yagt.Translations }
   ) {
     state.translationsForCurrentIndex = payload.translations;
+  },
+  MERGE_TRANSLATION(
+    state: Yagt.TranslatorHookState,
+    payload: { translation: Yagt.Translations["translations"] }
+  ) {
+    for (let key in payload.translation) {
+      state.translationsForCurrentIndex.translations = {
+        ...state.translationsForCurrentIndex.translations,
+        ...{ [key]: payload.translation[key] }
+      };
+    }
+  },
+  CLEAR_TRANSLATION(state: Yagt.TranslatorHookState) {
+    let translations = state.translationsForCurrentIndex.translations;
+    for (let key in translations) {
+      translations[key] = "...";
+    }
   }
 };
 
@@ -69,18 +86,19 @@ const actions = {
     }: { dispatch: Dispatch; commit: Commit; state: Yagt.HooksState },
     { hook, text }: { hook: Yagt.TextThread; text: string }
   ) {
-    if (state.hookInfos.find(h => h.num === hook.num) === undefined) {
-      dispatch("addHook", hook).then(() => {
-        commit("SET_HOOK_TEXT", { hookNum: hook.num, text });
-        if (state.currentDisplayHookIndex === hook.num) {
-          ipcRenderer.send(ipcTypes.REQUEST_TRANSLATION, text);
-        }
-      });
-    } else {
+    let commonActions = () => {
       commit("SET_HOOK_TEXT", { hookNum: hook.num, text });
       if (state.currentDisplayHookIndex === hook.num) {
+        commit("CLEAR_TRANSLATION");
         ipcRenderer.send(ipcTypes.REQUEST_TRANSLATION, text);
       }
+    };
+    if (state.hookInfos.find(h => h.num === hook.num) === undefined) {
+      dispatch("addHook", hook).then(() => {
+        commonActions();
+      });
+    } else {
+      commonActions();
     }
   },
   setTranslation(
@@ -88,6 +106,12 @@ const actions = {
     translations: Yagt.Translations
   ) {
     commit("SET_TRANSLATION", { translations });
+  },
+  mergeTranslation(
+    { commit }: { commit: Commit },
+    translation: Yagt.Translations["translations"]
+  ) {
+    commit("MERGE_TRANSLATION", { translation });
   },
   chooseHookAsDisplay({ commit }: { commit: Commit }, hookNum: number) {
     commit("CHOOSE_HOOK_AS_DISPLAY", { hookNum });
