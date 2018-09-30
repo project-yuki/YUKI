@@ -2,6 +2,7 @@ import { BrowserWindow } from "electron";
 const electron = require("electron");
 import hooker from "./hooker";
 import Game from "./game";
+const electronVibrancy = require("electron-vibrancy");
 
 export default class TranslatorWindow {
   private readonly URL =
@@ -35,10 +36,14 @@ export default class TranslatorWindow {
         }
       },
       show: false,
-      alwaysOnTop: true
+      alwaysOnTop: true,
+      transparent: true,
+      frame: false
     });
 
-    this.window.once("ready-to-show", () => {
+    this.window.on("ready-to-show", () => {
+      electronVibrancy.SetVibrancy(this.window, 3);
+
       console.debug("subscribing hooker events...");
       this.subscribeHookerEvents();
       this.window.show();

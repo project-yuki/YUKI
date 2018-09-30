@@ -1,5 +1,6 @@
 <template>
 <div id="app">
+  <gt-titlebar></gt-titlebar>
   <p class="text-h1">{{currentOriginText}}</p>
   <gt-text-display 
     v-for="(translation, key) in translationsForCurrentIndex.translations"
@@ -21,10 +22,12 @@ import { ipcRenderer, remote } from "electron";
 import ipcTypes from "../common/ipcTypes";
 
 import GtTextDisplay from "@/components/TextDisplay.vue";
+import GtTitlebar from "@/components/Titlebar.vue";
 
 @Component({
   components: {
-    GtTextDisplay
+    GtTextDisplay,
+    GtTitlebar
   }
 })
 export default class App extends Vue {
@@ -52,7 +55,7 @@ export default class App extends Vue {
   updated() {
     if (this.$router.currentRoute.name === "blank") {
       this.$nextTick(() => {
-        let newHeight = document.body.offsetHeight + 60;
+        let newHeight = document.body.offsetHeight;
         let window = remote.getCurrentWindow();
         let width = window.getSize()[0];
         window.setSize(width, newHeight);
@@ -68,11 +71,24 @@ export default class App extends Vue {
 }
 
 html,
+body,
 #app {
   min-width: 100%;
   min-height: 100%;
   margin: 0;
   padding: 0;
+  background: none;
+}
+
+body {
+  background-color: rgba(33, 150, 243, 0.6);
+  -webkit-user-select: none;
+}
+
+.text-h1,
+.text-h2,
+.text-h3 {
+  color: white;
 }
 
 .text-h1 {

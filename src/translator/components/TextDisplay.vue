@@ -28,7 +28,7 @@ export default class TextDisplay extends Vue {
 
 <style scoped>
 .name {
-  color: #2196f3;
+  color: #ffeb3b;
 }
 
 .margin-top {
