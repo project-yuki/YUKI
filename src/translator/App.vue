@@ -14,10 +14,10 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { Component } from "vue-property-decorator";
+import { Component, Watch } from "vue-property-decorator";
 import { namespace } from "vuex-class";
 
-import { ipcRenderer } from "electron";
+import { ipcRenderer, remote } from "electron";
 import ipcTypes from "../common/ipcTypes";
 
 import GtTextDisplay from "@/components/TextDisplay.vue";
@@ -48,10 +48,25 @@ export default class App extends Vue {
   mounted() {
     ipcRenderer.send(ipcTypes.REQUEST_CONFIG, "default");
   }
+
+  updated() {
+    if (this.$router.currentRoute.name === "blank") {
+      this.$nextTick(() => {
+        let newHeight = document.body.offsetHeight + 60;
+        let window = remote.getCurrentWindow();
+        let width = window.getSize()[0];
+        window.setSize(width, newHeight);
+      });
+    }
+  }
 }
 </script>
 
 <style>
+* {
+  margin: 0;
+}
+
 html,
 #app {
   min-width: 100%;

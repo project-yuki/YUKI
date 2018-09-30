@@ -1,5 +1,5 @@
 <template>
-<mu-container>
+<mu-container class="margin-top">
   <mu-row>
     <mu-col span="2">
       <div class="text-h3 name">{{name}}</div>
@@ -29,5 +29,9 @@ export default class TextDisplay extends Vue {
 <style scoped>
 .name {
   color: #2196f3;
+}
+
+.margin-top {
+  margin-top: 24px;
 }
 </style>
