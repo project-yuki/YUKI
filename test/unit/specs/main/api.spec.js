@@ -1,7 +1,8 @@
 import Api from "../../../../src/main/translate/api";
+import TranslationManager from "../../../../src/main/translate/translationManager";
 
 describe("Api", () => {
-  it("get translation from form and parse with object", done => {
+  it("gets translation from form and parses with object", done => {
     let baidu = new Api({
       name: "baidu",
       url: "https://fanyi.baidu.com/transapi",
@@ -19,7 +20,7 @@ describe("Api", () => {
     );
   });
 
-  it("get translation from form and parse with regex", done => {
+  it("gets translation from form and parses with regex", done => {
     let googleCN = new Api({
       name: "googleCN",
       url: "https://translate.google.cn/m",
@@ -37,5 +38,112 @@ describe("Api", () => {
         done();
       }
     );
+  });
+
+  it("combines multiple translations into Yagt.Translations object", done => {
+    let apis = [
+      {
+        name: "baidu",
+        url: "https://fanyi.baidu.com/transapi",
+        method: "POST",
+        requestBodyFormat: 'X{"query": %TEXT%, "from": "jp", "to": "zh"}',
+        responseBodyPattern: "J%RESPONSE%.data[0].dst",
+        enabled: true
+      },
+      {
+        name: "googleCN",
+        url: "https://translate.google.cn/m",
+        method: "POST",
+        requestBodyFormat: 'X{"q": %TEXT%, "sl": "ja", "hl": "zh-CN"}',
+        responseBodyPattern: 'Rclass="t0">([^<]*)<',
+        enabled: true
+      }
+    ];
+
+    TranslationManager.getInstance()
+      .initialize(apis)
+      .translate(
+        "悠真くんを攻略すれば２１０円か。なるほどなぁ…",
+        translations => {
+          expect(translations).to.deep.equal({
+            original: "悠真くんを攻略すれば２１０円か。なるほどなぁ…",
+            translations: {
+              baidu: "如果攻略悠真的话是210日元。原来如此啊…",
+              googleCN: "如果你捕获Yuen-kun，它是210日元。我明白了......"
+            }
+          });
+          done();
+        }
+      );
+  });
+
+  it("returns no translation if there is no enabled api", done => {
+    let apis = [
+      {
+        name: "baidu",
+        url: "https://fanyi.baidu.com/transapi",
+        method: "POST",
+        requestBodyFormat: 'X{"query": %TEXT%, "from": "jp", "to": "zh"}',
+        responseBodyPattern: "J%RESPONSE%.data[0].dst",
+        enabled: false
+      },
+      {
+        name: "googleCN",
+        url: "https://translate.google.cn/m",
+        method: "POST",
+        requestBodyFormat: 'X{"q": %TEXT%, "sl": "ja", "hl": "zh-CN"}',
+        responseBodyPattern: 'Rclass="t0">([^<]*)<',
+        enabled: false
+      }
+    ];
+
+    TranslationManager.getInstance()
+      .initialize(apis)
+      .translate(
+        "悠真くんを攻略すれば２１０円か。なるほどなぁ…",
+        translations => {
+          expect(translations).to.deep.equal({
+            original: "悠真くんを攻略すれば２１０円か。なるほどなぁ…",
+            translations: {}
+          });
+          done();
+        }
+      );
+  });
+
+  it("returns translations for any enabled apis", done => {
+    let apis = [
+      {
+        name: "baidu",
+        url: "https://fanyi.baidu.com/transapi",
+        method: "POST",
+        requestBodyFormat: 'X{"query": %TEXT%, "from": "jp", "to": "zh"}',
+        responseBodyPattern: "J%RESPONSE%.data[0].dst",
+        enabled: true
+      },
+      {
+        name: "googleCN",
+        url: "https://translate.google.cn/m",
+        method: "POST",
+        requestBodyFormat: 'X{"q": %TEXT%, "sl": "ja", "hl": "zh-CN"}',
+        responseBodyPattern: 'Rclass="t0">([^<]*)<',
+        enabled: false
+      }
+    ];
+
+    TranslationManager.getInstance()
+      .initialize(apis)
+      .translate(
+        "悠真くんを攻略すれば２１０円か。なるほどなぁ…",
+        translations => {
+          expect(translations).to.deep.equal({
+            original: "悠真くんを攻略すれば２１０円か。なるほどなぁ…",
+            translations: {
+              baidu: "如果攻略悠真的话是210日元。原来如此啊…"
+            }
+          });
+          done();
+        }
+      );
   });
 });
