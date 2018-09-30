@@ -16,4 +16,8 @@ declare namespace Yagt {
     default: any;
     games: Game[];
   }
+
+  export interface TranslatorHookState extends HooksState {
+    translationsForCurrentIndex: Translations;
+  }
 }

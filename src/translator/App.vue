@@ -1,6 +1,11 @@
 <template>
 <div id="app">
-  <p class="text-h1">{{currentOriginText}}</p> 
+  <p class="text-h1">{{currentOriginText}}</p>
+  <gt-text-display 
+    v-for="(translation, key) in translationsForCurrentIndex.translations"
+    :key="key"
+    :name="key"
+    :translation="translation"></gt-text-display>
   <router-link :to="{name: 'blank'}">返回</router-link>
   <router-link :to="{name: 'hooks'}">文本钩子设置</router-link>
   <router-view></router-view>
@@ -12,12 +17,25 @@ import Vue from "vue";
 import { Component } from "vue-property-decorator";
 import { namespace } from "vuex-class";
 
-@Component
+import { ipcRenderer } from "electron";
+import ipcTypes from "../common/ipcTypes";
+
+import GtTextDisplay from "@/components/TextDisplay.vue";
+
+@Component({
+  components: {
+    GtTextDisplay
+  }
+})
 export default class App extends Vue {
   @namespace("Hooks").Getter("getTextById")
   getTextById!: (id: number) => string[];
 
-  @namespace("Hooks").State("currentDisplayHookIndex") currentIndex!: number;
+  @namespace("Hooks").State("currentDisplayHookIndex")
+  currentIndex!: number;
+
+  @namespace("Hooks").State("translationsForCurrentIndex")
+  translationsForCurrentIndex!: Yagt.Translations;
 
   get currentOriginText() {
     let texts = this.getTextById(this.currentIndex);
@@ -25,6 +43,10 @@ export default class App extends Vue {
       return texts[texts.length - 1];
     }
     return "";
+  }
+
+  mounted() {
+    ipcRenderer.send(ipcTypes.REQUEST_CONFIG, "default");
   }
 }
 </script>

@@ -1,5 +1,6 @@
 const request = require("request");
 import { Options, RequestCallback } from "request";
+import logger from "../../common/logger";
 
 export default class Api implements Yagt.Api {
   private config: Yagt.Config.OnlineApiItem;
@@ -26,9 +27,10 @@ export default class Api implements Yagt.Api {
     this.generateRequestBody(text);
     this.sendRequest((error, response, body) => {
       if (error || response.statusCode != 200) {
-        throw new Error(
+        logger.error(
           `API [${this.config.name}]: ${response.statusCode} ${error}`
         );
+        callback("");
       }
       let translation = this.parseResponse(body);
       callback(translation);
@@ -38,14 +40,14 @@ export default class Api implements Yagt.Api {
   private generateRequestBody(text: string) {
     let requestBodyString = this.config.requestBodyFormat.replace(
       "%TEXT%",
-      `"${text}"`
+      `"${text.trim()}"`
     );
     if (this.config.requestBodyFormat.startsWith("X")) {
       this.requestOptions.form = JSON.parse(requestBodyString.substring(1));
     } else if (this.config.requestBodyFormat.startsWith("J")) {
       this.requestOptions.json = eval(requestBodyString.substring(1));
     } else {
-      throw new Error(`API [${this.config.name}]: No such request body type`);
+      logger.error(`API [${this.config.name}]: No such request body type`);
     }
   }
 
@@ -59,9 +61,8 @@ export default class Api implements Yagt.Api {
     } else if (this.config.responseBodyPattern.startsWith("R")) {
       return this.parseResponseByRegExp(body);
     } else {
-      throw new Error(
-        `API [${this.config.name}]: No such response parser type`
-      );
+      logger.error(`API [${this.config.name}]: No such response parser type`);
+      return "";
     }
   }
 

@@ -5,6 +5,7 @@ import config from "../config";
 import hooker from "../hooker";
 import Game from "../game";
 import TranslatorWindow from "../translatorWindow";
+import TranslationManager from "../translate/translationManager";
 
 let runningGamePid = -1;
 
@@ -14,6 +15,9 @@ let translatorWindow: TranslatorWindow;
 export default function(mainWindow: Electron.BrowserWindow) {
   ipcMain.on(types.MAIN_PAGE_LOAD_FINISHED, () => {
     logger.info(`main page load finished.`);
+    TranslationManager.getInstance().initialize(
+      config.default.get().onlineApis
+    );
   });
 
   ipcMain.on(
@@ -135,4 +139,13 @@ export default function(mainWindow: Electron.BrowserWindow) {
   ipcMain.on(types.APP_EXIT, (event: Electron.Event) => {
     app.quit();
   });
+
+  ipcMain.on(
+    types.REQUEST_TRANSLATION,
+    (event: Electron.Event, text: string) => {
+      TranslationManager.getInstance().translate(text, translations => {
+        event.sender.send(types.HAS_TRANSLATION, translations);
+      });
+    }
+  );
 }

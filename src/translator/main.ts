@@ -50,3 +50,15 @@ ipcRenderer.on(
     store.dispatch("Hooks/setHookText", { hook, text });
   }
 );
+ipcRenderer.on(
+  types.HAS_CONFIG,
+  (event: Electron.Event, name: string, cfgs: object) => {
+    store.dispatch("Config/setConfig", cfgs);
+  }
+);
+ipcRenderer.on(
+  types.HAS_TRANSLATION,
+  (event: Electron.Event, translations: Yagt.Translations) => {
+    store.dispatch("Hooks/setTranslation", translations);
+  }
+);

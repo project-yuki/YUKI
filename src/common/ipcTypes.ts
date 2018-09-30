@@ -23,5 +23,8 @@ export default {
 
   REQUEST_RUN_GAME: "request-run-game",
 
+  REQUEST_TRANSLATION: "request-translation",
+  HAS_TRANSLATION: "has-translation",
+
   APP_EXIT: "app-exit"
 };
