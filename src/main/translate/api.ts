@@ -67,11 +67,16 @@ export default class Api implements Yagt.Api {
   }
 
   private parseResponseByJsObject(body: string): string {
-    let bodyObject = JSON.parse(body);
+    global.tempTranslationPattern[this.getName()] = JSON.parse(body);
     let toEval = this.config.responseBodyPattern
       .substring(1)
-      .replace("%RESPONSE%", "bodyObject");
-    return eval(toEval);
+      .replace(
+        "%RESPONSE%",
+        `global.tempTranslationPattern["${this.getName()}"]`
+      );
+    let result = eval(toEval);
+    delete global.tempTranslationPattern[this.getName()];
+    return result;
   }
 
   private parseResponseByRegExp(body: string) {

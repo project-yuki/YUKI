@@ -10,6 +10,9 @@ declare global {
     export interface Global {
       __static: string;
       __baseDir: string;
+      tempTranslationPattern: {
+        [name: string]: any;
+      };
     }
   }
 }
@@ -31,6 +34,8 @@ if (process.env.NODE_ENV !== "development") {
     .join(__dirname, "/static")
     .replace(/\\/g, "\\\\");
 }
+
+global.tempTranslationPattern = {};
 
 global.__baseDir = path.join(__dirname, "../..");
 logger.debug(`basePath: ${global.__baseDir}`);
