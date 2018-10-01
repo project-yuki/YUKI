@@ -53,7 +53,7 @@ ipcRenderer.on(
 ipcRenderer.on(
   types.HAS_CONFIG,
   (event: Electron.Event, name: string, cfgs: object) => {
-    store.dispatch("Config/setConfig", cfgs);
+    store.dispatch("Config/setConfig", { name, cfgs });
   }
 );
 ipcRenderer.on(

@@ -50,6 +50,7 @@ export default class App extends Vue {
 
   mounted() {
     ipcRenderer.send(ipcTypes.REQUEST_CONFIG, "default");
+    ipcRenderer.send(ipcTypes.REQUEST_CONFIG, "game");
   }
 
   updated() {

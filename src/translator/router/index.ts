@@ -1,5 +1,5 @@
 import Vue from "vue";
-import Router, { Route } from "vue-router";
+import Router from "vue-router";
 
 import BlankPage from "@/components/BlankPage.vue";
 import HooksPage from "@/components/HooksPage.vue";

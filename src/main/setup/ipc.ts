@@ -7,8 +7,6 @@ import Game from "../game";
 import TranslatorWindow from "../translatorWindow";
 import TranslationManager from "../translate/translationManager";
 
-let runningGamePid = -1;
-
 let runningGame: Game;
 let translatorWindow: TranslatorWindow;
 
@@ -42,8 +40,10 @@ export default function(mainWindow: Electron.BrowserWindow) {
   ipcMain.on(
     types.REQUEST_INSERT_HOOK,
     (event: Electron.Event, code: string) => {
-      logger.debug(`inserting hook ${code} to process ${runningGamePid}...`);
-      hooker.insertHook(runningGamePid, code);
+      logger.debug(
+        `inserting hook ${code} to process ${runningGame.getPid()}...`
+      );
+      hooker.insertHook(runningGame.getPid(), code);
       logger.debug(`hook ${code} inserted`);
     }
   );
@@ -52,9 +52,9 @@ export default function(mainWindow: Electron.BrowserWindow) {
     types.REQUEST_REMOVE_HOOK,
     (event: Electron.Event, thread: Yagt.TextThread) => {
       logger.debug(
-        `removing hook ${thread.hook} from process ${runningGamePid}...`
+        `removing hook ${thread.hook} from process ${runningGame.getPid()}...`
       );
-      hooker.removeHook(runningGamePid, thread.hook);
+      hooker.removeHook(runningGame.getPid(), thread.hook);
       logger.debug(`hook ${thread.hook} removed`);
     }
   );
@@ -68,6 +68,14 @@ export default function(mainWindow: Electron.BrowserWindow) {
       case "games":
         logger.debug(`request config ${config.games.getFileName()}`);
         event.sender.send(types.HAS_CONFIG, name, config.games.get().games);
+        break;
+      case "game":
+        logger.debug(`request config ${translatorWindow.getGameInfo()}`);
+        event.sender.send(
+          types.HAS_CONFIG,
+          name,
+          translatorWindow.getGameInfo()
+        );
         break;
       default:
         logger.error(`invalid config name: ${name}`);

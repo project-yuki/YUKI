@@ -6,6 +6,7 @@ import ipcTypes from "../../../common/ipcTypes";
 const state: Yagt.TranslatorHookState = {
   hookInfos: [],
   texts: {},
+  toDisplayHookCode: "",
   currentDisplayHookIndex: -1,
   translationsForCurrentIndex: {
     original: "",
@@ -46,6 +47,12 @@ const mutations = {
   ) {
     state.currentDisplayHookIndex = payload.hookNum;
   },
+  INIT_DISPLAY_HOOK(
+    state: Yagt.TranslatorHookState,
+    payload: { code: string }
+  ) {
+    state.toDisplayHookCode = payload.code;
+  },
   SET_TRANSLATION(
     state: Yagt.TranslatorHookState,
     payload: { translations: Yagt.Translations }
@@ -72,8 +79,15 @@ const mutations = {
 };
 
 const actions = {
-  addHook({ commit }: { commit: Commit }, hook: Yagt.TextThread) {
+  addHook(
+    { commit, state }: { commit: Commit; state: Yagt.TranslatorHookState },
+    hook: Yagt.TextThread
+  ) {
     commit("ADD_HOOK", { hook });
+    if (hook.hcode.toLowerCase() === state.toDisplayHookCode.toLowerCase()) {
+      commit("CHOOSE_HOOK_AS_DISPLAY", { hookNum: hook.num });
+      commit("INIT_DISPLAY_HOOK", { code: "" });
+    }
   },
   removeHook({ commit }: { commit: Commit }, hook: Yagt.RemovedTextThread) {
     commit("REMOVE_HOOK", { hook });
@@ -83,7 +97,7 @@ const actions = {
       dispatch,
       commit,
       state
-    }: { dispatch: Dispatch; commit: Commit; state: Yagt.HooksState },
+    }: { dispatch: Dispatch; commit: Commit; state: Yagt.TranslatorHookState },
     { hook, text }: { hook: Yagt.TextThread; text: string }
   ) {
     let commonActions = () => {

@@ -1,21 +1,48 @@
 import { Commit } from "vuex";
 import TranslationManager from "../../../main/translate/translationManager";
+import logger from "../../../common/logger";
+import { ipcRenderer } from "electron";
+import ipcTypes from "../../../common/ipcTypes";
 
-const state: Yagt.ConfigState = {
+const state: Yagt.TranslatorConfigState = {
   default: {},
-  games: []
+  game: {
+    name: "",
+    code: "",
+    path: ""
+  }
 };
 
 const mutations = {
-  SET_CONFIG(state: Yagt.ConfigState, payload: { cfgs: any }) {
-    state.default = payload.cfgs;
-    TranslationManager.getInstance().initialize(payload.cfgs.onlineApis);
+  SET_CONFIG(
+    state: Yagt.TranslatorConfigState,
+    payload: { name: string; cfgs: any }
+  ) {
+    switch (payload.name) {
+      case "default":
+        state.default = payload.cfgs;
+        TranslationManager.getInstance().initialize(state.default.onlineApis);
+        break;
+      case "game":
+        state.game = payload.cfgs;
+        break;
+      default:
+        logger.error(`translator window: invalid config name: ${payload.name}`);
+        break;
+    }
   }
 };
 
 const actions = {
-  setConfig({ commit }: { commit: Commit }, cfgs: any) {
-    commit("SET_CONFIG", { cfgs });
+  setConfig(
+    { commit }: { commit: Commit },
+    { name, cfgs }: { name: string; cfgs: any }
+  ) {
+    commit("SET_CONFIG", { name, cfgs });
+    if (name === "game") {
+      commit("Hooks/INIT_DISPLAY_HOOK", { code: cfgs.code }, { root: true });
+      ipcRenderer.send(ipcTypes.REQUEST_INSERT_HOOK, cfgs.code);
+    }
   }
 };
 

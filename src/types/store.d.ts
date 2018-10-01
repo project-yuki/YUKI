@@ -19,5 +19,11 @@ declare namespace Yagt {
 
   export interface TranslatorHookState extends HooksState {
     translationsForCurrentIndex: Translations;
+    toDisplayHookCode: string;
+  }
+
+  export interface TranslatorConfigState {
+    default: any;
+    game: Game;
   }
 }

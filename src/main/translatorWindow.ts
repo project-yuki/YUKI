@@ -89,4 +89,8 @@ export default class TranslatorWindow {
   setGame(game: Game) {
     this.game = game;
   }
+
+  getGameInfo(): Yagt.Game {
+    return this.game.getInfo();
+  }
 }

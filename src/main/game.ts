@@ -61,7 +61,6 @@ export default class Game extends EventEmitter {
     logger.debug(`game: finding pid of ${this.exeName}...`);
     this.tryGetPidAnd(() => {
       this.injectProcessByPid();
-      this.insertHookIfHasCode();
       this.emit("started", this);
       this.registerProcessExitCallback();
     });
@@ -95,14 +94,6 @@ export default class Game extends EventEmitter {
     logger.debug(`injecting process ${this.pid}...`);
     hooker.injectProcess(this.pid);
     logger.debug(`process ${this.pid} injected`);
-  }
-
-  private insertHookIfHasCode() {
-    if (this.code !== "") {
-      logger.debug(`inserting hook ${this.code} to process ${this.pid}...`);
-      hooker.insertHook(this.pid, this.code);
-      logger.debug(`hook ${this.code} inserted`);
-    }
   }
 
   private registerProcessExitCallback() {
