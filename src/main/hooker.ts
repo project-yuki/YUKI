@@ -60,10 +60,6 @@ interface PublisherMap {
 class Hooker {
   private hooker: Yagt.Hooker = require("../../nexthooker");
 
-  private threadCreatePublisher = new HookerPublisher(types.HAS_INSERTED_HOOK);
-  private threadRemovePublisher = new HookerPublisher(types.HAS_REMOVED_HOOK);
-  private threadOutputPublisher = new HookerPublisher(types.HAS_HOOK_TEXT);
-
   constructor() {
     this.hooker.start();
     this.initHookerCallbacks();
@@ -75,24 +71,24 @@ class Hooker {
       (tt: Yagt.TextThread) => {
         logger.debug("hooker: thread created");
         logger.debug(tt);
-        this.threadCreatePublisher.publish(tt);
+        this.publisherMap["thread-create"].publish(tt);
       },
       (tt: Yagt.TextThread, text: string) => {
         logger.debug(`hooker: [${tt.num}]: ${text}`);
-        this.threadOutputPublisher.publish(tt, text);
+        this.publisherMap["thread-output"].publish(tt, text);
       }
     );
     this.hooker.onThreadRemove((tt: Yagt.RemovedTextThread) => {
       logger.debug("hooker: thread removed");
       logger.debug(tt);
-      this.threadRemovePublisher.publish(tt);
+      this.publisherMap["thread-remove"].publish(tt);
     });
   }
 
   private publisherMap: PublisherMap = {
-    "thread-create": this.threadCreatePublisher,
-    "thread-remove": this.threadRemovePublisher,
-    "thread-output": this.threadOutputPublisher
+    "thread-create": new HookerPublisher(types.HAS_INSERTED_HOOK),
+    "thread-remove": new HookerPublisher(types.HAS_REMOVED_HOOK),
+    "thread-output": new HookerPublisher(types.HAS_HOOK_TEXT)
   };
 
   public subscribe(on: keyof PublisherMap, webContents: Electron.WebContents) {
