@@ -1,5 +1,6 @@
 import types from "../common/ipcTypes";
 import logger from "../common/logger";
+import TextInterceptor from "./textInterceptor";
 
 class HookerPublisher {
   private subscribers: Electron.WebContents[] = [];
@@ -74,8 +75,10 @@ class Hooker {
         this.publisherMap["thread-create"].publish(tt);
       },
       (tt: Yagt.TextThread, text: string) => {
-        logger.debug(`hooker: [${tt.num}]: ${text}`);
-        this.publisherMap["thread-output"].publish(tt, text);
+        if (!TextInterceptor.getInstance().isSenseless(text)) {
+          logger.debug(`hooker: [${tt.num}]: ${text}`);
+          this.publisherMap["thread-output"].publish(tt, text);
+        }
       }
     );
     this.hooker.onThreadRemove((tt: Yagt.RemovedTextThread) => {
