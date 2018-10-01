@@ -179,5 +179,5 @@ function sendGamesConfig(event: Electron.Event) {
 }
 
 function sendGameInfo(event: Electron.Event) {
-  event.sender.send(types.HAS_CONFIG, name, translatorWindow.getGameInfo());
+  event.sender.send(types.HAS_CONFIG, "game", translatorWindow.getGameInfo());
 }
