@@ -4,7 +4,13 @@ export default class TextInterceptor {
     return this.instance;
   }
 
-  senselessTextPatterns: string[] = ["windowbtn", "00_プロローグ１", "value"];
+  senselessTextPatterns: string[] = [
+    "windowbtn",
+    "00_プロローグ１",
+    "value",
+    "sys",
+    "\u00020"
+  ];
   static readonly MAX_LENGTH = 255;
 
   isSenseless(text: string): boolean {
