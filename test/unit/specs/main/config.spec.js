@@ -77,38 +77,6 @@ describe("Config", () => {
       }
     }).default;
 
-  it("creates folder and save default if file not exist and there isn't ./config folder", () => {
-    const Config = makeCreateFolderTestingConfig();
-
-    const testConfig = new Config("invalid/config/path", expected);
-
-    expect(folderCreated).to.equal(true);
-    expect(fileWritten).to.equal(true);
-    expect(testConfig.get()).to.deep.equal(expected);
-  });
-
-  const makeCreateFolderTestingConfig = () =>
-    ConfigInjector({
-      fs: {
-        existsSync: () => false,
-        mkdirSync: dirname => {
-          if (dirname === "config") folderCreated = true;
-        },
-        writeFileSync: () => {
-          fileWritten = true;
-        }
-      },
-      "js-yaml": {
-        safeDump: obj => {
-          expect(obj).to.deep.equal(expected);
-        }
-      },
-      "../../common/logger": {
-        debug: () => {},
-        error: () => {}
-      }
-    }).default;
-
   it("saves after calling save()", () => {
     const Config = makeSaveTestingConfig();
 

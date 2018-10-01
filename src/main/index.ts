@@ -14,8 +14,12 @@ declare global {
   }
 }
 
-// check & make ./logs folder
+// check & make ./logs and ./config folder
 {
+  if (!fs.existsSync("config")) {
+    fs.mkdirSync("config");
+    logger.debug("created ./config folder");
+  }
   if (!fs.existsSync("logs")) {
     fs.mkdirSync("logs");
     logger.debug("created ./logs folder");

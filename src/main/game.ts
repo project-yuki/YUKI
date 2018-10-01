@@ -1,6 +1,6 @@
 import { exec } from "child_process";
 import logger from "../common/logger";
-import configs from "./config";
+import configManager from "./config";
 import { registerProcessExitCallback } from "./win32";
 import hooker from "./hooker";
 import { EventEmitter } from "events";
@@ -37,8 +37,9 @@ export default class Game extends EventEmitter {
   }
 
   private getRawExecStringOrDefault() {
-    const localeChangers: Yagt.Config.Default["localeChangers"] = configs.default.get()
-      .localeChangers;
+    const localeChangers: Yagt.Config.Default["localeChangers"] = configManager
+      .getInstance()
+      .get("default").localeChangers;
     for (let key in localeChangers) {
       if (localeChangers[key].enabled === true) {
         logger.debug(

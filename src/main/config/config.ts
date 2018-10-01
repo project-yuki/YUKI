@@ -16,16 +16,8 @@ export default class Config {
   }
 
   private checkAndSaveDefault(defaultObject: any) {
-    this.checkAndMakeConfigFolder();
     this.config = defaultObject;
     this.save();
-  }
-
-  private checkAndMakeConfigFolder() {
-    if (!fs.existsSync("config")) {
-      fs.mkdirSync("config");
-      logger.debug("created ./config folder");
-    }
   }
 
   load() {
