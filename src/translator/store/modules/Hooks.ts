@@ -3,6 +3,8 @@ import { Commit, Dispatch } from "vuex";
 import { ipcRenderer } from "electron";
 import ipcTypes from "../../../common/ipcTypes";
 
+const MAX_STORE_COUNT = 16;
+
 const state: Yagt.TranslatorHookState = {
   hookInfos: [],
   texts: {},
@@ -39,7 +41,11 @@ const mutations = {
     state: Yagt.TranslatorHookState,
     payload: { hookNum: number; text: string }
   ) {
-    state.texts[payload.hookNum.toString()].push(payload.text);
+    let texts = state.texts[payload.hookNum.toString()];
+    texts.push(payload.text);
+    if (state.texts[payload.hookNum.toString()].length > MAX_STORE_COUNT) {
+      state.texts[payload.hookNum.toString()].shift();
+    }
   },
   CHOOSE_HOOK_AS_DISPLAY(
     state: Yagt.TranslatorHookState,

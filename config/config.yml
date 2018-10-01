@@ -1,6 +1,10 @@
 localeChangers:
-  localeEmulator:
+  alphaROMdiE:
     enabled: true
+    exec: 'D:\software\AlphaROMdiE.exe %GAME_PATH%'
+    name: AlphaROMdiE
+  localeEmulator:
+    enabled: false
     exec: 'D:\LocaleEmulator\LEProc.exe %GAME_PATH%'
     name: Locale Emulator
   noChanger:

@@ -5,3 +5,6 @@ games:
   - code: '/HWN-4@83AAB:mahoXroba.exe'
     name: まほ×ろば -Witches spiritual home-
     path: 'D:\Program Files\あかべぇそふとすりぃ\まほ×ろば -Witches spiritual home-\mahoXroba.exe'
+  - code: ''
+    name: 金色ラブリッチェ
+    path: 'D:\Program Files\SAGAPLANETS\金色ラブリッチェ\SiglusEngine.exe'

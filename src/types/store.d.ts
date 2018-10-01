@@ -2,7 +2,7 @@ declare namespace Yagt {
   export interface HooksState {
     hookInfos: TextThread[];
     texts: {
-      [num: number]: string[];
+      [num: string]: string[];
     };
     currentDisplayHookIndex: number;
   }
