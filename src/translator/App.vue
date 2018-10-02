@@ -51,6 +51,13 @@ export default class App extends Vue {
   mounted() {
     ipcRenderer.send(ipcTypes.REQUEST_CONFIG, "default");
     ipcRenderer.send(ipcTypes.REQUEST_CONFIG, "game");
+    let callback = (event: Electron.Event, name: string, cfg: any) => {
+      if (name !== "game") ipcRenderer.once(ipcTypes.HAS_CONFIG, callback);
+      else if (cfg.code === "") {
+        this.$router.push("hooks");
+      }
+    };
+    ipcRenderer.once(ipcTypes.HAS_CONFIG, callback);
   }
 
   updated() {
