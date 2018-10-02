@@ -4,9 +4,16 @@ export default class TextInterceptor {
     return this.instance;
   }
 
-  shouldBeIgnorePatterns: string[] = ["value", "sys", "\u00020"];
+  shouldBeIgnorePatterns: string[] = [
+    "value",
+    "sys",
+    "\u00020",
+    "windowbtn",
+    "00_プロローグ１",
+    "menu"
+  ];
 
-  shouldBeRemovePatterns: string[] = ["windowbtn", "00_プロローグ１", "menu"];
+  shouldBeRemovePatterns: string[] = [];
 
   static readonly MAX_LENGTH = 255;
 
