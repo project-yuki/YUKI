@@ -63,12 +63,17 @@ class Hooker {
   private hooker: Yagt.Hooker = require("../../nexthooker");
 
   constructor() {
-    this.hooker.start();
     this.initHookerCallbacks();
-    this.hooker.open();
+    this.hooker.start();
   }
 
   private initHookerCallbacks() {
+    this.hooker.onProcessAttach(pid => {
+      logger.debug(`hooker: process attach: ${pid}`);
+    });
+    this.hooker.onProcessDetach(pid => {
+      logger.debug(`hooker: process detach: ${pid}`);
+    });
     this.hooker.onThreadCreate(
       (tt: Yagt.TextThread) => {
         logger.debug("hooker: thread created");

@@ -40,11 +40,13 @@ export default function(mainWindow: Electron.BrowserWindow) {
   ipcMain.on(
     types.REQUEST_INSERT_HOOK,
     (event: Electron.Event, code: string) => {
-      logger.debug(
-        `inserting hook ${code} to process ${runningGame.getPid()}...`
-      );
-      hooker.insertHook(runningGame.getPid(), code);
-      logger.debug(`hook ${code} inserted`);
+      if (code !== "") {
+        logger.debug(
+          `inserting hook ${code} to process ${runningGame.getPid()}...`
+        );
+        hooker.insertHook(runningGame.getPid(), code);
+        logger.debug(`hook ${code} inserted`);
+      }
     }
   );
 
