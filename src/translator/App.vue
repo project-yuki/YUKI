@@ -1,15 +1,21 @@
 <template>
 <div id="app">
-  <gt-titlebar></gt-titlebar>
-  <p class="text-h1">{{currentOriginText}}</p>
-  <gt-text-display 
-    v-for="(translation, key) in translationsForCurrentIndex.translations"
-    :key="key"
-    :name="key"
-    :translation="translation"></gt-text-display>
-  <router-link :to="{name: 'blank'}">返回</router-link>
-  <router-link :to="{name: 'hooks'}">文本钩子设置</router-link>
-  <router-view></router-view>
+  <div id="top">
+    <gt-titlebar></gt-titlebar>
+  </div>
+  <div id="content">
+    <p class="text-h1 text-center">{{currentOriginText}}</p>
+    <gt-text-display 
+      v-for="(translation, key) in translationsForCurrentIndex.translations"
+      :key="key"
+      :name="key"
+      :translation="translation"></gt-text-display>
+
+    <router-link :to="{name: 'blank'}">返回</router-link>
+    <router-link :to="{name: 'hooks'}">文本钩子设置</router-link>
+
+    <router-view></router-view>
+  </div>
 </div>
 </template>
 
@@ -60,13 +66,23 @@ export default class App extends Vue {
     ipcRenderer.once(ipcTypes.HAS_CONFIG, callback);
   }
 
+  updateWindowHeight() {
+    let newHeight = document.body.offsetHeight + 32;
+    let window = remote.getCurrentWindow();
+    let width = window.getSize()[0];
+    window.setSize(width, newHeight);
+  }
+
+  @Watch("currentIndex")
+  onCurrentIndexChanged() {
+    this.$router.push({ name: "blank" });
+    ipcRenderer.send(ipcTypes.REQUEST_TRANSLATION, this.currentOriginText);
+  }
+
   updated() {
     if (this.$router.currentRoute.name === "blank") {
       this.$nextTick(() => {
-        let newHeight = document.body.offsetHeight;
-        let window = remote.getCurrentWindow();
-        let width = window.getSize()[0];
-        window.setSize(width, newHeight);
+        this.updateWindowHeight();
       });
     }
   }
@@ -111,6 +127,11 @@ body {
   font-size: 1.2em;
 }
 
+.text-center {
+  text-align: center;
+  padding-top: 4px;
+}
+
 .no-margin {
   width: 100%;
   margin: 0;
@@ -127,5 +148,16 @@ body {
 
 .div {
   margin: 0;
+}
+
+#app #top {
+  position: fixed;
+  width: 100%;
+  z-index: 999;
+  top: 0;
+}
+
+#app #content {
+  margin-top: 32px;
 }
 </style>

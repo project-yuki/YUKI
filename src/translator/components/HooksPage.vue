@@ -24,14 +24,6 @@ export default class HooksPage extends Vue {
     window.setSize(width, newHeight);
     next();
   }
-
-  beforeRouteLeave(to: Route, from: Route, next: Function) {
-    let oldHeight = 240;
-    let window = remote.getCurrentWindow();
-    let width = window.getSize()[0];
-    window.setSize(width, oldHeight);
-    next();
-  }
 }
 </script>
 

@@ -3,7 +3,7 @@
 </div>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
 import { Prop } from "vue-property-decorator";
@@ -13,7 +13,15 @@ import { Route } from "vue-router";
 import { remote } from "electron";
 
 @Component
-export default class BlankPage extends Vue {}
+export default class BlankPage extends Vue {
+  beforeRouteEnter(to: Route, from: Route, next: Function) {
+    let newHeight = document.body.offsetHeight + 32;
+    let window = remote.getCurrentWindow();
+    let width = window.getSize()[0];
+    window.setSize(width, newHeight);
+    next();
+  }
+}
 </script>
 
 <style scoped>

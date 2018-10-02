@@ -35,11 +35,6 @@ export default class Titlebar extends Vue {
   float: left;
 }
 
-.text-center {
-  text-align: center;
-  padding-top: 4px;
-}
-
 .manipulate-button {
   -webkit-app-region: no-drag;
   position: fixed;

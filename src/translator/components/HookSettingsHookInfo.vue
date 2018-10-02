@@ -32,8 +32,10 @@ import ipcTypes from "../../common/ipcTypes";
 
 @Component
 export default class HookSettingsHookInfo extends Vue {
-  @Prop(Object) hook!: Yagt.TextThread;
-  @Prop(Boolean) isChosen!: boolean;
+  @Prop(Object)
+  hook!: Yagt.TextThread;
+  @Prop(Boolean)
+  isChosen!: boolean;
 
   @namespace("Hooks").Getter("getTextById")
   getTextById!: (id: number) => string[];
