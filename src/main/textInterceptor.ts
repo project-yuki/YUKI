@@ -4,21 +4,18 @@ export default class TextInterceptor {
     return this.instance;
   }
 
-  senselessTextPatterns: string[] = [
-    "windowbtn",
-    "00_プロローグ１",
-    "value",
-    "sys",
-    "\u00020"
-  ];
+  shouldBeIgnorePatterns: string[] = ["value", "sys", "\u00020"];
+
+  shouldBeRemovePatterns: string[] = ["windowbtn", "00_プロローグ１", "menu"];
+
   static readonly MAX_LENGTH = 255;
 
-  isSenseless(text: string): boolean {
-    return this.isTooLong(text) || this.containsSenselessText(text);
+  hookShouldBeRemove(text: string): boolean {
+    return this.containsShouldBeRemovePattern(text);
   }
 
-  private containsSenselessText(text: string) {
-    for (let pattern of this.senselessTextPatterns) {
+  containsShouldBeRemovePattern(text: string) {
+    for (let pattern of this.shouldBeRemovePatterns) {
       if (text.indexOf(pattern) > -1) {
         return true;
       }
@@ -26,7 +23,20 @@ export default class TextInterceptor {
     return false;
   }
 
+  textShouldBeIgnore(text: string): boolean {
+    return this.isTooLong(text) || this.containsShouldBeIgnorePattern(text);
+  }
+
   private isTooLong(text: string) {
     return text.length > TextInterceptor.MAX_LENGTH;
+  }
+
+  private containsShouldBeIgnorePattern(text: string) {
+    for (let pattern of this.shouldBeIgnorePatterns) {
+      if (text.indexOf(pattern) > -1) {
+        return true;
+      }
+    }
+    return false;
   }
 }

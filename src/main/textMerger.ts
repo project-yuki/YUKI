@@ -10,7 +10,7 @@ export default class TextMerger {
     return this.instance;
   }
 
-  static TIMEOUT = 500;
+  static TIMEOUT = 1000;
 
   private tempStore: TempStore = {};
 
