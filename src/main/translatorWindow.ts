@@ -66,9 +66,9 @@ export default class TranslatorWindow {
   }
 
   private subscribeHookerEvents() {
-    hooker.subscribe("thread-create", this.window.webContents);
-    hooker.subscribe("thread-remove", this.window.webContents);
-    hooker.subscribe("thread-output", this.window.webContents);
+    hooker.getInstance().subscribe("thread-create", this.window.webContents);
+    hooker.getInstance().subscribe("thread-remove", this.window.webContents);
+    hooker.getInstance().subscribe("thread-output", this.window.webContents);
   }
 
   getWindow() {
@@ -82,9 +82,9 @@ export default class TranslatorWindow {
   }
 
   private unsubscribeHookerEvents() {
-    hooker.unsubscribe("thread-create", this.window.webContents);
-    hooker.unsubscribe("thread-remove", this.window.webContents);
-    hooker.unsubscribe("thread-output", this.window.webContents);
+    hooker.getInstance().unsubscribe("thread-create", this.window.webContents);
+    hooker.getInstance().unsubscribe("thread-remove", this.window.webContents);
+    hooker.getInstance().unsubscribe("thread-output", this.window.webContents);
   }
 
   setGame(game: Game) {

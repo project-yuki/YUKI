@@ -59,10 +59,19 @@ interface PublisherMap {
   ["thread-output"]: HookerPublisher;
 }
 
-class Hooker {
-  private hooker: Yagt.Hooker = require("../../nexthooker");
+export default class Hooker {
+  private static instance: Hooker;
+  static getInstance() {
+    if (this.instance == null) {
+      this.instance = new Hooker();
+    }
+    return this.instance;
+  }
 
-  constructor() {
+  private hooker: Yagt.Hooker;
+
+  private constructor() {
+    this.hooker = require("../../nexthooker");
     this.initHookerCallbacks();
     this.hooker.start();
   }
@@ -134,7 +143,3 @@ class Hooker {
     this.hooker.removeHook(pid, hook);
   }
 }
-
-let instance = new Hooker();
-
-export default instance;

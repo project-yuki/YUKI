@@ -93,7 +93,7 @@ export default class Game extends EventEmitter {
 
   private injectProcessByPid() {
     logger.debug(`injecting process ${this.pid}...`);
-    hooker.injectProcess(this.pid);
+    hooker.getInstance().injectProcess(this.pid);
     logger.debug(`process ${this.pid} injected`);
   }
 
@@ -107,7 +107,7 @@ export default class Game extends EventEmitter {
 
   private detachProcessByPid() {
     logger.debug(`detaching process ${this.pid}...`);
-    hooker.detachProcess(this.pid);
+    hooker.getInstance().detachProcess(this.pid);
     logger.debug(`process ${this.pid} detached`);
     logger.debug(`game [${this.pid}] exited`);
   }

@@ -44,7 +44,7 @@ export default function(mainWindow: Electron.BrowserWindow) {
         logger.debug(
           `inserting hook ${code} to process ${runningGame.getPid()}...`
         );
-        hooker.insertHook(runningGame.getPid(), code);
+        hooker.getInstance().insertHook(runningGame.getPid(), code);
         logger.debug(`hook ${code} inserted`);
       }
     }
@@ -56,7 +56,7 @@ export default function(mainWindow: Electron.BrowserWindow) {
       logger.debug(
         `removing hook ${thread.hook} from process ${runningGame.getPid()}...`
       );
-      hooker.removeHook(runningGame.getPid(), thread.hook);
+      hooker.getInstance().removeHook(runningGame.getPid(), thread.hook);
       logger.debug(`hook ${thread.hook} removed`);
     }
   );

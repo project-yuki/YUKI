@@ -10,7 +10,6 @@ declare namespace Yagt {
   export interface TextThread extends RemovedTextThread, Object {
     name: string;
     hcode: string;
-    str: string;
   }
 
   export interface Hooker {
