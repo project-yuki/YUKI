@@ -1,11 +1,8 @@
 import * as winston from "winston";
+import * as stringify from "json-stringify-safe";
 
 let simpleFormatWithJsObject = winston.format.printf(info => {
-  return `${info.level.toUpperCase()} ${JSON.stringify(
-    info.message,
-    null,
-    "  "
-  )}`;
+  return `${info.level.toUpperCase()} ${stringify(info.message, null, 2)}`;
 });
 
 let logger = winston.createLogger({

@@ -1,5 +1,5 @@
 import * as fs from "fs";
-import * as yaml from "js-yaml";
+import * as jsonfile from "jsonfile";
 import logger from "../../common/logger";
 
 export default class Config {
@@ -8,7 +8,7 @@ export default class Config {
 
   constructor(filename: string, defaultObject?: any) {
     this.filename = filename;
-    if (!fs.existsSync(filename)) {
+    if (!fs.existsSync(`${filename}.json`)) {
       this.checkAndSaveDefault(defaultObject);
     } else {
       this.load();
@@ -30,7 +30,7 @@ export default class Config {
   }
 
   private loadAndThrow() {
-    this.config = yaml.safeLoad(fs.readFileSync(this.filename, "utf8"));
+    this.config = jsonfile.readFileSync(`${this.filename}.json`);
     logger.debug(`config: ${this.filename} loaded with`);
     logger.debug(this.config);
   }
@@ -45,7 +45,10 @@ export default class Config {
   }
 
   private saveAndThrow() {
-    fs.writeFileSync(this.filename, yaml.safeDump(this.config), "utf8");
+    jsonfile.writeFileSync(`${this.filename}.json`, this.config, {
+      spaces: 2,
+      EOL: "\r\n"
+    });
     logger.debug(`config: ${this.filename} saved with`);
     logger.debug(this.config);
   }

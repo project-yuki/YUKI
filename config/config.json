@@ -1,0 +1,54 @@
+{
+  "localeChangers": {
+    "alphaROMdiE": {
+      "name": "AlphaROMdiE",
+      "enable": false,
+      "exec": "D:\\software\\AlphaROMdiE.exe %GAME_PATH%"
+    },
+    "localeEmulator": {
+      "name": "Locale Emulator",
+      "enable": true,
+      "exec": "D:\\software\\AlphaROMdiE.exe %GAME_PATH%"
+    },
+    "ntleas": {
+      "name": "Ntleas",
+      "enable": false,
+      "exec": "D:\\ntleas046_x64\\x86\\ntleas.exe %GAME_PATH%"
+    },
+    "noChanger": {
+      "name": "No Changer",
+      "enable": false,
+      "exec": "%GAME_PATH%"
+    }
+  },
+  "onlineApis": [
+    {
+      "name": "baidu",
+      "enable": true,
+      "url": "https://fanyi.baidu.com/transapi",
+      "method": "POST",
+      "requestBodyFormat": "X{\"query\": %TEXT%, \"from\": \"jp\", \"to\": \"zh\"}",
+      "responseBodyPattern": "J%RESPONSE%.data[0].dst"
+    },
+    {
+      "name": "googleCN",
+      "enable": true,
+      "url": "https://translate.google.cn/m",
+      "method": "POST",
+      "requestBodyFormat": "X{\"q\": %TEXT%, \"sl\": \"ja\", \"hl\": \"zh-CN\"}",
+      "responseBodyPattern": "Rclass=\"t0\">([^<]*)<"
+    },
+    {
+      "name": "youdao",
+      "enable": false,
+      "external": true,
+      "jsFile": "config\\youdaoApi.js"
+    }
+  ],
+  "translators": {
+    "jBeijing": {
+      "enable": false,
+      "path": "D:\\Visual Novel Reader V2\\JBeijing7"
+    }
+  }
+}

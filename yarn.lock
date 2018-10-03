@@ -32,6 +32,16 @@
   version "3.11.2"
   resolved "http://registry.npm.taobao.org/@types/js-yaml/download/@types/js-yaml-3.11.2.tgz#699ad86054cc20043c30d66a6fcde30bbf5d3d5e"
 
+"@types/json-stringify-safe@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@types/json-stringify-safe/-/json-stringify-safe-5.0.0.tgz#df34d054419d39323a3730966bacba02ac5e474e"
+
+"@types/jsonfile@^4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@types/jsonfile/-/jsonfile-4.0.1.tgz#be43f5096f1b3c97180e7ae419d747287d24d494"
+  dependencies:
+    "@types/node" "*"
+
 "@types/node@*":
   version "10.9.3"
   resolved "http://registry.npm.taobao.org/@types/node/download/@types/node-10.9.3.tgz#85f288502503ade0b3bfc049fe1777b05d0327d5"
@@ -2682,9 +2692,9 @@ di@^0.0.1:
   version "0.0.1"
   resolved "http://registry.npm.taobao.org/di/download/di-0.0.1.tgz#806649326ceaa7caa3306d75d985ea2748ba913c"
 
-diagnostics@^1.0.1:
+diagnostics@^1.1.1:
   version "1.1.1"
-  resolved "http://registry.npm.taobao.org/diagnostics/download/diagnostics-1.1.1.tgz#cab6ac33df70c9d9a727490ae43ac995a769b22a"
+  resolved "https://registry.yarnpkg.com/diagnostics/-/diagnostics-1.1.1.tgz#cab6ac33df70c9d9a727490ae43ac995a769b22a"
   dependencies:
     colorspace "1.1.x"
     enabled "1.0.x"
@@ -4943,6 +4953,14 @@ jsonfile@^4.0.0:
   optionalDependencies:
     graceful-fs "^4.1.6"
 
+jsonfile@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/jsonfile/-/jsonfile-5.0.0.tgz#e6b718f73da420d612823996fdf14a03f6ff6922"
+  dependencies:
+    universalify "^0.1.2"
+  optionalDependencies:
+    graceful-fs "^4.1.6"
+
 jsprim@^1.2.2:
   version "1.4.1"
   resolved "http://registry.npm.taobao.org/jsprim/download/jsprim-1.4.1.tgz#313e66bc1e5cc06e438bc1b7499c2e5c56acb6a2"
@@ -5375,9 +5393,9 @@ log4js@^0.6.31:
     readable-stream "~1.0.2"
     semver "~4.3.3"
 
-logform@^1.9.0:
-  version "1.9.1"
-  resolved "http://registry.npm.taobao.org/logform/download/logform-1.9.1.tgz#58b29d7b11c332456d7a217e17b48a13ad69d60a"
+logform@^1.9.1:
+  version "1.10.0"
+  resolved "https://registry.yarnpkg.com/logform/-/logform-1.10.0.tgz#c9d5598714c92b546e23f4e78147c40f1e02012e"
   dependencies:
     colors "^1.2.1"
     fast-safe-stringify "^2.0.4"
@@ -8273,7 +8291,7 @@ unique-string@^1.0.0:
   dependencies:
     crypto-random-string "^1.0.0"
 
-universalify@^0.1.0:
+universalify@^0.1.0, universalify@^0.1.2:
   version "0.1.2"
   resolved "http://registry.npm.taobao.org/universalify/download/universalify-0.1.2.tgz#b646f69be3942dabcecc9d6639c80dc105efaa66"
 
@@ -8721,14 +8739,14 @@ winston-transport@^4.2.0:
     readable-stream "^2.3.6"
     triple-beam "^1.2.0"
 
-winston@^3.0.0:
-  version "3.0.0"
-  resolved "http://registry.npm.taobao.org/winston/download/winston-3.0.0.tgz#1f0b24a96586798bcf0cd149fb07ed47cb01a1b2"
+winston@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/winston/-/winston-3.1.0.tgz#80724376aef164e024f316100d5b178d78ac5331"
   dependencies:
     async "^2.6.0"
-    diagnostics "^1.0.1"
+    diagnostics "^1.1.1"
     is-stream "^1.1.0"
-    logform "^1.9.0"
+    logform "^1.9.1"
     one-time "0.0.4"
     readable-stream "^2.3.6"
     stack-trace "0.0.x"

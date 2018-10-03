@@ -51,11 +51,8 @@ export default class ConfigManager {
   private static defaultGamesConfig = { games: [] };
 
   private nameToConfigMap: NameToConfigMap = {
-    default: new Config(
-      "config/config.yml",
-      ConfigManager.defaultDefaultConfig
-    ),
-    games: new Config("config/games.yml", ConfigManager.defaultGamesConfig)
+    default: new Config("config/config", ConfigManager.defaultDefaultConfig),
+    games: new Config("config/games", ConfigManager.defaultGamesConfig)
   };
 
   get(configName: string): any {
