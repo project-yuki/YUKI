@@ -45,9 +45,9 @@ export default class localeChangerSettings extends Vue {
     let savingConfig = JSON.parse(JSON.stringify(this.defaultConfig));
     for (let key in this.defaultConfig.localeChangers) {
       if (key === this.selected) {
-        savingConfig.localeChangers[key].enabled = true;
+        savingConfig.localeChangers[key].enable = true;
       } else {
-        savingConfig.localeChangers[key].enabled = false;
+        savingConfig.localeChangers[key].enable = false;
       }
       for (let index in this.$refs.changerInfos) {
         if (
@@ -65,7 +65,7 @@ export default class localeChangerSettings extends Vue {
   resetSettings() {
     let hasSelected = false;
     for (let key in this.defaultConfig.localeChangers) {
-      if (this.defaultConfig.localeChangers[key].enabled === true) {
+      if (this.defaultConfig.localeChangers[key].enable === true) {
         this.selected = key;
         hasSelected = true;
       }

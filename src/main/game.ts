@@ -41,7 +41,7 @@ export default class Game extends EventEmitter {
       .getInstance()
       .get("default").localeChangers;
     for (let key in localeChangers) {
-      if (localeChangers[key].enabled === true) {
+      if (localeChangers[key].enable === true) {
         logger.debug(
           `game: choose ${localeChangers[key].name} as locale changer`
         );

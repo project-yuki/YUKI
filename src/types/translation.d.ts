@@ -8,8 +8,8 @@ declare namespace Yagt {
 
   export interface Api {
     translate(text: string, callback: (translation: string) => void): void;
-    isEnabled(): boolean;
-    setEnabled(isEnabled: boolean): void;
+    isEnable(): boolean;
+    setEnable(isEnable: boolean): void;
     getName(): string;
   }
 }

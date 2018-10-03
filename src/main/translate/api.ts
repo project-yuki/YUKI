@@ -89,12 +89,12 @@ export default class Api implements Yagt.Api {
     }
   }
 
-  isEnabled() {
-    return this.config.enabled;
+  isEnable() {
+    return this.config.enable;
   }
 
-  setEnabled(isEnabled: boolean) {
-    this.config.enabled = isEnabled;
+  setEnable(isEnable: boolean) {
+    this.config.enable = isEnable;
   }
 
   getName() {

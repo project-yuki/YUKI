@@ -48,7 +48,7 @@ describe("Api", () => {
         method: "POST",
         requestBodyFormat: 'X{"query": %TEXT%, "from": "jp", "to": "zh"}',
         responseBodyPattern: "J%RESPONSE%.data[0].dst",
-        enabled: true
+        enable: true
       },
       {
         name: "googleCN",
@@ -56,7 +56,7 @@ describe("Api", () => {
         method: "POST",
         requestBodyFormat: 'X{"q": %TEXT%, "sl": "ja", "hl": "zh-CN"}',
         responseBodyPattern: 'Rclass="t0">([^<]*)<',
-        enabled: true
+        enable: true
       }
     ];
 
@@ -85,7 +85,7 @@ describe("Api", () => {
         method: "POST",
         requestBodyFormat: 'X{"query": %TEXT%, "from": "jp", "to": "zh"}',
         responseBodyPattern: "J%RESPONSE%.data[0].dst",
-        enabled: false
+        enable: false
       },
       {
         name: "googleCN",
@@ -93,7 +93,7 @@ describe("Api", () => {
         method: "POST",
         requestBodyFormat: 'X{"q": %TEXT%, "sl": "ja", "hl": "zh-CN"}',
         responseBodyPattern: 'Rclass="t0">([^<]*)<',
-        enabled: false
+        enable: false
       }
     ];
 
@@ -119,7 +119,7 @@ describe("Api", () => {
         method: "POST",
         requestBodyFormat: 'X{"query": %TEXT%, "from": "jp", "to": "zh"}',
         responseBodyPattern: "J%RESPONSE%.data[0].dst",
-        enabled: true
+        enable: true
       },
       {
         name: "googleCN",
@@ -127,7 +127,7 @@ describe("Api", () => {
         method: "POST",
         requestBodyFormat: 'X{"q": %TEXT%, "sl": "ja", "hl": "zh-CN"}',
         responseBodyPattern: 'Rclass="t0">([^<]*)<',
-        enabled: false
+        enable: false
       }
     ];
 

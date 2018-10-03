@@ -23,14 +23,14 @@ export default class ConfigManager {
 
   private static defaultDefaultConfig = {
     localeChangers: {
-      localeEmulator: { name: "Locale Emulator", enabled: false, exec: "" },
-      ntleas: { name: "Ntleas", enabled: false, exec: "" },
-      noChanger: { name: "No Changer", enabled: true, exec: "%GAME_PATH%" }
+      localeEmulator: { name: "Locale Emulator", enable: false, exec: "" },
+      ntleas: { name: "Ntleas", enable: false, exec: "" },
+      noChanger: { name: "No Changer", enable: true, exec: "%GAME_PATH%" }
     },
     onlineApis: [
       {
         name: "baidu",
-        enabled: true,
+        enable: true,
         url: "https://fanyi.baidu.com/transapi",
         method: "POST",
         requestBodyFormat: 'X{"query": %TEXT%, "from": "jp", "to": "zh"}',
@@ -38,14 +38,14 @@ export default class ConfigManager {
       },
       {
         name: "googleCN",
-        enabled: true,
+        enable: true,
         url: "https://translate.google.cn/m",
         method: "POST",
         requestBodyFormat: 'X{"q": %TEXT%, "sl": "ja", "hl": "zh-CN"}',
         responseBodyPattern: 'Rclass="t0">([^<]*)<'
       }
     ],
-    translators: { jBeijing: { enabled: false, path: "" } }
+    translators: { jBeijing: { enable: false, path: "" } }
   };
 
   private static defaultGamesConfig = { games: [] };

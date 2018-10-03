@@ -2,13 +2,13 @@ declare namespace Yagt {
   namespace Config {
     interface LocaleChangerItem {
       name: string;
-      enabled: boolean;
+      enable: boolean;
       exec: string;
     }
 
     interface OnlineApiItem {
       name: string;
-      enabled: boolean;
+      enable: boolean;
       url: string;
       method: string;
       needSession: boolean;

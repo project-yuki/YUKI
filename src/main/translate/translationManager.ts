@@ -21,7 +21,7 @@ export default class TranslationManager {
   ) {
     let toTranslateCount = 0;
     for (let key in this.apis) {
-      if (this.apis[key].isEnabled()) {
+      if (this.apis[key].isEnable()) {
         toTranslateCount++;
         this.apis[key].translate(text, translation => {
           callback({ [this.apis[key].getName()]: translation });
@@ -44,7 +44,7 @@ export default class TranslationManager {
       translations: {}
     };
     for (let key in this.apis) {
-      if (this.apis[key].isEnabled()) {
+      if (this.apis[key].isEnable()) {
         toTranslateCount++;
         this.apis[key].translate(text, translation => {
           result.translations[key] = translation;
