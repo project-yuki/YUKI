@@ -11,28 +11,27 @@ describe("Hooker", () => {
     hookerCallback = null;
   });
 
-  it("publishes to single subscriber on event emitted", () => {
-    const hooker = makeTestingHooker();
+  it("publishes to single subscriber on event emitted", done => {
+    const hooker = makeTestingHooker().getInstance();
 
     hooker.subscribe("thread-remove", newFakeWebContents());
-    assertSendedCountEquals(1);
+    assertSendedCountEquals(1, done);
   });
 
   const makeTestingHooker = () =>
     HookerInjector({
       "../../nexthooker": {
         onThreadRemove(callback) {
-          setTimeout(
-            () =>
-              callback({
-                test: 0
-              }),
-            500
-          );
+          setTimeout(() => {
+            callback({
+              test: 0
+            });
+          }, 100);
         },
         start() {},
-        open() {},
-        onThreadCreate() {}
+        onThreadCreate() {},
+        onProcessAttach() {},
+        onProcessDetach() {}
       },
       "../common/logger": {
         debug: () => {},
@@ -52,14 +51,15 @@ describe("Hooker", () => {
     getTitle() {}
   };
 
-  const assertSendedCountEquals = count => {
+  const assertSendedCountEquals = (count, done) => {
     setTimeout(() => {
       expect(sendedCount).to.equal(count);
-    }, 500);
+      done();
+    }, 100);
   };
 
-  it("do not register two same subscriber", () => {
-    const hooker = makeTestingHooker();
+  it("do not register two same subscriber", done => {
+    const hooker = makeTestingHooker().getInstance();
 
     hooker.subscribe(
       "thread-remove",
@@ -69,35 +69,35 @@ describe("Hooker", () => {
       "thread-remove",
       fakeWebContentsCheckingTypeAndArgsAndAddSendedCount
     );
-    assertSendedCountEquals(1);
+    assertSendedCountEquals(1, done);
   });
 
-  it("do not unsubscribe non-exist web contents", () => {
-    const hooker = makeTestingHooker();
+  it("do not unsubscribe non-exist web contents", done => {
+    const hooker = makeTestingHooker().getInstance();
 
     hooker.unsubscribe("thread-remove", newFakeWebContents());
-    assertSendedCountEquals(0);
+    assertSendedCountEquals(0, done);
   });
 
-  it("do not register at non-exist event", () => {
-    const hooker = makeTestingHooker();
+  it("do not register at non-exist event", done => {
+    const hooker = makeTestingHooker().getInstance();
 
     hooker.subscribe("non-exist-event", newFakeWebContents());
-    assertSendedCountEquals(0);
+    assertSendedCountEquals(0, done);
   });
 
-  it("publishes to multiple subscribers on event emitted", () => {
-    const hooker = makeTestingHooker();
+  it("publishes to multiple subscribers on event emitted", done => {
+    const hooker = makeTestingHooker().getInstance();
 
     hooker.subscribe("thread-remove", newFakeWebContents());
     hooker.subscribe("thread-remove", newFakeWebContents());
     hooker.subscribe("thread-remove", newFakeWebContents());
 
-    assertSendedCountEquals(3);
+    assertSendedCountEquals(3, done);
   });
 
-  it("only publishes to subscribed, not unsubscribed, on event emitted", () => {
-    const hooker = makeTestingHooker();
+  it("only publishes to subscribed, not unsubscribed, on event emitted", done => {
+    const hooker = makeTestingHooker().getInstance();
 
     let toUnsubscibeFakeWebContents = newFakeWebContents();
 
@@ -106,16 +106,16 @@ describe("Hooker", () => {
     hooker.subscribe("thread-remove", newFakeWebContents());
     hooker.unsubscribe(toUnsubscibeFakeWebContents);
 
-    assertSendedCountEquals(2);
+    assertSendedCountEquals(3, done);
   });
 
-  it("injects process and publish to subscribers", () => {
-    const hooker = makeInjectProcessTestingHooker();
+  it("injects process and publish to subscribers", done => {
+    const hooker = makeInjectProcessTestingHooker().getInstance();
 
     hooker.subscribe("thread-remove", newFakeWebContents());
     hooker.injectProcess(PID);
 
-    assertSendedCountEquals(1);
+    assertSendedCountEquals(1, done);
   });
 
   const makeInjectProcessTestingHooker = () =>
@@ -125,11 +125,12 @@ describe("Hooker", () => {
           hookerCallback = callback;
         },
         start() {},
-        open() {},
         injectProcess() {
           hookerCallback({ test: 0 });
         },
-        onThreadCreate() {}
+        onThreadCreate() {},
+        onProcessAttach() {},
+        onProcessDetach() {}
       },
       "../common/logger": {
         debug: () => {},
@@ -139,13 +140,13 @@ describe("Hooker", () => {
 
   const PID = 100;
 
-  it("detaches process and publish to subscribers", () => {
-    const hooker = makeDetachProcessTestingHooker();
+  it("detaches process and publish to subscribers", done => {
+    const hooker = makeDetachProcessTestingHooker().getInstance();
 
     hooker.subscribe("thread-remove", newFakeWebContents());
     hooker.detachProcess(PID);
 
-    assertSendedCountEquals(1);
+    assertSendedCountEquals(1, done);
   });
 
   const makeDetachProcessTestingHooker = () =>
@@ -155,11 +156,12 @@ describe("Hooker", () => {
           hookerCallback = callback;
         },
         start() {},
-        open() {},
         detachProcess() {
           hookerCallback({ test: 0 });
         },
-        onThreadCreate() {}
+        onThreadCreate() {},
+        onProcessAttach() {},
+        onProcessDetach() {}
       },
       "../common/logger": {
         debug: () => {},
@@ -167,13 +169,13 @@ describe("Hooker", () => {
       }
     }).default;
 
-  it("inserts hook and publish to subscribers", () => {
-    const hooker = makeInsertHookTestingHooker();
+  it("inserts hook and publish to subscribers", done => {
+    const hooker = makeInsertHookTestingHooker().getInstance();
 
     hooker.subscribe("thread-remove", newFakeWebContents());
     hooker.insertHook(PID);
 
-    assertSendedCountEquals(1);
+    assertSendedCountEquals(1, done);
   });
 
   const makeInsertHookTestingHooker = () =>
@@ -183,11 +185,12 @@ describe("Hooker", () => {
           hookerCallback = callback;
         },
         start() {},
-        open() {},
         insertHook() {
           hookerCallback({ test: 0 });
         },
-        onThreadCreate() {}
+        onThreadCreate() {},
+        onProcessAttach() {},
+        onProcessDetach() {}
       },
       "../common/logger": {
         debug: () => {},
@@ -195,13 +198,13 @@ describe("Hooker", () => {
       }
     }).default;
 
-  it("removes hook and publish to subscribers", () => {
-    const hooker = makeRemoveHookTestingHooker();
+  it("removes hook and publish to subscribers", done => {
+    const hooker = makeRemoveHookTestingHooker().getInstance();
 
     hooker.subscribe("thread-remove", newFakeWebContents());
     hooker.removeHook(PID);
 
-    assertSendedCountEquals(1);
+    assertSendedCountEquals(1, done);
   });
 
   const makeRemoveHookTestingHooker = () =>
@@ -211,11 +214,12 @@ describe("Hooker", () => {
           hookerCallback = callback;
         },
         start() {},
-        open() {},
         removeHook() {
           hookerCallback({ test: 0 });
         },
-        onThreadCreate() {}
+        onThreadCreate() {},
+        onProcessAttach() {},
+        onProcessDetach() {}
       },
       "../common/logger": {
         debug: () => {},

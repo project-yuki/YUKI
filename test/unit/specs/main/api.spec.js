@@ -1,6 +1,9 @@
 import Api from "../../../../src/main/translate/api";
 import TranslationManager from "../../../../src/main/translate/translationManager";
 
+global = {};
+global["tempTranslationPattern"] = {};
+
 describe("Api", () => {
   it("gets translation from form and parses with object", done => {
     let baidu = new Api({
@@ -62,7 +65,7 @@ describe("Api", () => {
 
     TranslationManager.getInstance()
       .initialize(apis)
-      .translate(
+      .translateAll(
         "悠真くんを攻略すれば２１０円か。なるほどなぁ…",
         translations => {
           expect(translations).to.deep.equal({
@@ -99,7 +102,7 @@ describe("Api", () => {
 
     TranslationManager.getInstance()
       .initialize(apis)
-      .translate(
+      .translateAll(
         "悠真くんを攻略すれば２１０円か。なるほどなぁ…",
         translations => {
           expect(translations).to.deep.equal({
@@ -133,7 +136,7 @@ describe("Api", () => {
 
     TranslationManager.getInstance()
       .initialize(apis)
-      .translate(
+      .translateAll(
         "悠真くんを攻略すれば２１０円か。なるほどなぁ…",
         translations => {
           expect(translations).to.deep.equal({

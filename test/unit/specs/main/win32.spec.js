@@ -30,6 +30,9 @@ describe("Win32", () => {
             }
           };
         }
+      },
+      "../common/logger": {
+        debug() {}
       }
     }).registerProcessExitCallback;
 

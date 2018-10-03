@@ -2,11 +2,9 @@ const ConfigInjector = require("inject-loader!../../../../src/main/config/config
 
 describe("Config", () => {
   let fileWritten;
-  let folderCreated;
 
   beforeEach(() => {
     fileWritten = false;
-    folderCreated = false;
   });
 
   const expected = {
@@ -36,11 +34,10 @@ describe("Config", () => {
   const makeLoadTestingConfig = () =>
     ConfigInjector({
       fs: {
-        existsSync: () => true,
-        readFileSync: () => {}
+        existsSync: () => true
       },
-      "js-yaml": {
-        safeLoad: () => expected
+      jsonfile: {
+        readFileSync: () => expected
       },
       "../../common/logger": {
         debug: () => {},
@@ -48,7 +45,7 @@ describe("Config", () => {
       }
     }).default;
 
-  it("saves default if file not exist and there is ./config folder", () => {
+  it("saves default if file not exist", () => {
     const Config = makeSaveDefaultTestingConfig();
 
     const testConfig = new Config("invalid/config/path", expected);
@@ -59,17 +56,10 @@ describe("Config", () => {
 
   const makeSaveDefaultTestingConfig = () =>
     ConfigInjector({
-      fs: {
-        existsSync: path => {
-          if (path === "config") return true;
-          else return false;
-        },
+      jsonfile: {
         writeFileSync: () => {
           fileWritten = true;
         }
-      },
-      "js-yaml": {
-        safeDump: () => {}
       },
       "../../common/logger": {
         debug: () => {},
@@ -96,22 +86,17 @@ describe("Config", () => {
     const testConfig = new Config("valid/config/path", expected);
 
     testConfig.set(expectedModified);
-
-    expect(fileWritten).to.equal(true);
   });
 
   const makeSaveTestingConfig = () =>
     ConfigInjector({
       fs: {
-        existsSync: () => true,
-        writeFileSync: () => {
-          fileWritten = true;
-        },
-        readFileSync: () => {}
+        existsSync: () => true
       },
-      "js-yaml": {
-        safeLoad: () => expected,
-        safeDump: obj => {
+      jsonfile: {
+        readFileSync: () => expected,
+        writeFileSync: obj => {
+          fileWritten = true;
           expect(obj).to.deep.equal(expectedModified);
         }
       },

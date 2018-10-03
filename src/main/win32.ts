@@ -24,5 +24,5 @@ export function registerProcessExitCallback(
   knl32.WaitForSingleObject.async(hProc, INFINITE, () => {
     callback();
   });
-  console.log("process exit callback registered");
+  logger.debug("process exit callback registered");
 }
