@@ -30,7 +30,8 @@ function clean() {
 }
 
 function build() {
-  greeting();
+  // greeting();
+  console.log("building...");
 
   del.sync(["dist/electron/*", "!.gitkeep"]);
 

@@ -3,7 +3,6 @@
 const chalk = require("chalk");
 const electron = require("electron");
 const path = require("path");
-const { say } = require("cfonts");
 const { spawn } = require("child_process");
 const webpack = require("webpack");
 const WebpackDevServer = require("webpack-dev-server");
@@ -13,6 +12,10 @@ const mainConfig = require("./webpack.main.config");
 const rendererConfig = require("./webpack.renderer.config");
 const translatorConfig = require("./webpack.translator.config");
 
+const debugPrefix = chalk.bgBlue.white(" DEBUG ");
+const infoPrefix = chalk.bgGreen.white(" INFO  ");
+const errorPrefix = chalk.bgRed.white(" ERROR ");
+
 let electronProcess = null;
 let manualRestart = false;
 let hotMiddleware;
@@ -21,10 +24,7 @@ let translatorHotMiddleware;
 function logStats(proc, data) {
   let log = "";
 
-  log += chalk.yellow.bold(
-    `┏ ${proc} Process ${new Array(19 - proc.length + 1).join("-")}`
-  );
-  log += "\n\n";
+  log += chalk.bgYellow.white.bold(` ${proc} Process \n`);
 
   if (typeof data === "object") {
     data
@@ -37,10 +37,8 @@ function logStats(proc, data) {
         log += "  " + line + "\n";
       });
   } else {
-    log += `  ${data}\n`;
+    log += `  ${data}`;
   }
-
-  log += "\n" + chalk.yellow.bold(`┗ ${new Array(28 + 1).join("-")}`) + "\n";
 
   console.log(log);
 }
@@ -164,10 +162,10 @@ function startElectron() {
   electronProcess = spawn(electron, ["--inspect=5858", "."]);
 
   electronProcess.stdout.on("data", data => {
-    electronLog(data, "blue");
+    electronLog(data);
   });
   electronProcess.stderr.on("data", data => {
-    electronLog(data, "red");
+    electronLog(data);
   });
 
   electronProcess.on("close", () => {
@@ -175,43 +173,22 @@ function startElectron() {
   });
 }
 
-function electronLog(data, color) {
+function electronLog(data) {
   let log = "";
   data = data.toString().split(/\r?\n/);
   data.forEach(line => {
-    log += `  ${line}\n`;
+    if (line.startsWith("DEBUG")) log += `${debugPrefix}${line.substring(5)}\n`;
+    else if (line.startsWith("INFO"))
+      log += `${infoPrefix}${line.substring(4)}\n`;
+    else if (line.startsWith("ERROR"))
+      log += `${errorPrefix}${line.substring(5)}\n`;
+    else log += `        ${line}\n`;
   });
-  if (/[0-9A-z]+/.test(log)) {
-    console.log(
-      chalk[color].bold("┏ Electron -------------------") +
-        "\n\n" +
-        log +
-        chalk[color].bold("┗ ----------------------------") +
-        "\n"
-    );
-  }
-}
-
-function greeting() {
-  const cols = process.stdout.columns;
-  let text = "";
-
-  if (cols > 104) text = "electron-vue";
-  else if (cols > 76) text = "electron-|vue";
-  else text = false;
-
-  if (text) {
-    say(text, {
-      colors: ["yellow"],
-      font: "simple3d",
-      space: false
-    });
-  } else console.log(chalk.yellow.bold("\n  electron-vue"));
-  console.log(chalk.blue("  getting ready...") + "\n");
+  console.log(log);
 }
 
 function init() {
-  greeting();
+  console.log(chalk.bgGreen.white.bold(" STARTING... "));
 
   Promise.all([startTranslator(), startRenderer(), startMain()])
     .then(() => {

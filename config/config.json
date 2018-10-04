@@ -1,48 +1,48 @@
 {
   "localeChangers": {
     "alphaROMdiE": {
-      "name": "AlphaROMdiE",
       "enable": false,
-      "exec": "D:\\software\\AlphaROMdiE.exe %GAME_PATH%"
+      "exec": "D:\\software\\AlphaROMdiE.exe %GAME_PATH%",
+      "name": "AlphaROMdiE"
     },
     "localeEmulator": {
-      "name": "Locale Emulator",
       "enable": true,
-      "exec": "D:\\software\\AlphaROMdiE.exe %GAME_PATH%"
-    },
-    "ntleas": {
-      "name": "Ntleas",
-      "enable": false,
-      "exec": "D:\\ntleas046_x64\\x86\\ntleas.exe %GAME_PATH%"
+      "exec": "D:\\software\\AlphaROMdiE.exe %GAME_PATH%",
+      "name": "Locale Emulator"
     },
     "noChanger": {
-      "name": "No Changer",
       "enable": false,
-      "exec": "%GAME_PATH%"
+      "exec": "%GAME_PATH%",
+      "name": "No Changer"
+    },
+    "ntleas": {
+      "enable": false,
+      "exec": "D:\\ntleas046_x64\\x86\\ntleas.exe %GAME_PATH%",
+      "name": "Ntleas"
     }
   },
   "onlineApis": [
     {
+      "enable": true,
+      "method": "POST",
       "name": "baidu",
-      "enable": true,
-      "url": "https://fanyi.baidu.com/transapi",
-      "method": "POST",
       "requestBodyFormat": "X{\"query\": %TEXT%, \"from\": \"jp\", \"to\": \"zh\"}",
-      "responseBodyPattern": "J%RESPONSE%.data[0].dst"
+      "responseBodyPattern": "J%RESPONSE%.data[0].dst",
+      "url": "https://fanyi.baidu.com/transapi"
     },
     {
-      "name": "googleCN",
       "enable": true,
-      "url": "https://translate.google.cn/m",
       "method": "POST",
+      "name": "googleCN",
       "requestBodyFormat": "X{\"q\": %TEXT%, \"sl\": \"ja\", \"hl\": \"zh-CN\"}",
-      "responseBodyPattern": "Rclass=\"t0\">([^<]*)<"
+      "responseBodyPattern": "Rclass=\"t0\">([^<]*)<",
+      "url": "https://translate.google.cn/m"
     },
     {
-      "name": "youdao",
       "enable": false,
       "external": true,
-      "jsFile": "config\\youdaoApi.js"
+      "jsFile": "config\\youdaoApi.js",
+      "name": "youdao"
     }
   ],
   "translators": {
