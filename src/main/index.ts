@@ -20,11 +20,11 @@ declare global {
 
 // check & make ./log and ./config folder
 {
-  if (!fs.existsSync("log")) {
+  if (!fs.existsSync("log\\")) {
     fs.mkdirSync("log");
     logger.warn("created ./log folder");
   }
-  if (!fs.existsSync("config")) {
+  if (!fs.existsSync("config\\")) {
     fs.mkdirSync("config");
     logger.warn("created ./config folder");
   }

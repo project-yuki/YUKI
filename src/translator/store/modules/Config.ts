@@ -1,5 +1,4 @@
 import { Commit } from "vuex";
-import TranslationManager from "../../../main/translate/translationManager";
 import logger from "../../../common/logger";
 import { ipcRenderer } from "electron";
 import ipcTypes from "../../../common/ipcTypes";
@@ -21,7 +20,6 @@ const mutations = {
     switch (payload.name) {
       case "default":
         state.default = payload.cfgs;
-        TranslationManager.getInstance().initialize(state.default.onlineApis);
         break;
       case "game":
         state.game = payload.cfgs;

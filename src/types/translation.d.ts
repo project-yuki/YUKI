@@ -6,7 +6,7 @@ declare namespace Yagt {
     };
   }
 
-  export interface Api {
+  export interface Translator {
     translate(text: string, callback: (translation: string) => void): void;
     isEnable(): boolean;
     setEnable(isEnable: boolean): void;

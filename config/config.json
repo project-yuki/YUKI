@@ -7,7 +7,7 @@
     },
     "localeEmulator": {
       "enable": true,
-      "exec": "D:\\software\\AlphaROMdiE.exe %GAME_PATH%",
+      "exec": "D:\\LocaleEmulator\\LEProc.exe %GAME_PATH%",
       "name": "Locale Emulator"
     },
     "noChanger": {
@@ -48,7 +48,7 @@
   ],
   "translators": {
     "jBeijing": {
-      "enable": false,
+      "enable": true,
       "path": "D:\\Visual Novel Reader V2\\JBeijing7"
     }
   }

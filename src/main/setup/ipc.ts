@@ -13,8 +13,11 @@ let translatorWindow: TranslatorWindow;
 export default function(mainWindow: Electron.BrowserWindow) {
   ipcMain.on(types.MAIN_PAGE_LOAD_FINISHED, () => {
     logger.info(`main page load finished.`);
-    TranslationManager.getInstance().initialize(
+    TranslationManager.getInstance().initializeApis(
       configManager.getInstance().get("default").onlineApis
+    );
+    TranslationManager.getInstance().initializeTranslators(
+      configManager.getInstance().get("default").translators
     );
   });
 

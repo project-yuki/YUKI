@@ -2,7 +2,7 @@ const request = require("request");
 import { Options, RequestCallback } from "request";
 import logger from "../../common/logger";
 
-export default class Api implements Yagt.Api {
+export default class Api implements Yagt.Translator {
   private config: Yagt.Config.OnlineApiItem;
   private requestOptions: Options;
 

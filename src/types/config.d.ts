@@ -16,8 +16,19 @@ declare namespace Yagt {
       responseBodyPattern: string;
     }
 
+    interface JBeijing {
+      enable: boolean;
+      path: string;
+      dictPath?: string;
+      traditionalChinese?: boolean;
+    }
+
     export interface Default {
       localeChangers: LocaleChangerItem[];
+      onlineApis: OnlineApiItem[];
+      translators: {
+        jBeijing: JBeijing;
+      };
     }
   }
 }

@@ -1,4 +1,6 @@
 import Api from "../translate/api";
+import JBeijingAdapter from "./jbeijing";
+import logger from "../../common/logger";
 
 export default class TranslationManager {
   static instance: TranslationManager = new TranslationManager();
@@ -6,13 +8,20 @@ export default class TranslationManager {
     return this.instance;
   }
 
-  apis: Yagt.Api[] = [];
+  apis: Yagt.Translator[] = [];
 
-  initialize(apis: Yagt.Config.OnlineApiItem[]): TranslationManager {
+  initializeApis(apis: Yagt.Config.Default["onlineApis"]): TranslationManager {
     for (let index in apis) {
       this.apis[apis[index].name] = new Api(apis[index]);
     }
     return this;
+  }
+
+  initializeTranslators(translators: Yagt.Config.Default["translators"]) {
+    if (translators.jBeijing) {
+      let jb = new JBeijingAdapter(translators.jBeijing);
+      this.apis[jb.getName()] = jb;
+    }
   }
 
   translate(
@@ -24,7 +33,14 @@ export default class TranslationManager {
       if (this.apis[key].isEnable()) {
         toTranslateCount++;
         this.apis[key].translate(text, translation => {
-          callback({ [this.apis[key].getName()]: translation });
+          logger.debug(
+            `translation manager: [${this.apis[
+              key
+            ].getName()}] => ${translation}`
+          );
+          callback({
+            [this.apis[key].getName()]: translation
+          });
         });
       }
     }
@@ -39,10 +55,7 @@ export default class TranslationManager {
   ) {
     let toTranslateCount = 0;
     let finishedCount = 0;
-    let result: Yagt.Translations = {
-      original: text,
-      translations: {}
-    };
+    let result: Yagt.Translations = { original: text, translations: {} };
     for (let key in this.apis) {
       if (this.apis[key].isEnable()) {
         toTranslateCount++;
