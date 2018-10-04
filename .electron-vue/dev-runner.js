@@ -14,6 +14,7 @@ const translatorConfig = require("./webpack.translator.config");
 
 const debugPrefix = chalk.bgBlue.white(" DEBUG ");
 const infoPrefix = chalk.bgGreen.white(" INFO  ");
+const warnPrefix = chalk.bgYellow.white(" WARN  ");
 const errorPrefix = chalk.bgRed.white(" ERROR ");
 
 let electronProcess = null;
@@ -180,6 +181,8 @@ function electronLog(data) {
     if (line.startsWith("DEBUG")) log += `${debugPrefix}${line.substring(5)}\n`;
     else if (line.startsWith("INFO"))
       log += `${infoPrefix}${line.substring(4)}\n`;
+    else if (line.startsWith("WARN"))
+      log += `${warnPrefix}${line.substring(4)}\n`;
     else if (line.startsWith("ERROR"))
       log += `${errorPrefix}${line.substring(5)}\n`;
     else log += `        ${line}\n`;

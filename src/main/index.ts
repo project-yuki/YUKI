@@ -3,6 +3,7 @@ import * as path from "path";
 import * as fs from "fs";
 
 import logger from "../common/logger";
+logger.initialize();
 
 // to make TypeScript happy :)
 declare global {
@@ -17,17 +18,20 @@ declare global {
   }
 }
 
-// check & make ./logs and ./config folder
+// check & make ./log and ./config folder
 {
+  if (!fs.existsSync("log")) {
+    fs.mkdirSync("log");
+    logger.warn("created ./log folder");
+  }
   if (!fs.existsSync("config")) {
     fs.mkdirSync("config");
-    logger.debug("created ./config folder");
-  }
-  if (!fs.existsSync("logs")) {
-    fs.mkdirSync("logs");
-    logger.debug("created ./logs folder");
+    logger.warn("created ./config folder");
   }
 }
+
+import ConfigManager from "./config";
+logger.initialize(ConfigManager.getInstance().get("default").logLevel);
 
 if (process.env.NODE_ENV !== "development") {
   global.__static = require("path")
