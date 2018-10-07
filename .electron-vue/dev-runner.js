@@ -20,7 +20,6 @@ const errorPrefix = chalk.bgRed.white(" ERROR ");
 let electronProcess = null;
 let manualRestart = false;
 let hotMiddleware;
-let translatorHotMiddleware;
 
 function logStats(proc, data) {
   let log = "";
@@ -49,18 +48,21 @@ function startRenderer() {
     rendererConfig.entry.renderer = [path.join(__dirname, "dev-client")].concat(
       rendererConfig.entry.renderer
     );
-
+    rendererConfig.mode = "development";
     const rendererCompiler = webpack(rendererConfig);
     hotMiddleware = webpackHotMiddleware(rendererCompiler, {
       log: false,
       heartbeat: 2500
     });
 
-    rendererCompiler.plugin("compilation", compilation => {
-      compilation.plugin("html-webpack-plugin-after-emit", (data, cb) => {
-        hotMiddleware.publish({ action: "reload" });
-        cb();
-      });
+    rendererCompiler.hooks.compilation.tap("compilation", compilation => {
+      compilation.hooks.htmlWebpackPluginAfterEmit.tapAsync(
+        "html-webpack-plugin-after-emit",
+        (data, cb) => {
+          hotMiddleware.publish({ action: "reload" });
+          cb();
+        }
+      );
     });
 
     rendererCompiler.plugin("done", stats => {
@@ -87,18 +89,21 @@ function startTranslator() {
     translatorConfig.entry.translator = [
       path.join(__dirname, "dev-client")
     ].concat(translatorConfig.entry.translator);
-
+    translatorConfig.mode = "development";
     const translatorCompiler = webpack(translatorConfig);
-    translatorHotMiddleware = webpackHotMiddleware(translatorCompiler, {
+    hotMiddleware = webpackHotMiddleware(translatorCompiler, {
       log: false,
       heartbeat: 2500
     });
 
-    translatorCompiler.plugin("compilation", compilation => {
-      compilation.plugin("html-webpack-plugin-after-emit", (data, cb) => {
-        translatorHotMiddleware.publish({ action: "reload" });
-        cb();
-      });
+    translatorCompiler.hooks.compilation.tap("compilation", compilation => {
+      compilation.hooks.htmlWebpackPluginAfterEmit.tapAsync(
+        "html-webpack-plugin-after-emit",
+        (data, cb) => {
+          hotMiddleware.publish({ action: "reload" });
+          cb();
+        }
+      );
     });
 
     translatorCompiler.plugin("done", stats => {
@@ -109,7 +114,7 @@ function startTranslator() {
       contentBase: path.join(__dirname, "../"),
       quiet: true,
       before(app, ctx) {
-        app.use(translatorHotMiddleware);
+        app.use(hotMiddleware);
         ctx.middleware.waitUntilValid(() => {
           resolve();
         });
@@ -125,13 +130,12 @@ function startMain() {
     mainConfig.entry.main = [
       path.join(__dirname, "../src/main/index.dev.ts")
     ].concat(mainConfig.entry.main);
-
+    mainConfig.mode = "development";
     const compiler = webpack(mainConfig);
 
-    compiler.plugin("watch-run", (compilation, done) => {
+    compiler.hooks.watchRun.tapAsync("watch-run", (compilation, done) => {
       logStats("Main", chalk.white.bold("compiling..."));
       hotMiddleware.publish({ action: "compiling" });
-      translatorHotMiddleware.publish({ action: "compiling" });
       done();
     });
 
@@ -160,7 +164,19 @@ function startMain() {
 }
 
 function startElectron() {
-  electronProcess = spawn(electron, ["--inspect=5858", "."]);
+  var args = [
+    "--inspect=5858",
+    path.join(__dirname, "../dist/electron/main.js")
+  ];
+
+  // detect yarn or npm and process commandline args accordingly
+  if (process.env.npm_execpath.endsWith("yarn.js")) {
+    args = args.concat(process.argv.slice(3));
+  } else if (process.env.npm_execpath.endsWith("npm-cli.js")) {
+    args = args.concat(process.argv.slice(2));
+  }
+
+  electronProcess = spawn(electron, args);
 
   electronProcess.stdout.on("data", data => {
     electronLog(data);
@@ -191,7 +207,7 @@ function electronLog(data) {
 }
 
 function init() {
-  console.log(chalk.bgGreen.white.bold(" STARTING... "));
+  console.log(chalk.bgGreen.white.bold(" STARTING...  "));
 
   Promise.all([startTranslator(), startRenderer(), startMain()])
     .then(() => {
