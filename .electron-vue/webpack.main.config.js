@@ -23,7 +23,7 @@ let mainConfig = {
         test: /\.tsx?$/,
         use: [
           {
-            loader: "babel-loader"
+            loader: "babel-loader?cacheDirectory=true"
           },
           {
             loader: "ts-loader",
@@ -34,7 +34,7 @@ let mainConfig = {
       },
       {
         test: /\.js$/,
-        use: "babel-loader",
+        use: "babel-loader?cacheDirectory=true",
         exclude: /node_modules/
       },
       {
