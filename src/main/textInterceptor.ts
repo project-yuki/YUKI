@@ -1,19 +1,25 @@
+import configManager from "./config";
+import logger from "../common/logger";
+
 export default class TextInterceptor {
   static instance: TextInterceptor = new TextInterceptor();
   static getInstance() {
     return this.instance;
   }
 
-  shouldBeIgnorePatterns: string[] = [
-    "value",
-    "sys",
-    "\u00020",
-    "windowbtn",
-    "00_プロローグ１",
-    "menu"
-  ];
+  initialize() {
+    this.shouldBeIgnorePatterns = configManager
+      .getInstance()
+      .get("interceptor").shouldBeIgnore;
+    this.shouldBeRemovePatterns = configManager
+      .getInstance()
+      .get("interceptor").shouldBeRemove;
+    logger.debug("text interceptor: initialized");
+  }
 
-  shouldBeRemovePatterns: string[] = [];
+  shouldBeIgnorePatterns!: string[];
+
+  shouldBeRemovePatterns!: string[];
 
   static readonly MAX_LENGTH = 255;
 

@@ -1,12 +1,12 @@
 {
   "localeChangers": {
     "alphaROMdiE": {
-      "enable": false,
+      "enable": true,
       "exec": "D:\\software\\AlphaROMdiE.exe %GAME_PATH%",
       "name": "AlphaROMdiE"
     },
     "localeEmulator": {
-      "enable": true,
+      "enable": false,
       "exec": "D:\\LocaleEmulator\\LEProc.exe %GAME_PATH%",
       "name": "Locale Emulator"
     },

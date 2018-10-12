@@ -50,9 +50,18 @@ export default class ConfigManager {
 
   private static defaultGamesConfig = { games: [] };
 
+  private static defaultInterceptorConfig = {
+    shouldBeIgnore: [],
+    shouldBeRemove: []
+  };
+
   private nameToConfigMap: NameToConfigMap = {
     default: new Config("config/config", ConfigManager.defaultDefaultConfig),
-    games: new Config("config/games", ConfigManager.defaultGamesConfig)
+    games: new Config("config/games", ConfigManager.defaultGamesConfig),
+    interceptor: new Config(
+      "config/interceptor",
+      ConfigManager.defaultInterceptorConfig
+    )
   };
 
   get(configName: string): any {

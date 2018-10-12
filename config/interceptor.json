@@ -1,0 +1,11 @@
+{
+  "shouldBeIgnore": [
+    "value",
+    "sys",
+    "\u00020",
+    "windowbtn",
+    "00_プロローグ１",
+    "menu"
+  ],
+  "shouldBeRemove": []
+}

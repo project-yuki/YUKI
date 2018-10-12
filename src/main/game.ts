@@ -4,6 +4,7 @@ import configManager from "./config";
 import { registerProcessExitCallback } from "./win32";
 import hooker from "./hooker";
 import { EventEmitter } from "events";
+import TextInterceptor from "./textInterceptor";
 
 export default class Game extends EventEmitter {
   private readonly TIMEOUT = 1000;
@@ -61,6 +62,7 @@ export default class Game extends EventEmitter {
     this.exeName = this.path.substring(this.path.lastIndexOf("\\") + 1);
     logger.debug(`game: finding pid of ${this.exeName}...`);
     this.tryGetPidAnd(() => {
+      TextInterceptor.getInstance().initialize();
       this.injectProcessByPid();
       this.emit("started", this);
       this.registerProcessExitCallback();
