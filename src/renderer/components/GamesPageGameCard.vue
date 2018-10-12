@@ -6,8 +6,8 @@
       {{game.path}}
     </mu-card-text>
     <mu-card-actions>
-      <mu-button color="primary" @click="handleRunGame">运行</mu-button>
-      <mu-button color="error" @click="handleOpenConfirm">删除</mu-button>
+      <mu-button color="primary" class="half-width" @click="handleRunGame">运行</mu-button>
+      <mu-button color="error" class="half-width" @click="handleOpenConfirm">删除</mu-button>
     </mu-card-actions>
     <mu-dialog title="Dialog" width="360" :open.sync="openConfirm">
       确认删除？
@@ -27,7 +27,8 @@ import ipcTypes from "../../common/ipcTypes";
 
 @Component
 export default class HookSettingsHookInfo extends Vue {
-  @Prop() game!: Yagt.Game;
+  @Prop()
+  game!: Yagt.Game;
 
   openConfirm = false;
 
@@ -50,5 +51,9 @@ export default class HookSettingsHookInfo extends Vue {
 <style scoped>
 .hooker-textarea {
   padding: 8px;
+}
+
+.half-width {
+  width: 49%;
 }
 </style>

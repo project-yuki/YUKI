@@ -8,8 +8,6 @@
       <div class="text-h2">{{translation}}</div>
     </mu-col>
   </mu-row>
-  
-  
 </mu-container>
 </template>
 
