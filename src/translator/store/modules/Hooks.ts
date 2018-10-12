@@ -19,6 +19,9 @@ const state: Yagt.TranslatorHookState = {
 const getters = {
   getTextById: (state: Yagt.TranslatorHookState) => (id: number) => {
     return state.texts[id.toString()];
+  },
+  getLastTextById: (state: Yagt.TranslatorHookState) => (id: number) => {
+    return state.texts[id.toString()][state.texts[id.toString()].length - 1];
   }
 };
 
@@ -27,6 +30,12 @@ const mutations = {
     state: Yagt.TranslatorHookState,
     payload: { hook: Yagt.TextThread }
   ) {
+    if (payload.hook.name.length > 1) {
+      payload.hook.name = payload.hook.name.substring(
+        0,
+        payload.hook.name.length - 1
+      );
+    }
     state.hookInfos.push(payload.hook);
     state.texts = { ...state.texts, [payload.hook.num.toString()]: [] };
   },

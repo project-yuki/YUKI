@@ -6,11 +6,16 @@
     <mu-button slot="actions" flat @click="closeInputHookDialog">取消</mu-button>
     <mu-button slot="actions" flat color="primary" @click="addHook">确定</mu-button>
   </mu-dialog>
-  <mu-row gutter>
+  <!-- <mu-row gutter>
     <mu-col sm="12" md="6" lg="4" v-for="hook in hooks" :key="hook.num" class="margin-top">
-      <gt-hook-info :hook="hook" :isChosen="isChosen(hook.num)" />
     </mu-col>
-  </mu-row>
+  </mu-row> -->
+  <gt-hook-info 
+    v-for="hook in hooks" 
+    :hook="hook" 
+    :isChosen="isChosen(hook.num)" 
+    :key="hook.num + '-info'" 
+    class="hook-info" />
 </div>
 </template>
 
@@ -34,8 +39,10 @@ export default class HookSettings extends Vue {
   errorText = "";
   hookCode = "";
 
-  @namespace("Hooks").State("hookInfos") hooks!: Yagt.TextThread[];
-  @namespace("Hooks").State("currentDisplayHookIndex") currentIndex!: number;
+  @namespace("Hooks").State("hookInfos")
+  hooks!: Yagt.TextThread[];
+  @namespace("Hooks").State("currentDisplayHookIndex")
+  currentIndex!: number;
 
   openInputHookDialog() {
     this.openInputHook = true;
@@ -68,5 +75,10 @@ export default class HookSettings extends Vue {
 
 .small-margin {
   margin: 16px;
+}
+
+.hook-info {
+  margin: 8px 0;
+  text-align: center;
 }
 </style>
