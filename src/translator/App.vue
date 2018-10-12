@@ -10,10 +10,11 @@
       :key="key"
       :name="key"
       :translation="translation"></gt-text-display>
-
-    <router-link :to="{name: 'blank'}">返回</router-link>
-    <router-link :to="{name: 'hooks'}">文本钩子设置</router-link>
-
+    <div id="buttons">
+      <mu-button small flat :to="{name: 'blank'}" color="white" style="width: 32%">返回</mu-button>
+      <mu-button small flat :to="{name: 'hooks'}" color="white" style="width: 32%">文本钩子设置</mu-button>
+      <mu-button small flat :to="{name: 'blank'}" color="white" style="width: 32%">翻译器设置</mu-button>
+    </div>
     <router-view></router-view>
   </div>
 </div>
@@ -159,5 +160,13 @@ body {
 
 #app #content {
   margin-top: 32px;
+}
+
+#app #content #buttons {
+  margin-top: 16px;
+}
+
+#app #content #buttons .mu-button {
+  text-align: center;
 }
 </style>
