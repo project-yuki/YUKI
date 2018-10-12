@@ -1,9 +1,11 @@
 <template>
 <div>
   <gt-page-header title="关于Yagt" />
-  <gt-page-content>
+  <gt-page-content style="text-align: center">
+    <img src="../assets/icon.png" style="width: 128px; height: 128px">
+    <p class="text-h1">Yet Another Galgame Translator</p>
+    <p class="text-h2">另一个Galgame翻译器</p>
     <mu-button color="primary" @click="toggleDevTools">切换开发人员工具</mu-button>
-    <gt-hook-settings />
   </gt-page-content>
 </div>
 </template>
@@ -15,13 +17,11 @@ import { remote } from "electron";
 
 import GtPageHeader from "@/components/PageHeader.vue";
 import GtPageContent from "@/components/PageContent.vue";
-import GtHookSettings from "@/components/HookSettings.vue";
 
 @Component({
   components: {
     GtPageHeader,
-    GtPageContent,
-    GtHookSettings
+    GtPageContent
   }
 })
 export default class FavoritePage extends Vue {
