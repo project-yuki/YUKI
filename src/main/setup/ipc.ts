@@ -8,7 +8,7 @@ import TranslatorWindow from "../translatorWindow";
 import TranslationManager from "../translate/translationManager";
 
 let runningGame: Game;
-let translatorWindow: TranslatorWindow;
+let translatorWindow: TranslatorWindow | null;
 
 export default function(mainWindow: Electron.BrowserWindow) {
   ipcMain.on(types.MAIN_PAGE_LOAD_FINISHED, () => {
@@ -28,12 +28,14 @@ export default function(mainWindow: Electron.BrowserWindow) {
 
       runningGame = new Game(game);
       runningGame.on("started", () => {
+        if (translatorWindow) translatorWindow.close();
         translatorWindow = new TranslatorWindow();
         translatorWindow.setGame(runningGame);
       });
       runningGame.on("exited", () => {
         runningGame.removeAllListeners();
-        translatorWindow.close();
+        if (translatorWindow) translatorWindow.close();
+        translatorWindow = null;
         mainWindow.show();
       });
       runningGame.start();
@@ -79,8 +81,12 @@ export default function(mainWindow: Electron.BrowserWindow) {
         sendGamesConfig(event);
         break;
       case "game":
-        logger.debug(`request config ${translatorWindow.getGameInfo()}`);
-        sendGameInfo(event);
+        if (translatorWindow) {
+          logger.debug(`request config ${translatorWindow.getGameInfo()}`);
+          sendGameInfo(event);
+        } else {
+          logger.error(`no translator window`);
+        }
         break;
       default:
         logger.error(`invalid config name: ${name}`);
@@ -184,5 +190,18 @@ function sendGamesConfig(event: Electron.Event) {
 }
 
 function sendGameInfo(event: Electron.Event) {
-  event.sender.send(types.HAS_CONFIG, "game", translatorWindow.getGameInfo());
+  event.sender.send(
+    types.HAS_CONFIG,
+    "game",
+    (<TranslatorWindow>translatorWindow).getGameInfo()
+  );
 }
+
+app.on("before-quit", () => {
+  if (translatorWindow) {
+    logger.info("closing translator window...");
+    translatorWindow.close();
+    translatorWindow = null;
+  }
+  logger.info("app quited");
+});

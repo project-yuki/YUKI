@@ -118,10 +118,6 @@ function createWindow() {
 
 app.on("ready", createWindow);
 
-app.on("before-quit", () => {
-  logger.info("app quited");
-});
-
 app.on("activate", () => {
   if (!mainWindow) {
     createWindow();
