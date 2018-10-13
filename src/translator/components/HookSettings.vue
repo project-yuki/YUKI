@@ -11,7 +11,7 @@
     </mu-col>
   </mu-row> -->
   <gt-hook-info 
-    v-for="hook in hooks" 
+    v-for="hook in orderedHooks" 
     :hook="hook" 
     :isChosen="isChosen(hook.num)" 
     :key="hook.num + '-info'" 
@@ -29,6 +29,8 @@ import { ipcRenderer } from "electron";
 import GtHookInfo from "@/components/HookSettingsHookInfo.vue";
 import ipcTypes from "../../common/ipcTypes";
 
+import * as _ from "lodash";
+
 @Component({
   components: {
     GtHookInfo
@@ -39,8 +41,18 @@ export default class HookSettings extends Vue {
   errorText = "";
   hookCode = "";
 
+  get orderedHooks() {
+    return _.orderBy(
+      this.hooks,
+      (hook: Yagt.TextThread) => this.texts[hook.num].length,
+      "desc"
+    );
+  }
+
   @namespace("Hooks").State("hookInfos")
   hooks!: Yagt.TextThread[];
+  @namespace("Hooks").State("texts")
+  texts!: string[];
   @namespace("Hooks").State("currentDisplayHookIndex")
   currentIndex!: number;
 
