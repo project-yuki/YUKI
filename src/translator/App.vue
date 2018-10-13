@@ -30,7 +30,8 @@ import GtTitlebar from "@/components/Titlebar.vue";
   }
 })
 export default class App extends Vue {
-  isButtonsShown: boolean = true;
+  @namespace("View").State("isButtonsShown")
+  isButtonsShown!: boolean;
 
   @namespace("Hooks").Getter("getLastTextById")
   getLastTextById!: (id: number) => string;
@@ -43,12 +44,13 @@ export default class App extends Vue {
   }
 
   mounted() {
+    this.$router.push("translate");
     document.addEventListener("mouseenter", () => {
-      this.isButtonsShown = true;
+      this.$store.dispatch("View/setButtonsShown", true);
     });
     document.addEventListener("mouseleave", () => {
       if (this.currentOriginText !== "") {
-        this.isButtonsShown = false;
+        this.$store.dispatch("View/setButtonsShown", false);
       }
     });
 
@@ -72,7 +74,7 @@ export default class App extends Vue {
 
   @Watch("currentIndex")
   onCurrentIndexChanged() {
-    this.isButtonsShown = false;
+    this.$store.dispatch("View/setButtonsShown", false);
     this.$router.push({ name: "translate" });
     ipcRenderer.send(ipcTypes.REQUEST_TRANSLATION, this.currentOriginText);
   }

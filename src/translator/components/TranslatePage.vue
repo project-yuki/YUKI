@@ -12,7 +12,7 @@
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
-import { Prop } from "vue-property-decorator";
+import { Prop, Watch } from "vue-property-decorator";
 import { Route } from "vue-router";
 import { remote } from "electron";
 import { namespace } from "vuex-class";
@@ -26,6 +26,9 @@ import GtHookSettings from "@/components/HookSettings.vue";
   }
 })
 export default class TranslatePage extends Vue {
+  @namespace("View").State("isButtonsShown")
+  isButtonsShown!: boolean;
+
   @namespace("Hooks").Getter("getLastTextById")
   getLastTextById!: (id: number) => string;
 
@@ -45,6 +48,34 @@ export default class TranslatePage extends Vue {
     let width = window.getSize()[0];
     window.setSize(width, newHeight);
     next();
+  }
+
+  updateWindowHeight(offset: number) {
+    let newHeight = document.body.offsetHeight + offset;
+    let window = remote.getCurrentWindow();
+    let width = window.getSize()[0];
+    window.setSize(width, newHeight);
+  }
+
+  @Watch("isButtonShown")
+  onButtonShownChanged() {
+    if (this.isButtonsShown) {
+      this.updateWindowHeight(64);
+    } else {
+      this.updateWindowHeight(40);
+    }
+  }
+
+  updated() {
+    if (this.isButtonsShown) {
+      this.$nextTick(() => {
+        this.updateWindowHeight(64);
+      });
+    } else {
+      this.$nextTick(() => {
+        this.updateWindowHeight(40);
+      });
+    }
   }
 }
 </script>

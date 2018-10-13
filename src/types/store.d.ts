@@ -26,4 +26,8 @@ declare namespace Yagt {
     default: any;
     game: Game;
   }
+
+  export interface TranslatorViewState {
+    isButtonsShown: boolean;
+  }
 }
