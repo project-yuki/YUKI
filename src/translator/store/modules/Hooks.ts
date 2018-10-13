@@ -21,7 +21,9 @@ const getters = {
     return state.texts[id.toString()];
   },
   getLastTextById: (state: Yagt.TranslatorHookState) => (id: number) => {
-    return state.texts[id.toString()][state.texts[id.toString()].length - 1];
+    if (state.texts[id.toString()])
+      return state.texts[id.toString()][state.texts[id.toString()].length - 1];
+    else return "";
   }
 };
 

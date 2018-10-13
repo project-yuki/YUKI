@@ -1,5 +1,5 @@
 <template>
-<div class="small-margin">
+<div class="small-margin" id="hook-settings">
   <mu-button type="primary" @click="openInputHookDialog">加载钩子</mu-button>
   <mu-dialog title="请输入特殊码" :open.sync="openInputHook">
     <mu-text-field v-model="hookCode" :error-text="errorText"></mu-text-field>
@@ -80,5 +80,16 @@ export default class HookSettings extends Vue {
 .hook-info {
   margin: 8px 0;
   text-align: center;
+}
+
+#hook-settings {
+  margin: 0 auto;
+  padding: 16px;
+  position: fixed;
+  top: 32px;
+  width: 100%;
+  height: 88%;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 </style>

@@ -4,18 +4,12 @@
     <gt-titlebar></gt-titlebar>
   </div>
   <div id="content">
-    <p class="text-h1 text-center">{{currentOriginText}}</p>
-    <gt-text-display 
-      v-for="(translation, key) in translationsForCurrentIndex.translations"
-      :key="key"
-      :name="key"
-      :translation="translation"></gt-text-display>
-    <div id="buttons">
-      <mu-button small flat :to="{name: 'blank'}" color="white" style="width: 32%">返回</mu-button>
+    <router-view></router-view>    
+    <div id="buttons" v-if="isButtonsShown">
+      <mu-button small flat :to="{name: 'translate'}" color="white" style="width: 32%">翻译</mu-button>
       <mu-button small flat :to="{name: 'hooks'}" color="white" style="width: 32%">文本钩子设置</mu-button>
-      <mu-button small flat :to="{name: 'blank'}" color="white" style="width: 32%">翻译器设置</mu-button>
+      <mu-button small flat :to="{name: 'translate'}" color="white" style="width: 32%">翻译器设置</mu-button>
     </div>
-    <router-view></router-view>
   </div>
 </div>
 </template>
@@ -28,34 +22,36 @@ import { namespace } from "vuex-class";
 import { ipcRenderer, remote } from "electron";
 import ipcTypes from "../common/ipcTypes";
 
-import GtTextDisplay from "@/components/TextDisplay.vue";
 import GtTitlebar from "@/components/Titlebar.vue";
 
 @Component({
   components: {
-    GtTextDisplay,
     GtTitlebar
   }
 })
 export default class App extends Vue {
-  @namespace("Hooks").Getter("getTextById")
-  getTextById!: (id: number) => string[];
+  isButtonsShown: boolean = true;
+
+  @namespace("Hooks").Getter("getLastTextById")
+  getLastTextById!: (id: number) => string;
 
   @namespace("Hooks").State("currentDisplayHookIndex")
   currentIndex!: number;
 
-  @namespace("Hooks").State("translationsForCurrentIndex")
-  translationsForCurrentIndex!: Yagt.Translations;
-
   get currentOriginText() {
-    let texts = this.getTextById(this.currentIndex);
-    if (texts) {
-      return texts[texts.length - 1];
-    }
-    return "";
+    return this.getLastTextById(this.currentIndex);
   }
 
   mounted() {
+    document.addEventListener("mouseenter", () => {
+      this.isButtonsShown = true;
+    });
+    document.addEventListener("mouseleave", () => {
+      if (this.currentOriginText !== "") {
+        this.isButtonsShown = false;
+      }
+    });
+
     ipcRenderer.send(ipcTypes.REQUEST_CONFIG, "default");
     ipcRenderer.send(ipcTypes.REQUEST_CONFIG, "game");
     let callback = (event: Electron.Event, name: string, cfg: any) => {
@@ -67,8 +63,8 @@ export default class App extends Vue {
     ipcRenderer.once(ipcTypes.HAS_CONFIG, callback);
   }
 
-  updateWindowHeight() {
-    let newHeight = document.body.offsetHeight + 32;
+  updateWindowHeight(offset: number) {
+    let newHeight = document.body.offsetHeight + offset;
     let window = remote.getCurrentWindow();
     let width = window.getSize()[0];
     window.setSize(width, newHeight);
@@ -76,15 +72,22 @@ export default class App extends Vue {
 
   @Watch("currentIndex")
   onCurrentIndexChanged() {
-    this.$router.push({ name: "blank" });
+    this.isButtonsShown = false;
+    this.$router.push({ name: "translate" });
     ipcRenderer.send(ipcTypes.REQUEST_TRANSLATION, this.currentOriginText);
   }
 
   updated() {
-    if (this.$router.currentRoute.name === "blank") {
-      this.$nextTick(() => {
-        this.updateWindowHeight();
-      });
+    if (this.$router.currentRoute.name === "translate") {
+      if (this.isButtonsShown) {
+        this.$nextTick(() => {
+          this.updateWindowHeight(64);
+        });
+      } else {
+        this.$nextTick(() => {
+          this.updateWindowHeight(40);
+        });
+      }
     }
   }
 }
@@ -93,6 +96,10 @@ export default class App extends Vue {
 <style>
 * {
   margin: 0;
+}
+
+html::-webkit-scrollbar {
+  display: none;
 }
 
 html,
@@ -163,7 +170,10 @@ body {
 }
 
 #app #content #buttons {
-  margin-top: 16px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  left: 16px;
 }
 
 #app #content #buttons .mu-button {
