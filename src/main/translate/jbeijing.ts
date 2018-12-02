@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
-import * as ffi from "ffi";
-import * as ref from "ref";
+import * as ffi from "ffi-napi";
+import * as ref from "ref-napi";
 import logger from "../../common/logger";
 
 export default class JBeijingAdapter implements Yagt.Translator {

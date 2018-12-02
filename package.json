@@ -37,16 +37,18 @@
       "icon": "build/icons/icon.png"
     }
   },
+  "config": {
+    "arch": "ia32"
+  },
   "dependencies": {
     "@types/lodash": "^4.14.117",
     "axios": "^0.18.0",
     "electron-vibrancy": "^0.1.3",
-    "ffi": "^2.2.0",
+    "ffi-napi": "^2.4.4",
     "json-stringify-safe": "^5.0.1",
     "jsonfile": "^5.0.0",
     "muse-ui": "^3.0.1",
-    "ref": "^1.3.5",
-    "ref-struct": "^1.1.0",
+    "ref-napi": "^1.4.0",
     "request": "^2.88.0",
     "tasklist": "^3.1.1",
     "vue": "^2.5.17",
@@ -56,7 +58,7 @@
     "winston": "^3.1.0"
   },
   "devDependencies": {
-    "@types/ffi": "^0.2.0",
+    "@types/ffi-napi": "^2.4.0",
     "@types/js-yaml": "^3.11.2",
     "@types/json-stringify-safe": "^5.0.0",
     "@types/jsonfile": "^4.0.1",

@@ -43,7 +43,7 @@ export default class TranslatorWindow {
     });
 
     this.window.on("ready-to-show", () => {
-      electronVibrancy.SetVibrancy(this.window, 3);
+      electronVibrancy.SetVibrancy(this.window, 0);
 
       logger.debug("subscribing hooker events...");
       this.subscribeHookerEvents();

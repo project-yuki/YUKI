@@ -1,4 +1,4 @@
-import * as ffi from "ffi";
+import * as ffi from "ffi-napi";
 import logger from "../common/logger";
 
 const SYNCHRONIZE = 0x00100000;
