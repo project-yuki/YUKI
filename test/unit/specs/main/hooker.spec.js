@@ -197,33 +197,4 @@ describe("Hooker", () => {
         error: () => {}
       }
     }).default;
-
-  it("removes hook and publish to subscribers", done => {
-    const hooker = makeRemoveHookTestingHooker().getInstance();
-
-    hooker.subscribe("thread-remove", newFakeWebContents());
-    hooker.removeHook(PID);
-
-    assertSendedCountEquals(1, done);
-  });
-
-  const makeRemoveHookTestingHooker = () =>
-    HookerInjector({
-      "../../nexthooker": {
-        onThreadRemove(callback) {
-          hookerCallback = callback;
-        },
-        start() {},
-        removeHook() {
-          hookerCallback({ test: 0 });
-        },
-        onThreadCreate() {},
-        onProcessAttach() {},
-        onProcessDetach() {}
-      },
-      "../common/logger": {
-        debug: () => {},
-        error: () => {}
-      }
-    }).default;
 });

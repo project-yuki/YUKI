@@ -101,17 +101,9 @@ export default class Game extends EventEmitter {
 
   private registerProcessExitCallback() {
     registerProcessExitCallback(this.pid, () => {
-      this.detachProcessByPid();
       this.pid = -1;
       this.emit("exited", this);
     });
-  }
-
-  private detachProcessByPid() {
-    logger.debug(`detaching process ${this.pid}...`);
-    hooker.getInstance().detachProcess(this.pid);
-    logger.debug(`process ${this.pid} detached`);
-    logger.debug(`game [${this.pid}] exited`);
   }
 
   getPid() {

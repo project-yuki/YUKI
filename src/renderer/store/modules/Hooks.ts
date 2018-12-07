@@ -1,6 +1,3 @@
-import { ipcRenderer } from "electron";
-import ipcTypes from "../../../common/ipcTypes";
-import Vue from "vue";
 import { Commit, Dispatch } from "vuex";
 
 const state: Yagt.HooksState = {
@@ -20,13 +17,6 @@ const mutations = {
     state.hookInfos.push(payload.hook);
     state.texts = { ...state.texts, [payload.hook.num.toString()]: [] };
   },
-  REMOVE_HOOK(
-    state: Yagt.HooksState,
-    payload: { hook: Yagt.RemovedTextThread }
-  ) {
-    state.hookInfos = state.hookInfos.filter(h => h.num !== payload.hook.num);
-    Vue.delete(state.texts, payload.hook.num.toString());
-  },
   SET_HOOK_TEXT(
     state: Yagt.HooksState,
     payload: { hookNum: number; text: string }
@@ -41,9 +31,6 @@ const mutations = {
 const actions = {
   addHook({ commit }: { commit: Commit }, hook: Yagt.TextThread) {
     commit("ADD_HOOK", { hook });
-  },
-  removeHook({ commit }: { commit: Commit }, hook: Yagt.RemovedTextThread) {
-    commit("REMOVE_HOOK", { hook });
   },
   setHookText(
     {

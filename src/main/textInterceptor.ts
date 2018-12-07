@@ -11,30 +11,12 @@ export default class TextInterceptor {
     this.shouldBeIgnorePatterns = configManager
       .getInstance()
       .get("interceptor").shouldBeIgnore;
-    this.shouldBeRemovePatterns = configManager
-      .getInstance()
-      .get("interceptor").shouldBeRemove;
     logger.debug("text interceptor: initialized");
   }
 
   shouldBeIgnorePatterns!: string[];
 
-  shouldBeRemovePatterns!: string[];
-
   static readonly MAX_LENGTH = 255;
-
-  hookShouldBeRemove(text: string): boolean {
-    return this.containsShouldBeRemovePattern(text);
-  }
-
-  containsShouldBeRemovePattern(text: string) {
-    for (let pattern of this.shouldBeRemovePatterns) {
-      if (text.indexOf(pattern) > -1) {
-        return true;
-      }
-    }
-    return false;
-  }
 
   textShouldBeIgnore(text: string): boolean {
     return this.isTooLong(text) || this.containsShouldBeIgnorePattern(text);

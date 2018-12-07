@@ -91,10 +91,6 @@ export default class Hooker {
       },
       (tt: Yagt.TextThread, text: string) => {
         TextMerger.getInstance().makeMerge(tt.num, text, mergedText => {
-          if (TextInterceptor.getInstance().hookShouldBeRemove(mergedText)) {
-            this.hooker.removeHook(tt.pid, tt.hook);
-            return;
-          }
           if (!TextInterceptor.getInstance().textShouldBeIgnore(mergedText)) {
             logger.debug(`hooker [${tt.num}]: ${mergedText}`);
             this.publisherMap["thread-output"].publish(tt, mergedText);
@@ -141,9 +137,5 @@ export default class Hooker {
 
   public insertHook(pid: number, code: string) {
     this.hooker.insertHook(pid, code);
-  }
-
-  public removeHook(pid: number, hook: number) {
-    this.hooker.removeHook(pid, hook);
   }
 }

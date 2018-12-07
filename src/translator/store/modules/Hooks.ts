@@ -41,13 +41,6 @@ const mutations = {
     state.hookInfos.push(payload.hook);
     state.texts = { ...state.texts, [payload.hook.num.toString()]: [] };
   },
-  REMOVE_HOOK(
-    state: Yagt.TranslatorHookState,
-    payload: { hook: Yagt.RemovedTextThread }
-  ) {
-    state.hookInfos = state.hookInfos.filter(h => h.num !== payload.hook.num);
-    Vue.delete(state.texts, payload.hook.num.toString());
-  },
   SET_HOOK_TEXT(
     state: Yagt.TranslatorHookState,
     payload: { hookNum: number; text: string }
@@ -105,9 +98,6 @@ const actions = {
       commit("CHOOSE_HOOK_AS_DISPLAY", { hookNum: hook.num });
       commit("INIT_DISPLAY_HOOK", { code: "" });
     }
-  },
-  removeHook({ commit }: { commit: Commit }, hook: Yagt.RemovedTextThread) {
-    commit("REMOVE_HOOK", { hook });
   },
   setHookText(
     {

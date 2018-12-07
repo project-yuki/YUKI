@@ -55,17 +55,6 @@ export default function(mainWindow: Electron.BrowserWindow) {
     }
   );
 
-  ipcMain.on(
-    types.REQUEST_REMOVE_HOOK,
-    (event: Electron.Event, thread: Yagt.TextThread) => {
-      logger.debug(
-        `removing hook ${thread.hook} from process ${runningGame.getPid()}...`
-      );
-      hooker.getInstance().removeHook(runningGame.getPid(), thread.hook);
-      logger.debug(`hook ${thread.hook} removed`);
-    }
-  );
-
   ipcMain.on(types.REQUEST_CONFIG, (event: Electron.Event, name: string) => {
     switch (name) {
       case "default":

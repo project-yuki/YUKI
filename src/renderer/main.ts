@@ -34,12 +34,6 @@ ipcRenderer.on(
   }
 );
 ipcRenderer.on(
-  types.HAS_REMOVED_HOOK,
-  (event: Electron.Event, hook: Yagt.TextThread) => {
-    store.dispatch("Hooks/removeHook", hook);
-  }
-);
-ipcRenderer.on(
   types.HAS_HOOK_TEXT,
   (event: Electron.Event, hook: Yagt.TextThread, text: string) => {
     store.dispatch("Hooks/setHookText", { hook, text });

@@ -27,6 +27,5 @@ declare namespace Yagt {
     injectProcess: (pid: number) => void;
     detachProcess: (pid: number) => void;
     insertHook: (pid: number, code: string) => void;
-    removeHook: (pid: number, hook: number) => void;
   }
 }
