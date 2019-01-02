@@ -20,21 +20,22 @@ let mainConfig = {
         use: "ignore-loader"
       },
       {
-        test: /\.tsx?$/,
+        test: /\.ts$/,
         use: [
+          "thread-loader",
           {
             loader: "babel-loader?cacheDirectory=true"
           },
           {
             loader: "ts-loader",
-            options: { appendTsSuffixTo: [/\.vue$/] }
+            options: { happyPackMode: true, appendTsSuffixTo: [/\.vue$/] }
           }
         ],
         exclude: /node_modules|\.d\.ts$/
       },
       {
         test: /\.js$/,
-        use: "babel-loader?cacheDirectory=true",
+        use: ["thread-loader", "babel-loader?cacheDirectory=true"],
         exclude: /node_modules/
       },
       {

@@ -42,14 +42,15 @@ let rendererConfig = {
         use: "ignore-loader"
       },
       {
-        test: /\.tsx?$/,
+        test: /\.ts$/,
         use: [
+          "thread-loader",
           {
             loader: "babel-loader?cacheDirectory=true"
           },
           {
             loader: "ts-loader",
-            options: { appendTsSuffixTo: [/\.vue$/] }
+            options: { happyPackMode: true, appendTsSuffixTo: [/\.vue$/] }
           }
         ],
         exclude: /node_modules|\.d\.ts$/
@@ -64,7 +65,7 @@ let rendererConfig = {
       },
       {
         test: /\.js$/,
-        use: "babel-loader?cacheDirectory=true",
+        use: ["thread-loader", "babel-loader?cacheDirectory=true"],
         exclude: /node_modules/
       },
       {
@@ -73,17 +74,21 @@ let rendererConfig = {
       },
       {
         test: /\.vue$/,
-        use: {
-          loader: "vue-loader",
-          options: {
-            extractCSS: process.env.NODE_ENV === "production",
-            loaders: {
-              sass: "vue-style-loader!css-loader!sass-loader?indentedSyntax=1",
-              scss: "vue-style-loader!css-loader!sass-loader",
-              less: "vue-style-loader!css-loader!less-loader"
+        use: [
+          "thread-loader",
+          {
+            loader: "vue-loader",
+            options: {
+              extractCSS: process.env.NODE_ENV === "production",
+              loaders: {
+                sass:
+                  "vue-style-loader!css-loader!sass-loader?indentedSyntax=1",
+                scss: "vue-style-loader!css-loader!sass-loader",
+                less: "vue-style-loader!css-loader!less-loader"
+              }
             }
           }
-        }
+        ]
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
