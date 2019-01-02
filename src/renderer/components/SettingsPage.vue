@@ -2,9 +2,9 @@
 <div>
   <gt-page-header title="应用设置" />
   <gt-page-content>
-    <gt-one-column>
+    <mu-container>
       <gt-locale-changer-settings />
-    </gt-one-column>
+    </mu-container>
   </gt-page-content>
 </div>
 </template>
