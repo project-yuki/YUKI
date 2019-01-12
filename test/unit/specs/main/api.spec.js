@@ -1,7 +1,6 @@
 import Api from "../../../../src/main/translate/api";
-import TranslationManager from "../../../../src/main/translate/translationManager";
+const TranslationManagerInjector = require("inject-loader!../../../../src/main/translate/translationManager");
 
-global = {};
 global["tempTranslationPattern"] = {};
 
 describe("Api", () => {
@@ -17,7 +16,7 @@ describe("Api", () => {
     baidu.translate(
       "悠真くんを攻略すれば２１０円か。なるほどなぁ…",
       translation => {
-        expect(translation).to.equal("如果攻略悠真的话是210日元。原来如此啊…");
+        expect(translation).to.equal("如果攻略悠真210日元吗？原来如此……");
         done();
       }
     );
@@ -36,7 +35,7 @@ describe("Api", () => {
       "悠真くんを攻略すれば２１０円か。なるほどなぁ…",
       translation => {
         expect(translation).to.equal(
-          "如果你捕获Yuen-kun，它是210日元。我明白了......"
+          "如果你捕获元坤，它是210日元？我明白了......"
         );
         done();
       }
@@ -44,6 +43,7 @@ describe("Api", () => {
   });
 
   it("combines multiple translations into Yagt.Translations object", done => {
+    let translationManager = makeTranslationManager();
     let apis = [
       {
         name: "baidu",
@@ -63,16 +63,17 @@ describe("Api", () => {
       }
     ];
 
-    TranslationManager.getInstance()
-      .initialize(apis)
+    translationManager
+      .getInstance()
+      .initializeApis(apis)
       .translateAll(
         "悠真くんを攻略すれば２１０円か。なるほどなぁ…",
         translations => {
           expect(translations).to.deep.equal({
             original: "悠真くんを攻略すれば２１０円か。なるほどなぁ…",
             translations: {
-              baidu: "如果攻略悠真的话是210日元。原来如此啊…",
-              googleCN: "如果你捕获Yuen-kun，它是210日元。我明白了......"
+              baidu: "如果攻略悠真210日元吗？原来如此……",
+              googleCN: "如果你捕获元坤，它是210日元？我明白了......"
             }
           });
           done();
@@ -80,7 +81,15 @@ describe("Api", () => {
       );
   });
 
+  const makeTranslationManager = () =>
+    TranslationManagerInjector({
+      "./jbeijing": {
+        ffi: {}
+      }
+    }).default;
+
   it("returns no translation if there is no enabled api", done => {
+    let translationManager = makeTranslationManager();
     let apis = [
       {
         name: "baidu",
@@ -100,8 +109,9 @@ describe("Api", () => {
       }
     ];
 
-    TranslationManager.getInstance()
-      .initialize(apis)
+    translationManager
+      .getInstance()
+      .initializeApis(apis)
       .translateAll(
         "悠真くんを攻略すれば２１０円か。なるほどなぁ…",
         translations => {
@@ -115,6 +125,7 @@ describe("Api", () => {
   });
 
   it("returns translations for any enabled apis", done => {
+    let translationManager = makeTranslationManager();
     let apis = [
       {
         name: "baidu",
@@ -134,15 +145,16 @@ describe("Api", () => {
       }
     ];
 
-    TranslationManager.getInstance()
-      .initialize(apis)
+    translationManager
+      .getInstance()
+      .initializeApis(apis)
       .translateAll(
         "悠真くんを攻略すれば２１０円か。なるほどなぁ…",
         translations => {
           expect(translations).to.deep.equal({
             original: "悠真くんを攻略すれば２１０円か。なるほどなぁ…",
             translations: {
-              baidu: "如果攻略悠真的话是210日元。原来如此啊…"
+              baidu: "如果攻略悠真210日元吗？原来如此……"
             }
           });
           done();

@@ -3,8 +3,11 @@ import JBeijingAdapter from "./jbeijing";
 import logger from "../../common/logger";
 
 export default class TranslationManager {
-  static instance: TranslationManager = new TranslationManager();
+  static instance: TranslationManager;
   static getInstance(): TranslationManager {
+    if (this.instance == null) {
+      this.instance = new TranslationManager();
+    }
     return this.instance;
   }
 
