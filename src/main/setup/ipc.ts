@@ -56,55 +56,35 @@ export default function(mainWindow: Electron.BrowserWindow) {
   );
 
   ipcMain.on(types.REQUEST_CONFIG, (event: Electron.Event, name: string) => {
-    switch (name) {
-      case "default":
-        logger.debug(
-          `request config ${configManager.getInstance().getFileName(name)}`
-        );
-        sendDefaultConfig(event);
-        break;
-      case "games":
-        logger.debug(
-          `request config ${configManager.getInstance().getFileName(name)}`
-        );
-        sendGamesConfig(event);
-        break;
-      case "game":
-        if (translatorWindow) {
-          logger.debug(`request config ${translatorWindow.getGameInfo()}`);
-          sendGameInfo(event);
-        } else {
-          logger.error(`no translator window`);
-        }
-        break;
-      default:
-        logger.error(`invalid config name: ${name}`);
-        break;
+    if (name === "game") {
+      requestGame(event);
+      return;
     }
+    logger.debug(
+      `request config ${configManager.getInstance().getFilename(name)}`
+    );
+    sendConfig(name, event);
   });
+
+  function requestGame(event: Electron.Event) {
+    if (translatorWindow) {
+      logger.debug(`request config ${translatorWindow.getGameInfo()}`);
+      sendGameInfo(event);
+    } else {
+      logger.error(`no translator window`);
+    }
+  }
 
   ipcMain.on(
     types.REQUEST_SAVE_CONFIG,
     (event: Electron.Event, name: string, cfg: any) => {
-      let configFileName = configManager.getInstance().getFileName(name);
+      let configFileName = configManager.getInstance().getFilename(name);
       logger.debug(`request saving config ${configFileName}: `);
       logger.debug(cfg);
 
-      switch (name) {
-        case "default":
-          configManager.getInstance().set(name, cfg);
-          logger.debug(`config ${configFileName} saved`);
-          sendDefaultConfig(event);
-          break;
-        case "games":
-          configManager.getInstance().set(name, cfg);
-          logger.debug(`config ${configFileName} saved`);
-          sendGamesConfig(event);
-          break;
-        default:
-          logger.error(`invalid config name: ${name}`);
-          break;
-      }
+      configManager.getInstance().set(name, cfg);
+      logger.debug(`config ${configFileName} saved`);
+      sendConfig(name, event);
     }
   );
 
@@ -114,9 +94,9 @@ export default function(mainWindow: Electron.BrowserWindow) {
       configManager
         .getInstance()
         .get("games")
-        .games.push(game);
+        .push(game);
       configManager.getInstance().save("games");
-      sendGamesConfig(event);
+      sendConfig("games", event);
       event.sender.send(types.HAS_ADDED_GAME);
     }
   );
@@ -128,9 +108,9 @@ export default function(mainWindow: Electron.BrowserWindow) {
         games: configManager
           .getInstance()
           .get("games")
-          .games.filter((item: Yagt.Game) => item.name !== game.name)
+          .filter((item: Yagt.Game) => item.name !== game.name)
       });
-      sendGamesConfig(event);
+      sendConfig("games", event);
     }
   );
 
@@ -162,19 +142,11 @@ export default function(mainWindow: Electron.BrowserWindow) {
   );
 }
 
-function sendDefaultConfig(event: Electron.Event) {
+function sendConfig(configName: string, event: Electron.Event) {
   event.sender.send(
     types.HAS_CONFIG,
-    "default",
-    configManager.getInstance().get("default")
-  );
-}
-
-function sendGamesConfig(event: Electron.Event) {
-  event.sender.send(
-    types.HAS_CONFIG,
-    "games",
-    configManager.getInstance().get("games").games
+    configName,
+    configManager.getInstance().get(configName)
   );
 }
 

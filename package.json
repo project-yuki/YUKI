@@ -18,7 +18,8 @@
     "unit:main": "cross-env NODE_ENV=none karma start test/unit/karma.main.conf.js",
     "unit:renderer": "cross-env NODE_ENV=none karma start test/unit/karma.renderer.conf.js",
     "rebuild": "electron-rebuild",
-    "postinstall": ""
+    "postinstall": "",
+    "tsc": "tsc --noEmit"
   },
   "build": {
     "productName": "yagt",

@@ -2,55 +2,52 @@ import * as fs from "fs";
 import * as jsonfile from "jsonfile";
 import logger from "../../common/logger";
 
-export default class Config {
-  private filename: string;
-  private config: any;
+abstract class Config {
+  protected config: any;
 
-  constructor(filename: string, defaultObject?: any) {
-    this.filename = filename;
-    if (!fs.existsSync(`${filename}.json`)) {
-      this.checkAndSaveDefault(defaultObject);
+  protected abstract getDefaultObject(): object;
+  public abstract getFilename(): string;
+
+  constructor() {
+    if (!fs.existsSync(`config/${this.getFilename()}.json`)) {
+      this.config = this.getDefaultObject();
+      this.save();
     } else {
       this.load();
     }
   }
 
-  private checkAndSaveDefault(defaultObject: any) {
-    this.config = defaultObject;
-    this.save();
-  }
-
   load() {
     try {
-      this.loadAndThrow();
+      this.config = jsonfile.readFileSync(`config/${this.getFilename()}.json`);
+      logger.debug(`config: ${this.getFilename()} loaded with`);
+      logger.debug(this.config);
     } catch (e) {
-      logger.error(`config: file ${this.filename} loads failed with`);
+      logger.error(`config: file ${this.getFilename()} loads failed with`);
       logger.error(e);
     }
-  }
-
-  private loadAndThrow() {
-    this.config = jsonfile.readFileSync(`${this.filename}.json`);
-    logger.debug(`config: ${this.filename} loaded with`);
-    logger.debug(this.config);
   }
 
   save() {
     try {
-      this.saveAndThrow();
+      jsonfile.writeFileSync(
+        `config/${this.getFilename()}.json`,
+        this.config,
+        this.getFileOptions()
+      );
+      logger.debug(`config: ${this.getFilename()} saved with`);
+      logger.debug(this.config);
     } catch (e) {
-      logger.error(`config: file ${this.filename} saves failed with`);
+      logger.error(`config: file ${this.getFilename()} saves failed with`);
       logger.error(e);
     }
   }
 
-  private saveAndThrow() {
-    jsonfile.writeFileSync(`${this.filename}.json`, this.config, {
+  private getFileOptions() {
+    return {
       spaces: 2,
       EOL: "\r\n"
-    });
-    logger.debug(`config: ${this.filename} saved with`);
-    logger.debug(this.config);
+    };
   }
 
   get() {
@@ -61,8 +58,6 @@ export default class Config {
     this.config = cfg;
     this.save();
   }
-
-  getFileName() {
-    return this.filename;
-  }
 }
+
+export default Config;
