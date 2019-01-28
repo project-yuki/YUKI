@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import GamePage from "@/components/GamesPage";
+const GamesPage = require("@/components/GamesPage.vue").default;
 
 describe("GamesPage.vue", () => {
   let vm;
@@ -24,7 +24,7 @@ describe("GamesPage.vue", () => {
     });
     vm = new Vue({
       el: document.createElement("div"),
-      render: h => h(GamePage),
+      render: h => h(GamesPage),
       store
     }).$mount();
   });

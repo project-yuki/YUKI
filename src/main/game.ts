@@ -7,7 +7,8 @@ import { EventEmitter } from "events";
 import TextInterceptor from "./textInterceptor";
 
 export default class Game extends EventEmitter {
-  private readonly TIMEOUT = 1000;
+  private static readonly TIMEOUT = 1000;
+  private static readonly MAX_RESET_TIME = 10;
   private execString: string;
   private path: string;
   private code: string;
@@ -58,31 +59,46 @@ export default class Game extends EventEmitter {
     this.execString = this.execString.replace("%GAME_PATH%", `"${this.path}"`);
   }
 
-  private registerHookerWithPid() {
+  private async registerHookerWithPid() {
     this.exeName = this.path.substring(this.path.lastIndexOf("\\") + 1);
     logger.debug(`game: finding pid of ${this.exeName}...`);
-    this.tryGetPidAnd(() => {
-      TextInterceptor.getInstance().initialize();
-      this.injectProcessByPid();
-      this.emit("started", this);
-      this.registerProcessExitCallback();
-    });
+    try {
+      await this.findPid();
+    } catch (e) {
+      logger.error(`game: could not find game ${this.exeName}. abort.`);
+      this.emit("exited");
+    }
+    TextInterceptor.getInstance().initialize();
+    this.injectProcessByPid();
+    this.emit("started", this);
+    this.registerProcessExitCallback();
   }
 
-  private tryGetPidAnd(then: Function) {
-    let pidGetterInterval = setInterval(() => {
-      exec(
-        `tasklist /nh /fo csv /fi "imagename eq ${this.exeName}"`,
-        (err, stdout, stderr) => {
-          console.log(stdout);
-          if (this.findsPidIn(stdout)) {
-            clearInterval(pidGetterInterval);
-            this.pid = this.parsePidFrom(stdout);
-            then();
+  private findPid() {
+    return new Promise((resolve, reject) => {
+      let retryTimes = 0;
+      let pidGetterInterval = setInterval(() => {
+        exec(
+          `tasklist /nh /fo csv /fi "imagename eq ${this.exeName}"`,
+          (err, stdout, stderr) => {
+            if (retryTimes >= Game.MAX_RESET_TIME) {
+              reject();
+            }
+            if (this.findsPidIn(stdout)) {
+              clearInterval(pidGetterInterval);
+              this.pid = this.parsePidFrom(stdout);
+              logger.debug(`game: found game. pid ${this.pid}`);
+              resolve();
+            } else {
+              retryTimes++;
+              logger.debug(
+                `game: could not find game. retry ${retryTimes} times...`
+              );
+            }
           }
-        }
-      );
-    }, this.TIMEOUT);
+        );
+      }, Game.TIMEOUT);
+    });
   }
 
   private findsPidIn(value: string) {
@@ -119,10 +135,6 @@ export default class Game extends EventEmitter {
   }
 
   getInfo(): Yagt.Game {
-    return {
-      name: this.name,
-      code: this.code,
-      path: this.path
-    };
+    return { name: this.name, code: this.code, path: this.path };
   }
 }
