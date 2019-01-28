@@ -25,8 +25,9 @@ describe("Config", () => {
 
   it("loads if file exists", () => {
     const Config = makeLoadTestingConfig();
+    Config.prototype.getFilename = () => "valid/path/name";
 
-    const testConfig = new Config("valid/config/path");
+    const testConfig = new Config();
 
     expect(testConfig.get()).to.deep.equal(expected);
   });
@@ -47,8 +48,10 @@ describe("Config", () => {
 
   it("saves default if file not exist", () => {
     const Config = makeSaveDefaultTestingConfig();
+    Config.prototype.getFilename = () => "invalid/path/name";
+    Config.prototype.getDefaultObject = () => expected;
 
-    const testConfig = new Config("invalid/config/path", expected);
+    const testConfig = new Config();
 
     expect(fileWritten).to.equal(true);
     expect(testConfig.get()).to.deep.equal(expected);
@@ -69,8 +72,9 @@ describe("Config", () => {
 
   it("saves after calling save()", () => {
     const Config = makeSaveTestingConfig();
+    Config.prototype.getFilename = () => "valid/path/name";
 
-    const testConfig = new Config("valid/config/path", expected);
+    const testConfig = new Config();
 
     testConfig.get().test.content =
       "『如果分手的恋人还能做朋友，要不从没爱过，要不还在爱着。』-「九ちのセカィ」";
@@ -82,8 +86,9 @@ describe("Config", () => {
 
   it("sets & saves after calling set()", () => {
     const Config = makeSaveTestingConfig();
+    Config.prototype.getFilename = () => "valid/path/name";
 
-    const testConfig = new Config("valid/config/path", expected);
+    const testConfig = new Config();
 
     testConfig.set(expectedModified);
   });

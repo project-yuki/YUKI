@@ -6,10 +6,9 @@
         [
           "env",
           {
-            "targets": { "node": 7 }
+            "targets": { "node": "current" }
           }
-        ],
-        "stage-0"
+        ]
       ],
       "plugins": [["istanbul"], ["transform-decorators-legacy"]]
     },
@@ -18,10 +17,9 @@
         [
           "env",
           {
-            "targets": { "node": 7 }
+            "targets": { "node": "current" }
           }
-        ],
-        "stage-0"
+        ]
       ],
       "plugins": ["transform-decorators-legacy"]
     },
@@ -32,8 +30,7 @@
           {
             "modules": false
           }
-        ],
-        "stage-0"
+        ]
       ],
       "plugins": ["transform-decorators-legacy"]
     },
@@ -44,8 +41,7 @@
           {
             "modules": false
           }
-        ],
-        "stage-0"
+        ]
       ],
       "plugins": ["transform-decorators-legacy"]
     },
@@ -56,8 +52,7 @@
           {
             "modules": false
           }
-        ],
-        "stage-0"
+        ]
       ],
       "plugins": ["transform-decorators-legacy"]
     }

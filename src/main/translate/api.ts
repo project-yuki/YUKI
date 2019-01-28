@@ -1,5 +1,5 @@
 const request = require("request");
-import { Options, RequestCallback } from "request";
+import { Options, Response } from "request";
 import logger from "../../common/logger";
 
 export default class Api implements Yagt.Translator {
@@ -8,11 +8,6 @@ export default class Api implements Yagt.Translator {
 
   constructor(config: Yagt.Config.OnlineApiItem) {
     this.config = config;
-    this.requestOptions = { url: "" };
-    this.initRequestOptions();
-  }
-
-  private initRequestOptions() {
     this.requestOptions = {
       url: this.config.url,
       method: this.config.method,
@@ -23,18 +18,15 @@ export default class Api implements Yagt.Translator {
     };
   }
 
-  translate(text: string, callback: (translation: string) => void) {
+  async translate(text: string) {
     this.generateRequestBody(text);
-    this.sendRequest((error, response, body) => {
-      if (error || response.statusCode != 200) {
-        logger.error(
-          `API [${this.config.name}]: ${response.statusCode} ${error}`
-        );
-        callback("");
-      }
-      let translation = this.parseResponse(body);
-      callback(translation);
-    });
+    try {
+      let responseBody = await this.getResponseBody();
+      let translation = this.parseResponse(responseBody);
+      return translation;
+    } catch (e) {
+      return "";
+    }
   }
 
   private generateRequestBody(text: string) {
@@ -51,8 +43,21 @@ export default class Api implements Yagt.Translator {
     }
   }
 
-  private sendRequest(callback: RequestCallback) {
-    request(this.requestOptions, callback);
+  private getResponseBody() {
+    return new Promise<string>((resolve, reject) => {
+      request(
+        this.requestOptions,
+        (error: any, response: Response, body: string) => {
+          if (error || response.statusCode != 200) {
+            logger.error(
+              `API [${this.config.name}]: ${response.statusCode} ${error}`
+            );
+            reject();
+          }
+          resolve(body);
+        }
+      );
+    });
   }
 
   private parseResponse(body: string): string {

@@ -14,13 +14,10 @@ export default class JBeijingAdapter implements Yagt.Translator {
     this.jb.loadUserDic(config.dictPath);
   }
 
-  translate(text: string, callback: (translation: string) => void): void {
-    this.jb.translate(
+  async translate(text: string) {
+    return await this.jb.translate(
       text,
-      this.config.traditionalChinese ? 950 : 936,
-      translation => {
-        callback(translation);
-      }
+      this.config.traditionalChinese ? 950 : 936
     );
   }
 
@@ -171,26 +168,26 @@ class JBeijing {
     });
   }
 
-  translate(
-    text: string,
-    destCodePage: number,
-    callback: (translation: string) => void
-  ): void {
-    this.initializeBuffers();
-    this.jbjct.JC_Transfer_Unicode.async(
-      0,
-      932,
-      destCodePage,
-      1,
-      1,
-      Buffer.from(`${text}\0`, "ucs2"),
-      this.outBuffer,
-      ref.ref(this.bufferSize),
-      this.bufBuffer,
-      ref.ref(this.bufferSize),
-      () => {
-        callback(ref.reinterpretUntilZeros(this.outBuffer, 2).toString("ucs2"));
-      }
-    );
+  async translate(text: string, destCodePage: number) {
+    return new Promise<string>(resolve => {
+      this.initializeBuffers();
+      this.jbjct.JC_Transfer_Unicode.async(
+        0,
+        932,
+        destCodePage,
+        1,
+        1,
+        Buffer.from(`${text}\0`, "ucs2"),
+        this.outBuffer,
+        ref.ref(this.bufferSize),
+        this.bufBuffer,
+        ref.ref(this.bufferSize),
+        () => {
+          resolve(
+            ref.reinterpretUntilZeros(this.outBuffer, 2).toString("ucs2")
+          );
+        }
+      );
+    });
   }
 }

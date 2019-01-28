@@ -7,7 +7,7 @@ declare namespace Yagt {
   }
 
   export interface Translator {
-    translate(text: string, callback: (translation: string) => void): void;
+    translate(text: string): Promise<string>;
     isEnable(): boolean;
     setEnable(isEnable: boolean): void;
     getName(): string;

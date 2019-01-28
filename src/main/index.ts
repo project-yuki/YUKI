@@ -1,3 +1,4 @@
+import "babel-polyfill";
 import { app, BrowserWindow, Tray, Menu } from "electron";
 import * as path from "path";
 import * as fs from "fs";

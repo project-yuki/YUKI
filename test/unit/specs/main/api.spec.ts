@@ -1,10 +1,11 @@
 import Api from "../../../../src/main/translate/api";
+import TranslationManager from "../../../../src/main/translate/translationManager";
 const TranslationManagerInjector = require("inject-loader!../../../../src/main/translate/translationManager");
 
 global["tempTranslationPattern"] = {};
 
 describe("Api", () => {
-  it("gets translation from form and parses with object", done => {
+  it("gets translation from form and parses with object", () => {
     let baidu = new Api({
       name: "baidu",
       url: "https://fanyi.baidu.com/transapi",
@@ -13,16 +14,14 @@ describe("Api", () => {
       responseBodyPattern: "J%RESPONSE%.data[0].dst"
     });
 
-    baidu.translate(
-      "悠真くんを攻略すれば２１０円か。なるほどなぁ…",
-      translation => {
+    return baidu
+      .translate("悠真くんを攻略すれば２１０円か。なるほどなぁ…")
+      .then(translation => {
         expect(translation).to.equal("如果攻略悠真210日元吗？原来如此……");
-        done();
-      }
-    );
-  });
+      });
+  }).timeout(5000);
 
-  it("gets translation from form and parses with regex", done => {
+  it("gets translation from form and parses with regex", () => {
     let googleCN = new Api({
       name: "googleCN",
       url: "https://translate.google.cn/m",
@@ -31,16 +30,14 @@ describe("Api", () => {
       responseBodyPattern: 'Rclass="t0">([^<]*)<'
     });
 
-    googleCN.translate(
-      "悠真くんを攻略すれば２１０円か。なるほどなぁ…",
-      translation => {
+    return googleCN
+      .translate("悠真くんを攻略すれば２１０円か。なるほどなぁ…")
+      .then(translation => {
         expect(translation).to.equal(
-          "如果你捕获元坤，它是210日元？我明白了......"
+          "如果你捕获元君，那是210日元？我明白了......"
         );
-        done();
-      }
-    );
-  });
+      });
+  }).timeout(5000);
 
   it("combines multiple translations into Yagt.Translations object", done => {
     let translationManager = makeTranslationManager();
@@ -73,15 +70,15 @@ describe("Api", () => {
             original: "悠真くんを攻略すれば２１０円か。なるほどなぁ…",
             translations: {
               baidu: "如果攻略悠真210日元吗？原来如此……",
-              googleCN: "如果你捕获元坤，它是210日元？我明白了......"
+              googleCN: "如果你捕获元君，那是210日元？我明白了......"
             }
           });
           done();
         }
       );
-  });
+  }).timeout(5000);
 
-  const makeTranslationManager = () =>
+  const makeTranslationManager: () => typeof TranslationManager = () =>
     TranslationManagerInjector({
       "./jbeijing": {
         ffi: {}
@@ -160,5 +157,5 @@ describe("Api", () => {
           done();
         }
       );
-  });
+  }).timeout(5000);
 });
