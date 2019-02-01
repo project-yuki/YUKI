@@ -1,6 +1,5 @@
 import Api from "../../../../src/main/translate/api";
 import TranslationManager from "../../../../src/main/translate/translationManager";
-const TranslationManagerInjector = require("inject-loader!../../../../src/main/translate/translationManager");
 
 global["tempTranslationPattern"] = {};
 
@@ -40,7 +39,6 @@ describe("Api", () => {
   }).timeout(5000);
 
   it("combines multiple translations into Yagt.Translations object", done => {
-    let translationManager = makeTranslationManager();
     let apis = [
       {
         name: "baidu",
@@ -60,8 +58,7 @@ describe("Api", () => {
       }
     ];
 
-    translationManager
-      .getInstance()
+    TranslationManager.getInstance()
       .initializeApis(apis)
       .translateAll(
         "悠真くんを攻略すれば２１０円か。なるほどなぁ…",
@@ -78,15 +75,7 @@ describe("Api", () => {
       );
   }).timeout(5000);
 
-  const makeTranslationManager: () => typeof TranslationManager = () =>
-    TranslationManagerInjector({
-      "./jbeijing": {
-        ffi: {}
-      }
-    }).default;
-
   it("returns no translation if there is no enabled api", done => {
-    let translationManager = makeTranslationManager();
     let apis = [
       {
         name: "baidu",
@@ -106,8 +95,7 @@ describe("Api", () => {
       }
     ];
 
-    translationManager
-      .getInstance()
+    TranslationManager.getInstance()
       .initializeApis(apis)
       .translateAll(
         "悠真くんを攻略すれば２１０円か。なるほどなぁ…",
@@ -122,7 +110,6 @@ describe("Api", () => {
   });
 
   it("returns translations for any enabled apis", done => {
-    let translationManager = makeTranslationManager();
     let apis = [
       {
         name: "baidu",
@@ -142,8 +129,7 @@ describe("Api", () => {
       }
     ];
 
-    translationManager
-      .getInstance()
+    TranslationManager.getInstance()
       .initializeApis(apis)
       .translateAll(
         "悠真くんを攻略すれば２１０円か。なるほどなぁ…",

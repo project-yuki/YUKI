@@ -21,8 +21,8 @@ let webpackConfig = merge(baseConfig, {
 
 // don't treat dependencies as externals
 delete webpackConfig.entry;
-delete webpackConfig.externals;
-delete webpackConfig.output.libraryTarget;
+// delete webpackConfig.externals;
+// delete webpackConfig.output.libraryTarget;
 
 module.exports = config => {
   config.set({
