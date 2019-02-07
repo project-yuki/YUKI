@@ -1,22 +1,19 @@
 <template>
-<div class="small-margin" id="hook-settings">
-  <mu-button type="primary" @click="openInputHookDialog">加载钩子</mu-button>
-  <mu-dialog title="请输入特殊码" :open.sync="openInputHook">
-    <mu-text-field v-model="hookCode" :error-text="errorText"></mu-text-field>
-    <mu-button slot="actions" flat @click="closeInputHookDialog">取消</mu-button>
-    <mu-button slot="actions" flat color="primary" @click="addHook">确定</mu-button>
-  </mu-dialog>
-  <!-- <mu-row gutter>
-    <mu-col sm="12" md="6" lg="4" v-for="hook in hooks" :key="hook.num" class="margin-top">
-    </mu-col>
-  </mu-row> -->
-  <gt-hook-info 
-    v-for="hook in orderedHooks" 
-    :hook="hook" 
-    :isChosen="isChosen(hook.num)" 
-    :key="hook.num + '-info'" 
-    class="hook-info" />
-</div>
+  <div class="small-margin" id="hook-settings">
+    <mu-button type="primary" @click="openInputHookDialog">加载钩子</mu-button>
+    <mu-dialog title="请输入特殊码" :open.sync="openInputHook">
+      <mu-text-field v-model="hookCode" :error-text="errorText"></mu-text-field>
+      <mu-button slot="actions" flat @click="closeInputHookDialog">取消</mu-button>
+      <mu-button slot="actions" flat color="primary" @click="addHook">确定</mu-button>
+    </mu-dialog>
+    <gt-hook-info
+      v-for="hook in orderedHooks"
+      :hook="hook"
+      :isChosen="isChosen(hook.num)"
+      :key="hook.handle + '-info'"
+      class="hook-info"
+    />
+  </div>
 </template>
 
 <script lang="ts">
@@ -44,13 +41,13 @@ export default class HookSettings extends Vue {
   get orderedHooks() {
     return _.orderBy(
       this.hooks,
-      (hook: Yagt.TextThread) => this.texts[hook.num].length,
+      (hook: Yagt.TextOutputObject) => this.texts[hook.handle].length,
       "desc"
     );
   }
 
   @namespace("Hooks").State("hookInfos")
-  hooks!: Yagt.TextThread[];
+  hooks!: Yagt.TextOutputObject[];
   @namespace("Hooks").State("texts")
   texts!: string[];
   @namespace("Hooks").State("currentDisplayHookIndex")

@@ -42,7 +42,7 @@ if (process.env.NODE_ENV !== "development") {
 
 global.tempTranslationPattern = {};
 
-global.__baseDir = path.join(__dirname, "../..");
+global.__baseDir = path.resolve(__dirname, "../..");
 logger.debug(`basePath: ${global.__baseDir}`);
 
 const iconPath = path.join(global.__baseDir, "build/icons/icon.png");

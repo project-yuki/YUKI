@@ -1,6 +1,15 @@
 declare namespace Yagt {
+  export interface TextOutputObject {
+    handle: number;
+    pid: number;
+    addr: number;
+    ctx: number;
+    ctx2: number;
+    name: string;
+    code: string;
+  }
   export interface HooksState {
-    hookInfos: TextThread[];
+    hookInfos: TextOutputObject[];
     texts: {
       [num: string]: string[];
     };

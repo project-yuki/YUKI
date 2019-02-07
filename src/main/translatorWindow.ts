@@ -66,8 +66,6 @@ export default class TranslatorWindow {
   }
 
   private subscribeHookerEvents() {
-    hooker.getInstance().subscribe("thread-create", this.window.webContents);
-    hooker.getInstance().subscribe("thread-remove", this.window.webContents);
     hooker.getInstance().subscribe("thread-output", this.window.webContents);
   }
 
@@ -82,8 +80,6 @@ export default class TranslatorWindow {
   }
 
   private unsubscribeHookerEvents() {
-    hooker.getInstance().unsubscribe("thread-create", this.window.webContents);
-    hooker.getInstance().unsubscribe("thread-remove", this.window.webContents);
     hooker.getInstance().unsubscribe("thread-output", this.window.webContents);
   }
 

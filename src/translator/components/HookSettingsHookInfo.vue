@@ -5,7 +5,12 @@
         <mu-col sm="12" md="4" lg="2" class="vertical-center">
           <strong>{{hook.name}}</strong>
         </mu-col>
-        <mu-col sm="12" md="8" lg="4" class="vertical-center">{{hook.hcode}}</mu-col>
+        <mu-col
+          sm="12"
+          md="8"
+          lg="4"
+          class="vertical-center"
+        >{{hook.code}}</mu-col>
         <mu-col sm="12" md="8" lg="4" class="vertical-center">
           <mu-text-field solo full-width :value="lastHookText" placeholder="等待文本获取..."/>
         </mu-col>
@@ -41,7 +46,7 @@ import ipcTypes from "../../common/ipcTypes";
 @Component
 export default class HookSettingsHookInfo extends Vue {
   @Prop(Object)
-  hook!: Yagt.TextThread;
+  hook!: Yagt.TextOutputObject;
   @Prop(Boolean)
   isChosen!: boolean;
 
@@ -58,10 +63,10 @@ export default class HookSettingsHookInfo extends Vue {
     return this.isChosen ? 5 : 1;
   }
   get hookText() {
-    return this.getTextById(this.hook.num).join("\n");
+    return this.getTextById(this.hook.handle).join("\n");
   }
   get lastHookText() {
-    return this.getLastTextById(this.hook.num);
+    return this.getLastTextById(this.hook.handle);
   }
 
   openConfirmDialog() {
@@ -71,7 +76,7 @@ export default class HookSettingsHookInfo extends Vue {
     this.openConfirm = false;
   }
   chooseAsDisplay() {
-    this.chooseHookAsDisplayAction(this.hook.num);
+    this.chooseHookAsDisplayAction(this.hook.handle);
   }
 }
 </script>

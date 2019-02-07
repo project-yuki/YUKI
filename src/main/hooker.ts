@@ -2,6 +2,8 @@ import types from "../common/ipcTypes";
 import logger from "../common/logger";
 import TextInterceptor from "./textInterceptor";
 import TextMerger from "./textMerger";
+import { Textractor } from "textractor-wrapper";
+import * as path from "path";
 
 class HookerPublisher {
   private subscribers: Electron.WebContents[] = [];
@@ -54,8 +56,6 @@ class HookerPublisher {
 }
 
 interface PublisherMap {
-  ["thread-create"]: HookerPublisher;
-  ["thread-remove"]: HookerPublisher;
   ["thread-output"]: HookerPublisher;
 }
 
@@ -68,46 +68,37 @@ export default class Hooker {
     return this.instance;
   }
 
-  private hooker: Yagt.Hooker;
+  private hooker: Textractor;
 
   private constructor() {
-    this.hooker = require("../../nexthooker");
+    console.log(
+      path.join(global.__baseDir, "lib/textractor/TextractorCLI.exe")
+    );
+    this.hooker = new Textractor(
+      path.join(global.__baseDir, "lib/textractor/TextractorCLI.exe")
+    );
     this.initHookerCallbacks();
     this.hooker.start();
   }
 
   private initHookerCallbacks() {
-    this.hooker.onProcessAttach(pid => {
-      logger.debug(`hooker: process attach: ${pid}`);
-    });
-    this.hooker.onProcessDetach(pid => {
-      logger.debug(`hooker: process detach: ${pid}`);
-    });
-    this.hooker.onThreadCreate(
-      (tt: Yagt.TextThread) => {
-        logger.debug("hooker: thread created");
-        logger.debug(tt);
-        this.publisherMap["thread-create"].publish(tt);
-      },
-      (tt: Yagt.TextThread, text: string) => {
-        TextMerger.getInstance().makeMerge(tt.num, text, mergedText => {
+    this.hooker.on("output", output => {
+      TextMerger.getInstance().makeMerge(
+        output.handle,
+        output.text,
+        mergedText => {
           if (!TextInterceptor.getInstance().textShouldBeIgnore(mergedText)) {
-            logger.debug(`hooker [${tt.num}]: ${mergedText}`);
-            this.publisherMap["thread-output"].publish(tt, mergedText);
+            logger.debug(`hooker [${output.handle}]: ${mergedText}`);
+            delete output.text;
+            output.code = `/${output.code}`;
+            this.publisherMap["thread-output"].publish(output, mergedText);
           }
-        });
-      }
-    );
-    this.hooker.onThreadRemove((tt: Yagt.RemovedTextThread) => {
-      logger.debug("hooker: thread removed");
-      logger.debug(tt);
-      this.publisherMap["thread-remove"].publish(tt);
+        }
+      );
     });
   }
 
   private publisherMap: PublisherMap = {
-    "thread-create": new HookerPublisher(types.HAS_INSERTED_HOOK),
-    "thread-remove": new HookerPublisher(types.HAS_REMOVED_HOOK),
     "thread-output": new HookerPublisher(types.HAS_HOOK_TEXT)
   };
 
@@ -128,14 +119,10 @@ export default class Hooker {
   }
 
   public injectProcess(pid: number) {
-    this.hooker.injectProcess(pid);
-  }
-
-  public detachProcess(pid: number) {
-    this.hooker.detachProcess(pid);
+    this.hooker.attach(pid);
   }
 
   public insertHook(pid: number, code: string) {
-    this.hooker.insertHook(pid, code);
+    this.hooker.hook(pid, code);
   }
 }

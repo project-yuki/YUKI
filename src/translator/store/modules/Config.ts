@@ -1,4 +1,4 @@
-import { Commit } from "vuex";
+import { Commit, Dispatch } from "vuex";
 import logger from "../../../common/logger";
 import { ipcRenderer } from "electron";
 import ipcTypes from "../../../common/ipcTypes";

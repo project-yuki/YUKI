@@ -30,7 +30,7 @@ const getters = {
 const mutations = {
   ADD_HOOK(
     state: Yagt.TranslatorHookState,
-    payload: { hook: Yagt.TextThread }
+    payload: { hook: Yagt.TextOutputObject }
   ) {
     if (payload.hook.name.length > 1) {
       payload.hook.name = payload.hook.name.substring(
@@ -39,7 +39,7 @@ const mutations = {
       );
     }
     state.hookInfos.push(payload.hook);
-    state.texts = { ...state.texts, [payload.hook.num.toString()]: [] };
+    state.texts = { ...state.texts, [payload.hook.handle.toString()]: [] };
   },
   SET_HOOK_TEXT(
     state: Yagt.TranslatorHookState,
@@ -90,12 +90,12 @@ const mutations = {
 
 const actions = {
   addHook(
-    { commit, state }: { commit: Commit; state: Yagt.TranslatorHookState },
-    hook: Yagt.TextThread
+    { commit }: { commit: Commit; state: Yagt.TranslatorHookState },
+    hook: Yagt.TextOutputObject
   ) {
     commit("ADD_HOOK", { hook });
-    if (hook.hcode.toLowerCase() === state.toDisplayHookCode.toLowerCase()) {
-      commit("CHOOSE_HOOK_AS_DISPLAY", { hookNum: hook.num });
+    if (hook.code.toLowerCase() === state.toDisplayHookCode.toLowerCase()) {
+      commit("CHOOSE_HOOK_AS_DISPLAY", { hookNum: hook.handle });
       commit("INIT_DISPLAY_HOOK", { code: "" });
     }
   },
@@ -105,16 +105,16 @@ const actions = {
       commit,
       state
     }: { dispatch: Dispatch; commit: Commit; state: Yagt.TranslatorHookState },
-    { hook, text }: { hook: Yagt.TextThread; text: string }
+    { hook, text }: { hook: Yagt.TextOutputObject; text: string }
   ) {
     let commonActions = () => {
-      commit("SET_HOOK_TEXT", { hookNum: hook.num, text });
-      if (state.currentDisplayHookIndex === hook.num) {
+      commit("SET_HOOK_TEXT", { hookNum: hook.handle, text });
+      if (state.currentDisplayHookIndex === hook.handle) {
         commit("CLEAR_TRANSLATION");
         ipcRenderer.send(ipcTypes.REQUEST_TRANSLATION, text);
       }
     };
-    if (state.hookInfos.find(h => h.num === hook.num) === undefined) {
+    if (state.hookInfos.find(h => h.handle === hook.handle) === undefined) {
       dispatch("addHook", hook).then(() => {
         commonActions();
       });

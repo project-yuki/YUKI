@@ -52,6 +52,7 @@
     "ref-napi": "^1.4.1",
     "request": "^2.88.0",
     "tasklist": "^3.1.1",
+    "textractor-wrapper": "^1.1.0",
     "vue": "^2.5.17",
     "vue-electron": "^1.0.6",
     "vue-router": "^3.0.1",

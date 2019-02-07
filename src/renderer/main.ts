@@ -28,18 +28,6 @@ import { ipcRenderer } from "electron";
 import types from "../common/ipcTypes";
 
 ipcRenderer.on(
-  types.HAS_INSERTED_HOOK,
-  (event: Electron.Event, hook: Yagt.TextThread) => {
-    store.dispatch("Hooks/addHook", hook);
-  }
-);
-ipcRenderer.on(
-  types.HAS_HOOK_TEXT,
-  (event: Electron.Event, hook: Yagt.TextThread, text: string) => {
-    store.dispatch("Hooks/setHookText", { hook, text });
-  }
-);
-ipcRenderer.on(
   types.HAS_CONFIG,
   (event: Electron.Event, name: string, cfgs: object) => {
     store.dispatch("Config/setConfig", { name, cfgs });

@@ -8242,6 +8242,11 @@ sax@^1.2.4, sax@~1.2.1:
   resolved "http://registry.npm.taobao.org/sax/download/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
   integrity sha1-KBYjTiN4vdxOU1T6tcqold9xANk=
 
+scanf@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/scanf/-/scanf-1.0.2.tgz#391cad4beff248b170e5bf968cdec8e3c8549026"
+  integrity sha512-3WTLRdIAypK0117Fqep8rXlUesYyz8kcMsC4ATSFO6tqGmxmzohFizIKOIrgKCs1b7RYR9QI6XOFrvH5ZGP/iA==
+
 schema-utils@^0.4.4, schema-utils@^0.4.5:
   version "0.4.7"
   resolved "http://registry.npm.taobao.org/schema-utils/download/schema-utils-0.4.7.tgz#ba74f597d2be2ea880131746ee17d0a093c68187"
@@ -8687,7 +8692,7 @@ split2@^2.1.0:
   dependencies:
     through2 "^2.0.2"
 
-split@^1.0.0:
+split@^1.0.0, split@^1.0.1:
   version "1.0.1"
   resolved "http://registry.npm.taobao.org/split/download/split-1.0.1.tgz#605bd9be303aa59fb35f9229fbea0ddec9ea07d9"
   integrity sha1-YFvZvjA6pZ+zX5Ip++oN3snqB9k=
@@ -9059,6 +9064,14 @@ text-hex@1.0.x:
   version "1.0.0"
   resolved "http://registry.npm.taobao.org/text-hex/download/text-hex-1.0.0.tgz#69dc9c1b17446ee79a92bf5b884bb4b9127506f5"
   integrity sha1-adycGxdEbueakr9biEu0uRJ1BvU=
+
+textractor-wrapper@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/textractor-wrapper/-/textractor-wrapper-1.1.0.tgz#34a95d0c927087a2a7baf3344e3f93442dbca32b"
+  integrity sha512-/9gElY7VBeZap114duWUgVLawGRI+IIwBBpkcVbohH7akFczGdB50gEMGWqyQU2o7rfAOpvOzBEjWO7YX/UrnA==
+  dependencies:
+    scanf "^1.0.2"
+    split "^1.0.1"
 
 thread-loader@^2.1.1:
   version "2.1.1"
