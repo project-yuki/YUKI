@@ -71,8 +71,11 @@ export default class Hooker {
   private hooker: Textractor;
 
   private constructor() {
-    console.log(
-      path.join(global.__baseDir, "lib/textractor/TextractorCLI.exe")
+    logger.debug(
+      `hooker: trying to resolve CLI exe at ${path.join(
+        global.__baseDir,
+        "lib/textractor/TextractorCLI.exe"
+      )}`
     );
     this.hooker = new Textractor(
       path.join(global.__baseDir, "lib/textractor/TextractorCLI.exe")

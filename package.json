@@ -32,8 +32,10 @@
       "build/icons/*"
     ],
     "extraFiles": [
-      "vnrhook.dll"
+      "dict/**/*",
+      "lib/**/*"
     ],
+    "asar": false,
     "win": {
       "icon": "build/icons/icon.png"
     }

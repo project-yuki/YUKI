@@ -12,6 +12,7 @@ declare global {
     export interface Global {
       __static: string;
       __baseDir: string;
+      __appDir: string;
       tempTranslationPattern: {
         [name: string]: any;
       };
@@ -42,10 +43,16 @@ if (process.env.NODE_ENV !== "development") {
 
 global.tempTranslationPattern = {};
 
-global.__baseDir = path.resolve(__dirname, "../..");
+global.__baseDir = path.resolve(
+  __dirname,
+  process.env.NODE_ENV !== "development" ? "../../../.." : "../.."
+);
 logger.debug(`basePath: ${global.__baseDir}`);
 
-const iconPath = path.join(global.__baseDir, "build/icons/icon.png");
+global.__appDir = path.resolve(__dirname, "../..");
+logger.debug(`appPath: ${global.__appDir}`);
+
+const iconPath = path.join(global.__appDir, "build/icons/icon.png");
 
 import setupIpc from "./setup/ipc";
 
