@@ -4,6 +4,7 @@ import hooker from "./hooker";
 import Game from "./game";
 import logger from "../common/logger";
 const electronVibrancy = require("electron-vibrancy");
+import { ResizeMonitor } from "win32-monitor-window-resize";
 
 export default class TranslatorWindow {
   private readonly URL =
@@ -15,12 +16,36 @@ export default class TranslatorWindow {
   private readonly Y_OFFSET = 0.1;
 
   private window!: Electron.BrowserWindow;
-  private game!: Game;
+  private game: Game;
+  private resizeMonitor!: ResizeMonitor;
 
   private isRealClose = false;
 
-  constructor() {
+  constructor(game: Game) {
+    this.game = game;
     this.create();
+  }
+
+  private registerResizeMonitor() {
+    this.resizeMonitor = new ResizeMonitor(this.game.getPid());
+    this.resizeMonitor.on("resize", rect => {
+      let primaryDisplayScaleFactor = electron.screen.getPrimaryDisplay()
+        .scaleFactor;
+
+      rect.left /= primaryDisplayScaleFactor;
+      rect.top /= primaryDisplayScaleFactor;
+      rect.right /= primaryDisplayScaleFactor;
+      rect.bottom /= primaryDisplayScaleFactor;
+
+      const windowSize = this.window.getSize();
+
+      this.window.setBounds({
+        width: windowSize[0],
+        height: windowSize[1],
+        x: ~~(rect.left + (rect.right - rect.left - windowSize[0]) / 2),
+        y: ~~(rect.top + (rect.bottom - rect.top - windowSize[1]) / 2)
+      });
+    });
   }
 
   private create() {
@@ -45,6 +70,8 @@ export default class TranslatorWindow {
     this.window.on("ready-to-show", () => {
       electronVibrancy.SetVibrancy(this.window, 0);
 
+      this.registerResizeMonitor();
+
       logger.debug("subscribing hooker events...");
       this.subscribeHookerEvents();
       this.window.show();
@@ -56,11 +83,6 @@ export default class TranslatorWindow {
         this.window.hide();
       }
     });
-
-    this.window.setPosition(
-      ~~(primaryDisplaySize.width * this.X_OFFSET),
-      ~~(primaryDisplaySize.height * this.Y_OFFSET)
-    );
 
     this.window.loadURL(this.URL);
   }
@@ -78,6 +100,7 @@ export default class TranslatorWindow {
   close() {
     this.isRealClose = true;
     this.unsubscribeHookerEvents();
+    this.resizeMonitor.kill();
     this.window.close();
   }
 
@@ -85,10 +108,6 @@ export default class TranslatorWindow {
     hooker.getInstance().unsubscribe("thread-create", this.window.webContents);
     hooker.getInstance().unsubscribe("thread-remove", this.window.webContents);
     hooker.getInstance().unsubscribe("thread-output", this.window.webContents);
-  }
-
-  setGame(game: Game) {
-    this.game = game;
   }
 
   getGameInfo(): Yagt.Game {

@@ -29,8 +29,7 @@ export default function(mainWindow: Electron.BrowserWindow) {
       runningGame = new Game(game);
       runningGame.on("started", () => {
         if (translatorWindow) translatorWindow.close();
-        translatorWindow = new TranslatorWindow();
-        translatorWindow.setGame(runningGame);
+        translatorWindow = new TranslatorWindow(runningGame);
       });
       runningGame.on("exited", () => {
         runningGame.removeAllListeners();
