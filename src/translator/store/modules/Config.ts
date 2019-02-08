@@ -1,5 +1,5 @@
 import { Commit, Dispatch } from "vuex";
-import logger from "../../../common/logger";
+const debug = require("debug")("yagt:translatorWindow");
 import { ipcRenderer } from "electron";
 import ipcTypes from "../../../common/ipcTypes";
 
@@ -25,7 +25,7 @@ const mutations = {
         state.game = payload.cfgs;
         break;
       default:
-        logger.error(`translator window: invalid config name: ${payload.name}`);
+        debug("invalid config name: %s", payload.name);
         break;
     }
   }

@@ -1,5 +1,3 @@
-import logger from "../common/logger";
-
 interface TempStore {
   [num: number]: string[];
 }

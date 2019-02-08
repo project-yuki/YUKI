@@ -19,7 +19,7 @@ describe("Win32", () => {
 
   const makeTestingProcessExitCallbackRegister = () =>
     Win32Injector({
-      "ffi-napi": {
+      ffi: {
         Library() {
           return {
             OpenProcess() {},
@@ -30,9 +30,6 @@ describe("Win32", () => {
             }
           };
         }
-      },
-      "../common/logger": {
-        debug() {}
       }
     }).registerProcessExitCallback;
 

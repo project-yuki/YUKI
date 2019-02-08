@@ -2,7 +2,7 @@ import { BrowserWindow } from "electron";
 const electron = require("electron");
 import hooker from "./hooker";
 import Game from "./game";
-import logger from "../common/logger";
+const debug = require("debug")("translatorWindow");
 const electronVibrancy = require("electron-vibrancy");
 
 export default class TranslatorWindow {
@@ -45,8 +45,9 @@ export default class TranslatorWindow {
     this.window.on("ready-to-show", () => {
       electronVibrancy.SetVibrancy(this.window, 0);
 
-      logger.debug("subscribing hooker events...");
+      debug("subscribing hooker events...");
       this.subscribeHookerEvents();
+      debug("hooker events subscribed");
       this.window.show();
     });
 

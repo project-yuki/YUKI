@@ -1,5 +1,5 @@
 import types from "../common/ipcTypes";
-import logger from "../common/logger";
+const debug = require("debug");
 import TextInterceptor from "./textInterceptor";
 import TextMerger from "./textMerger";
 import { Textractor } from "textractor-wrapper";
@@ -14,36 +14,36 @@ class HookerPublisher {
 
   public subscribe(webContents: Electron.WebContents) {
     if (this.subscribers.find(value => value === webContents)) {
-      logger.error(
-        `HookerPublisher: webContents [${webContents.getTitle()}] already subscribed type [${
-          this.type
-        }]`
+      debug("yagt:hookerPublisher")(
+        "webContents %s already subscribed type %s",
+        webContents.getTitle(),
+        this.type
       );
     } else {
       this.subscribers.push(webContents);
-      logger.debug(
-        `HookerPublisher: webContents [${webContents.getTitle()}] successfully subscribed type [${
-          this.type
-        }]`
+      debug("yagt:hookerPublisher")(
+        "webContents %s successfully subscribed type %s",
+        webContents.getTitle(),
+        this.type
       );
     }
   }
 
   public unsubscribe(webContents: Electron.WebContents) {
     if (!this.subscribers.find(value => value === webContents)) {
-      logger.error(
-        `HookerPublisher: webContents [${webContents.getTitle()}] hasn't subscribed type [${
-          this.type
-        }]`
+      debug("yagt:hookerPublisher")(
+        "webContents %s hasn't subscribed type %s",
+        webContents.getTitle(),
+        this.type
       );
     } else {
       this.subscribers = this.subscribers.filter(
         subscriber => subscriber !== webContents
       );
-      logger.debug(
-        `HookerPublisher: webContents [${webContents.getTitle()}] successfully unsubscribed type [${
-          this.type
-        }]`
+      debug("yagt:hookerPublisher")(
+        "webContents %s successfully unsubscribed type %s",
+        webContents.getTitle(),
+        this.type
       );
     }
   }
@@ -71,15 +71,12 @@ export default class Hooker {
   private hooker: Textractor;
 
   private constructor() {
-    logger.debug(
-      `hooker: trying to resolve CLI exe at ${path.join(
-        global.__baseDir,
-        "lib/textractor/TextractorCLI.exe"
-      )}`
+    let absolutePath = path.join(
+      global.__baseDir,
+      "lib/textractor/TextractorCLI.exe"
     );
-    this.hooker = new Textractor(
-      path.join(global.__baseDir, "lib/textractor/TextractorCLI.exe")
-    );
+    debug("trying to access CLI exe at %s", absolutePath);
+    this.hooker = new Textractor(absolutePath);
     this.initHookerCallbacks();
     this.hooker.start();
   }
@@ -91,7 +88,7 @@ export default class Hooker {
         output.text,
         mergedText => {
           if (!TextInterceptor.getInstance().textShouldBeIgnore(mergedText)) {
-            logger.debug(`hooker [${output.handle}]: ${mergedText}`);
+            debug("yagt:hooker")("[%d] %s", output.handle, mergedText);
             delete output.text;
             output.code = `/${output.code}`;
             this.publisherMap["thread-output"].publish(output, mergedText);
@@ -107,7 +104,7 @@ export default class Hooker {
 
   public subscribe(on: keyof PublisherMap, webContents: Electron.WebContents) {
     if (!this.publisherMap[on]) {
-      logger.error(`hooker: trying to register unknown event ${on}`);
+      debug("yagt:hooker")("trying to register unknown event %s", on);
     } else {
       this.publisherMap[on].subscribe(webContents);
     }
@@ -115,17 +112,21 @@ export default class Hooker {
 
   public unsubscribe(on: string, webContents: Electron.WebContents) {
     if (!this.publisherMap[on]) {
-      logger.error(`hooker: trying to unregister unknown event ${on}`);
+      debug("yagt:hooker")("trying to unregister unknown event %s", on);
     } else {
       this.publisherMap[on].unsubscribe(webContents);
     }
   }
 
   public injectProcess(pid: number) {
+    debug("injecting process %d...", pid);
     this.hooker.attach(pid);
+    debug("process %d injected", pid);
   }
 
   public insertHook(pid: number, code: string) {
+    debug("yagt:hooker")("inserting hook %s to process %d...", code, pid);
     this.hooker.hook(pid, code);
+    debug("yagt:hooker")(`hook %s inserted into process %d`, code, pid);
   }
 }

@@ -1,6 +1,6 @@
 const request = require("request-promise-native");
 import { Options } from "request";
-import logger from "../../common/logger";
+const debug = require("debug")("yagt:api");
 import * as vm from "vm";
 
 export default class Api implements Yagt.Translator {
@@ -30,7 +30,7 @@ export default class Api implements Yagt.Translator {
       let translation = this.parseResponse(responseBody);
       return translation;
     } catch (e) {
-      logger.error(`API [${this.config.name}]: ${e}`);
+      debug("[%s] translate error: %s", this.config.name, e);
       return "";
     }
   }
@@ -45,7 +45,11 @@ export default class Api implements Yagt.Translator {
     } else if (this.config.requestBodyFormat.startsWith("J")) {
       this.requestOptions.json = JSON.parse(requestBodyString.substring(1));
     } else {
-      logger.error(`API [${this.config.name}]: No such request body type`);
+      debug(
+        "[%s] no such request body type: %s",
+        this.config.name,
+        this.config.requestBodyFormat.substring(0, 1)
+      );
     }
   }
 
@@ -59,7 +63,11 @@ export default class Api implements Yagt.Translator {
     } else if (this.config.responseBodyPattern.startsWith("R")) {
       return this.parseResponseByRegExp(body);
     } else {
-      logger.error(`API [${this.config.name}]: No such response parser type`);
+      debug(
+        "[%s] no such response parser type: %s",
+        this.config.name,
+        this.config.responseBodyPattern.substring(0, 1)
+      );
       return "";
     }
   }

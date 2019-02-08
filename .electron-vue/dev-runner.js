@@ -12,11 +12,6 @@ const mainConfig = require("./webpack.main.config");
 const rendererConfig = require("./webpack.renderer.config");
 const translatorConfig = require("./webpack.translator.config");
 
-const debugPrefix = chalk.bgBlue.white(" DEBUG ");
-const infoPrefix = chalk.bgGreen.white(" INFO  ");
-const warnPrefix = chalk.bgYellow.white(" WARN  ");
-const errorPrefix = chalk.bgRed.white(" ERROR ");
-
 let electronProcess = null;
 let manualRestart = false;
 let hotMiddleware;
@@ -176,34 +171,17 @@ function startElectron() {
     args = args.concat(process.argv.slice(2));
   }
 
-  electronProcess = spawn(electron, args);
-
-  electronProcess.stdout.on("data", data => {
-    electronLog(data);
-  });
-  electronProcess.stderr.on("data", data => {
-    electronLog(data);
+  let electronEnv = process.env;
+  electronEnv.DEBUG = "yagt:*";
+  electronEnv.DEBUG_COLORS = true;
+  electronProcess = spawn(electron, args, {
+    stdio: "inherit",
+    env: electronEnv
   });
 
   electronProcess.on("close", () => {
     if (!manualRestart) process.exit();
   });
-}
-
-function electronLog(data) {
-  let log = "";
-  data = data.toString().split(/\r?\n/);
-  data.forEach(line => {
-    if (line.startsWith("DEBUG")) log += `${debugPrefix}${line.substring(5)}\n`;
-    else if (line.startsWith("INFO"))
-      log += `${infoPrefix}${line.substring(4)}\n`;
-    else if (line.startsWith("WARN"))
-      log += `${warnPrefix}${line.substring(4)}\n`;
-    else if (line.startsWith("ERROR"))
-      log += `${errorPrefix}${line.substring(5)}\n`;
-    else log += `        ${line}\n`;
-  });
-  console.log(log);
 }
 
 function init() {

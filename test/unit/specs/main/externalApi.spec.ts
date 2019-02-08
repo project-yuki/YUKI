@@ -1,4 +1,4 @@
-const ExternalApiInjector = require("inject-loader!../../../../src/main/translate/externalApi");
+import ExternalApi from "../../../../src/main/translate/externalApi";
 
 describe("ExternalApi", () => {
   before(() => {
@@ -6,7 +6,6 @@ describe("ExternalApi", () => {
   });
 
   it("gets translation from external JS file", () => {
-    const ExternalApi = makeDummyLoggerExternalApi();
     let youdao = new ExternalApi({
       enable: true,
       external: true,
@@ -22,16 +21,4 @@ describe("ExternalApi", () => {
         );
       });
   }).timeout(5000);
-
-  const makeDummyLoggerExternalApi = () =>
-    ExternalApiInjector({
-      "../../common/logger": {
-        debug: msg => {
-          console.log(msg);
-        },
-        error: msg => {
-          console.error(msg);
-        }
-      }
-    }).default;
 });

@@ -1,5 +1,5 @@
 import configManager from "./config";
-import logger from "../common/logger";
+const debug = require("debug")("yagt:textInterceptor");
 
 export default class TextInterceptor {
   static instance: TextInterceptor = new TextInterceptor();
@@ -11,7 +11,7 @@ export default class TextInterceptor {
     this.shouldBeIgnorePatterns = configManager
       .getInstance()
       .get("interceptor").shouldBeIgnore;
-    logger.debug("text interceptor: initialized");
+    debug("initialized");
   }
 
   shouldBeIgnorePatterns!: string[];

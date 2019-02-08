@@ -1,5 +1,5 @@
 import { exec } from "child_process";
-import logger from "../common/logger";
+const debug = require("debug")("yagt:game");
 import configManager from "./config";
 import { registerProcessExitCallback } from "./win32";
 import hooker from "./hooker";
@@ -34,7 +34,7 @@ export default class Game extends EventEmitter {
   private execGameProcess() {
     this.getRawExecStringOrDefault();
     this.replaceExecStringTokensWithActualValues();
-    logger.debug(`game: exec string: ${this.execString}`);
+    debug("exec string: %s", this.execString);
     exec(this.execString);
   }
 
@@ -44,14 +44,12 @@ export default class Game extends EventEmitter {
       .get("default").localeChangers;
     for (let key in localeChangers) {
       if (localeChangers[key].enable === true) {
-        logger.debug(
-          `game: choose ${localeChangers[key].name} as locale changer`
-        );
+        debug("choose %s as locale changer", localeChangers[key].name);
         this.execString = localeChangers[key].exec;
         return;
       }
     }
-    logger.warn("game: no locale changer chosed. use default");
+    debug("no locale changer chosed. use %GAME_PATH%");
     this.execString = "%GAME_PATH%";
   }
 
@@ -61,11 +59,11 @@ export default class Game extends EventEmitter {
 
   private async registerHookerWithPid() {
     this.exeName = this.path.substring(this.path.lastIndexOf("\\") + 1);
-    logger.debug(`game: finding pid of ${this.exeName}...`);
+    debug("finding pid of %s...", this.exeName);
     try {
       await this.findPid();
     } catch (e) {
-      logger.error(`game: could not find game ${this.exeName}. abort.`);
+      debug("could not find game %s. abort", this.exeName);
       this.emit("exited");
     }
     TextInterceptor.getInstance().initialize();
@@ -87,13 +85,11 @@ export default class Game extends EventEmitter {
             if (this.findsPidIn(stdout)) {
               clearInterval(pidGetterInterval);
               this.pid = this.parsePidFrom(stdout);
-              logger.debug(`game: found game. pid ${this.pid}`);
+              debug("found game. pid %d", this.pid);
               resolve();
             } else {
               retryTimes++;
-              logger.debug(
-                `game: could not find game. retry ${retryTimes} times...`
-              );
+              debug("could not find game. retry times...", retryTimes);
             }
           }
         );
@@ -110,9 +106,7 @@ export default class Game extends EventEmitter {
   }
 
   private injectProcessByPid() {
-    logger.debug(`injecting process ${this.pid}...`);
     hooker.getInstance().injectProcess(this.pid);
-    logger.debug(`process ${this.pid} injected`);
   }
 
   private registerProcessExitCallback() {

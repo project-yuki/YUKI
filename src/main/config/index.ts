@@ -10,10 +10,10 @@ interface NameToConfigMap {
 }
 
 import Config from "./config";
-import logger from "../../common/logger";
 import DefaultConfig from "./defaultConfig";
 import GamesConfig from "./gamesConfig";
 import InterceptorConfig from "./interceptorConfig";
+const debug = require("debug")("yagt:configManager");
 
 export default class ConfigManager {
   static instance: ConfigManager;
@@ -32,10 +32,9 @@ export default class ConfigManager {
 
   get(configName: string): any {
     try {
-      console.log(this.nameToConfigMap[configName]);
       return this.nameToConfigMap[configName].get();
     } catch (e) {
-      logger.error(`config manager: no config named ${configName}`);
+      debug("no config named %s", configName);
       return null;
     }
   }
@@ -44,7 +43,7 @@ export default class ConfigManager {
     try {
       return this.nameToConfigMap[configName].set(cfg);
     } catch (e) {
-      logger.error(`config manager: no config named ${configName}`);
+      debug("no config named %s", configName);
     }
   }
 
@@ -52,7 +51,7 @@ export default class ConfigManager {
     try {
       return this.nameToConfigMap[configName].save();
     } catch (e) {
-      logger.error(`config manager: no config named ${configName}`);
+      debug("no config named %s", configName);
     }
   }
 
@@ -60,7 +59,7 @@ export default class ConfigManager {
     try {
       return this.nameToConfigMap[configName].getFilename();
     } catch (e) {
-      logger.error(`config manager: no config named ${configName}`);
+      debug("no config named %s", configName);
       return "";
     }
   }

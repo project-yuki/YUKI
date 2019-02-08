@@ -1,8 +1,8 @@
 import * as fs from "fs";
 import * as path from "path";
-import * as ffi from "ffi-napi";
-import * as ref from "ref-napi";
-import logger from "../../common/logger";
+import * as ffi from "ffi";
+import * as ref from "ref";
+const debug = require("debug")("yagt:jbeijing");
 
 export default class JBeijingAdapter implements Yagt.Translator {
   private config: Yagt.Config.JBeijing;
@@ -55,19 +55,17 @@ class JBeijing {
 
   constructor(exePath: string) {
     this.exePath = exePath;
-    this.checkExePathAndThrow();
-    this.checkAndMakeDictDir();
-    process.env.PATH += `;${exePath}`;
-    this.initializeJbjct();
+    try {
+      this.checkExePathAndThrow();
+      this.checkAndMakeDictDir();
+      process.env.PATH += `;${exePath}`;
+      this.initializeJbjct();
+    } catch (e) {}
   }
 
   private checkExePathAndThrow() {
     if (!fs.existsSync(path.join(this.exePath, "JBJCT.dll"))) {
-      logger.error(
-        `jbeijing: there is no jbeijing translator in path ${
-          this.exePath
-        }. abort.`
-      );
+      debug("there is no jbeijing translator in path %s. abort", this.exePath);
       throw new Error();
     }
   }
@@ -75,7 +73,7 @@ class JBeijing {
   private checkAndMakeDictDir() {
     if (!fs.existsSync(JBeijing.DICT_PATH)) {
       fs.mkdirSync(JBeijing.DICT_PATH);
-      logger.warn("jbeijing: user dict path not exists. mkdir.");
+      debug("user dict path not exists. created it");
     }
   }
 
@@ -116,10 +114,9 @@ class JBeijing {
       0
     );
     if (statusCode === 1 || statusCode === -255) {
-      console.info("jbeijing: user dict loaded");
+      debug("user dict loaded");
     } else {
-      console.error("jbeijing: cannot load user dict. abort.");
-      throw new Error();
+      debug("cannot load user dict. abort");
     }
   }
 
@@ -129,7 +126,7 @@ class JBeijing {
     for (let i in userdicPaths) {
       if (parseInt(i) >= JBeijing.MAX_USERDIC_COUNT) break;
       if (userdicPaths[i].length > JBeijing.USERDIC_PATH_SIZE / 2) {
-        console.warn(`jbeijing: user dict path is to long: ${userdicPaths[i]}`);
+        debug("user dict path is to long: %s. didn't load it", userdicPaths[i]);
         continue;
       }
       userdicPaths[i] = path.join(userdicPaths[i], "Jcuser");
@@ -140,8 +137,7 @@ class JBeijing {
         "ucs2"
       );
     }
-    logger.debug(`jbeijing: trying to load user dict from: `);
-    logger.debug(userdicPaths);
+    debug("trying to load user dict from %O", userdicPaths);
   }
 
   private findAvailableUserdicPaths(basePath: string): string[] {

@@ -2,7 +2,7 @@ import * as request from "request-promise-native";
 import * as vm from "vm";
 import * as fs from "fs";
 import * as path from "path";
-import logger from "../../common/logger";
+const debug = require("debug")("yagt:api");
 
 export default class ExternalApi implements Yagt.Translator {
   private config: Yagt.Config.OnlineApiItem;
@@ -22,10 +22,9 @@ export default class ExternalApi implements Yagt.Translator {
     let absolutePath = path.join(global.__baseDir, this.config.jsFile);
     try {
       this.scriptString = fs.readFileSync(absolutePath, "utf8");
-      logger.debug(`api: external file ${absolutePath} loaded`);
+      debug("external file %s loaded", absolutePath);
     } catch (e) {
-      logger.error(`api: external file ${absolutePath} loads failed with`);
-      logger.error(e);
+      debug("external file %s loads failed !> %s", absolutePath, e);
     }
   }
 

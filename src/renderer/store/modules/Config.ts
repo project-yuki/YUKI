@@ -1,4 +1,4 @@
-import logger from "../../../common/logger";
+const debug = require("debug")("yagt:rendererWindow");
 import { Commit } from "vuex";
 
 const state: Yagt.ConfigState = {
@@ -16,7 +16,7 @@ const mutations = {
         state.games = payload.cfgs;
         break;
       default:
-        logger.error(`invalid config name: ${payload.name}`);
+        debug("invalid config name: %s", payload.name);
         break;
     }
   }

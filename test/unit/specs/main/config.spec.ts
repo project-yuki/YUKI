@@ -39,10 +39,6 @@ describe("Config", () => {
       },
       jsonfile: {
         readFileSync: () => expected
-      },
-      "../../common/logger": {
-        debug: () => {},
-        error: () => {}
       }
     }).default;
 
@@ -63,10 +59,6 @@ describe("Config", () => {
         writeFileSync: () => {
           fileWritten = true;
         }
-      },
-      "../../common/logger": {
-        debug: () => {},
-        error: () => {}
       }
     }).default;
 
@@ -104,10 +96,6 @@ describe("Config", () => {
           fileWritten = true;
           expect(obj).to.deep.equal(expectedModified);
         }
-      },
-      "../../common/logger": {
-        debug: () => {},
-        error: () => {}
       }
     }).default;
 });

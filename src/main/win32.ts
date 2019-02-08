@@ -1,5 +1,5 @@
-import * as ffi from "ffi-napi";
-import logger from "../common/logger";
+import * as ffi from "ffi";
+const debug = require("debug")("yagt:win32");
 
 const SYNCHRONIZE = 0x00100000;
 const FALSE = 0;
@@ -16,13 +16,13 @@ export function registerProcessExitCallback(
   pid: number,
   callback: () => void
 ): void {
-  logger.debug(`registering process exit callback at pid ${pid}...`);
+  debug("registering process exit callback at pid %d...", pid);
 
   hProc = knl32.OpenProcess(SYNCHRONIZE, FALSE, pid);
-  logger.debug(`process handle: ${hProc}`);
+  debug("process handle: %d", hProc);
 
   knl32.WaitForSingleObject.async(hProc, INFINITE, () => {
     callback();
   });
-  logger.debug("process exit callback registered");
+  debug("process exit callback registered");
 }

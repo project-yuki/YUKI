@@ -1,6 +1,6 @@
 import Api from "../translate/api";
 import JBeijingAdapter from "./jbeijing";
-import logger from "../../common/logger";
+const debug = require("debug")("yagt:translationManager");
 import ExternalApi from "./externalApi";
 
 export default class TranslationManager {
@@ -42,11 +42,7 @@ export default class TranslationManager {
         toTranslateCount++;
         (async () => {
           let translation = await this.apis[key].translate(text);
-          logger.debug(
-            `translation manager: [${this.apis[
-              key
-            ].getName()}] => ${translation}`
-          );
+          debug("[%s] -> %s", this.apis[key].getName(), translation);
           callback({
             [this.apis[key].getName()]: translation
           });

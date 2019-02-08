@@ -1,6 +1,6 @@
 import { app, ipcMain, dialog } from "electron";
 import types from "../../common/ipcTypes";
-import logger from "../../common/logger";
+const debug = require("debug")("yagt:ipc");
 import configManager from "../config";
 import hooker from "../hooker";
 import Game from "../game";
@@ -12,13 +12,14 @@ let translatorWindow: TranslatorWindow | null;
 
 export default function(mainWindow: Electron.BrowserWindow) {
   ipcMain.on(types.MAIN_PAGE_LOAD_FINISHED, () => {
-    logger.info(`main page load finished.`);
+    debug("main page load finished. starting apis...");
     TranslationManager.getInstance().initializeApis(
       configManager.getInstance().get("default").onlineApis
     );
     TranslationManager.getInstance().initializeTranslators(
       configManager.getInstance().get("default").translators
     );
+    debug("apis started");
   });
 
   ipcMain.on(
@@ -46,11 +47,7 @@ export default function(mainWindow: Electron.BrowserWindow) {
     types.REQUEST_INSERT_HOOK,
     (event: Electron.Event, code: string) => {
       if (code !== "") {
-        logger.debug(
-          `inserting hook ${code} to process ${runningGame.getPid()}...`
-        );
         hooker.getInstance().insertHook(runningGame.getPid(), code);
-        logger.debug(`hook ${code} inserted`);
       }
     }
   );
@@ -60,18 +57,16 @@ export default function(mainWindow: Electron.BrowserWindow) {
       requestGame(event);
       return;
     }
-    logger.debug(
-      `request config ${configManager.getInstance().getFilename(name)}`
-    );
+    debug("request config %s", configManager.getInstance().getFilename(name));
     sendConfig(name, event);
   });
 
   function requestGame(event: Electron.Event) {
     if (translatorWindow) {
-      logger.debug(`request config ${translatorWindow.getGameInfo()}`);
+      debug("request config %o", translatorWindow.getGameInfo());
       sendGameInfo(event);
     } else {
-      logger.error(`no translator window`);
+      debug(`no translator window`);
     }
   }
 
@@ -79,11 +74,9 @@ export default function(mainWindow: Electron.BrowserWindow) {
     types.REQUEST_SAVE_CONFIG,
     (event: Electron.Event, name: string, cfg: any) => {
       let configFileName = configManager.getInstance().getFilename(name);
-      logger.debug(`request saving config ${configFileName}: `);
-      logger.debug(cfg);
-
+      debug(`request saving config %s...`, configFileName);
       configManager.getInstance().set(name, cfg);
-      logger.debug(`config ${configFileName} saved`);
+      debug("config %s saved. resend it to window", configFileName);
       sendConfig(name, event);
     }
   );
@@ -160,9 +153,10 @@ function sendGameInfo(event: Electron.Event) {
 
 app.on("before-quit", () => {
   if (translatorWindow) {
-    logger.info("closing translator window...");
+    require("debug")("yagt:app")("closing translator window...");
     translatorWindow.close();
     translatorWindow = null;
+    require("debug")("yagt:app")("translator window closed");
   }
-  logger.info("app quited");
+  require("debug")("yagt:app")("app quited");
 });

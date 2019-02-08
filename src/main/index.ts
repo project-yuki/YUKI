@@ -2,9 +2,7 @@ import "babel-polyfill";
 import { app, BrowserWindow, Tray, Menu } from "electron";
 import * as path from "path";
 import * as fs from "fs";
-
-import logger from "../common/logger";
-logger.initialize();
+const debug = require("debug")("yagt:app");
 
 // to make TypeScript happy :)
 declare global {
@@ -20,20 +18,13 @@ declare global {
   }
 }
 
-// check & make ./log and ./config folder
+// check & make ./config folder
 {
-  if (!fs.existsSync("log\\")) {
-    fs.mkdirSync("log");
-    logger.warn("created ./log folder");
-  }
   if (!fs.existsSync("config\\")) {
     fs.mkdirSync("config");
-    logger.warn("created ./config folder");
+    debug("created ./config folder");
   }
 }
-
-import ConfigManager from "./config";
-logger.initialize(ConfigManager.getInstance().get("default").logLevel);
 
 if (process.env.NODE_ENV !== "development") {
   global.__static = require("path")
@@ -47,10 +38,10 @@ global.__baseDir = path.resolve(
   __dirname,
   process.env.NODE_ENV !== "development" ? "../../../.." : "../.."
 );
-logger.debug(`basePath: ${global.__baseDir}`);
+debug("basePath: %s", global.__baseDir);
 
 global.__appDir = path.resolve(__dirname, "../..");
-logger.debug(`appPath: ${global.__appDir}`);
+debug("appPath: %s", global.__appDir);
 
 const iconPath = path.join(global.__appDir, "build/icons/icon.png");
 

@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import * as jsonfile from "jsonfile";
-import logger from "../../common/logger";
+const debug = require("debug")("yagt:config");
 
 abstract class Config {
   protected config: any;
@@ -20,11 +20,9 @@ abstract class Config {
   load() {
     try {
       this.config = jsonfile.readFileSync(`config/${this.getFilename()}.json`);
-      logger.debug(`config: ${this.getFilename()} loaded with`);
-      logger.debug(this.config);
+      debug("%s loaded", `config/${this.getFilename()}.json`);
     } catch (e) {
-      logger.error(`config: file ${this.getFilename()} loads failed with`);
-      logger.error(e);
+      debug("%s loads failed !> %s", `config/${this.getFilename()}.json`, e);
     }
   }
 
@@ -33,22 +31,18 @@ abstract class Config {
       jsonfile.writeFileSync(
         `config/${this.getFilename()}.json`,
         this.config,
-        this.getFileOptions()
+        this.fileOptions
       );
-      logger.debug(`config: ${this.getFilename()} saved with`);
-      logger.debug(this.config);
+      debug("%s saved", `config/${this.getFilename()}.json`);
     } catch (e) {
-      logger.error(`config: file ${this.getFilename()} saves failed with`);
-      logger.error(e);
+      debug("%s saves failed !> %s", `config/${this.getFilename()}.json`, e);
     }
   }
 
-  private getFileOptions() {
-    return {
-      spaces: 2,
-      EOL: "\r\n"
-    };
-  }
+  private fileOptions = {
+    spaces: 2,
+    EOL: "\r\n"
+  };
 
   get() {
     return this.config;
