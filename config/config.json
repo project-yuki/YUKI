@@ -40,7 +40,7 @@
       "url": "https://translate.google.cn/m"
     },
     {
-      "enable": false,
+      "enable": true,
       "external": true,
       "jsFile": "config\\youdaoApi.js",
       "name": "youdao"

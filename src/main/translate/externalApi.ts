@@ -1,4 +1,4 @@
-const request = require("request");
+import * as request from "request-promise-native";
 import * as vm from "vm";
 import * as fs from "fs";
 import * as path from "path";

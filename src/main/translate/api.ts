@@ -1,5 +1,5 @@
-const request = require("request");
-import { Options, Response } from "request";
+const request = require("request-promise-native");
+import { Options } from "request";
 import logger from "../../common/logger";
 import * as vm from "vm";
 
@@ -30,6 +30,7 @@ export default class Api implements Yagt.Translator {
       let translation = this.parseResponse(responseBody);
       return translation;
     } catch (e) {
+      logger.error(`API [${this.config.name}]: ${e}`);
       return "";
     }
   }
@@ -49,20 +50,7 @@ export default class Api implements Yagt.Translator {
   }
 
   private getResponseBody() {
-    return new Promise<string>((resolve, reject) => {
-      request(
-        this.requestOptions,
-        (error: any, response: Response, body: string) => {
-          if (error || response.statusCode != 200) {
-            logger.error(
-              `API [${this.config.name}]: ${response.statusCode} ${error}`
-            );
-            reject();
-          }
-          resolve(body);
-        }
-      );
-    });
+    return request(this.requestOptions);
   }
 
   private parseResponse(body: string): string {
