@@ -60,7 +60,7 @@ function startRenderer() {
       );
     });
 
-    rendererCompiler.plugin("done", stats => {
+    rendererCompiler.hooks.done.tap("done", stats => {
       logStats("Renderer", stats);
     });
 
@@ -101,7 +101,7 @@ function startTranslator() {
       );
     });
 
-    translatorCompiler.plugin("done", stats => {
+    translatorCompiler.hooks.done.tap("done", stats => {
       logStats("Translator", stats);
     });
 
@@ -129,7 +129,6 @@ function startMain() {
     const compiler = webpack(mainConfig);
 
     compiler.hooks.watchRun.tapAsync("watch-run", (compilation, done) => {
-      logStats("Main", chalk.white.bold("compiling..."));
       hotMiddleware.publish({ action: "compiling" });
       done();
     });
@@ -185,8 +184,7 @@ function startElectron() {
 }
 
 function init() {
-  console.log(chalk.bgGreen.white.bold(" STARTING...  "));
-
+  console.log("starting...");
   Promise.all([startTranslator(), startRenderer(), startMain()])
     .then(() => {
       startElectron();
