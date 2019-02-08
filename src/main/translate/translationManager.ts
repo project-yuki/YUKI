@@ -1,6 +1,7 @@
 import Api from "../translate/api";
 import JBeijingAdapter from "./jbeijing";
 import logger from "../../common/logger";
+import ExternalApi from "./externalApi";
 
 export default class TranslationManager {
   private static instance: TranslationManager;
@@ -15,7 +16,11 @@ export default class TranslationManager {
 
   initializeApis(apis: Yagt.Config.Default["onlineApis"]): TranslationManager {
     for (let index in apis) {
-      this.apis[apis[index].name] = new Api(apis[index]);
+      if (apis[index].external && apis[index].jsFile) {
+        this.apis[apis[index].name] = new ExternalApi(apis[index]);
+      } else {
+        this.apis[apis[index].name] = new Api(apis[index]);
+      }
     }
     return this;
   }

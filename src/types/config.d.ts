@@ -14,6 +14,8 @@ declare namespace Yagt {
       needSession: boolean;
       requestBodyFormat: string;
       responseBodyPattern: string;
+      external: boolean;
+      jsFile: string;
     }
 
     interface JBeijing {

@@ -5,17 +5,22 @@ import * as vm from "vm";
 
 export default class Api implements Yagt.Translator {
   private config: Yagt.Config.OnlineApiItem;
-  private requestOptions: Options = {
-    url: this.config.url,
-    method: this.config.method,
-    headers: {
-      "User-Agent":
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:62.0) Gecko/20100101 Firefox/62.0"
-    }
-  };
+  private requestOptions: Options;
+  private responseVmContext: vm.Context = vm.createContext({
+    response: "",
+    result: ""
+  });
 
   constructor(config: Yagt.Config.OnlineApiItem) {
     this.config = config;
+    this.requestOptions = {
+      url: this.config.url,
+      method: this.config.method,
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:62.0) Gecko/20100101 Firefox/62.0"
+      }
+    };
   }
 
   async translate(text: string) {
@@ -72,16 +77,12 @@ export default class Api implements Yagt.Translator {
   }
 
   private parseResponseByJsObject(body: string): string {
-    global.tempTranslationPattern[this.getName()] = JSON.parse(body);
-    let toEval = this.config.responseBodyPattern
+    this.responseVmContext.response = JSON.parse(body);
+    let scriptString = this.config.responseBodyPattern
       .substring(1)
-      .replace(
-        "%RESPONSE%",
-        `global.tempTranslationPattern["${this.getName()}"]`
-      );
-    let result = eval(toEval);
-    delete global.tempTranslationPattern[this.getName()];
-    return result;
+      .replace("%RESPONSE%", `result = response`);
+    vm.runInNewContext(scriptString, this.responseVmContext);
+    return this.responseVmContext.result;
   }
 
   private parseResponseByRegExp(body: string) {
