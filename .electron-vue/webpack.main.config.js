@@ -3,7 +3,7 @@
 process.env.BABEL_ENV = "main";
 
 const path = require("path");
-const { dependencies } = require("../package.json");
+const { dependencies, devDependencies } = require("../package.json");
 const webpack = require("webpack");
 
 const BabelMinifyWebpackPlugin = require("babel-minify-webpack-plugin");
@@ -13,7 +13,10 @@ let mainConfig = {
   entry: {
     main: path.join(__dirname, "../src/main/index.ts")
   },
-  externals: [...Object.keys(dependencies || {})],
+  externals: [
+    ...Object.keys(dependencies || {}),
+    ...Object.keys(devDependencies || {})
+  ],
   module: {
     rules: [
       {
