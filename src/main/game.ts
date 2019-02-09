@@ -65,6 +65,7 @@ export default class Game extends EventEmitter {
     } catch (e) {
       debug("could not find game %s. abort", this.exeName);
       this.emit("exited");
+      return;
     }
     TextInterceptor.getInstance().initialize();
     this.injectProcessByPid();
