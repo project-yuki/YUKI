@@ -2,7 +2,8 @@ import { BrowserWindow } from "electron";
 const electron = require("electron");
 import hooker from "./hooker";
 import Game from "./game";
-const debug = require("debug")("translatorWindow");
+import ConfigManager from "./config";
+const debug = require("debug")("yagt:translatorWindow");
 const electronVibrancy = require("electron-vibrancy");
 
 export default class TranslatorWindow {
@@ -27,8 +28,6 @@ export default class TranslatorWindow {
     let primaryDisplaySize = electron.screen.getPrimaryDisplay().size;
 
     this.window = new BrowserWindow({
-      height: 240,
-      width: ~~(primaryDisplaySize.width * (1 - 2 * this.X_OFFSET)),
       webPreferences: {
         defaultFontFamily: {
           standard: "Microsoft Yahei UI",
@@ -56,11 +55,18 @@ export default class TranslatorWindow {
         event.preventDefault();
         this.window.hide();
       }
+
+      debug("saving translator window bounds -> %o", this.window.getBounds());
+      ConfigManager.getInstance().set("gui", {
+        ...ConfigManager.getInstance().get("gui"),
+        translatorWindow: {
+          bounds: this.window.getBounds()
+        }
+      });
     });
 
-    this.window.setPosition(
-      ~~(primaryDisplaySize.width * this.X_OFFSET),
-      ~~(primaryDisplaySize.height * this.Y_OFFSET)
+    this.window.setBounds(
+      ConfigManager.getInstance().get("gui").translatorWindow.bounds
     );
 
     this.window.loadURL(this.URL);

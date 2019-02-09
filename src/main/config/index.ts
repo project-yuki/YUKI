@@ -13,6 +13,7 @@ import Config from "./config";
 import DefaultConfig from "./defaultConfig";
 import GamesConfig from "./gamesConfig";
 import InterceptorConfig from "./interceptorConfig";
+import GuiConfig from "./guiConfig";
 const debug = require("debug")("yagt:configManager");
 
 export default class ConfigManager {
@@ -27,7 +28,8 @@ export default class ConfigManager {
   private nameToConfigMap: NameToConfigMap = {
     default: new DefaultConfig(),
     games: new GamesConfig(),
-    interceptor: new InterceptorConfig()
+    interceptor: new InterceptorConfig(),
+    gui: new GuiConfig()
   };
 
   get(configName: string): any {

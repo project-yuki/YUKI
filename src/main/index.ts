@@ -46,6 +46,7 @@ debug("appPath: %s", global.__appDir);
 const iconPath = path.join(global.__appDir, "build/icons/icon.png");
 
 import setupIpc from "./setup/ipc";
+import ConfigManager from "./config";
 
 let mainWindow: Electron.BrowserWindow | null;
 
@@ -69,9 +70,7 @@ function createWindow() {
    * Initial main window options
    */
   mainWindow = new BrowserWindow({
-    height: 720,
     useContentSize: true,
-    width: 1280,
     webPreferences: {
       defaultFontFamily: {
         standard: "Microsoft Yahei UI",
@@ -85,9 +84,25 @@ function createWindow() {
 
   mainWindow.loadURL(mainWinURL);
 
+  mainWindow.on("close", () => {
+    if (!mainWindow) return;
+
+    debug("saving main window bounds -> %o", mainWindow.getBounds());
+    ConfigManager.getInstance().set("gui", {
+      ...ConfigManager.getInstance().get("gui"),
+      mainWindow: {
+        bounds: mainWindow.getBounds()
+      }
+    });
+  });
+
   mainWindow.on("closed", () => {
     mainWindow = null;
   });
+
+  mainWindow.setBounds(
+    ConfigManager.getInstance().get("gui").mainWindow.bounds
+  );
 
   tray = new Tray(iconPath);
   const contextMenu = Menu.buildFromTemplate([
