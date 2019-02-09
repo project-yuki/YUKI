@@ -2,6 +2,8 @@
 
 [English](https://github.com/Yagt/Yagt/blob/master/docs/README_EN.md)
 
+![how it looks](https://raw.githubusercontent.com/Yagt/Yagt/master/.github/imgs/how_it_looks.png)
+
 ## 警告！
 
 与实际正在推进的项目相比，Yagt 更像是一个倡议。因为我本人并不是 Node.js 或者 C++方面的专家，所以本项目很可能只会以极其缓慢的进度向前推进... ¯\\\_(ツ)\_/¯
