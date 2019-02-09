@@ -1,4 +1,5 @@
 import ExternalApi from "../../../../src/main/translate/externalApi";
+import { expect } from "chai";
 
 describe("ExternalApi", () => {
   before(() => {

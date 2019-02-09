@@ -1,5 +1,6 @@
 import Api from "../../../../src/main/translate/api";
 import TranslationManager from "../../../../src/main/translate/translationManager";
+import { expect } from "chai";
 
 describe("Api", () => {
   it("gets translation from form and parses with object", () => {

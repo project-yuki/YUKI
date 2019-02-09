@@ -1,4 +1,5 @@
 const Win32Injector = require("inject-loader!../../../../src/main/win32");
+import { expect } from "chai";
 
 describe("Win32", () => {
   let callbackCalled;

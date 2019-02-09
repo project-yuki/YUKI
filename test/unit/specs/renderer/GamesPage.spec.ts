@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 const GamesPage = require("@/components/GamesPage.vue").default;
+import { expect } from "chai";
 
 describe("GamesPage.vue", () => {
   let vm;
