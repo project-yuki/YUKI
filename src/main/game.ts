@@ -84,6 +84,7 @@ export default class Game extends EventEmitter {
           `tasklist /nh /fo csv /fi "imagename eq ${this.exeName}"`,
           (err, stdout, stderr) => {
             if (retryTimes >= Game.MAX_RESET_TIME) {
+              clearInterval(pidGetterInterval);
               reject();
             }
             if (this.findsPidIn(stdout)) {
