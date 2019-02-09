@@ -18,8 +18,6 @@ if (process.env.NODE_ENV !== "development") {
     .replace(/\\/g, "\\\\");
 }
 
-global.tempTranslationPattern = {};
-
 global.__baseDir = path.resolve(
   __dirname,
   process.env.NODE_ENV !== "development" ? "../../../.." : "../.."

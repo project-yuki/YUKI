@@ -1,8 +1,6 @@
 import Api from "../../../../src/main/translate/api";
 import TranslationManager from "../../../../src/main/translate/translationManager";
 
-global["tempTranslationPattern"] = {};
-
 describe("Api", () => {
   it("gets translation from form and parses with object", () => {
     let baidu = new Api({
