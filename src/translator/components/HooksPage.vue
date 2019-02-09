@@ -18,7 +18,7 @@ import { remote } from "electron";
 })
 export default class HooksPage extends Vue {
   beforeRouteEnter(to: Route, from: Route, next: Function) {
-    let newHeight = ~~(remote.screen.getPrimaryDisplay().size.height * 0.6);
+    let newHeight = Math.trunc(remote.screen.getPrimaryDisplay().size.height * 0.6);
     let window = remote.getCurrentWindow();
     let width = window.getSize()[0];
     window.setSize(width, newHeight);

@@ -58,6 +58,7 @@ import Vue from "vue";
 import { ipcRenderer } from "electron";
 import ipcTypes from "../../common/ipcTypes";
 import { Component } from "vue-property-decorator";
+import { State, namespace } from "vuex-class";
 
 import GtPageHeader from "@/components/PageHeader.vue";
 import GtPageContent from "@/components/PageContent.vue";
@@ -75,9 +76,13 @@ export default class FavoritePage extends Vue {
   game: Yagt.Game = {
     name: "",
     path: "",
-    code: ""
+    code: "",
+    localeChanger: ""
   };
   openDialog: boolean = false;
+
+  @namespace("Config").State("default")
+  defaultConfig!: Yagt.ConfigState["default"];
 
   get showStepOne() {
     return this.activeStep === 0;
@@ -98,6 +103,13 @@ export default class FavoritePage extends Vue {
       ipcRenderer.once(ipcTypes.HAS_ADDED_GAME, () => {
         this.openDialog = true;
       });
+      let localeChangers = this.defaultConfig.localeChangers;
+      for (let key in localeChangers) {
+        if (localeChangers[key].enable === true) {
+          this.game.localeChanger = key;
+          break;
+        }
+      }
       ipcRenderer.send(ipcTypes.REQUEST_ADD_GAME, this.game);
     }
   }

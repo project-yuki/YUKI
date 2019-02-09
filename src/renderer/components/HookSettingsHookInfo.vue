@@ -31,7 +31,7 @@ import ipcTypes from "../../common/ipcTypes";
 
 @Component
 export default class HookSettingsHookInfo extends Vue {
-  @Prop(Object) hook!: Yagt.TextThread;
+  @Prop(Object) hook!: Yagt.TextOutputObject;
   @Prop(Boolean) isChosen!: boolean;
 
   @namespace("Hooks").Getter("getTextById")
@@ -45,7 +45,7 @@ export default class HookSettingsHookInfo extends Vue {
     return this.isChosen ? 5 : 1;
   }
   get hookText() {
-    return this.getTextById(this.hook.num).join("\n");
+    return this.getTextById(this.hook.handle).join("\n");
   }
 
   openConfirmDialog() {
@@ -55,7 +55,7 @@ export default class HookSettingsHookInfo extends Vue {
     this.openConfirm = false;
   }
   chooseAsDisplay() {
-    this.chooseHookAsDisplayAction(this.hook.num);
+    this.chooseHookAsDisplayAction(this.hook.handle);
   }
 }
 </script>

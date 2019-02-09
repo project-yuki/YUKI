@@ -44,6 +44,7 @@
     "arch": "ia32"
   },
   "dependencies": {
+    "@types/lodash": "^4.14.120",
     "axios": "^0.18.0",
     "debug": "^4.1.1",
     "electron-vibrancy": "^0.1.3",

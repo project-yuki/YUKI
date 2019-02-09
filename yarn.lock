@@ -40,6 +40,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/lodash@^4.14.120":
+  version "4.14.120"
+  resolved "http://registry.npm.taobao.org/@types/lodash/download/@types/lodash-4.14.120.tgz#cf265d06f6c7a710db087ed07523ab8c1a24047b"
+  integrity sha1-zyZdBvbHpxDbCH7QdSOrjBokBHs=
+
 "@types/mocha@^5.2.5":
   version "5.2.5"
   resolved "http://registry.npm.taobao.org/@types/mocha/download/@types/mocha-5.2.5.tgz#8a4accfc403c124a0bafe8a9fc61a05ec1032073"

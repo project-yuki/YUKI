@@ -9,7 +9,7 @@
     <gt-hook-info
       v-for="hook in orderedHooks"
       :hook="hook"
-      :isChosen="isChosen(hook.num)"
+      :isChosen="isChosen(hook.handle)"
       :key="hook.handle + '-info'"
       class="hook-info"
     />

@@ -8,8 +8,8 @@
       <mu-button slot="actions" flat color="primary" @click="addHook">确定</mu-button>
     </mu-dialog>
     <mu-row gutter>
-      <mu-col sm="12" md="6" lg="4" v-for="hook in hooks" :key="hook.num" class="margin-top">
-        <gt-hook-info :hook="hook" :isChosen="isChosen(hook.num)"/>
+      <mu-col sm="12" md="6" lg="4" v-for="hook in hooks" :key="hook.handle" class="margin-top">
+        <gt-hook-info :hook="hook" :isChosen="isChosen(hook.handle)"/>
       </mu-col>
     </mu-row>
   </div>
