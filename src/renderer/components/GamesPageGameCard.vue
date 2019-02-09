@@ -3,7 +3,7 @@
     <mu-card>
       <mu-card-title :title="game.name" :sub-title="game.code"></mu-card-title>
       <mu-card-text>{{game.path}}</mu-card-text>
-      <mu-card-actions>
+      <mu-card-actions style="padding: 8px 0">
         <mu-expansion-panel :zDepth="0">
           <div slot="header">
             <mu-button color="primary" @click="handleRunGame">运行</mu-button>
