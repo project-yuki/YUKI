@@ -21,7 +21,6 @@
       "name": "Ntleas"
     }
   },
-  "logLevel": 4,
   "onlineApis": [
     {
       "enable": true,
