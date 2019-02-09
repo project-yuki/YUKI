@@ -4,20 +4,6 @@ import * as path from "path";
 import * as fs from "fs";
 const debug = require("debug")("yagt:app");
 
-// to make TypeScript happy :)
-declare global {
-  namespace NodeJS {
-    export interface Global {
-      __static: string;
-      __baseDir: string;
-      __appDir: string;
-      tempTranslationPattern: {
-        [name: string]: any;
-      };
-    }
-  }
-}
-
 // check & make ./config folder
 {
   if (!fs.existsSync("config\\")) {
