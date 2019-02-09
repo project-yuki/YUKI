@@ -1,10 +1,30 @@
 <template>
-<div class="titlebar">
-  <p class="text-h3 text-center title">YET ANOTHER GALGAME TRANSLATOR</p>
-  <mu-button icon small class="manipulate-button" @click="closeWindow" color="#FFFFFF">
-    <mu-icon value="close"></mu-icon>
-  </mu-button>
-</div>
+  <div class="titlebar">
+    <p class="text-h3 text-center title">YET ANOTHER GALGAME TRANSLATOR</p>
+    <mu-button
+      v-if="isAlwaysOnTop"
+      icon
+      small
+      class="manipulate-button-top"
+      @click="toggleAlwaysOnTop"
+      color="#FFFFFF"
+    >
+      <mu-icon value="lock"></mu-icon>
+    </mu-button>
+    <mu-button
+      v-else
+      icon
+      small
+      class="manipulate-button-top"
+      @click="toggleAlwaysOnTop"
+      color="#FFFFFF"
+    >
+      <mu-icon value="lock_open"></mu-icon>
+    </mu-button>
+    <mu-button icon small class="manipulate-button-close" @click="closeWindow" color="#FFFFFF">
+      <mu-icon value="close"></mu-icon>
+    </mu-button>
+  </div>
 </template>
 
 <script lang="ts">
@@ -16,6 +36,15 @@ import { remote } from "electron";
 export default class Titlebar extends Vue {
   closeWindow() {
     remote.getCurrentWindow().hide();
+  }
+
+  isAlwaysOnTop = remote.getCurrentWindow().isAlwaysOnTop();
+
+  toggleAlwaysOnTop() {
+    remote
+      .getCurrentWindow()
+      .setAlwaysOnTop(!remote.getCurrentWindow().isAlwaysOnTop());
+    this.isAlwaysOnTop = !this.isAlwaysOnTop;
   }
 }
 </script>
@@ -35,7 +64,14 @@ export default class Titlebar extends Vue {
   float: left;
 }
 
-.manipulate-button {
+.manipulate-button-top {
+  -webkit-app-region: no-drag;
+  position: fixed;
+  right: 32px;
+  top: 0;
+}
+
+.manipulate-button-close {
   -webkit-app-region: no-drag;
   position: fixed;
   right: 0;

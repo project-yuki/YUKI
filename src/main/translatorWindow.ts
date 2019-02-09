@@ -31,10 +31,16 @@ export default class TranslatorWindow {
         }
       },
       show: false,
-      alwaysOnTop: true,
+      alwaysOnTop: ConfigManager.getInstance().get("gui").translatorWindow
+        .alwaysOnTop,
       transparent: true,
       frame: false
     });
+
+    debug(
+      "alwaysOnTop -> %s",
+      ConfigManager.getInstance().get("gui").translatorWindow.alwaysOnTop
+    );
 
     this.window.on("ready-to-show", () => {
       electronVibrancy.SetVibrancy(this.window, 0);
@@ -58,6 +64,10 @@ export default class TranslatorWindow {
           bounds: this.window.getBounds()
         }
       });
+      debug(
+        "saving translator window alwaysOnTop -> %s",
+        this.window.isAlwaysOnTop()
+      );
     });
 
     this.window.setBounds(

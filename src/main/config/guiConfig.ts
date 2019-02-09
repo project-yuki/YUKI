@@ -26,7 +26,8 @@ export default class GuiConfig extends Config {
             displaySize.width * ((1 - translatorWindowWidthRatio) / 2)
           ),
           y: Math.trunc(displaySize.height * 0.05)
-        }
+        },
+        alwaysOnTop: true
       }
     };
   }
