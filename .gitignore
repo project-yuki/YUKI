@@ -10,3 +10,4 @@ thumbs.db
 !.gitkeep
 .vscode/
 config/games.json
+config/gui.json

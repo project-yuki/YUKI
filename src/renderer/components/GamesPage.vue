@@ -1,14 +1,14 @@
 <template>
-<div>
-  <gt-page-header title="我的游戏" />
-  <gt-page-content>
-    <mu-row gutter>
-      <mu-col sm="12" md="6" lg="4" v-for="game in games" :key="game.path">
-        <gt-game-card :game="game"></gt-game-card>
-      </mu-col>
-    </mu-row>
-  </gt-page-content>
-</div>
+  <div>
+    <gt-page-header title="我的游戏"/>
+    <gt-page-content>
+      <mu-row gutter>
+        <mu-col sm="12" md="6" lg="6" v-for="game in games" :key="game.path">
+          <gt-game-card :game="game"></gt-game-card>
+        </mu-col>
+      </mu-row>
+    </gt-page-content>
+  </div>
 </template>
 
 <script lang="ts">

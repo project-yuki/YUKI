@@ -20,6 +20,7 @@ declare namespace Yagt {
     name: string;
     path: string;
     code: string;
+    localeChanger: string;
   }
   export interface ConfigState {
     default: any;

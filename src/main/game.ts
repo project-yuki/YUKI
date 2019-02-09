@@ -14,6 +14,7 @@ export default class Game extends EventEmitter {
   private code: string;
   private pid: number;
   private name: string;
+  private localeChanger: string;
   private exeName: string;
 
   constructor(game: Yagt.Game) {
@@ -23,6 +24,7 @@ export default class Game extends EventEmitter {
     this.pid = -1;
     this.code = game.code;
     this.name = game.name;
+    this.localeChanger = game.localeChanger;
     this.exeName = "";
   }
 
@@ -42,12 +44,13 @@ export default class Game extends EventEmitter {
     const localeChangers: Yagt.Config.Default["localeChangers"] = configManager
       .getInstance()
       .get("default").localeChangers;
-    for (let key in localeChangers) {
-      if (localeChangers[key].enable === true) {
-        debug("choose %s as locale changer", localeChangers[key].name);
-        this.execString = localeChangers[key].exec;
-        return;
-      }
+    if (this.localeChanger) {
+      debug(
+        "choose %s as locale changer",
+        localeChangers[this.localeChanger].name
+      );
+      this.execString = localeChangers[this.localeChanger].exec;
+      return;
     }
     debug("no locale changer chosed. use %GAME_PATH%");
     this.execString = "%GAME_PATH%";
@@ -121,15 +124,12 @@ export default class Game extends EventEmitter {
     return this.pid;
   }
 
-  getCode() {
-    return this.code;
-  }
-
-  getName() {
-    return this.name;
-  }
-
   getInfo(): Yagt.Game {
-    return { name: this.name, code: this.code, path: this.path };
+    return {
+      name: this.name,
+      code: this.code,
+      path: this.path,
+      localeChanger: this.localeChanger
+    };
   }
 }

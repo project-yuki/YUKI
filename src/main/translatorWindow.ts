@@ -12,9 +12,6 @@ export default class TranslatorWindow {
       ? `http://localhost:9081/translator.html`
       : `file://${__dirname}/translator.html`;
 
-  private readonly X_OFFSET = 0.2;
-  private readonly Y_OFFSET = 0.1;
-
   private window!: Electron.BrowserWindow;
   private game!: Game;
 
@@ -25,8 +22,6 @@ export default class TranslatorWindow {
   }
 
   private create() {
-    let primaryDisplaySize = electron.screen.getPrimaryDisplay().size;
-
     this.window = new BrowserWindow({
       webPreferences: {
         defaultFontFamily: {

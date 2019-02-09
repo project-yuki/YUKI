@@ -1,5 +1,9 @@
 declare namespace Yagt {
   namespace Config {
+    interface LocaleChangerItems {
+      [id: string]: LocaleChangerItem;
+    }
+
     interface LocaleChangerItem {
       name: string;
       enable: boolean;
@@ -26,7 +30,7 @@ declare namespace Yagt {
     }
 
     export interface Default {
-      localeChangers: LocaleChangerItem[];
+      localeChangers: LocaleChangerItems;
       onlineApis: OnlineApiItem[];
       translators: {
         jBeijing: JBeijing;

@@ -34,7 +34,6 @@ export default function(mainWindow: Electron.BrowserWindow) {
         translatorWindow.setGame(runningGame);
       });
       runningGame.on("exited", () => {
-        runningGame.removeAllListeners();
         if (translatorWindow) translatorWindow.close();
         translatorWindow = null;
         mainWindow.show();

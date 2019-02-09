@@ -1,18 +1,18 @@
 <template>
-<div>
-  <p class="text-h1">文本钩子设置</p>
-  <mu-button type="primary" @click="openInputHookDialog">加载钩子</mu-button>
-  <mu-dialog title="请输入特殊码" :open.sync="openInputHook">
-    <mu-text-field v-model="hookCode" :error-text="errorText"></mu-text-field>
-    <mu-button slot="actions" flat @click="closeInputHookDialog">取消</mu-button>
-    <mu-button slot="actions" flat color="primary" @click="addHook">确定</mu-button>
-  </mu-dialog>
-  <mu-row gutter>
-    <mu-col sm="12" md="6" lg="4" v-for="hook in hooks" :key="hook.num" class="margin-top">
-      <gt-hook-info :hook="hook" :isChosen="isChosen(hook.num)" />
-    </mu-col>
-  </mu-row>
-</div>
+  <div>
+    <p class="text-h1">文本钩子设置</p>
+    <mu-button type="primary" @click="openInputHookDialog">加载钩子</mu-button>
+    <mu-dialog title="请输入特殊码" :open.sync="openInputHook">
+      <mu-text-field v-model="hookCode" :error-text="errorText"></mu-text-field>
+      <mu-button slot="actions" flat @click="closeInputHookDialog">取消</mu-button>
+      <mu-button slot="actions" flat color="primary" @click="addHook">确定</mu-button>
+    </mu-dialog>
+    <mu-row gutter>
+      <mu-col sm="12" md="6" lg="4" v-for="hook in hooks" :key="hook.num" class="margin-top">
+        <gt-hook-info :hook="hook" :isChosen="isChosen(hook.num)"/>
+      </mu-col>
+    </mu-row>
+  </div>
 </template>
 
 <script lang="ts">
@@ -35,7 +35,7 @@ export default class HookSettings extends Vue {
   errorText = "";
   hookCode = "";
 
-  @namespace("Hooks").State("hookInfos") hooks!: Yagt.TextThread[];
+  @namespace("Hooks").State("hookInfos") hooks!: Yagt.TextOutputObject[];
   @namespace("Hooks").State("currentDisplayHookIndex") currentIndex!: number;
 
   openInputHookDialog() {
