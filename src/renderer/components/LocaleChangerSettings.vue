@@ -3,27 +3,47 @@
     <mu-button color="primary" @click="saveSettings">保存</mu-button>
     <mu-button color="warning" @click="resetSettings">重置</mu-button>
     <p class="text-h1">区域转换器设置</p>
-    <p class="text-h2">默认区域转换器</p>
-    <mu-radio
-      v-for="(value, key) in defaultConfig.localeChangers"
-      :key="'choose-'+key"
-      :value="key"
-      v-model="selected"
-      :label="value.name"
-    />
-
-    <gt-locale-changer-info
-      v-for="(value, key) in defaultConfig.localeChangers"
-      :key="key"
-      :changer="value"
-      ref="changerInfos"
-    />
+    <p>点击表格行展开编辑界面</p>
+    <br>
+    <mu-paper :z-depth="1">
+      <mu-data-table stripe :columns="tableColumns" :data="tempLocaleChangers">
+        <template slot="expand" slot-scope="prop">
+          <div style="padding: 24px">
+            <mu-row gutter>
+              <mu-col span="6">
+                <mu-text-field v-model="prop.row.id" label="ID" full-width label-float></mu-text-field>
+              </mu-col>
+              <mu-col span="6">
+                <mu-text-field v-model="prop.row.name" label="名称" full-width label-float></mu-text-field>
+              </mu-col>
+            </mu-row>
+            <mu-text-field
+              v-model="prop.row.exec"
+              label="执行方式"
+              full-width
+              multi-line
+              :rows-max="10"
+            ></mu-text-field>
+            <p>参数</p>
+            <p>%GAME_PATH% - 游戏所在路径</p>
+          </div>
+        </template>
+        <template slot-scope="scope">
+          <td>{{scope.row.id}}</td>
+          <td>{{scope.row.name}}</td>
+          <td>{{scope.row.exec}}</td>
+          <td>
+            <mu-switch v-model="scope.row.enable" @click.stop="setDefault(scope.row.id)"></mu-switch>
+          </td>
+        </template>
+      </mu-data-table>
+    </mu-paper>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import { Component } from "vue-property-decorator";
+import { Component, Watch } from "vue-property-decorator";
 import { State, namespace } from "vuex-class";
 
 import GtLocaleChangerInfo from "@/components/LocaleChangerInfo.vue";
@@ -31,63 +51,61 @@ import GtLocaleChangerInfo from "@/components/LocaleChangerInfo.vue";
 import { ipcRenderer } from "electron";
 import ipcTypes from "../../common/ipcTypes";
 
+type TempLocaleChangerItem = Yagt.Config.LocaleChangerItem & { id: string };
+
 @Component({
   components: {
     GtLocaleChangerInfo
   }
 })
 export default class localeChangerSettings extends Vue {
-  selected = "";
+  tableColumns = [
+    { title: "ID", name: "id" },
+    { title: "名称", name: "name" },
+    { title: "执行方式", name: "exec" },
+    { title: "设为默认", name: "enable", width: 96 }
+  ];
 
   @namespace("Config").State("default")
   defaultConfig!: Yagt.ConfigState["default"];
 
+  tempLocaleChangers: TempLocaleChangerItem[] = [];
+
   saveSettings() {
-    let savingConfig = JSON.parse(JSON.stringify(this.defaultConfig));
-    for (let key in this.defaultConfig.localeChangers) {
-      if (key === this.selected) {
-        savingConfig.localeChangers[key].enable = true;
-      } else {
-        savingConfig.localeChangers[key].enable = false;
-      }
-      for (let index in this.$refs.changerInfos) {
-        if (
-          this.$refs.changerInfos[index].changer.name ===
-          this.defaultConfig.localeChangers[key].name
-        ) {
-          savingConfig.localeChangers[key].exec = this.$refs.changerInfos[
-            index
-          ].execInput;
-        }
-      }
+    let savingLocaleChangers = {};
+    for (let localeChanger of this.tempLocaleChangers) {
+      savingLocaleChangers[localeChanger.id] = localeChanger;
+      delete savingLocaleChangers[localeChanger.id].id;
     }
+
+    let savingConfig = {
+      ...this.defaultConfig,
+      localeChangers: savingLocaleChangers
+    };
     ipcRenderer.send(ipcTypes.REQUEST_SAVE_CONFIG, "default", savingConfig);
   }
+
+  @Watch("defaultConfig", { immediate: true, deep: true })
   resetSettings() {
-    let hasSelected = false;
+    this.tempLocaleChangers = [];
     for (let key in this.defaultConfig.localeChangers) {
-      if (this.defaultConfig.localeChangers[key].enable === true) {
-        this.selected = key;
-        hasSelected = true;
-      }
-      for (let index in this.$refs.changerInfos) {
-        if (
-          this.$refs.changerInfos[index].changer.name ===
-          this.defaultConfig.localeChangers[key].name
-        ) {
-          this.$refs.changerInfos[
-            index
-          ].execInput = this.defaultConfig.localeChangers[key].exec;
-        }
-      }
-    }
-    if (!hasSelected) {
-      this.selected = "";
+      this.tempLocaleChangers.push({
+        ...this.defaultConfig.localeChangers[key],
+        id: key
+      });
     }
   }
 
-  mounted() {
-    this.resetSettings();
+  setDefault(id: string) {
+    let afterLocaleChangers = [];
+    for (let localeChanger of this.tempLocaleChangers) {
+      if (localeChanger.id === id) {
+        afterLocaleChangers.push({ ...localeChanger, enable: true });
+      } else {
+        afterLocaleChangers.push({ ...localeChanger, enable: false });
+      }
+    }
+    this.tempLocaleChangers = afterLocaleChangers;
   }
 }
 </script>

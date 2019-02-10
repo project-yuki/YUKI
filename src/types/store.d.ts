@@ -1,4 +1,10 @@
 declare namespace Yagt {
+  export interface SettingsState {
+    localeChangers: TempLocaleChangerItem[];
+  }
+
+  type TempLocaleChangerItem = Yagt.Config.LocaleChangerItem & { id: string };
+
   export interface TextOutputObject {
     handle: number;
     pid: number;
