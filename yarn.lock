@@ -1759,7 +1759,7 @@ body-parser@1.18.3, body-parser@^1.16.1:
     raw-body "2.3.3"
     type-is "~1.6.16"
 
-body-scroll-lock@^2.5.7:
+body-scroll-lock@^2.6.1:
   version "2.6.1"
   resolved "http://registry.npm.taobao.org/body-scroll-lock/download/body-scroll-lock-2.6.1.tgz#3782ff37404886faaee366968ceee40c3964d8f2"
   integrity sha1-N4L/N0BIhvqu42aWjO7kDDlk2PI=
@@ -3013,10 +3013,10 @@ dateformat@^1.0.6:
     get-stdin "^4.0.1"
     meow "^3.3.0"
 
-dayjs@^1.6.5:
-  version "1.7.7"
-  resolved "http://registry.npm.taobao.org/dayjs/download/dayjs-1.7.7.tgz#8df20f78ac2476e3f5348ef49f8f22ebc3016370"
-  integrity sha1-jfIPeKwkduP1NI70n48i68MBY3A=
+dayjs@^1.8.2:
+  version "1.8.5"
+  resolved "http://registry.npm.taobao.org/dayjs/download/dayjs-1.8.5.tgz#0b066770f89a20022218544989f3d23e5e8db29a"
+  integrity sha1-CwZncPiaIAIiGFRJifPSPl6Nspo=
 
 de-indent@^1.0.2:
   version "1.0.2"
@@ -6402,13 +6402,13 @@ multispinner@^0.2.1:
     lodash.merge "^3.3.2"
     log-update "^1.0.2"
 
-muse-ui@^3.0.1:
-  version "3.0.1"
-  resolved "http://registry.npm.taobao.org/muse-ui/download/muse-ui-3.0.1.tgz#6c22cc424f3573b7c8ddcc5a662d40f2e4c8caea"
-  integrity sha1-bCLMQk81c7fI3cxaZi1A8uTIyuo=
+muse-ui@^3.0.2:
+  version "3.0.2"
+  resolved "http://registry.npm.taobao.org/muse-ui/download/muse-ui-3.0.2.tgz#f292e8a063d625d35b1dce1b1504bc0cccd78e65"
+  integrity sha1-8pLooGPWJdNbHc4bFQS8DMzXjmU=
   dependencies:
-    body-scroll-lock "^2.5.7"
-    dayjs "^1.6.5"
+    body-scroll-lock "^2.6.1"
+    dayjs "^1.8.2"
     keycode "^2.1.9"
     normalize-wheel "^1.0.1"
     resize-observer-polyfill "^1.5.0"
@@ -8027,9 +8027,9 @@ requires-port@^1.0.0:
   integrity sha1-kl0mAdOaxIXgkc8NpcbmlNw9yv8=
 
 resize-observer-polyfill@^1.5.0:
-  version "1.5.0"
-  resolved "http://registry.npm.taobao.org/resize-observer-polyfill/download/resize-observer-polyfill-1.5.0.tgz#660ff1d9712a2382baa2cad450a4716209f9ca69"
-  integrity sha1-Zg/x2XEqI4K6osrUUKRxYgn5ymk=
+  version "1.5.1"
+  resolved "http://registry.npm.taobao.org/resize-observer-polyfill/download/resize-observer-polyfill-1.5.1.tgz#0e9020dd3d21024458d4ebd27e23e40269810464"
+  integrity sha1-DpAg3T0hAkRY1OvSfiPkAmmBBGQ=
 
 resolve-cwd@^2.0.0:
   version "2.0.0"

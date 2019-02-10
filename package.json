@@ -50,7 +50,7 @@
     "electron-vibrancy": "^0.1.3",
     "ffi": "^2.3.0",
     "jsonfile": "^5.0.0",
-    "muse-ui": "^3.0.1",
+    "muse-ui": "^3.0.2",
     "ref": "^1.3.5",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.5",
