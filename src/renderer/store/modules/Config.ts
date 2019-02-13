@@ -28,6 +28,11 @@ const actions = {
     { name, cfgs }: { name: string; cfgs: any }
   ) {
     commit("SET_CONFIG", { name, cfgs });
+    if (name === "games" && cfgs.length === 0) {
+      commit("Gui/SET_NO_GAME", { value: true }, { root: true });
+    } else {
+      commit("Gui/SET_NO_GAME", { value: false }, { root: true });
+    }
   }
 };
 

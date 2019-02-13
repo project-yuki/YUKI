@@ -33,6 +33,10 @@ declare namespace Yagt {
     games: Game[];
   }
 
+  export interface GuiState {
+    noGame: boolean;
+  }
+
   export interface TranslatorHookState extends HooksState {
     translationsForCurrentIndex: Translations;
     toDisplayHookCode: string;

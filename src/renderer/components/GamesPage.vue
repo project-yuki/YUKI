@@ -2,7 +2,7 @@
   <div>
     <gt-page-header title="我的游戏"/>
     <gt-page-content>
-      <p v-if="noGame" class="all-center text-h3">什么都没有呢(っ °Д °;)っ
+      <p v-show="noGame" class="all-center text-h3">什么都没有呢(っ °Д °;)っ
         <br>快去添加游戏吧~ヾ(•ω•`)o
       </p>
       <mu-row gutter>
@@ -33,9 +33,7 @@ import GtGameCard from "@/components/GamesPageGameCard.vue";
 export default class GamesPage extends Vue {
   @namespace("Config").State("games") games!: Yagt.Game[];
 
-  get noGame() {
-    return this.games.length === 0;
-  }
+  @namespace("Gui").State("noGame") noGame!: boolean;
 }
 </script>
 
