@@ -12,9 +12,4 @@ export default class GamesConfig extends Config {
   get() {
     return this.config.games;
   }
-
-  set(cfg: any) {
-    this.config.games = cfg;
-    this.save();
-  }
 }
