@@ -6,8 +6,8 @@
       <mu-card-actions style="padding: 8px 0">
         <mu-expansion-panel :zDepth="0">
           <div slot="header">
-            <mu-button color="primary" @click="handleRunGame">运行</mu-button>
-            <mu-button color="error" @click="handleOpenConfirm">删除</mu-button>
+            <mu-button color="primary" @click.stop="handleRunGame">运行</mu-button>
+            <mu-button color="error" @click.stop="handleOpenConfirm">删除</mu-button>
           </div>
           <mu-select
             label="区域转换器"
