@@ -32,12 +32,6 @@ const mutations = {
     state: Yagt.TranslatorHookState,
     payload: { hook: Yagt.TextOutputObject }
   ) {
-    if (payload.hook.name.length > 1) {
-      payload.hook.name = payload.hook.name.substring(
-        0,
-        payload.hook.name.length - 1
-      );
-    }
     state.hookInfos.push(payload.hook);
     state.texts = { ...state.texts, [payload.hook.handle.toString()]: [] };
   },
