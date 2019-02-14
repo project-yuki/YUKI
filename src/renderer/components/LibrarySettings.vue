@@ -3,6 +3,9 @@
     <mu-button color="primary">保存</mu-button>
     <mu-button color="warning">重置</mu-button>
     <p class="text-h1">程序库设置</p>
+    <p class="all-center text-h3">开发中m( _ _ )m
+      <br>请将程序库文件放至 lib 文件夹下（默认已带Textractor）
+    </p>
   </div>
 </template>
 

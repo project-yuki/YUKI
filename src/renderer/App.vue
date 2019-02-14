@@ -1,8 +1,8 @@
 <template>
-<div id="app">
-  <gt-app-sidebar></gt-app-sidebar>
-  <router-view class="full-height" style="margin-left: 240px;"></router-view>
-</div>
+  <div id="app">
+    <gt-app-sidebar></gt-app-sidebar>
+    <router-view class="full-height" style="margin-left: 240px;"></router-view>
+  </div>
 </template>
 
 <script lang="ts">
@@ -61,5 +61,13 @@ body,
 .full {
   width: 100%;
   height: 100%;
+}
+
+.all-center {
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
 }
 </style>

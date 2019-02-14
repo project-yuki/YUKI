@@ -10,20 +10,26 @@ export default class DefaultConfig extends Config {
       },
       onlineApis: [
         {
-          name: "baidu",
           enable: true,
-          url: "https://fanyi.baidu.com/transapi",
           method: "POST",
+          name: "百度",
           requestBodyFormat: 'X{"query": %TEXT%, "from": "jp", "to": "zh"}',
-          responseBodyPattern: "J%RESPONSE%.data[0].dst"
+          responseBodyPattern: "J%RESPONSE%.data[0].dst",
+          url: "https://fanyi.baidu.com/transapi"
         },
         {
-          name: "googleCN",
           enable: true,
-          url: "https://translate.google.cn/m",
           method: "POST",
+          name: "谷歌",
           requestBodyFormat: 'X{"q": %TEXT%, "sl": "ja", "hl": "zh-CN"}',
-          responseBodyPattern: 'Rclass="t0">([^<]*)<'
+          responseBodyPattern: 'Rclass="t0">([^<]*)<',
+          url: "https://translate.google.cn/m"
+        },
+        {
+          enable: true,
+          external: true,
+          jsFile: "config\\youdaoApi.js",
+          name: "有道"
         }
       ],
       translators: { jBeijing: { enable: false, path: "" } }
