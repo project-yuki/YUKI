@@ -38,7 +38,7 @@ export default class Api implements Yagt.Translator {
   private generateRequestBody(text: string) {
     let requestBodyString = this.config.requestBodyFormat.replace(
       "%TEXT%",
-      `"${text.trim()}"`
+      `"${text}"`
     );
     if (this.config.requestBodyFormat.startsWith("X")) {
       this.requestOptions.form = JSON.parse(requestBodyString.substring(1));
