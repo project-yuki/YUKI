@@ -132,7 +132,7 @@ export default class FavoritePage extends Vue {
     ipcRenderer.send(ipcTypes.REQUEST_NEW_GAME_PATH);
   }
   handleRedirect() {
-    this.$router.push({ name: "Games" });
+    this.$router.push("/games");
   }
 
   mounted() {

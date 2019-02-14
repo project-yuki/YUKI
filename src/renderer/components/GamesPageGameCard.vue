@@ -24,7 +24,7 @@
           </mu-select>
         </mu-expansion-panel>
       </mu-card-actions>
-      <mu-dialog title="Dialog" width="360" :open.sync="openConfirm">确认删除？
+      <mu-dialog title="确认删除？" width="360" :open.sync="openConfirm">
         <mu-button slot="actions" flat @click="handleCloseConfirm">否</mu-button>
         <mu-button slot="actions" flat color="primary" @click="handleDeleteGame">是</mu-button>
       </mu-dialog>

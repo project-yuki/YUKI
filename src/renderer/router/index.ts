@@ -4,18 +4,36 @@ import Router from "vue-router";
 import GamesPage from "@/components/GamesPage.vue";
 import AddGamePage from "@/components/AddGamePage.vue";
 import SettingsPage from "@/components/SettingsPage.vue";
+import LocaleChangerSettings from "@/components/LocaleChangerSettings.vue";
+import LibrarySettings from "@/components/LibrarySettings.vue";
+import TranslatorSettings from "@/components/TranslatorSettings.vue";
 import AboutPage from "@/components/AboutPage.vue";
 
 Vue.use(Router);
 
-let routes = [
-  { path: "", component: GamesPage },
-  { path: "/games", name: "Games", component: GamesPage },
-  { path: "/addgame", name: "AddGame", component: AddGamePage },
-  { path: "/settings", name: "Settings", component: SettingsPage },
-  { path: "/about", name: "About", component: AboutPage }
-];
-
 export default new Router({
-  routes
+  routes: [
+    { path: "", redirect: "/games" },
+    { path: "/games", component: GamesPage },
+    { path: "/addgame", component: AddGamePage },
+    {
+      path: "/settings",
+      component: SettingsPage,
+      children: [
+        {
+          path: "localechanger",
+          component: LocaleChangerSettings
+        },
+        {
+          path: "library",
+          component: LibrarySettings
+        },
+        {
+          path: "translator",
+          component: TranslatorSettings
+        }
+      ]
+    },
+    { path: "/about", component: AboutPage }
+  ]
 });
