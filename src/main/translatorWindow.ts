@@ -58,16 +58,17 @@ export default class TranslatorWindow {
       }
 
       debug("saving translator window bounds -> %o", this.window.getBounds());
-      ConfigManager.getInstance().set("gui", {
-        ...ConfigManager.getInstance().get("gui"),
-        translatorWindow: {
-          bounds: this.window.getBounds()
-        }
-      });
       debug(
         "saving translator window alwaysOnTop -> %s",
         this.window.isAlwaysOnTop()
       );
+      ConfigManager.getInstance().set("gui", {
+        ...ConfigManager.getInstance().get("gui"),
+        translatorWindow: {
+          bounds: this.window.getBounds(),
+          alwaysOnTop: this.window.isAlwaysOnTop()
+        }
+      });
     });
 
     this.window.setBounds(
