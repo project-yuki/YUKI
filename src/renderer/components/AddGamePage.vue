@@ -45,7 +45,7 @@
             </mu-step-content>
           </mu-step>
         </mu-stepper>
-        <mu-dialog title="Dialog" width="360" :open.sync="openDialog">添加成功！
+        <mu-dialog title="添加成功！" width="360" :open.sync="openDialog">
           <mu-button slot="actions" flat color="primary" @click="handleRedirect">确定</mu-button>
         </mu-dialog>
       </mu-container>

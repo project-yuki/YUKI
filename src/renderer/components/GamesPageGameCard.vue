@@ -11,14 +11,14 @@
           </div>
           <mu-select
             label="区域转换器"
-            v-model="selectedLocaleChanger.name"
+            v-model="selectedLocaleChanger"
             full-width
             @change="updateLocaleChanger"
           >
             <mu-option
               v-for="(value, key) in defaultConfig.localeChangers"
               :key="game.name+'-changer-'+key"
-              :value="value"
+              :value="value.name"
               :label="value.name"
             ></mu-option>
           </mu-select>
@@ -40,6 +40,8 @@ import { State, namespace } from "vuex-class";
 import { ipcRenderer } from "electron";
 import ipcTypes from "../../common/ipcTypes";
 
+import * as _ from "lodash";
+
 @Component
 export default class HookSettingsHookInfo extends Vue {
   @Prop()
@@ -49,7 +51,7 @@ export default class HookSettingsHookInfo extends Vue {
   defaultConfig!: Yagt.ConfigState["default"];
   @namespace("Config").State("games")
   gamesConfig!: Yagt.ConfigState["games"];
-  selectedLocaleChanger: { id: string; name: string } = { id: "", name: "" };
+  selectedLocaleChanger: string = "";
 
   openConfirm = false;
 
@@ -68,19 +70,27 @@ export default class HookSettingsHookInfo extends Vue {
   }
 
   updateLocaleChanger() {
-    for (let game of this.gamesConfig) {
-      if (game.name === this.game.name) {
-        game.localeChanger = this.selectedLocaleChanger.id;
-      }
+    let savingConfig = _.cloneDeep(this.gamesConfig);
+    const thisGame = savingConfig.find(game => game.name === this.game.name);
+    if (!thisGame) return;
+
+    for (const key in this.defaultConfig.localeChangers) {
+      if (
+        this.defaultConfig.localeChangers[key].name !==
+        this.selectedLocaleChanger
+      )
+        continue;
+
+      thisGame.localeChanger = key;
     }
-    ipcRenderer.send(ipcTypes.REQUEST_SAVE_CONFIG, "games", this.gamesConfig);
+
+    ipcRenderer.send(ipcTypes.REQUEST_SAVE_CONFIG, "games", savingConfig);
   }
 
-  mounted() {
-    this.selectedLocaleChanger = {
-      id: this.game.localeChanger,
-      name: this.defaultConfig.localeChangers[this.game.localeChanger].name
-    };
+  beforeMount() {
+    this.selectedLocaleChanger = this.defaultConfig.localeChangers[
+      this.game.localeChanger
+    ].name;
   }
 }
 </script>

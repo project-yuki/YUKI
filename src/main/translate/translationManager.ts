@@ -26,7 +26,7 @@ export default class TranslationManager {
   }
 
   initializeTranslators(translators: Yagt.Config.Default["translators"]) {
-    if (translators.jBeijing) {
+    if (translators.jBeijing && translators.jBeijing.enable) {
       let jb = new JBeijingAdapter(translators.jBeijing);
       this.apis[jb.getName()] = jb;
     }

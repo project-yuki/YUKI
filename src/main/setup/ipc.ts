@@ -96,12 +96,13 @@ export default function(mainWindow: Electron.BrowserWindow) {
   ipcMain.on(
     types.REQUEST_REMOVE_GAME,
     (event: Electron.Event, game: Yagt.Game) => {
-      configManager.getInstance().set("games", {
-        games: configManager
+      configManager.getInstance().set(
+        "games",
+        configManager
           .getInstance()
           .get("games")
           .filter((item: Yagt.Game) => item.name !== game.name)
-      });
+      );
       sendConfig("games", event);
     }
   );

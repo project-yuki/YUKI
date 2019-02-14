@@ -7,7 +7,6 @@ const { dependencies } = require("../package.json");
 const webpack = require("webpack");
 
 const BabelMinifyWebpackPlugin = require("babel-minify-webpack-plugin");
-const CopyWebpackPlugin = require("copy-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { VueLoaderPlugin } = require("vue-loader");
@@ -180,13 +179,6 @@ if (process.env.NODE_ENV === "production") {
 
   rendererConfig.plugins.push(
     new BabelMinifyWebpackPlugin(),
-    new CopyWebpackPlugin([
-      {
-        from: path.join(__dirname, "../static"),
-        to: path.join(__dirname, "../dist/electron/static"),
-        ignore: [".*"]
-      }
-    ]),
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": '"production"'
     }),
