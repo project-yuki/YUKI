@@ -25,19 +25,19 @@
         <mu-list-item-title>应用设置</mu-list-item-title>
         <mu-list-item button to="/settings/localechanger" slot="nested">
           <mu-list-item-action>
-            <mu-icon value="settings"></mu-icon>
+            <mu-icon value="location_on"></mu-icon>
           </mu-list-item-action>
           <mu-list-item-title>区域转换器</mu-list-item-title>
         </mu-list-item>
         <mu-list-item button to="/settings/library" slot="nested">
           <mu-list-item-action>
-            <mu-icon value="settings"></mu-icon>
+            <mu-icon value="apps"></mu-icon>
           </mu-list-item-action>
           <mu-list-item-title>程序库</mu-list-item-title>
         </mu-list-item>
         <mu-list-item button to="/settings/translator" slot="nested">
           <mu-list-item-action>
-            <mu-icon value="settings"></mu-icon>
+            <mu-icon value="translate"></mu-icon>
           </mu-list-item-action>
           <mu-list-item-title>翻译器</mu-list-item-title>
         </mu-list-item>
