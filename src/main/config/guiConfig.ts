@@ -27,7 +27,16 @@ export default class GuiConfig extends Config {
           ),
           y: Math.trunc(displaySize.height * 0.05)
         },
-        alwaysOnTop: true
+        alwaysOnTop: true,
+        originalText: {
+          fontSize: 24,
+          color: "white"
+        },
+        translationText: {
+          fontSize: 18,
+          color: "white"
+        },
+        background: "rgba(33, 150, 243, 0.6)"
       }
     };
   }

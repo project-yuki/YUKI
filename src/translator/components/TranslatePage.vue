@@ -1,12 +1,16 @@
 <template>
-<div>
-  <p class="text-h1 text-center">{{currentOriginText}}</p>
-  <gt-text-display 
-    v-for="(translation, key) in translationsForCurrentIndex.translations" 
-    :key="key" 
-    :name="key" 
-    :translation="translation"></gt-text-display>
-</div>
+  <div>
+    <p
+      class="text-center"
+      :style="{color: originalTextStyle.color, fontSize: `${originalTextStyle.fontSize}px`}"
+    >{{currentOriginText}}</p>
+    <gt-text-display
+      v-for="(translation, key) in translationsForCurrentIndex.translations"
+      :key="key"
+      :name="key"
+      :translation="translation"
+    ></gt-text-display>
+  </div>
 </template>
 
 <script lang="ts">
@@ -37,6 +41,13 @@ export default class TranslatePage extends Vue {
 
   @namespace("Hooks").State("translationsForCurrentIndex")
   translationsForCurrentIndex!: Yagt.Translations;
+
+  @namespace("Config").State("gui")
+  guiConfig!: any;
+
+  get originalTextStyle() {
+    return this.guiConfig.originalText;
+  }
 
   get currentOriginText() {
     return this.getLastTextById(this.currentIndex);

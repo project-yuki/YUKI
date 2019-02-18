@@ -1,4 +1,4 @@
-import { Commit, Dispatch } from "vuex";
+import { Commit } from "vuex";
 const debug = require("debug")("yagt:translatorWindow");
 import { ipcRenderer } from "electron";
 import ipcTypes from "../../../common/ipcTypes";
@@ -8,7 +8,18 @@ const state: Yagt.TranslatorConfigState = {
   game: {
     name: "",
     code: "",
-    path: ""
+    path: "",
+    localeChanger: ""
+  },
+  gui: {
+    originalText: {
+      fontSize: 0,
+      color: ""
+    },
+    translationText: {
+      fontSize: 0,
+      color: ""
+    }
   }
 };
 
@@ -24,6 +35,8 @@ const mutations = {
       case "game":
         state.game = payload.cfgs;
         break;
+      case "gui":
+        state.gui = payload.cfgs.translatorWindow;
       default:
         debug("invalid config name: %s", payload.name);
         break;

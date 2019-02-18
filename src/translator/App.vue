@@ -1,17 +1,17 @@
 <template>
-<div id="app">
-  <div id="top">
-    <gt-titlebar></gt-titlebar>
-  </div>
-  <div id="content">
-    <router-view></router-view>    
-    <div id="buttons" v-if="isButtonsShown">
-      <mu-button small flat :to="{name: 'translate'}" color="white" style="width: 32%">翻译</mu-button>
-      <mu-button small flat :to="{name: 'hooks'}" color="white" style="width: 32%">文本钩子设置</mu-button>
-      <mu-button small flat :to="{name: 'translate'}" color="white" style="width: 32%">翻译器设置</mu-button>
+  <div id="app">
+    <div id="top">
+      <gt-titlebar></gt-titlebar>
+    </div>
+    <div id="content">
+      <router-view></router-view>
+      <div id="buttons" v-if="isButtonsShown">
+        <mu-button small flat to="/translate" color="white" style="width: 32%">翻译</mu-button>
+        <mu-button small flat to="/hooks" color="white" style="width: 32%">文本钩子设置</mu-button>
+        <mu-button small flat to="/translate" color="white" style="width: 32%">翻译器设置</mu-button>
+      </div>
     </div>
   </div>
-</div>
 </template>
 
 <script lang="ts">
@@ -39,6 +39,18 @@ export default class App extends Vue {
   @namespace("Hooks").State("currentDisplayHookIndex")
   currentIndex!: number;
 
+  @namespace("Config").State("gui")
+  guiConfig!: any;
+
+  @Watch("guiConfig")
+  onGuiConfigChange() {
+    document.body.style.backgroundColor = this.guiConfig.background;
+  }
+
+  get backgroundStyle() {
+    return this.guiConfig.background;
+  }
+
   get currentOriginText() {
     return this.getLastTextById(this.currentIndex);
   }
@@ -56,6 +68,7 @@ export default class App extends Vue {
 
     ipcRenderer.send(ipcTypes.REQUEST_CONFIG, "default");
     ipcRenderer.send(ipcTypes.REQUEST_CONFIG, "game");
+    ipcRenderer.send(ipcTypes.REQUEST_CONFIG, "gui");
     let callback = (event: Electron.Event, name: string, cfg: any) => {
       if (name !== "game") ipcRenderer.once(ipcTypes.HAS_CONFIG, callback);
       else if (cfg.code === "") {
@@ -115,7 +128,6 @@ body,
 }
 
 body {
-  background-color: rgba(33, 150, 243, 0.6);
   -webkit-user-select: none;
 }
 
@@ -126,15 +138,15 @@ body {
 }
 
 .text-h1 {
-  font-size: 2em;
+  font-size: 32px;
 }
 
 .text-h2 {
-  font-size: 1.5em;
+  font-size: 24px;
 }
 
 .text-h3 {
-  font-size: 1.2em;
+  font-size: 18px;
 }
 
 .text-center {

@@ -1,19 +1,25 @@
 <template>
-<mu-container class="margin-top">
-  <mu-row>
-    <mu-col span="2">
-      <div class="text-h3 name">{{name}}</div>
-    </mu-col>
-    <mu-col span="10">
-      <div class="text-h2">{{translation}}</div>
-    </mu-col>
-  </mu-row>
-</mu-container>
+  <mu-container class="margin-top">
+    <mu-row>
+      <mu-col span="2">
+        <div class="name" :style="{fontSize: `${translationTextStyle.fontSize}px`}">{{name}}</div>
+      </mu-col>
+      <mu-col span="10">
+        <div
+          :style="{
+            color: translationTextStyle.color, 
+            fontSize: `${translationTextStyle.fontSize}px`
+          }"
+        >{{translation}}</div>
+      </mu-col>
+    </mu-row>
+  </mu-container>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 import { Component, Prop } from "vue-property-decorator";
+import { namespace } from "vuex-class";
 
 @Component
 export default class TextDisplay extends Vue {
@@ -21,6 +27,13 @@ export default class TextDisplay extends Vue {
   name!: string;
   @Prop(String)
   translation!: string;
+
+  @namespace("Config").State("gui")
+  guiConfig!: any;
+
+  get translationTextStyle() {
+    return this.guiConfig.translationText;
+  }
 }
 </script>
 

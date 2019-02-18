@@ -65,6 +65,7 @@ export default class TranslatorWindow {
       ConfigManager.getInstance().set("gui", {
         ...ConfigManager.getInstance().get("gui"),
         translatorWindow: {
+          ...ConfigManager.getInstance().get("gui").translatorWindow,
           bounds: this.window.getBounds(),
           alwaysOnTop: this.window.isAlwaysOnTop()
         }

@@ -45,6 +45,15 @@ declare namespace Yagt {
   export interface TranslatorConfigState {
     default: any;
     game: Game;
+    gui: {
+      originalText: FontStyle;
+      translationText: FontStyle;
+    };
+  }
+
+  export interface FontStyle {
+    fontSize: number;
+    color: string;
   }
 
   export interface TranslatorViewState {
