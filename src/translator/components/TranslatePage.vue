@@ -2,7 +2,7 @@
   <div>
     <p
       class="text-center"
-      :style="{color: originalTextStyle.color, fontSize: `${originalTextStyle.fontSize}px`}"
+      :style="{color: originalTextColor, fontSize: `${originalTextSize}px`}"
     >{{currentOriginText}}</p>
     <gt-text-display
       v-for="(translation, key) in translationsForCurrentIndex.translations"
@@ -42,11 +42,14 @@ export default class TranslatePage extends Vue {
   @namespace("Hooks").State("translationsForCurrentIndex")
   translationsForCurrentIndex!: Yagt.Translations;
 
-  @namespace("Config").State("gui")
-  guiConfig!: any;
+  @namespace("Config").Getter("getOriginalText")
+  getOriginalText!: () => Yagt.FontStyle;
 
-  get originalTextStyle() {
-    return this.guiConfig.originalText;
+  get originalTextColor() {
+    return this.getOriginalText().color;
+  }
+  get originalTextSize() {
+    return this.getOriginalText().fontSize;
   }
 
   get currentOriginText() {

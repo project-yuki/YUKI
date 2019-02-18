@@ -3,6 +3,7 @@ const electron = require("electron");
 import hooker from "./hooker";
 import Game from "./game";
 import ConfigManager from "./config";
+import IpcTypes from "../common/ipcTypes";
 const debug = require("debug")("yagt:translatorWindow");
 const electronVibrancy = require("electron-vibrancy");
 

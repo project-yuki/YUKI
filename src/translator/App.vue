@@ -8,7 +8,7 @@
       <div id="buttons" v-if="isButtonsShown">
         <mu-button small flat to="/translate" color="white" style="width: 32%">翻译</mu-button>
         <mu-button small flat to="/hooks" color="white" style="width: 32%">文本钩子设置</mu-button>
-        <mu-button small flat to="/translate" color="white" style="width: 32%">翻译器设置</mu-button>
+        <mu-button small flat to="/settings" color="white" style="width: 32%">翻译器设置</mu-button>
       </div>
     </div>
   </div>
@@ -56,7 +56,7 @@ export default class App extends Vue {
   }
 
   mounted() {
-    this.$router.push("translate");
+    this.$router.push("/translate");
     document.addEventListener("mouseenter", () => {
       this.$store.dispatch("View/setButtonsShown", true);
     });
@@ -72,7 +72,7 @@ export default class App extends Vue {
     let callback = (event: Electron.Event, name: string, cfg: any) => {
       if (name !== "game") ipcRenderer.once(ipcTypes.HAS_CONFIG, callback);
       else if (cfg.code === "") {
-        this.$router.push("hooks");
+        this.$router.push("/hooks");
       }
     };
     ipcRenderer.once(ipcTypes.HAS_CONFIG, callback);
@@ -88,12 +88,12 @@ export default class App extends Vue {
   @Watch("currentIndex")
   onCurrentIndexChanged() {
     this.$store.dispatch("View/setButtonsShown", false);
-    this.$router.push({ name: "translate" });
+    this.$router.push("/translate");
     ipcRenderer.send(ipcTypes.REQUEST_TRANSLATION, this.currentOriginText);
   }
 
   updated() {
-    if (this.$router.currentRoute.name === "translate") {
+    if (this.$router.currentRoute.path === "/translate") {
       if (this.isButtonsShown) {
         this.$nextTick(() => {
           this.updateWindowHeight(64);
