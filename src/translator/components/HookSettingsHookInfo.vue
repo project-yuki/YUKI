@@ -5,12 +5,7 @@
         <mu-col sm="12" md="4" lg="2" class="vertical-center">
           <strong>{{hook.name}}</strong>
         </mu-col>
-        <mu-col
-          sm="12"
-          md="8"
-          lg="4"
-          class="vertical-center"
-        >{{hook.code}}</mu-col>
+        <mu-col sm="12" md="8" lg="4" class="vertical-center">{{hook.code}}</mu-col>
         <mu-col sm="12" md="8" lg="4" class="vertical-center">
           <mu-text-field solo full-width :value="lastHookText" placeholder="等待文本获取..."/>
         </mu-col>
@@ -21,17 +16,6 @@
         </mu-col>
       </mu-row>
     </mu-paper>
-    <!-- <mu-paper :z-depth="zIndex">
-    <mu-card>
-      <mu-card-header :title="hook.name" :sub-title="hook.hcode" />
-      <mu-text-field multi-line full-width :value="hookText" :rows="8" placeholder="等待文本获取..." class="hooker-textarea" />
-      <mu-card-actions>
-        <mu-button fab small color="success" @click="chooseAsDisplay" v-show="!isChosen">
-          <mu-icon value="done"></mu-icon>
-        </mu-button>
-      </mu-card-actions>
-    </mu-card>
-    </mu-paper>-->
   </mu-scale-transition>
 </template>
 

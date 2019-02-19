@@ -45,7 +45,6 @@
     "arch": "ia32"
   },
   "dependencies": {
-    "@types/lodash": "^4.14.120",
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
     "debug": "^4.1.1",
@@ -59,6 +58,7 @@
     "tasklist": "^3.1.1",
     "textractor-wrapper": "^1.1.0",
     "vue": "^2.5.17",
+    "vue-color": "^2.7.0",
     "vue-electron": "^1.0.6",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
@@ -67,8 +67,10 @@
     "@types/chai": "^4.1.7",
     "@types/ffi": "^0.2.1",
     "@types/jsonfile": "^4.0.1",
+    "@types/lodash": "^4.14.121",
     "@types/mocha": "^5.2.5",
     "@types/request-promise-native": "^1.0.15",
+    "@types/vue-color": "^2.4.1",
     "ajv": "^6.5.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",

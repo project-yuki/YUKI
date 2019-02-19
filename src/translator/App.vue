@@ -39,16 +39,14 @@ export default class App extends Vue {
   @namespace("Hooks").State("currentDisplayHookIndex")
   currentIndex!: number;
 
-  @namespace("Config").State("gui")
-  guiConfig!: any;
-
-  @Watch("guiConfig")
-  onGuiConfigChange() {
-    document.body.style.backgroundColor = this.guiConfig.background;
+  @namespace("Config").Getter("getBackgroundColor")
+  getBackgroundColor!: () => string;
+  get backgroundColor() {
+    return this.getBackgroundColor();
   }
-
-  get backgroundStyle() {
-    return this.guiConfig.background;
+  @Watch("backgroundColor")
+  onBackgroundColorChange() {
+    document.body.style.backgroundColor = this.backgroundColor;
   }
 
   get currentOriginText() {
@@ -159,6 +157,10 @@ body {
   margin: 0;
 }
 
+.small-margin {
+  margin: 16px;
+}
+
 .full-height {
   height: 100%;
 }
@@ -192,5 +194,16 @@ body {
 
 #app #content #buttons .mu-button {
   text-align: center;
+}
+
+.fixed-scroll {
+  margin: 0 auto;
+  padding: 16px;
+  position: fixed;
+  top: 32px;
+  width: 100%;
+  height: 88%;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 </style>

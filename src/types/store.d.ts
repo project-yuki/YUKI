@@ -48,6 +48,7 @@ declare namespace Yagt {
     gui: {
       originalText: FontStyle;
       translationText: FontStyle;
+      background: string;
     };
   }
 

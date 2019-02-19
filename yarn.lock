@@ -40,10 +40,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/lodash@^4.14.120":
-  version "4.14.120"
-  resolved "http://registry.npm.taobao.org/@types/lodash/download/@types/lodash-4.14.120.tgz#cf265d06f6c7a710db087ed07523ab8c1a24047b"
-  integrity sha1-zyZdBvbHpxDbCH7QdSOrjBokBHs=
+"@types/lodash@^4.14.121":
+  version "4.14.121"
+  resolved "http://registry.npm.taobao.org/@types/lodash/download/@types/lodash-4.14.121.tgz#9327e20d49b95fc2bf983fc2f045b2c6effc80b9"
+  integrity sha1-kyfiDUm5X8K/mD/C8EWyxu/8gLk=
 
 "@types/mocha@^5.2.5":
   version "5.2.5"
@@ -95,6 +95,13 @@
   version "2.3.4"
   resolved "http://registry.npm.taobao.org/@types/tough-cookie/download/@types/tough-cookie-2.3.4.tgz#821878b81bfab971b93a265a561d54ea61f9059f"
   integrity sha1-ghh4uBv6uXG5OiZaVh1U6mH5BZ8=
+
+"@types/vue-color@^2.4.1":
+  version "2.4.1"
+  resolved "http://registry.npm.taobao.org/@types/vue-color/download/@types/vue-color-2.4.1.tgz#36892314b278ed3d348e035ea96df5df449fa86b"
+  integrity sha1-NokjFLJ47T00jgNeqW3130SfqGs=
+  dependencies:
+    vue ">=2.0.0"
 
 "@vue/component-compiler-utils@^2.0.0":
   version "2.3.0"
@@ -2295,6 +2302,11 @@ circular-json@^0.5.5:
   version "0.5.9"
   resolved "http://registry.npm.taobao.org/circular-json/download/circular-json-0.5.9.tgz#932763ae88f4f7dead7a0d09c8a51a4743a53b1d"
   integrity sha1-kydjroj0996teg0JyKUaR0OlOx0=
+
+clamp@^1.0.1:
+  version "1.0.1"
+  resolved "http://registry.npm.taobao.org/clamp/download/clamp-1.0.1.tgz#66a0e64011816e37196828fdc8c8c147312c8634"
+  integrity sha1-ZqDmQBGBbjcZaCj9yMjBRzEshjQ=
 
 clap@^1.0.9:
   version "1.2.3"
@@ -5956,6 +5968,11 @@ lodash.some@^4.6.0:
   resolved "http://registry.npm.taobao.org/lodash.some/download/lodash.some-4.6.0.tgz#1bb9f314ef6b8baded13b549169b2a945eb68e4d"
   integrity sha1-G7nzFO9ri63tE7VJFpsqlF62jk0=
 
+lodash.throttle@^4.0.0:
+  version "4.1.1"
+  resolved "http://registry.npm.taobao.org/lodash.throttle/download/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
+  integrity sha1-wj6RtxAkKscMN/HhzaknTMOb8vQ=
+
 lodash.toplainobject@^3.0.0:
   version "3.0.0"
   resolved "http://registry.npm.taobao.org/lodash.toplainobject/download/lodash.toplainobject-3.0.0.tgz#28790ad942d293d78aa663a07ecf7f52ca04198d"
@@ -6080,6 +6097,11 @@ map-visit@^1.0.0:
   integrity sha1-7Nyo8TFE5mDxtb1B8S80edmN+48=
   dependencies:
     object-visit "^1.0.0"
+
+material-colors@^1.0.0:
+  version "1.2.6"
+  resolved "http://registry.npm.taobao.org/material-colors/download/material-colors-1.2.6.tgz#6d1958871126992ceecc72f4bcc4d8f010865f46"
+  integrity sha1-bRlYhxEmmSzuzHL0vMTY8BCGX0Y=
 
 math-expression-evaluator@^1.2.14:
   version "1.2.17"
@@ -9046,6 +9068,11 @@ timers-browserify@^2.0.4:
   dependencies:
     setimmediate "^1.0.4"
 
+tinycolor2@^1.1.2:
+  version "1.4.1"
+  resolved "http://registry.npm.taobao.org/tinycolor2/download/tinycolor2-1.4.1.tgz#f4fad333447bc0b07d4dc8e9209d8f39a8ac77e8"
+  integrity sha1-9PrTM0R7wLB9TcjpIJ2POaisd+g=
+
 title-case@^2.1.0:
   version "2.1.1"
   resolved "http://registry.npm.taobao.org/title-case/download/title-case-2.1.1.tgz#3e127216da58d2bc5becf137ab91dae3a7cd8faa"
@@ -9486,6 +9513,16 @@ vue-class-component@^6.2.0:
   resolved "http://registry.npm.taobao.org/vue-class-component/download/vue-class-component-6.3.2.tgz#e6037e84d1df2af3bde4f455e50ca1b9eec02be6"
   integrity sha1-5gN+hNHfKvO95PRV5Qyhue7AK+Y=
 
+vue-color@^2.7.0:
+  version "2.7.0"
+  resolved "http://registry.npm.taobao.org/vue-color/download/vue-color-2.7.0.tgz#31e898370a5786fd6c3007388cb7242db6ba6988"
+  integrity sha1-MeiYNwpXhv1sMAc4jLckLba6aYg=
+  dependencies:
+    clamp "^1.0.1"
+    lodash.throttle "^4.0.0"
+    material-colors "^1.0.0"
+    tinycolor2 "^1.1.2"
+
 vue-devtools@4.1.4:
   version "4.1.4"
   resolved "http://registry.npm.taobao.org/vue-devtools/download/vue-devtools-4.1.4.tgz#d256093d005408dbc44be9538290971e2b6f6564"
@@ -9555,6 +9592,11 @@ vue-template-es2015-compiler@^1.6.0:
   version "1.6.0"
   resolved "http://registry.npm.taobao.org/vue-template-es2015-compiler/download/vue-template-es2015-compiler-1.6.0.tgz#dc42697133302ce3017524356a6c61b7b69b4a18"
   integrity sha1-3EJpcTMwLOMBdSQ1amxht7abShg=
+
+vue@>=2.0.0:
+  version "2.6.6"
+  resolved "http://registry.npm.taobao.org/vue/download/vue-2.6.6.tgz#dde41e483c11c46a7bf523909f4f2f816ab60d25"
+  integrity sha1-3eQeSDwRxGp79SOQn08vgWq2DSU=
 
 vue@^2.5.17:
   version "2.5.17"

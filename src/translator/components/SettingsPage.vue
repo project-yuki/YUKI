@@ -1,10 +1,12 @@
 <template>
-  <mu-container>
-    <p class="text-h2 padding-top">原始文本大小</p>
+  <div class="small-margin fixed-scroll">
+    <p class="text-h2">原始文本大小</p>
     <mu-slider class="margin-top" :step="1" v-model="originalTextSize"></mu-slider>
     <p class="text-h2 padding-top">翻译文本大小</p>
     <mu-slider class="margin-top" :step="1" v-model="translationTextSize"></mu-slider>
-  </mu-container>
+    <p class="text-h2 padding-top">背景色</p>
+    <sketch-picker v-model="backgroundColor"></sketch-picker>
+  </div>
 </template>
 
 <script lang="ts">
@@ -16,12 +18,20 @@ import { remote } from "electron";
 
 import { ipcRenderer } from "electron";
 
-@Component
+import { Sketch } from "vue-color";
+
+@Component({
+  components: {
+    SketchPicker: <any>Sketch
+  }
+})
 export default class HookSettings extends Vue {
   @namespace("Config").Getter("getOriginalText")
   getOriginalText!: () => Yagt.FontStyle;
   @namespace("Config").Getter("getTranslationText")
   getTranslationText!: () => Yagt.FontStyle;
+  @namespace("Config").Getter("getBackgroundColor")
+  getBackgroundColor!: () => string;
 
   get originalTextSize() {
     return this.getOriginalText().fontSize;
@@ -35,6 +45,13 @@ export default class HookSettings extends Vue {
   }
   set translationTextSize(size: number) {
     this.$store.commit("Config/SET_TRANSLATION_TEXT_SIZE", { size });
+    this.$store.commit("Config/SAVE_GUI_CONFIG");
+  }
+  get backgroundColor(): string {
+    return this.getBackgroundColor();
+  }
+  set backgroundColor(color: string) {
+    this.$store.commit("Config/SET_BACKGROUND_COLOR", { color });
     this.$store.commit("Config/SAVE_GUI_CONFIG");
   }
 
@@ -52,10 +69,10 @@ export default class HookSettings extends Vue {
 
 <style scoped>
 .padding-top {
-  padding-top: 24px;
+  padding-top: 18px;
 }
 
 .margin-top {
-  margin-top: 24px;
+  margin-top: 18px;
 }
 </style>

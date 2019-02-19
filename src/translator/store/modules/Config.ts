@@ -21,7 +21,8 @@ const state: Yagt.TranslatorConfigState = {
     translationText: {
       fontSize: 0,
       color: ""
-    }
+    },
+    background: ""
   }
 };
 
@@ -31,6 +32,9 @@ const getters = {
   },
   getTranslationText: (state: Yagt.TranslatorConfigState) => () => {
     return state.gui.translationText;
+  },
+  getBackgroundColor: (state: Yagt.TranslatorConfigState) => () => {
+    return state.gui.background;
   }
 };
 
@@ -71,6 +75,12 @@ const mutations = {
       ...state.gui.translationText,
       fontSize: payload.size
     };
+  },
+  SET_BACKGROUND_COLOR(
+    state: Yagt.TranslatorConfigState,
+    payload: { color: { hex8: string } }
+  ) {
+    state.gui.background = payload.color.hex8;
   },
   SAVE_GUI_CONFIG(state: Yagt.TranslatorConfigState) {
     if (!isSavingConfig) {
