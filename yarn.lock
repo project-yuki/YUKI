@@ -9635,6 +9635,11 @@ vuex@^3.0.1:
   resolved "http://registry.npm.taobao.org/vuex/download/vuex-3.0.1.tgz#e761352ebe0af537d4bb755a9b9dc4be3df7efd2"
   integrity sha1-52E1Lr4K9TfUu3Vam53Evj3379I=
 
+wanakana@^4.0.2:
+  version "4.0.2"
+  resolved "http://registry.npm.taobao.org/wanakana/download/wanakana-4.0.2.tgz#a7d60186724a56fd50e6e9c224628c09294901d8"
+  integrity sha1-p9YBhnJKVv1Q5unCJGKMCSlJAdg=
+
 watchpack@^1.5.0:
   version "1.6.0"
   resolved "http://registry.npm.taobao.org/watchpack/download/watchpack-1.6.0.tgz#4bc12c2ebe8aa277a71f1d3f14d685c7b446cd00"

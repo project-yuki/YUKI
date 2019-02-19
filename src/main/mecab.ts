@@ -1,5 +1,6 @@
 import * as fs from "fs";
 import * as path from "path";
+const toHiragana = require("wanakana").toHiragana;
 
 interface MeCab {
   parseSync: (text: string) => string[][];
@@ -64,10 +65,12 @@ export default class MecabManager {
     let result = this.mecab.parseSync(text);
     let usefulResult = [];
     for (const i in result) {
-      usefulResult.push({
+      let kana = toHiragana(result[i][8]);
+      if (kana === result[i][0]) kana = "";
+      kana = usefulResult.push({
         word: result[i][0],
-        type: result[i][1],
-        abbr: this.kanjiToAbbrMap[result[i][1]]
+        abbr: this.kanjiToAbbrMap[result[i][1]],
+        kana
       });
     }
     return usefulResult;

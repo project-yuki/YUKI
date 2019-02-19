@@ -16,8 +16,8 @@ declare namespace Yagt {
   export interface MeCabPattern {
     [index: number]: {
       word: string;
-      type: string;
       abbr: string;
+      kana: string;
     };
   }
 }

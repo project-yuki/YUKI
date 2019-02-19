@@ -16,15 +16,15 @@ describe("MeCab", () => {
     );
 
     expect(patterns).to.deep.equal([
-      { word: "ボク", type: "名詞", abbr: "n" },
-      { word: "に", type: "助詞", abbr: "p" },
-      { word: "選択", type: "名詞", abbr: "n" },
-      { word: "の", type: "助詞", abbr: "p" },
-      { word: "余地", type: "名詞", abbr: "n" },
-      { word: "は", type: "助詞", abbr: "p" },
-      { word: "無かっ", type: "形容詞", abbr: "adj" },
-      { word: "た", type: "助動詞", abbr: "aux" },
-      { word: "。", type: "記号", abbr: "w" }
+      { word: "ボク", abbr: "n", kana: "ぼく" },
+      { word: "に", abbr: "p", kana: "" },
+      { word: "選択", abbr: "n", kana: "せんたく" },
+      { word: "の", abbr: "p", kana: "" },
+      { word: "余地", abbr: "n", kana: "よち" },
+      { word: "は", abbr: "p", kana: "" },
+      { word: "無かっ", abbr: "adj", kana: "なかっ" },
+      { word: "た", abbr: "aux", kana: "" },
+      { word: "。", abbr: "w", kana: "" }
     ]);
   });
 });
