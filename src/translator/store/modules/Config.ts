@@ -28,6 +28,9 @@ const state: Yagt.TranslatorConfigState = {
 const getters = {
   getOriginalText: (state: Yagt.TranslatorConfigState) => () => {
     return state.gui.originalText;
+  },
+  getTranslationText: (state: Yagt.TranslatorConfigState) => () => {
+    return state.gui.translationText;
   }
 };
 
@@ -57,6 +60,15 @@ const mutations = {
   ) {
     state.gui.originalText = {
       ...state.gui.originalText,
+      fontSize: payload.size
+    };
+  },
+  SET_TRANSLATION_TEXT_SIZE(
+    state: Yagt.TranslatorConfigState,
+    payload: { size: number }
+  ) {
+    state.gui.translationText = {
+      ...state.gui.translationText,
       fontSize: payload.size
     };
   },
