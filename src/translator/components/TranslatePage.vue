@@ -1,9 +1,9 @@
 <template>
   <div>
-    <p
+    <mu-container
       class="text-center"
       :style="{color: originalTextColor, fontSize: `${originalTextSize}px`}"
-    >{{currentOriginText}}</p>
+    >{{currentOriginText}}</mu-container>
     <gt-text-display
       v-for="(translation, key) in translationsForCurrentIndex.translations"
       :key="key"

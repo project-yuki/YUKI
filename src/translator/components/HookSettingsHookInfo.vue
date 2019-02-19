@@ -5,13 +5,15 @@
         <mu-col sm="12" md="4" lg="2" class="vertical-center">
           <strong>{{hook.name}}</strong>
         </mu-col>
-        <mu-col sm="12" md="8" lg="4" class="vertical-center">{{hook.code}}</mu-col>
-        <mu-col sm="12" md="8" lg="4" class="vertical-center">
-          <mu-text-field solo full-width :value="lastHookText" placeholder="等待文本获取..."/>
+        <mu-col sm="12" md="8" lg="3" class="vertical-center selectable">
+          <div>{{hook.code}}</div>
+        </mu-col>
+        <mu-col sm="12" md="8" lg="5" class="vertical-center">
+          <mu-text-field solo full-width disabled :value="lastHookText" placeholder="等待文本获取..."/>
         </mu-col>
         <mu-col sm="12" md="4" lg="2" class="vertical-center">
-          <mu-button fab small color="success" @click="chooseAsDisplay" v-show="!isChosen">
-            <mu-icon value="done"></mu-icon>
+          <mu-button flat color="success" @click="chooseAsDisplay" v-show="!isChosen">选择
+            <mu-icon right value="done"></mu-icon>
           </mu-button>
         </mu-col>
       </mu-row>
@@ -72,5 +74,13 @@ export default class HookSettingsHookInfo extends Vue {
 
 .vertical-center {
   margin: auto;
+}
+
+.row {
+  margin: 8px;
+}
+
+.selectable {
+  -webkit-user-select: text;
 }
 </style>

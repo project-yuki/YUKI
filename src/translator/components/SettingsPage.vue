@@ -1,11 +1,44 @@
 <template>
   <div class="small-margin fixed-scroll">
-    <p class="text-h2">原始文本大小</p>
-    <mu-slider class="margin-top" :step="1" v-model="originalTextSize"></mu-slider>
-    <p class="text-h2 padding-top">翻译文本大小</p>
-    <mu-slider class="margin-top" :step="1" v-model="translationTextSize"></mu-slider>
-    <p class="text-h2 padding-top">背景色</p>
-    <sketch-picker v-model="backgroundColor"></sketch-picker>
+    <mu-row gutter>
+      <mu-col span="3">
+        <div class="text-h3 text-center">原始文本</div>
+      </mu-col>
+      <mu-col span="8">
+        <mu-form :model="{}">
+          <mu-form-item label="大小" :style="{color: 'white'}">
+            <mu-slider class="margin-top" :step="1" v-model="originalTextSize"></mu-slider>
+          </mu-form-item>
+        </mu-form>
+      </mu-col>
+    </mu-row>
+    <mu-row gutter>
+      <mu-col span="3">
+        <div class="text-h3 text-center">翻译文本</div>
+      </mu-col>
+      <mu-col span="4">
+        <mu-form :model="{}">
+          <mu-form-item label="大小" :style="{color: 'white'}">
+            <mu-slider class="margin-top" :step="1" v-model="translationTextSize"></mu-slider>
+          </mu-form-item>
+        </mu-form>
+      </mu-col>
+      <mu-col span="4">
+        <mu-form :model="{}">
+          <mu-form-item label="间距" :style="{color: 'white'}">
+            <mu-slider class="margin-top" :step="1" v-model="translationTextMargin"></mu-slider>
+          </mu-form-item>
+        </mu-form>
+      </mu-col>
+    </mu-row>
+    <mu-row gutter>
+      <mu-col span="3">
+        <div class="text-h3 text-center">背景色</div>
+      </mu-col>
+      <mu-col span="9">
+        <chrome-picker v-model="backgroundColor"></chrome-picker>
+      </mu-col>
+    </mu-row>
   </div>
 </template>
 
@@ -18,18 +51,18 @@ import { remote } from "electron";
 
 import { ipcRenderer } from "electron";
 
-import { Sketch } from "vue-color";
+import { Chrome } from "vue-color";
 
 @Component({
   components: {
-    SketchPicker: <any>Sketch
+    ChromePicker: <any>Chrome
   }
 })
 export default class HookSettings extends Vue {
   @namespace("Config").Getter("getOriginalText")
   getOriginalText!: () => Yagt.FontStyle;
   @namespace("Config").Getter("getTranslationText")
-  getTranslationText!: () => Yagt.FontStyle;
+  getTranslationText!: () => Yagt.TranslationTextStyle;
   @namespace("Config").Getter("getBackgroundColor")
   getBackgroundColor!: () => string;
 
@@ -45,6 +78,13 @@ export default class HookSettings extends Vue {
   }
   set translationTextSize(size: number) {
     this.$store.commit("Config/SET_TRANSLATION_TEXT_SIZE", { size });
+    this.$store.commit("Config/SAVE_GUI_CONFIG");
+  }
+  get translationTextMargin() {
+    return this.getTranslationText().margin;
+  }
+  set translationTextMargin(margin: number) {
+    this.$store.commit("Config/SET_TRANSLATION_TEXT_MARGIN", { margin });
     this.$store.commit("Config/SAVE_GUI_CONFIG");
   }
   get backgroundColor(): string {
@@ -74,5 +114,10 @@ export default class HookSettings extends Vue {
 
 .margin-top {
   margin-top: 18px;
+}
+
+.text-center {
+  text-align: center;
+  vertical-align: middle;
 }
 </style>

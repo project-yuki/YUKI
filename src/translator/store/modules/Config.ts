@@ -20,7 +20,8 @@ const state: Yagt.TranslatorConfigState = {
     },
     translationText: {
       fontSize: 0,
-      color: ""
+      color: "",
+      margin: 0
     },
     background: ""
   }
@@ -74,6 +75,15 @@ const mutations = {
     state.gui.translationText = {
       ...state.gui.translationText,
       fontSize: payload.size
+    };
+  },
+  SET_TRANSLATION_TEXT_MARGIN(
+    state: Yagt.TranslatorConfigState,
+    payload: { margin: number }
+  ) {
+    state.gui.translationText = {
+      ...state.gui.translationText,
+      margin: payload.margin
     };
   },
   SET_BACKGROUND_COLOR(

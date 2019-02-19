@@ -47,7 +47,7 @@ declare namespace Yagt {
     game: Game;
     gui: {
       originalText: FontStyle;
-      translationText: FontStyle;
+      translationText: TranslationTextStyle;
       background: string;
     };
   }
@@ -55,6 +55,10 @@ declare namespace Yagt {
   export interface FontStyle {
     fontSize: number;
     color: string;
+  }
+
+  export interface TranslationTextStyle extends FontStyle {
+    margin: number;
   }
 
   export interface TranslatorViewState {

@@ -1,5 +1,5 @@
 <template>
-  <mu-container class="margin-top">
+  <mu-container :style="{marginTop: `${translationTextStyle.margin}px`}">
     <mu-row>
       <mu-col span="2">
         <div class="name" :style="{fontSize: `${translationTextStyle.fontSize}px`}">{{name}}</div>
