@@ -3,7 +3,7 @@ import { expect } from "chai";
 import * as path from "path";
 
 describe("MeCab", () => {
-  beforeEach(() => {
+  before(() => {
     MeCabManager.getInstance().load({
       enable: true,
       path: path.resolve(__dirname, "../../../../../libraries/pos/mecab-ipadic")
