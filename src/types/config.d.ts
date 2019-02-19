@@ -22,11 +22,16 @@ declare namespace Yagt {
       jsFile: string;
     }
 
-    interface JBeijing {
+    export interface JBeijing {
       enable: boolean;
       path: string;
       dictPath?: string;
       traditionalChinese?: boolean;
+    }
+
+    export interface MeCab {
+      enable: boolean;
+      path: string;
     }
 
     export interface Default {

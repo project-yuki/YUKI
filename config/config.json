@@ -50,5 +50,9 @@
       "enable": true,
       "path": "D:\\Visual Novel Reader V2\\JBeijing7"
     }
+  },
+  "mecab": {
+    "enable": true,
+    "path": "E:\\yagt\\libraries\\pos\\mecab-ipadic"
   }
 }

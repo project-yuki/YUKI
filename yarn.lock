@@ -635,6 +635,13 @@ async@1.x, async@^1.5.2:
   resolved "http://registry.npm.taobao.org/async/download/async-1.5.2.tgz#ec6a61ae56480c0c3cb241c95618e20892f9672a"
   integrity sha1-7GphrlZIDAw8skHJVhjiCJL5Zyo=
 
+"async@>= 0.2.9":
+  version "2.6.2"
+  resolved "http://registry.npm.taobao.org/async/download/async-2.6.2.tgz#18330ea7e6e313887f5d2f2a904bac6fe4dd5381"
+  integrity sha1-GDMOp+bjE4h/XS8qkEusb+TdU4E=
+  dependencies:
+    lodash "^4.17.11"
+
 async@^2.0.0, async@^2.5.0:
   version "2.6.1"
   resolved "http://registry.npm.taobao.org/async/download/async-2.6.1.tgz#b245a23ca71930044ec53fa46aa00a3e87c6a610"
@@ -2413,6 +2420,11 @@ code-point-at@^1.0.0:
   resolved "http://registry.npm.taobao.org/code-point-at/download/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
   integrity sha1-DQcLTQQ6W+ozovGkDi7bPZpMz3c=
 
+"coffee-script@>= 1.8.0":
+  version "1.12.7"
+  resolved "http://registry.npm.taobao.org/coffee-script/download/coffee-script-1.12.7.tgz#c05dae0cb79591d05b3070a8433a98c9a89ccc53"
+  integrity sha1-wF2uDLeVkdBbMHCoQzqYyaiczFM=
+
 collection-visit@^1.0.0:
   version "1.0.0"
   resolved "http://registry.npm.taobao.org/collection-visit/download/collection-visit-1.0.0.tgz#4bc0373c164bc3291b4d368c829cf1a80a59dca0"
@@ -4000,7 +4012,7 @@ fd-slicer@~1.0.1:
   dependencies:
     pend "~1.2.0"
 
-ffi@^2.3.0:
+"ffi@>= 1.2.5", ffi@^2.3.0:
   version "2.3.0"
   resolved "http://registry.npm.taobao.org/ffi/download/ffi-2.3.0.tgz#fa1a7b3d85c0fa8c83d96947a64b5192bc47f858"
   integrity sha1-+hp7PYXA+oyD2WlHpktRkrxH+Fg=
@@ -5986,7 +5998,7 @@ lodash.uniq@^4.5.0:
   resolved "http://registry.npm.taobao.org/lodash.uniq/download/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
   integrity sha1-0CJTc662Uq3BvILklFM5qEJ1R3M=
 
-lodash@^4.13.1, lodash@^4.17.0, lodash@^4.17.10, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.3.0, lodash@^4.5.0, lodash@^4.8.0, lodash@~4.17.10:
+lodash@^4.13.1, lodash@^4.17.0, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.3.0, lodash@^4.5.0, lodash@^4.8.0, lodash@~4.17.10:
   version "4.17.11"
   resolved "http://registry.npm.taobao.org/lodash/download/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
   integrity sha1-s56mIp72B+zYniyN8SU2iRysm40=
@@ -6121,6 +6133,16 @@ md5.js@^1.3.4:
     hash-base "^3.0.0"
     inherits "^2.0.1"
     safe-buffer "^5.1.2"
+
+mecab-ffi@^0.2.0:
+  version "0.2.0"
+  resolved "http://registry.npm.taobao.org/mecab-ffi/download/mecab-ffi-0.2.0.tgz#8c3d16eb18d2f3d0aec306da8608292828a38e2e"
+  integrity sha1-jD0W6xjS89CuwwbahggpKCijji4=
+  dependencies:
+    async ">= 0.2.9"
+    coffee-script ">= 1.8.0"
+    ffi ">= 1.2.5"
+    ref ">= 0.1.3"
 
 media-typer@0.3.0:
   version "0.3.0"
@@ -7850,7 +7872,7 @@ ref-struct@1:
     debug "2"
     ref "1"
 
-ref@1, ref@^1.3.5:
+ref@1, "ref@>= 0.1.3", ref@^1.3.5:
   version "1.3.5"
   resolved "http://registry.npm.taobao.org/ref/download/ref-1.3.5.tgz#0e33f080cdb94a3d95312b2b3b1fd0f82044ca0f"
   integrity sha1-DjPwgM25Sj2VMSsrOx/Q+CBEyg8=

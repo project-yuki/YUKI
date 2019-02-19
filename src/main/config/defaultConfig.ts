@@ -32,7 +32,8 @@ export default class DefaultConfig extends Config {
           name: "有道"
         }
       ],
-      translators: { jBeijing: { enable: false, path: "" } }
+      translators: { jBeijing: { enable: false, path: "" } },
+      mecab: { enable: false, path: "" }
     };
   }
 
