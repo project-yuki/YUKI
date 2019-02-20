@@ -6,23 +6,14 @@ interface MeCab {
   parseSync: (text: string) => string[][];
 }
 
-export default class MecabManager {
-  private static instance: MecabManager;
-  static getInstance(): MecabManager {
-    if (this.instance == null) {
-      this.instance = new MecabManager();
-    }
-    return this.instance;
-  }
-
-  private mecab: MeCab | undefined;
-
+export default class MecabMiddleware
+  implements Yagt.Middleware<Yagt.TextOutputObject> {
   /**
    * Role type
    * See: https://answers.yahoo.com/question/index?qid=20110805070212AAdpWZf
    * See: https://gist.github.com/neubig/2555399
    */
-  private kanjiToAbbrMap = {
+  public static readonly KANJI_TO_ABBR_MAP = {
     人名: "m", // name
     地名: "mp", // place
     名詞: "n", // noun
@@ -44,11 +35,23 @@ export default class MecabManager {
     // ROLE_PHRASE: 'x'
   };
 
-  getKanjiToAbbrMap() {
-    return this.kanjiToAbbrMap;
+  public static isMeCabString(mstring: string): boolean {
+    return mstring.startsWith("$");
   }
 
-  load(config: Yagt.Config.MeCab) {
+  public static stringToObject(mstring: string): Yagt.MeCabPatterns {
+    if (!this.isMeCabString(mstring)) return [];
+
+    let validString = mstring.substring(1);
+    let result: Yagt.MeCabPatterns = [];
+    validString.split("|").forEach(value => {
+      let aWord = value.split(",");
+      result.push({ word: aWord[0], abbr: aWord[1], kana: aWord[2] });
+    });
+    return result;
+  }
+
+  constructor(config: Yagt.Config.MeCab) {
     if (
       !config.enable ||
       !fs.existsSync(path.join(config.path, "libmecab.dll"))
@@ -59,20 +62,29 @@ export default class MecabManager {
     this.mecab = require("mecab-ffi");
   }
 
-  parseSync(text: string): Yagt.MeCabPattern {
-    if (!this.mecab) return [];
+  private mecab: MeCab | undefined;
 
-    let result = this.mecab.parseSync(text);
+  process(
+    context: Yagt.TextOutputObject,
+    next: (newContext: Yagt.TextOutputObject) => void
+  ) {
+    if (!this.mecab) {
+      next(context);
+      return;
+    }
+
+    let result = this.mecab.parseSync(context.text);
     let usefulResult = [];
     for (const i in result) {
       let kana = toHiragana(result[i][8]);
       if (kana === result[i][0]) kana = "";
-      kana = usefulResult.push({
-        word: result[i][0],
-        abbr: this.kanjiToAbbrMap[result[i][1]],
-        kana
-      });
+      usefulResult.push(
+        `${result[i][0]},${
+          MecabMiddleware.KANJI_TO_ABBR_MAP[result[i][1]]
+        },${kana}`
+      );
     }
-    return usefulResult;
+    context.text = `$${usefulResult.join("|")}`;
+    next(context);
   }
 }

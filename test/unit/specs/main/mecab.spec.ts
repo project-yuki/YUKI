@@ -1,21 +1,32 @@
-import MeCabManager from "../../../../src/main/mecab";
+/// <reference path="../../../../src/types/common.d.ts" />
+
 import { expect } from "chai";
 import * as path from "path";
+import MecabMiddleware from "../../../../src/main/mecab";
 
 describe("MeCab", () => {
-  before(() => {
-    MeCabManager.getInstance().load({
+  it("returns correct patterns", () => {
+    const mecabMiddleware = new MecabMiddleware({
       enable: true,
       path: path.resolve(__dirname, "../../../../../libraries/pos/mecab-ipadic")
     });
+
+    mecabMiddleware.process(
+      { text: "ボクに選択の余地は無かった。" },
+      newContext => {
+        expect(newContext.text).to.deep.equal(
+          "$ボク,n,ぼく|に,p,|選択,n,せんたく|の,p,|余地,n,よち|は,p,|無かっ,adj,なかっ|た,aux,|。,w,"
+        );
+      }
+    );
   });
 
-  it("returns correct patterns", () => {
-    const patterns = MeCabManager.getInstance().parseSync(
-      "ボクに選択の余地は無かった。"
-    );
-
-    expect(patterns).to.deep.equal([
+  it("converts mecab string to object", () => {
+    expect(
+      MecabMiddleware.stringToObject(
+        "$ボク,n,ぼく|に,p,|選択,n,せんたく|の,p,|余地,n,よち|は,p,|無かっ,adj,なかっ|た,aux,|。,w,"
+      )
+    ).to.deep.equal([
       { word: "ボク", abbr: "n", kana: "ぼく" },
       { word: "に", abbr: "p", kana: "" },
       { word: "選択", abbr: "n", kana: "せんたく" },
@@ -26,5 +37,9 @@ describe("MeCab", () => {
       { word: "た", abbr: "aux", kana: "" },
       { word: "。", abbr: "w", kana: "" }
     ]);
+
+    expect(
+      MecabMiddleware.stringToObject("ボクに選択の余地は無かった。")
+    ).to.deep.equal([]);
   });
 });

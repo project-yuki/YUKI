@@ -10,7 +10,7 @@ class SubstringMiddleware implements Yagt.Middleware<string> {
   }
 }
 
-class ExpectMiddleware implements Yagt.Middleware<string> {
+export class ExpectMiddleware implements Yagt.Middleware<string> {
   private expectValue: string;
   private done: () => void;
 
