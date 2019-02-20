@@ -1,5 +1,5 @@
 declare namespace Yagt {
-  export interface Middleware {
-    process: (context: any, next: (newContext: any) => void) => void;
+  export interface Middleware<T> {
+    process: (context: T, next: (newContext: T) => void) => void;
   }
 }

@@ -1,11 +1,14 @@
 import types from "../common/ipcTypes";
 const debug = require("debug");
-import TextInterceptor from "./textInterceptor";
-import TextMerger from "./textMerger";
+import TextMergerMiddleware from "./textMerger";
 import { Textractor } from "textractor-wrapper";
 import * as path from "path";
+import ApplicationBuilder from "../common/applicationBuilder";
+import TextInterceptorMiddleware from "./textInterceptor";
 
-class HookerPublisher {
+const applicationBuilder = new ApplicationBuilder<Yagt.TextOutputObject>();
+
+class PublishMiddleware implements Yagt.Middleware<Yagt.TextOutputObject> {
   private subscribers: Electron.WebContents[] = [];
   private type: string;
   constructor(type: string) {
@@ -48,15 +51,15 @@ class HookerPublisher {
     }
   }
 
-  public publish(...args: any[]) {
+  process(context: Yagt.TextOutputObject) {
     for (let subscriber of this.subscribers) {
-      subscriber.send(this.type, ...args);
+      subscriber.send(this.type, context);
     }
   }
 }
 
 interface PublisherMap {
-  ["thread-output"]: HookerPublisher;
+  ["thread-output"]: PublishMiddleware;
 }
 
 export default class Hooker {
@@ -77,29 +80,26 @@ export default class Hooker {
     );
     debug("trying to access CLI exe at %s", absolutePath);
     this.hooker = new Textractor(absolutePath);
+    this.buildApplication();
     this.initHookerCallbacks();
     this.hooker.start();
   }
 
+  private buildApplication() {
+    applicationBuilder.use(new TextMergerMiddleware());
+    applicationBuilder.use(new TextInterceptorMiddleware());
+    applicationBuilder.use(new FilterMiddleware());
+    applicationBuilder.use(this.publisherMap["thread-output"]);
+  }
+
   private initHookerCallbacks() {
     this.hooker.on("output", output => {
-      TextMerger.getInstance().makeMerge(
-        output.handle,
-        output.text,
-        mergedText => {
-          if (!TextInterceptor.getInstance().textShouldBeIgnore(mergedText)) {
-            debug("yagt:hooker")("[%d] %s", output.handle, mergedText);
-            delete output.text;
-            output.code = `/${output.code}`;
-            this.publisherMap["thread-output"].publish(output, mergedText);
-          }
-        }
-      );
+      applicationBuilder.run(output);
     });
   }
 
   private publisherMap: PublisherMap = {
-    "thread-output": new HookerPublisher(types.HAS_HOOK_TEXT)
+    "thread-output": new PublishMiddleware(types.HAS_HOOK_TEXT)
   };
 
   public subscribe(on: keyof PublisherMap, webContents: Electron.WebContents) {
@@ -128,5 +128,16 @@ export default class Hooker {
     debug("yagt:hooker")("inserting hook %s to process %d...", code, pid);
     this.hooker.hook(pid, code);
     debug("yagt:hooker")(`hook %s inserted into process %d`, code, pid);
+  }
+}
+
+class FilterMiddleware implements Yagt.Middleware<Yagt.TextOutputObject> {
+  process(
+    context: Yagt.TextOutputObject,
+    next: (newContext: Yagt.TextOutputObject) => void
+  ) {
+    debug("yagt:hooker")("[%d] %s", context.handle, context.text);
+    context.code = `/${context.code}`;
+    next(context);
   }
 }

@@ -1,15 +1,15 @@
-export default class ApplicationBuilder {
-  private middlewares: Yagt.Middleware[] = [];
+export default class ApplicationBuilder<T> {
+  private middlewares: Yagt.Middleware<T>[] = [];
 
-  use(middleware: Yagt.Middleware) {
+  use(middleware: Yagt.Middleware<T>) {
     this.middlewares.push(middleware);
   }
 
-  run(initContext: any) {
+  run(initContext: T) {
     this.iterator(initContext, 0);
   }
 
-  private iterator(context: any, index: number) {
+  private iterator(context: T, index: number) {
     if (index === this.middlewares.length) return;
 
     this.middlewares[index].process(context, newContext => {

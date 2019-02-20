@@ -28,14 +28,15 @@ new Vue({
 
 import { ipcRenderer, remote } from "electron";
 import types from "../common/ipcTypes";
-import { TextOutputObject } from "textractor-wrapper";
 
 ipcRenderer.on(
   types.HAS_HOOK_TEXT,
-  (event: Electron.Event, hook: TextOutputObject, text: string) => {
+  (event: Electron.Event, hook: Yagt.TextOutputObject) => {
     if (!remote.getCurrentWindow().isVisible()) {
       remote.getCurrentWindow().show();
     }
+    const text = hook.text;
+    delete hook.text;
     store.dispatch("Hooks/setHookText", { hook, text });
   }
 );

@@ -1,37 +1,41 @@
-interface TempStore {
-  [num: number]: string[];
+interface TextStore {
+  [handle: number]: string[];
 }
 
-export default class TextMerger {
-  static instance: TextMerger = new TextMerger();
-  static getInstance() {
-    return this.instance;
-  }
+interface ThreadStore {
+  [handle: number]: Yagt.TextOutputObject | undefined;
+}
 
-  static TIMEOUT = 1000;
+export default class TextMergerMiddleware
+  implements Yagt.Middleware<Yagt.TextOutputObject> {
+  static TIMEOUT = 500;
 
-  private tempStore: TempStore = {};
+  private textStore: TextStore = {};
+  private threadStore: ThreadStore = {};
 
-  makeMerge(
-    hookNum: number,
-    text: string,
-    callback: (mergedText: string) => void
+  process(
+    context: Yagt.TextOutputObject,
+    next: (newContext: Yagt.TextOutputObject) => void
   ) {
-    if (this.isStoreEmpty(hookNum)) {
-      this.tempStore[hookNum] = [text];
-      setTimeout(() => {
-        let mergedText = this.tempStore[hookNum]
-          .join("")
-          .replace(/[\r\n]/g, "");
-        delete this.tempStore[hookNum];
-        callback(mergedText);
-      }, TextMerger.TIMEOUT);
-    } else {
-      this.tempStore[hookNum].push(text);
+    if (!this.isStoreEmpty(context.handle)) {
+      this.textStore[context.handle].push(context.text);
+      return;
     }
+
+    this.textStore[context.handle] = [];
+    this.textStore[context.handle].push(context.text);
+    this.threadStore[context.handle] = context;
+    setTimeout(() => {
+      context.text = this.textStore[context.handle]
+        .join("")
+        .replace(/[\r\n]/g, "");
+      delete this.textStore[context.handle];
+      this.threadStore[context.handle] = undefined;
+      next(context);
+    }, TextMergerMiddleware.TIMEOUT);
   }
 
-  private isStoreEmpty(hookNum: number): boolean {
-    return this.tempStore[hookNum] === undefined;
+  private isStoreEmpty(handle: number): boolean {
+    return this.threadStore[handle] === undefined;
   }
 }

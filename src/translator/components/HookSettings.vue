@@ -41,13 +41,13 @@ export default class HookSettings extends Vue {
   get orderedHooks() {
     return _.orderBy(
       this.hooks,
-      (hook: Yagt.TextOutputObject) => this.texts[hook.handle].length,
+      (hook: Yagt.TextThread) => this.texts[hook.handle].length,
       "desc"
     );
   }
 
   @namespace("Hooks").State("hookInfos")
-  hooks!: Yagt.TextOutputObject[];
+  hooks!: Yagt.TextThread[];
   @namespace("Hooks").State("texts")
   texts!: string[];
   @namespace("Hooks").State("currentDisplayHookIndex")

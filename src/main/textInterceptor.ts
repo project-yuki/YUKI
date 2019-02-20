@@ -1,13 +1,9 @@
 import configManager from "./config";
 const debug = require("debug")("yagt:textInterceptor");
 
-export default class TextInterceptor {
-  static instance: TextInterceptor = new TextInterceptor();
-  static getInstance() {
-    return this.instance;
-  }
-
-  initialize() {
+export default class TextInterceptorMiddleware
+  implements Yagt.Middleware<Yagt.TextOutputObject> {
+  constructor() {
     this.shouldBeIgnorePatterns = configManager
       .getInstance()
       .get("interceptor").shouldBeIgnore;
@@ -18,12 +14,21 @@ export default class TextInterceptor {
 
   static readonly MAX_LENGTH = 255;
 
+  process(
+    context: Yagt.TextOutputObject,
+    next: (newContext: Yagt.TextOutputObject) => void
+  ) {
+    if (this.textShouldBeIgnore(context.text)) return;
+
+    next(context);
+  }
+
   textShouldBeIgnore(text: string): boolean {
     return this.isTooLong(text) || this.containsShouldBeIgnorePattern(text);
   }
 
   private isTooLong(text: string) {
-    return text.length > TextInterceptor.MAX_LENGTH;
+    return text.length > TextInterceptorMiddleware.MAX_LENGTH;
   }
 
   private containsShouldBeIgnorePattern(text: string) {

@@ -70,7 +70,6 @@ export default class Game extends EventEmitter {
       this.emit("exited");
       return;
     }
-    TextInterceptor.getInstance().initialize();
     this.injectProcessByPid();
     this.emit("started", this);
     this.registerProcessExitCallback();

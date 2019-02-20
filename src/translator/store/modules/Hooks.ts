@@ -30,7 +30,7 @@ const getters = {
 const mutations = {
   ADD_HOOK(
     state: Yagt.TranslatorHookState,
-    payload: { hook: Yagt.TextOutputObject }
+    payload: { hook: Yagt.TextThread }
   ) {
     state.hookInfos.push(payload.hook);
     state.texts = { ...state.texts, [payload.hook.handle.toString()]: [] };
@@ -85,7 +85,7 @@ const mutations = {
 const actions = {
   addHook(
     { commit }: { commit: Commit; state: Yagt.TranslatorHookState },
-    hook: Yagt.TextOutputObject
+    hook: Yagt.TextThread
   ) {
     commit("ADD_HOOK", { hook });
     if (hook.code.toLowerCase() === state.toDisplayHookCode.toLowerCase()) {
@@ -99,7 +99,7 @@ const actions = {
       commit,
       state
     }: { dispatch: Dispatch; commit: Commit; state: Yagt.TranslatorHookState },
-    { hook, text }: { hook: Yagt.TextOutputObject; text: string }
+    { hook, text }: { hook: Yagt.TextThread; text: string }
   ) {
     let commonActions = () => {
       commit("SET_HOOK_TEXT", { hookNum: hook.handle, text });

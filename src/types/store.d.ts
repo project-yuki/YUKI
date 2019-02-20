@@ -5,7 +5,11 @@ declare namespace Yagt {
 
   type TempLocaleChangerItem = Yagt.Config.LocaleChangerItem & { id: string };
 
-  export interface TextOutputObject {
+  export interface TextOutputObject extends TextThread {
+    text: string;
+  }
+
+  export interface TextThread {
     handle: number;
     pid: number;
     addr: number;
@@ -15,7 +19,7 @@ declare namespace Yagt {
     code: string;
   }
   export interface HooksState {
-    hookInfos: TextOutputObject[];
+    hookInfos: TextThread[];
     texts: {
       [num: string]: string[];
     };

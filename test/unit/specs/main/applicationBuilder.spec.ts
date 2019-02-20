@@ -3,25 +3,23 @@
 import ApplicationBuilder from "../../../../src/common/applicationBuilder";
 import { expect } from "chai";
 
-class SubstringMiddleware implements Yagt.Middleware {
-  process(context: any, next: (newContext: any) => void) {
-    if (typeof context !== "string") return;
-
+class SubstringMiddleware implements Yagt.Middleware<string> {
+  process(context: string, next: (newContext: string) => void) {
     if (context.length < 1) next(context);
     else next(context.substring(0, context.length - 1));
   }
 }
 
-class ExpectMiddleware implements Yagt.Middleware {
-  private expectValue: any;
+class ExpectMiddleware implements Yagt.Middleware<string> {
+  private expectValue: string;
   private done: () => void;
 
-  constructor(expectValue: any, done: () => void) {
+  constructor(expectValue: string, done: () => void) {
     this.expectValue = expectValue;
     this.done = done;
   }
 
-  process(context: any, next: (newContext: any) => void) {
+  process(context: string, next: (newContext: string) => void) {
     expect(context).to.deep.equal(this.expectValue);
     this.done();
   }
