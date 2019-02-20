@@ -33,7 +33,8 @@
     ],
     "extraFiles": [
       "dict/**/*",
-      "lib/**/*"
+      "lib/**/*",
+      "config/youdaoApi.js"
     ],
     "win": {
       "icon": "build/icons/icon.png"

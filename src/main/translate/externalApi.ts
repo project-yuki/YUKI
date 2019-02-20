@@ -2,6 +2,7 @@ import * as request from "request-promise-native";
 import * as vm from "vm";
 import * as fs from "fs";
 import * as path from "path";
+import * as crypto from "crypto";
 const debug = require("debug")("yagt:api");
 
 export default class ExternalApi implements Yagt.Translator {
@@ -9,7 +10,11 @@ export default class ExternalApi implements Yagt.Translator {
   private responseVmContext: vm.Context = vm.createContext({
     Request: request,
     text: "",
-    result: ""
+    result: "",
+    md5: (data: string, encoding: crypto.HexBase64Latin1Encoding) => {
+      let hash = crypto.createHash("md5");
+      return hash.update(data).digest(encoding);
+    }
   });
   private scriptString: string = "";
 
@@ -31,7 +36,7 @@ export default class ExternalApi implements Yagt.Translator {
   async translate(text: string) {
     this.responseVmContext.text = text;
     return new Promise<string>(resolve => {
-      vm.runInNewContext(this.scriptString, this.responseVmContext);
+      vm.runInContext(this.scriptString, this.responseVmContext);
       resolve(this.responseVmContext.result);
     });
   }
