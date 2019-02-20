@@ -5,6 +5,8 @@ import { Textractor } from "textractor-wrapper";
 import * as path from "path";
 import ApplicationBuilder from "../common/applicationBuilder";
 import TextInterceptorMiddleware from "./textInterceptor";
+import MecabMiddleware from "./mecab";
+import ConfigManager from "./config";
 
 const applicationBuilder = new ApplicationBuilder<Yagt.TextOutputObject>();
 
@@ -88,6 +90,9 @@ export default class Hooker {
   private buildApplication() {
     applicationBuilder.use(new TextMergerMiddleware());
     applicationBuilder.use(new TextInterceptorMiddleware());
+    applicationBuilder.use(
+      new MecabMiddleware(ConfigManager.getInstance().get("default").mecab)
+    );
     applicationBuilder.use(new FilterMiddleware());
     applicationBuilder.use(this.publisherMap["thread-output"]);
   }

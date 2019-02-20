@@ -1,6 +1,10 @@
 <template>
   <div>
+    <mu-container v-if="isMecabEnable" class="text-center">
+      <gt-mecab-text :patterns="currentPatterns"></gt-mecab-text>
+    </mu-container>
     <mu-container
+      v-else
       class="text-center"
       :style="{color: originalTextColor, fontSize: `${originalTextSize}px`}"
     >{{currentOriginText}}</mu-container>
@@ -23,10 +27,13 @@ import { namespace } from "vuex-class";
 
 import GtTextDisplay from "@/components/TextDisplay.vue";
 import GtHookSettings from "@/components/HookSettings.vue";
+import GtMecabText from "@/components/MecabText.vue";
+import MecabMiddleware from "../../main/mecab";
 
 @Component({
   components: {
-    GtTextDisplay
+    GtTextDisplay,
+    GtMecabText
   }
 })
 export default class TranslatePage extends Vue {
@@ -35,6 +42,8 @@ export default class TranslatePage extends Vue {
 
   @namespace("Hooks").Getter("getLastTextById")
   getLastTextById!: (id: number) => string;
+  @namespace("Hooks").Getter("getLastPatternsById")
+  getLastPatternsById!: (id: number) => Yagt.MeCabPatterns;
 
   @namespace("Hooks").State("currentDisplayHookIndex")
   currentIndex!: number;
@@ -45,6 +54,9 @@ export default class TranslatePage extends Vue {
   @namespace("Config").Getter("getOriginalText")
   getOriginalText!: () => Yagt.FontStyle;
 
+  @namespace("Hooks").State("isMecabEnable")
+  isMecabEnable!: boolean;
+
   get originalTextColor() {
     return this.getOriginalText().color;
   }
@@ -54,6 +66,9 @@ export default class TranslatePage extends Vue {
 
   get currentOriginText() {
     return this.getLastTextById(this.currentIndex);
+  }
+  get currentPatterns() {
+    return this.getLastPatternsById(this.currentIndex);
   }
 
   beforeRouteEnter(to: Route, from: Route, next: Function) {

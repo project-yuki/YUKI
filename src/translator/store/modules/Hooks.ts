@@ -1,13 +1,15 @@
-import Vue from "vue";
 import { Commit, Dispatch } from "vuex";
 import { ipcRenderer } from "electron";
 import ipcTypes from "../../../common/ipcTypes";
+import MecabMiddleware from "../../../main/mecab";
 
 const MAX_STORE_COUNT = 16;
 
 const state: Yagt.TranslatorHookState = {
+  isMecabEnable: false,
   hookInfos: [],
   texts: {},
+  patterns: {},
   toDisplayHookCode: "",
   currentDisplayHookIndex: -1,
   translationsForCurrentIndex: {
@@ -17,13 +19,24 @@ const state: Yagt.TranslatorHookState = {
 };
 
 const getters = {
-  getTextById: (state: Yagt.TranslatorHookState) => (id: number) => {
+  getTextById: (state: Yagt.TranslatorHookState) => (id: number): string[] => {
     return state.texts[id.toString()];
   },
-  getLastTextById: (state: Yagt.TranslatorHookState) => (id: number) => {
-    if (state.texts[id.toString()])
-      return state.texts[id.toString()][state.texts[id.toString()].length - 1];
-    else return "";
+  getLastTextById: (state: Yagt.TranslatorHookState) => (
+    id: number
+  ): string => {
+    if (!state.texts[id.toString()]) return "";
+
+    return state.texts[id.toString()][state.texts[id.toString()].length - 1];
+  },
+  getLastPatternsById: (state: Yagt.TranslatorHookState) => (
+    id: number
+  ): Yagt.MeCabPatterns => {
+    if (!state.patterns[id.toString()]) return [];
+
+    return state.patterns[id.toString()][
+      state.patterns[id.toString()].length - 1
+    ];
   }
 };
 
@@ -34,6 +47,10 @@ const mutations = {
   ) {
     state.hookInfos.push(payload.hook);
     state.texts = { ...state.texts, [payload.hook.handle.toString()]: [] };
+    state.patterns = {
+      ...state.patterns,
+      [payload.hook.handle.toString()]: []
+    };
   },
   SET_HOOK_TEXT(
     state: Yagt.TranslatorHookState,
@@ -43,6 +60,16 @@ const mutations = {
     texts.push(payload.text);
     if (state.texts[payload.hookNum.toString()].length > MAX_STORE_COUNT) {
       state.texts[payload.hookNum.toString()].shift();
+    }
+  },
+  SET_HOOK_PATTERNS(
+    state: Yagt.TranslatorHookState,
+    payload: { hookNum: number; patterns: Yagt.MeCabPatterns }
+  ) {
+    let patterns = state.patterns[payload.hookNum.toString()];
+    patterns.push(payload.patterns);
+    if (state.patterns[payload.hookNum.toString()].length > MAX_STORE_COUNT) {
+      state.patterns[payload.hookNum.toString()].shift();
     }
   },
   CHOOSE_HOOK_AS_DISPLAY(
@@ -93,7 +120,7 @@ const actions = {
       commit("INIT_DISPLAY_HOOK", { code: "" });
     }
   },
-  setHookText(
+  setHookTextOrPatterns(
     {
       dispatch,
       commit,
@@ -102,10 +129,29 @@ const actions = {
     { hook, text }: { hook: Yagt.TextThread; text: string }
   ) {
     let commonActions = () => {
-      commit("SET_HOOK_TEXT", { hookNum: hook.handle, text });
+      if (!state.isMecabEnable && MecabMiddleware.isMeCabString(text)) {
+        state.isMecabEnable = true;
+      }
+
+      let originalText;
+      if (state.isMecabEnable) {
+        let patterns = MecabMiddleware.stringToObject(text);
+        commit("SET_HOOK_PATTERNS", {
+          hookNum: hook.handle,
+          patterns
+        });
+        originalText = MecabMiddleware.objectToOriginalText(patterns);
+        commit("SET_HOOK_TEXT", { hookNum: hook.handle, text: originalText });
+      } else {
+        commit("SET_HOOK_TEXT", { hookNum: hook.handle, text });
+      }
       if (state.currentDisplayHookIndex === hook.handle) {
         commit("CLEAR_TRANSLATION");
-        ipcRenderer.send(ipcTypes.REQUEST_TRANSLATION, text);
+        if (state.isMecabEnable) {
+          ipcRenderer.send(ipcTypes.REQUEST_TRANSLATION, originalText);
+        } else {
+          ipcRenderer.send(ipcTypes.REQUEST_TRANSLATION, text);
+        }
       }
     };
     if (state.hookInfos.find(h => h.handle === hook.handle) === undefined) {

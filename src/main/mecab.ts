@@ -1,5 +1,6 @@
 import * as fs from "fs";
 import * as path from "path";
+const debug = require("debug")("yagt:mecab");
 const toHiragana = require("wanakana").toHiragana;
 
 interface MeCab {
@@ -51,15 +52,30 @@ export default class MecabMiddleware
     return result;
   }
 
+  public static objectToOriginalText(patterns: Yagt.MeCabPatterns): string {
+    let result = "";
+    for (let pattern of patterns) {
+      result += pattern.word;
+    }
+    return result;
+  }
+
   constructor(config: Yagt.Config.MeCab) {
     if (
       !config.enable ||
       !fs.existsSync(path.join(config.path, "libmecab.dll"))
-    )
+    ) {
+      debug("disabled");
       return;
+    }
 
     process.env.PATH += `;${config.path}`;
-    this.mecab = require("mecab-ffi");
+    try {
+      this.mecab = require("mecab-ffi");
+      debug("enabled");
+    } catch (e) {
+      debug("enable failed !> %s", e);
+    }
   }
 
   private mecab: MeCab | undefined;

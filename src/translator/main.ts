@@ -37,7 +37,7 @@ ipcRenderer.on(
     }
     const text = hook.text;
     delete hook.text;
-    store.dispatch("Hooks/setHookText", { hook, text });
+    store.dispatch("Hooks/setHookTextOrPatterns", { hook, text });
   }
 );
 ipcRenderer.on(

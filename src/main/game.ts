@@ -4,7 +4,6 @@ import configManager from "./config";
 import { registerProcessExitCallback } from "./win32";
 import hooker from "./hooker";
 import { EventEmitter } from "events";
-import TextInterceptor from "./textInterceptor";
 
 export default class Game extends EventEmitter {
   private static readonly TIMEOUT = 1000;

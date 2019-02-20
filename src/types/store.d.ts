@@ -18,13 +18,6 @@ declare namespace Yagt {
     name: string;
     code: string;
   }
-  export interface HooksState {
-    hookInfos: TextThread[];
-    texts: {
-      [num: string]: string[];
-    };
-    currentDisplayHookIndex: number;
-  }
 
   export interface Game {
     name: string;
@@ -41,7 +34,16 @@ declare namespace Yagt {
     noGame: boolean;
   }
 
-  export interface TranslatorHookState extends HooksState {
+  export interface TranslatorHookState {
+    isMecabEnable: boolean;
+    hookInfos: TextThread[];
+    texts: {
+      [handle: string]: string[];
+    };
+    patterns: {
+      [handle: string]: Yagt.MeCabPatterns[];
+    };
+    currentDisplayHookIndex: number;
     translationsForCurrentIndex: Translations;
     toDisplayHookCode: string;
   }
