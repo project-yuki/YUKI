@@ -5,7 +5,7 @@
     <p class="text-h1">翻译器设置</p>
     <p class="all-center text-h3">开发中m( _ _ )m
       <br>请通过修改配置文件 config\config.json 来配置翻译器
-      <br>（默认提供百度，谷歌，有道翻译）
+      <br>（默认提供百度，谷歌翻译）
     </p>
   </div>
 </template>
