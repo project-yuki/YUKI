@@ -1,8 +1,8 @@
-# Yagt - 另一个 Galgame 翻译器
+﻿# Yagt - 另一个 Galgame 翻译器
 
 [English](https://github.com/Yagt/Yagt/blob/master/docs/README_EN.md)
 
-![how it looks](https://raw.githubusercontent.com/Yagt/Yagt/master/.github/imgs/how_it_looks.png)
+![它看起来的样子](https://raw.githubusercontent.com/Yagt/Yagt/master/.github/imgs/how_it_looks.png)
 
 ## 警告！
 
