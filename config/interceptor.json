@@ -7,5 +7,6 @@
     "00_プロローグ１",
     "menu",
     "WndDisp"
-  ]
+  ],
+  "ignoreAsciiOnly": true
 }

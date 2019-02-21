@@ -11,7 +11,8 @@ export default class InterceptorConfig extends Config {
         "00_プロローグ１",
         "menu",
         "WndDisp"
-      ]
+      ],
+      ignoreAsciiOnly: false
     };
   }
 

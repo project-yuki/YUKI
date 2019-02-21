@@ -7,10 +7,14 @@ export default class TextInterceptorMiddleware
     this.shouldBeIgnorePatterns = configManager
       .getInstance()
       .get("interceptor").shouldBeIgnore;
+    this.ignoreAsciiOnly = configManager
+      .getInstance()
+      .get("interceptor").ignoreAsciiOnly;
     debug("initialized");
   }
 
-  shouldBeIgnorePatterns!: string[];
+  shouldBeIgnorePatterns: string[];
+  ignoreAsciiOnly: boolean;
 
   static readonly MAX_LENGTH = 255;
 
@@ -19,6 +23,7 @@ export default class TextInterceptorMiddleware
     next: (newContext: Yagt.TextOutputObject) => void
   ) {
     if (this.textShouldBeIgnore(context.text)) return;
+    if (this.ignoreAsciiOnly && this.isAsciiOnly(context.text)) return;
 
     next(context);
   }
@@ -38,5 +43,9 @@ export default class TextInterceptorMiddleware
       }
     }
     return false;
+  }
+
+  private isAsciiOnly(text: string) {
+    return /^[\x00-\xFF]*$/.test(text);
   }
 }
