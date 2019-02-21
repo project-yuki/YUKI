@@ -3,12 +3,14 @@
     <div v-for="(pattern, index) in patterns" :key="`mecab-text-${index}`" class="gutter">
       <mu-flex direction="column" align-items="center">
         <div
-          :style="{color: originalTextColor, fontSize: `${originalTextSize*0.8}px`}"
+          :style="{color: abbrToColor(pattern.abbr), fontSize: `${originalTextSize*0.8}px`}"
         >{{pattern.kana ? pattern.kana : "&nbsp;"}}</div>
-        <div :style="{color: originalTextColor, fontSize: `${originalTextSize}px`}">{{pattern.word}}</div>
         <div
-          :style="{color: originalTextColor, fontSize: `${originalTextSize*0.6}px`}"
-        >{{pattern.abbr}}</div>
+          :style="{color: abbrToColor(pattern.abbr), fontSize: `${originalTextSize}px`}"
+        >{{pattern.word}}</div>
+        <div
+          :style="{color: abbrToColor(pattern.abbr), fontSize: `${originalTextSize*0.6}px`}"
+        >{{pattern.abbr !== "undefined" ? pattern.abbr : "&nbsp;"}}</div>
       </mu-flex>
     </div>
   </mu-flex>
@@ -18,6 +20,7 @@
 import Vue from "vue";
 import { Component, Prop } from "vue-property-decorator";
 import { namespace } from "vuex-class";
+import MecabMiddleware from "../../main/mecab";
 
 @Component
 export default class MecabText extends Vue {
@@ -31,6 +34,11 @@ export default class MecabText extends Vue {
   }
   get originalTextSize() {
     return this.getOriginalText().fontSize;
+  }
+
+  abbrToColor(abbr: string): string {
+    if (!MecabMiddleware.ABBR_TO_COLOR_MAP[abbr]) return "white";
+    else return MecabMiddleware.ABBR_TO_COLOR_MAP[abbr];
   }
 }
 </script>

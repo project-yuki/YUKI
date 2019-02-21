@@ -37,7 +37,7 @@ export default class GuiConfig extends Config {
           color: "white",
           margin: 18
         },
-        background: "rgba(33, 150, 243, 0.6)"
+        background: "#000000BD"
       }
     };
   }

@@ -36,6 +36,27 @@ export default class MecabMiddleware
     // ROLE_PHRASE: 'x'
   };
 
+  public static readonly ABBR_TO_COLOR_MAP = {
+    m: "#a7ffeb",
+    mp: "#84ffff",
+    n: "#80d8ff",
+    num: "#b9f6ca",
+    pn: "#d500f9",
+    v: "#ff9e80",
+    a: "#bbdefb",
+    adn: "#e1bee7",
+    adj: "#ce93d8",
+    adv: "#e1bee7",
+    p: "#ffeb3b",
+    aux: "#fff176",
+    suf: "#fdd835",
+    pref: "#fbc02d",
+    int: "#ffcdd2",
+    conj: "#ff8a65",
+    punct: "#d32f2f",
+    w: "#bcaaa4"
+  };
+
   public static isMeCabString(mstring: string): boolean {
     return mstring.startsWith("$");
   }
