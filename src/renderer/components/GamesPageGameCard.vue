@@ -7,7 +7,7 @@
         <mu-expansion-panel :zDepth="0">
           <div slot="header">
             <mu-button color="primary" @click.stop="handleRunGame">运行</mu-button>
-            <mu-button color="error" @click.stop="handleOpenConfirm">删除</mu-button>
+            <mu-button color="error" @click.stop="handleDeleteConfirm">删除</mu-button>
           </div>
           <mu-select
             label="区域转换器"
@@ -24,10 +24,6 @@
           </mu-select>
         </mu-expansion-panel>
       </mu-card-actions>
-      <mu-dialog title="确认删除？" width="360" :open.sync="openConfirm">
-        <mu-button slot="actions" flat @click="handleCloseConfirm">否</mu-button>
-        <mu-button slot="actions" flat color="primary" @click="handleDeleteGame">是</mu-button>
-      </mu-dialog>
     </mu-card>
   </mu-scale-transition>
 </template>
@@ -47,25 +43,24 @@ export default class HookSettingsHookInfo extends Vue {
   @Prop()
   game!: Yagt.Game;
 
-  @namespace("Config").State("default")
+  @(namespace("Config").State("default"))
   defaultConfig!: Yagt.ConfigState["default"];
-  @namespace("Config").State("games")
+  @(namespace("Config").State("games"))
   gamesConfig!: Yagt.ConfigState["games"];
   selectedLocaleChanger: string = "";
 
-  openConfirm = false;
-
-  handleOpenConfirm() {
-    this.openConfirm = true;
-  }
-  handleCloseConfirm() {
-    this.openConfirm = false;
+  handleDeleteConfirm() {
+    this.$confirm("确认删除？", { type: "warning" }).then(({ result }) => {
+      if (result) {
+        this.handleDeleteGame();
+        this.$toast.success("删除成功！");
+      }
+    });
   }
   handleRunGame() {
     ipcRenderer.send(ipcTypes.REQUEST_RUN_GAME, this.game);
   }
   handleDeleteGame() {
-    this.openConfirm = false;
     ipcRenderer.send(ipcTypes.REQUEST_REMOVE_GAME, this.game);
   }
 

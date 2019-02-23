@@ -6446,6 +6446,16 @@ multispinner@^0.2.1:
     lodash.merge "^3.3.2"
     log-update "^1.0.2"
 
+muse-ui-message@^0.2.1:
+  version "0.2.1"
+  resolved "http://registry.npm.taobao.org/muse-ui-message/download/muse-ui-message-0.2.1.tgz#01689945b2e82236981ead78e3f34d80fe690824"
+  integrity sha1-AWiZRbLoIjaYHq144/NNgP5pCCQ=
+
+muse-ui-toast@^0.3.0:
+  version "0.3.0"
+  resolved "http://registry.npm.taobao.org/muse-ui-toast/download/muse-ui-toast-0.3.0.tgz#572bc6c250579c3d6f4dafc8535e631c401b8db0"
+  integrity sha1-VyvGwlBXnD1vTa/IU15jHEAbjbA=
+
 muse-ui@^3.0.2:
   version "3.0.2"
   resolved "http://registry.npm.taobao.org/muse-ui/download/muse-ui-3.0.2.tgz#f292e8a063d625d35b1dce1b1504bc0cccd78e65"

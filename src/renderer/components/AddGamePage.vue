@@ -45,9 +45,6 @@
             </mu-step-content>
           </mu-step>
         </mu-stepper>
-        <mu-dialog title="添加成功！" width="360" :open.sync="openDialog">
-          <mu-button slot="actions" flat color="primary" @click="handleRedirect">确定</mu-button>
-        </mu-dialog>
       </mu-container>
     </gt-page-content>
   </div>
@@ -79,9 +76,8 @@ export default class FavoritePage extends Vue {
     code: "",
     localeChanger: ""
   };
-  openDialog: boolean = false;
 
-  @namespace("Config").State("default")
+  @(namespace("Config").State("default"))
   defaultConfig!: Yagt.ConfigState["default"];
 
   get showStepOne() {
@@ -101,7 +97,9 @@ export default class FavoritePage extends Vue {
     this.activeStep++;
     if (this.finished) {
       ipcRenderer.once(ipcTypes.HAS_ADDED_GAME, () => {
-        this.openDialog = true;
+        this.$alert("添加成功！", { type: "success" }).then(() => {
+          this.handleRedirect();
+        });
       });
       let localeChangers = this.defaultConfig.localeChangers;
       for (let key in localeChangers) {
