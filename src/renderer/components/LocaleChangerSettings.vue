@@ -67,7 +67,7 @@ export default class localeChangerSettings extends Vue {
     { title: "删除", name: "delete", width: 96 }
   ];
 
-  @namespace("Config").State("default")
+  @(namespace("Config").State("default"))
   defaultConfig!: Yagt.ConfigState["default"];
 
   tempLocaleChangers: TempLocaleChangerItem[] = [];
@@ -84,6 +84,7 @@ export default class localeChangerSettings extends Vue {
       localeChangers: savingLocaleChangers
     };
     ipcRenderer.send(ipcTypes.REQUEST_SAVE_CONFIG, "default", savingConfig);
+    this.$toast.success("保存成功！");
   }
 
   @Watch("defaultConfig", { immediate: true, deep: true })

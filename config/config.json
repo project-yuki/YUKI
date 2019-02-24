@@ -1,4 +1,4 @@
-﻿{
+{
   "localeChangers": {
     "alphaROMdiE": {
       "enable": false,
@@ -20,6 +20,10 @@
       "exec": "D:\\ntleas046_x64\\x86\\ntleas.exe %GAME_PATH%",
       "name": "Ntleas"
     }
+  },
+  "mecab": {
+    "enable": true,
+    "path": "E:\\yagt\\libraries\\pos\\mecab-ipadic"
   },
   "onlineApis": [
     {
@@ -50,9 +54,5 @@
       "enable": true,
       "path": "D:\\Visual Novel Reader V2\\JBeijing7"
     }
-  },
-  "mecab": {
-    "enable": true,
-    "path": "E:\\yagt\\libraries\\pos\\mecab-ipadic"
   }
 }
