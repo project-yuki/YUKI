@@ -19,7 +19,9 @@ enum IpcTypes {
   REQUEST_TRANSLATION = "request-translation",
   HAS_TRANSLATION = "has-translation",
   APP_EXIT = "app-exit",
-  REQUEST_SAVE_TRANSLATOR_GUI = "request-save-translator-gui"
+  REQUEST_SAVE_TRANSLATOR_GUI = "request-save-translator-gui",
+  REQUEST_PATH_WITH_FILE = "request-path-with-file",
+  HAS_PATH_WITH_FILE = "has-path-with-file"
 }
 
 export default IpcTypes;

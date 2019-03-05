@@ -6,6 +6,7 @@ import hooker from "../hooker";
 import Game from "../game";
 import TranslatorWindow from "../translatorWindow";
 import TranslationManager from "../translate/translationManager";
+import { extname } from "path";
 
 let runningGame: Game;
 let translatorWindow: TranslatorWindow | null;
@@ -132,6 +133,25 @@ export default function(mainWindow: Electron.BrowserWindow) {
       }
     );
   });
+
+  ipcMain.on(
+    types.REQUEST_PATH_WITH_FILE,
+    (event: Electron.Event, filename: string) => {
+      const extension = extname(filename).substring(1);
+      dialog.showOpenDialog(
+        {
+          title: `请选择文件夹下的 ${filename}`,
+          properties: ["openFile"],
+          filters: [{ name: extension, extensions: [extension] }]
+        },
+        files => {
+          if (files) {
+            event.sender.send(types.HAS_PATH_WITH_FILE, files[0]);
+          }
+        }
+      );
+    }
+  );
 
   ipcMain.on(types.APP_EXIT, () => {
     app.quit();

@@ -34,12 +34,16 @@ declare namespace Yagt {
       path: string;
     }
 
-    export interface Default {
+    export interface Default extends Libraries {
       localeChangers: LocaleChangerItems;
       onlineApis: OnlineApiItem[];
       translators: {
         jBeijing: JBeijing;
       };
+    }
+
+    export interface Libraries {
+      mecab: MeCab;
     }
   }
 }
