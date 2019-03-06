@@ -1,8 +1,8 @@
 import { exec } from "child_process";
 const debug = require("debug")("yagt:game");
-import configManager from "./config";
+import ConfigManager from "./config";
 import { registerProcessExitCallback } from "./win32";
-import hooker from "./hooker";
+import Hooker from "./hooker";
 import { EventEmitter } from "events";
 
 export default class Game extends EventEmitter {
@@ -40,9 +40,9 @@ export default class Game extends EventEmitter {
   }
 
   private getRawExecStringOrDefault() {
-    const localeChangers: Yagt.Config.Default["localeChangers"] = configManager
-      .getInstance()
-      .get("default").localeChangers;
+    const localeChangers: Yagt.Config.Default["localeChangers"] = ConfigManager.getInstance().get(
+      "default"
+    ).localeChangers;
     if (this.localeChanger) {
       debug(
         "choose %s as locale changer",
@@ -109,7 +109,7 @@ export default class Game extends EventEmitter {
   }
 
   private injectProcessByPid() {
-    hooker.getInstance().injectProcess(this.pid);
+    Hooker.getInstance().injectProcess(this.pid);
   }
 
   private registerProcessExitCallback() {

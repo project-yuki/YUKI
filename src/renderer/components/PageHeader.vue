@@ -16,7 +16,7 @@ import Vue from "vue";
 import { Component, Prop } from "vue-property-decorator";
 
 import { ipcRenderer, remote } from "electron";
-import ipcTypes from "../../common/ipcTypes";
+import IpcTypes from "../../common/ipcTypes";
 
 @Component
 export default class PageContent extends Vue {
@@ -26,7 +26,7 @@ export default class PageContent extends Vue {
     remote.getCurrentWindow().hide();
   }
   closeWindow() {
-    ipcRenderer.send(ipcTypes.APP_EXIT);
+    ipcRenderer.send(IpcTypes.APP_EXIT);
   }
 }
 </script>

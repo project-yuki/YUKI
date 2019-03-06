@@ -34,7 +34,7 @@ import { Component, Prop } from "vue-property-decorator";
 import { State, namespace } from "vuex-class";
 
 import { ipcRenderer } from "electron";
-import ipcTypes from "../../common/ipcTypes";
+import IpcTypes from "../../common/ipcTypes";
 
 import * as _ from "lodash";
 
@@ -58,10 +58,10 @@ export default class HookSettingsHookInfo extends Vue {
     });
   }
   handleRunGame() {
-    ipcRenderer.send(ipcTypes.REQUEST_RUN_GAME, this.game);
+    ipcRenderer.send(IpcTypes.REQUEST_RUN_GAME, this.game);
   }
   handleDeleteGame() {
-    ipcRenderer.send(ipcTypes.REQUEST_REMOVE_GAME, this.game);
+    ipcRenderer.send(IpcTypes.REQUEST_REMOVE_GAME, this.game);
   }
 
   updateLocaleChanger() {
@@ -79,7 +79,7 @@ export default class HookSettingsHookInfo extends Vue {
       thisGame.localeChanger = key;
     }
 
-    ipcRenderer.send(ipcTypes.REQUEST_SAVE_CONFIG, "games", savingConfig);
+    ipcRenderer.send(IpcTypes.REQUEST_SAVE_CONFIG, "games", savingConfig);
   }
 
   beforeMount() {

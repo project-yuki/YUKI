@@ -24,7 +24,7 @@ import { State, namespace } from "vuex-class";
 import { ipcRenderer } from "electron";
 
 import GtHookInfo from "@/components/HookSettingsHookInfo.vue";
-import ipcTypes from "../../common/ipcTypes";
+import IpcTypes from "../../common/ipcTypes";
 
 import * as _ from "lodash";
 
@@ -46,11 +46,11 @@ export default class HookSettings extends Vue {
     );
   }
 
-  @namespace("Hooks").State("hookInfos")
+  @(namespace("Hooks").State("hookInfos"))
   hooks!: Yagt.TextThread[];
-  @namespace("Hooks").State("texts")
+  @(namespace("Hooks").State("texts"))
   texts!: string[];
-  @namespace("Hooks").State("currentDisplayHookIndex")
+  @(namespace("Hooks").State("currentDisplayHookIndex"))
   currentIndex!: number;
 
   openInputHookDialog() {
@@ -63,7 +63,7 @@ export default class HookSettings extends Vue {
   }
   addHook() {
     if (new RegExp(/\/H\w+/).test(this.hookCode)) {
-      ipcRenderer.send(ipcTypes.REQUEST_INSERT_HOOK, this.hookCode);
+      ipcRenderer.send(IpcTypes.REQUEST_INSERT_HOOK, this.hookCode);
       this.closeInputHookDialog();
     } else {
       this.errorText = "特殊码格式不正确";

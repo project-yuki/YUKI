@@ -1,8 +1,8 @@
 import { app, ipcMain, dialog } from "electron";
-import types from "../../common/ipcTypes";
+import IpcTypes from "../../common/ipcTypes";
 const debug = require("debug")("yagt:ipc");
-import configManager from "../config";
-import hooker from "../hooker";
+import ConfigManager from "../config";
+import Hooker from "../hooker";
 import Game from "../game";
 import TranslatorWindow from "../translatorWindow";
 import TranslationManager from "../translate/translationManager";
@@ -12,19 +12,20 @@ let runningGame: Game;
 let translatorWindow: TranslatorWindow | null;
 
 export default function(mainWindow: Electron.BrowserWindow) {
-  ipcMain.on(types.MAIN_PAGE_LOAD_FINISHED, () => {
+  ipcMain.on(IpcTypes.MAIN_PAGE_LOAD_FINISHED, () => {
     debug("main page load finished. starting apis...");
     TranslationManager.getInstance().initializeApis(
-      configManager.getInstance().get("default").onlineApis
+      ConfigManager.getInstance().get<Yagt.Config.Default>("default").onlineApis
     );
     TranslationManager.getInstance().initializeTranslators(
-      configManager.getInstance().get("default").translators
+      ConfigManager.getInstance().get<Yagt.Config.Default>("default")
+        .translators
     );
     debug("apis started");
   });
 
   ipcMain.on(
-    types.REQUEST_RUN_GAME,
+    IpcTypes.REQUEST_RUN_GAME,
     (event: Electron.Event, game: Yagt.Game) => {
       mainWindow.hide();
 
@@ -44,20 +45,20 @@ export default function(mainWindow: Electron.BrowserWindow) {
   );
 
   ipcMain.on(
-    types.REQUEST_INSERT_HOOK,
+    IpcTypes.REQUEST_INSERT_HOOK,
     (event: Electron.Event, code: string) => {
       if (code !== "") {
-        hooker.getInstance().insertHook(runningGame.getPid(), code);
+        Hooker.getInstance().insertHook(runningGame.getPid(), code);
       }
     }
   );
 
-  ipcMain.on(types.REQUEST_CONFIG, (event: Electron.Event, name: string) => {
+  ipcMain.on(IpcTypes.REQUEST_CONFIG, (event: Electron.Event, name: string) => {
     if (name === "game") {
       requestGame(event);
       return;
     }
-    debug("request config %s", configManager.getInstance().getFilename(name));
+    debug("request config %s", ConfigManager.getInstance().getFilename(name));
     sendConfig(name, event);
   });
 
@@ -71,22 +72,22 @@ export default function(mainWindow: Electron.BrowserWindow) {
   }
 
   ipcMain.on(
-    types.REQUEST_SAVE_CONFIG,
+    IpcTypes.REQUEST_SAVE_CONFIG,
     (event: Electron.Event, name: string, cfg: any) => {
-      let configFileName = configManager.getInstance().getFilename(name);
+      let configFileName = ConfigManager.getInstance().getFilename(name);
       debug(`request saving config %s...`, configFileName);
-      configManager.getInstance().set(name, cfg);
+      ConfigManager.getInstance().set(name, cfg);
       debug("config %s saved. resend it to window", configFileName);
       sendConfig(name, event);
     }
   );
 
   ipcMain.on(
-    types.REQUEST_SAVE_TRANSLATOR_GUI,
+    IpcTypes.REQUEST_SAVE_TRANSLATOR_GUI,
     (event: Electron.Event, cfg: any) => {
       debug("request saving translator gui config...");
-      configManager.getInstance().set("gui", {
-        ...configManager.getInstance().get("gui"),
+      ConfigManager.getInstance().set("gui", {
+        ...ConfigManager.getInstance().get("gui"),
         translatorWindow: cfg
       });
       debug("translator gui config saved");
@@ -94,33 +95,31 @@ export default function(mainWindow: Electron.BrowserWindow) {
   );
 
   ipcMain.on(
-    types.REQUEST_ADD_GAME,
+    IpcTypes.REQUEST_ADD_GAME,
     (event: Electron.Event, game: Yagt.Game) => {
-      configManager
-        .getInstance()
-        .get("games")
+      ConfigManager.getInstance()
+        .get<Yagt.Config.Games>("games")
         .push(game);
-      configManager.getInstance().save("games");
+      ConfigManager.getInstance().save("games");
       sendConfig("games", event);
-      event.sender.send(types.HAS_ADDED_GAME);
+      event.sender.send(IpcTypes.HAS_ADDED_GAME);
     }
   );
 
   ipcMain.on(
-    types.REQUEST_REMOVE_GAME,
+    IpcTypes.REQUEST_REMOVE_GAME,
     (event: Electron.Event, game: Yagt.Game) => {
-      configManager.getInstance().set(
+      ConfigManager.getInstance().set(
         "games",
-        configManager
-          .getInstance()
-          .get("games")
+        ConfigManager.getInstance()
+          .get<Yagt.Config.Games>("games")
           .filter((item: Yagt.Game) => item.name !== game.name)
       );
       sendConfig("games", event);
     }
   );
 
-  ipcMain.on(types.REQUEST_NEW_GAME_PATH, (event: Electron.Event) => {
+  ipcMain.on(IpcTypes.REQUEST_NEW_GAME_PATH, (event: Electron.Event) => {
     dialog.showOpenDialog(
       {
         properties: ["openFile"],
@@ -128,14 +127,14 @@ export default function(mainWindow: Electron.BrowserWindow) {
       },
       files => {
         if (files) {
-          event.sender.send(types.HAS_NEW_GAME_PATH, files[0]);
+          event.sender.send(IpcTypes.HAS_NEW_GAME_PATH, files[0]);
         }
       }
     );
   });
 
   ipcMain.on(
-    types.REQUEST_PATH_WITH_FILE,
+    IpcTypes.REQUEST_PATH_WITH_FILE,
     (event: Electron.Event, filename: string) => {
       const extension = extname(filename).substring(1);
       dialog.showOpenDialog(
@@ -146,22 +145,22 @@ export default function(mainWindow: Electron.BrowserWindow) {
         },
         files => {
           if (files) {
-            event.sender.send(types.HAS_PATH_WITH_FILE, files[0]);
+            event.sender.send(IpcTypes.HAS_PATH_WITH_FILE, files[0]);
           }
         }
       );
     }
   );
 
-  ipcMain.on(types.APP_EXIT, () => {
+  ipcMain.on(IpcTypes.APP_EXIT, () => {
     app.quit();
   });
 
   ipcMain.on(
-    types.REQUEST_TRANSLATION,
+    IpcTypes.REQUEST_TRANSLATION,
     (event: Electron.Event, text: string) => {
       TranslationManager.getInstance().translate(text, translation => {
-        event.sender.send(types.HAS_TRANSLATION, translation);
+        event.sender.send(IpcTypes.HAS_TRANSLATION, translation);
       });
     }
   );
@@ -169,15 +168,15 @@ export default function(mainWindow: Electron.BrowserWindow) {
 
 function sendConfig(configName: string, event: Electron.Event) {
   event.sender.send(
-    types.HAS_CONFIG,
+    IpcTypes.HAS_CONFIG,
     configName,
-    configManager.getInstance().get(configName)
+    ConfigManager.getInstance().get(configName)
   );
 }
 
 function sendGameInfo(event: Electron.Event) {
   event.sender.send(
-    types.HAS_CONFIG,
+    IpcTypes.HAS_CONFIG,
     "game",
     (<TranslatorWindow>translatorWindow).getGameInfo()
   );

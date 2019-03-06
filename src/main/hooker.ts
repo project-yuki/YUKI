@@ -1,4 +1,4 @@
-import types from "../common/ipcTypes";
+import IpcTypes from "../common/ipcTypes";
 const debug = require("debug");
 import TextMergerMiddleware from "./textMerger";
 import { Textractor } from "textractor-wrapper";
@@ -89,7 +89,11 @@ export default class Hooker {
 
   private buildApplication() {
     applicationBuilder.use(new TextMergerMiddleware());
-    applicationBuilder.use(new TextInterceptorMiddleware());
+    applicationBuilder.use(
+      new TextInterceptorMiddleware(
+        ConfigManager.getInstance().get("interceptor")
+      )
+    );
     applicationBuilder.use(
       new MecabMiddleware(ConfigManager.getInstance().get("default").mecab)
     );
@@ -104,7 +108,7 @@ export default class Hooker {
   }
 
   private publisherMap: PublisherMap = {
-    "thread-output": new PublishMiddleware(types.HAS_HOOK_TEXT)
+    "thread-output": new PublishMiddleware(IpcTypes.HAS_HOOK_TEXT)
   };
 
   public subscribe(on: keyof PublisherMap, webContents: Electron.WebContents) {

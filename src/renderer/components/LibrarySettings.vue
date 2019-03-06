@@ -36,7 +36,7 @@ import { Component, Watch } from "vue-property-decorator";
 import { State, namespace } from "vuex-class";
 
 import { ipcRenderer } from "electron";
-import ipcTypes from "../../common/ipcTypes";
+import IpcTypes from "../../common/ipcTypes";
 
 @Component
 export default class LibrarySettings extends Vue {
@@ -52,13 +52,13 @@ export default class LibrarySettings extends Vue {
       ...this.defaultConfig,
       ...this.tempLibraries
     };
-    ipcRenderer.send(ipcTypes.REQUEST_SAVE_CONFIG, "default", savingConfig);
+    ipcRenderer.send(IpcTypes.REQUEST_SAVE_CONFIG, "default", savingConfig);
     this.$toast.success("保存成功！");
   }
 
   requestPath(library: string, filename: string) {
     ipcRenderer.once(
-      ipcTypes.HAS_PATH_WITH_FILE,
+      IpcTypes.HAS_PATH_WITH_FILE,
       (event: Electron.Event, path: string) => {
         if (path.indexOf(filename) === -1) {
           this.$toast.error(`请选择文件夹下的 ${filename} !`);
@@ -71,7 +71,7 @@ export default class LibrarySettings extends Vue {
         );
       }
     );
-    ipcRenderer.send(ipcTypes.REQUEST_PATH_WITH_FILE, filename);
+    ipcRenderer.send(IpcTypes.REQUEST_PATH_WITH_FILE, filename);
   }
 
   @Watch("defaultConfig", { immediate: true, deep: true })

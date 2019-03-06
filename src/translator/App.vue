@@ -20,7 +20,7 @@ import { Component, Watch } from "vue-property-decorator";
 import { namespace } from "vuex-class";
 
 import { ipcRenderer, remote } from "electron";
-import ipcTypes from "../common/ipcTypes";
+import IpcTypes from "../common/ipcTypes";
 
 import GtTitlebar from "@/components/Titlebar.vue";
 
@@ -30,16 +30,16 @@ import GtTitlebar from "@/components/Titlebar.vue";
   }
 })
 export default class App extends Vue {
-  @namespace("View").State("isButtonsShown")
+  @(namespace("View").State("isButtonsShown"))
   isButtonsShown!: boolean;
 
-  @namespace("Hooks").Getter("getLastTextById")
+  @(namespace("Hooks").Getter("getLastTextById"))
   getLastTextById!: (id: number) => string;
 
-  @namespace("Hooks").State("currentDisplayHookIndex")
+  @(namespace("Hooks").State("currentDisplayHookIndex"))
   currentIndex!: number;
 
-  @namespace("Config").Getter("getBackgroundColor")
+  @(namespace("Config").Getter("getBackgroundColor"))
   getBackgroundColor!: () => string;
   get backgroundColor() {
     return this.getBackgroundColor();
@@ -64,16 +64,16 @@ export default class App extends Vue {
       }
     });
 
-    ipcRenderer.send(ipcTypes.REQUEST_CONFIG, "default");
-    ipcRenderer.send(ipcTypes.REQUEST_CONFIG, "game");
-    ipcRenderer.send(ipcTypes.REQUEST_CONFIG, "gui");
+    ipcRenderer.send(IpcTypes.REQUEST_CONFIG, "default");
+    ipcRenderer.send(IpcTypes.REQUEST_CONFIG, "game");
+    ipcRenderer.send(IpcTypes.REQUEST_CONFIG, "gui");
     let callback = (event: Electron.Event, name: string, cfg: any) => {
-      if (name !== "game") ipcRenderer.once(ipcTypes.HAS_CONFIG, callback);
+      if (name !== "game") ipcRenderer.once(IpcTypes.HAS_CONFIG, callback);
       else if (cfg.code === "") {
         this.$router.push("/hooks");
       }
     };
-    ipcRenderer.once(ipcTypes.HAS_CONFIG, callback);
+    ipcRenderer.once(IpcTypes.HAS_CONFIG, callback);
   }
 
   updateWindowHeight(offset: number) {
@@ -87,7 +87,7 @@ export default class App extends Vue {
   onCurrentIndexChanged() {
     this.$store.dispatch("View/setButtonsShown", false);
     this.$router.push("/translate");
-    ipcRenderer.send(ipcTypes.REQUEST_TRANSLATION, this.currentOriginText);
+    ipcRenderer.send(IpcTypes.REQUEST_TRANSLATION, this.currentOriginText);
   }
 
   updated() {

@@ -53,7 +53,7 @@
 <script lang="ts">
 import Vue from "vue";
 import { ipcRenderer } from "electron";
-import ipcTypes from "../../common/ipcTypes";
+import IpcTypes from "../../common/ipcTypes";
 import { Component } from "vue-property-decorator";
 import { State, namespace } from "vuex-class";
 
@@ -96,7 +96,7 @@ export default class FavoritePage extends Vue {
   handleNext() {
     this.activeStep++;
     if (this.finished) {
-      ipcRenderer.once(ipcTypes.HAS_ADDED_GAME, () => {
+      ipcRenderer.once(IpcTypes.HAS_ADDED_GAME, () => {
         this.$alert("添加成功！", { type: "success" }).then(() => {
           this.handleRedirect();
         });
@@ -108,7 +108,7 @@ export default class FavoritePage extends Vue {
           break;
         }
       }
-      ipcRenderer.send(ipcTypes.REQUEST_ADD_GAME, this.game);
+      ipcRenderer.send(IpcTypes.REQUEST_ADD_GAME, this.game);
     }
   }
   handlePrev() {
@@ -116,7 +116,7 @@ export default class FavoritePage extends Vue {
   }
   handleRequestGamePath() {
     ipcRenderer.once(
-      ipcTypes.HAS_NEW_GAME_PATH,
+      IpcTypes.HAS_NEW_GAME_PATH,
       (event: Electron.Event, gamePath: string) => {
         this.game.path = gamePath;
         if (this.game.name === "") {
@@ -127,7 +127,7 @@ export default class FavoritePage extends Vue {
         }
       }
     );
-    ipcRenderer.send(ipcTypes.REQUEST_NEW_GAME_PATH);
+    ipcRenderer.send(IpcTypes.REQUEST_NEW_GAME_PATH);
   }
   handleRedirect() {
     this.$router.push("/games");

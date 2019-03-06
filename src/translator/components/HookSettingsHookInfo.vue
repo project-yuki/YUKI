@@ -27,7 +27,7 @@ import { Component, Prop } from "vue-property-decorator";
 import { State, namespace } from "vuex-class";
 
 import { ipcRenderer } from "electron";
-import ipcTypes from "../../common/ipcTypes";
+import IpcTypes from "../../common/ipcTypes";
 
 @Component
 export default class HookSettingsHookInfo extends Vue {
@@ -36,11 +36,11 @@ export default class HookSettingsHookInfo extends Vue {
   @Prop(Boolean)
   isChosen!: boolean;
 
-  @namespace("Hooks").Getter("getTextById")
+  @(namespace("Hooks").Getter("getTextById"))
   getTextById!: (id: number) => string[];
-  @namespace("Hooks").Getter("getLastTextById")
+  @(namespace("Hooks").Getter("getLastTextById"))
   getLastTextById!: (id: number) => string;
-  @namespace("Hooks").Action("chooseHookAsDisplay")
+  @(namespace("Hooks").Action("chooseHookAsDisplay"))
   chooseHookAsDisplayAction!: (id: number) => void;
 
   openConfirm = false;

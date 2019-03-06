@@ -1,6 +1,6 @@
 import { Commit, Dispatch } from "vuex";
 import { ipcRenderer } from "electron";
-import ipcTypes from "../../../common/ipcTypes";
+import IpcTypes from "../../../common/ipcTypes";
 import MecabMiddleware from "../../../main/mecab";
 
 const MAX_STORE_COUNT = 16;
@@ -148,9 +148,9 @@ const actions = {
       if (state.currentDisplayHookIndex === hook.handle) {
         commit("CLEAR_TRANSLATION");
         if (state.isMecabEnable) {
-          ipcRenderer.send(ipcTypes.REQUEST_TRANSLATION, originalText);
+          ipcRenderer.send(IpcTypes.REQUEST_TRANSLATION, originalText);
         } else {
-          ipcRenderer.send(ipcTypes.REQUEST_TRANSLATION, text);
+          ipcRenderer.send(IpcTypes.REQUEST_TRANSLATION, text);
         }
       }
     };

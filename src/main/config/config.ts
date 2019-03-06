@@ -31,7 +31,7 @@ abstract class Config {
       jsonfile.writeFileSync(
         `config/${this.getFilename()}.json`,
         this.config,
-        this.fileOptions
+        Config.FILE_OPTIONS
       );
       debug("%s saved", `config/${this.getFilename()}.json`);
     } catch (e) {
@@ -39,7 +39,7 @@ abstract class Config {
     }
   }
 
-  private fileOptions = {
+  private static readonly FILE_OPTIONS = {
     spaces: 2,
     EOL: "\r\n"
   };

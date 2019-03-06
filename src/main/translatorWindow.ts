@@ -1,9 +1,8 @@
 import { BrowserWindow } from "electron";
 const electron = require("electron");
-import hooker from "./hooker";
+import Hooker from "./hooker";
 import Game from "./game";
 import ConfigManager from "./config";
-import IpcTypes from "../common/ipcTypes";
 const debug = require("debug")("yagt:translatorWindow");
 const electronVibrancy = require("electron-vibrancy");
 
@@ -81,7 +80,7 @@ export default class TranslatorWindow {
   }
 
   private subscribeHookerEvents() {
-    hooker.getInstance().subscribe("thread-output", this.window.webContents);
+    Hooker.getInstance().subscribe("thread-output", this.window.webContents);
   }
 
   getWindow() {
@@ -95,7 +94,7 @@ export default class TranslatorWindow {
   }
 
   private unsubscribeHookerEvents() {
-    hooker.getInstance().unsubscribe("thread-output", this.window.webContents);
+    Hooker.getInstance().unsubscribe("thread-output", this.window.webContents);
   }
 
   setGame(game: Game) {

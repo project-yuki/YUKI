@@ -1,15 +1,10 @@
-import configManager from "./config";
 const debug = require("debug")("yagt:textInterceptor");
 
 export default class TextInterceptorMiddleware
   implements Yagt.Middleware<Yagt.TextOutputObject> {
-  constructor() {
-    this.shouldBeIgnorePatterns = configManager
-      .getInstance()
-      .get("interceptor").shouldBeIgnore;
-    this.ignoreAsciiOnly = configManager
-      .getInstance()
-      .get("interceptor").ignoreAsciiOnly;
+  constructor(config: Yagt.Config.TextInterceptor) {
+    this.shouldBeIgnorePatterns = config.shouldBeIgnore;
+    this.ignoreAsciiOnly = config.ignoreAsciiOnly;
     debug("initialized");
   }
 

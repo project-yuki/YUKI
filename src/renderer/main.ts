@@ -31,10 +31,10 @@ new Vue({
 }).$mount("#app");
 
 import { ipcRenderer } from "electron";
-import types from "../common/ipcTypes";
+import IpcTypes from "../common/ipcTypes";
 
 ipcRenderer.on(
-  types.HAS_CONFIG,
+  IpcTypes.HAS_CONFIG,
   (event: Electron.Event, name: string, cfgs: object) => {
     store.dispatch("Config/setConfig", { name, cfgs });
   }

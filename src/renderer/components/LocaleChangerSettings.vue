@@ -53,7 +53,7 @@ import { Component, Watch } from "vue-property-decorator";
 import { State, namespace } from "vuex-class";
 
 import { ipcRenderer } from "electron";
-import ipcTypes from "../../common/ipcTypes";
+import IpcTypes from "../../common/ipcTypes";
 
 type TempLocaleChangerItem = Yagt.Config.LocaleChangerItem & { id: string };
 
@@ -83,7 +83,7 @@ export default class localeChangerSettings extends Vue {
       ...this.defaultConfig,
       localeChangers: savingLocaleChangers
     };
-    ipcRenderer.send(ipcTypes.REQUEST_SAVE_CONFIG, "default", savingConfig);
+    ipcRenderer.send(IpcTypes.REQUEST_SAVE_CONFIG, "default", savingConfig);
     this.$toast.success("保存成功！");
   }
 

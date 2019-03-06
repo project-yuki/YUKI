@@ -12,7 +12,7 @@ import { Component } from "vue-property-decorator";
 import GtAppSidebar from "@/components/AppSidebar.vue";
 
 import { ipcRenderer } from "electron";
-import ipcTypes from "../common/ipcTypes";
+import IpcTypes from "../common/ipcTypes";
 
 @Component({
   components: {
@@ -21,9 +21,9 @@ import ipcTypes from "../common/ipcTypes";
 })
 export default class App extends Vue {
   mounted() {
-    ipcRenderer.send(ipcTypes.REQUEST_CONFIG, "default");
-    ipcRenderer.send(ipcTypes.REQUEST_CONFIG, "games");
-    ipcRenderer.send(ipcTypes.MAIN_PAGE_LOAD_FINISHED);
+    ipcRenderer.send(IpcTypes.REQUEST_CONFIG, "default");
+    ipcRenderer.send(IpcTypes.REQUEST_CONFIG, "games");
+    ipcRenderer.send(IpcTypes.MAIN_PAGE_LOAD_FINISHED);
   }
 }
 </script>

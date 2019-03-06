@@ -1,25 +1,27 @@
 declare namespace Yagt {
   namespace Config {
-    interface LocaleChangerItems {
+    export interface Config {}
+
+    export interface LocaleChangerItems {
       [id: string]: LocaleChangerItem;
     }
 
-    interface LocaleChangerItem {
+    export interface LocaleChangerItem {
       name: string;
       enable: boolean;
       exec: string;
     }
 
-    interface OnlineApiItem {
+    export interface OnlineApiItem {
       name: string;
       enable: boolean;
-      url: string;
-      method: string;
-      needSession: boolean;
-      requestBodyFormat: string;
-      responseBodyPattern: string;
-      external: boolean;
-      jsFile: string;
+      url?: string;
+      method?: string;
+      needSession?: boolean;
+      requestBodyFormat?: string;
+      responseBodyPattern?: string;
+      external?: boolean;
+      jsFile?: string;
     }
 
     export interface JBeijing {
@@ -34,7 +36,7 @@ declare namespace Yagt {
       path: string;
     }
 
-    export interface Default extends Libraries {
+    export interface Default extends Libraries, Config {
       localeChangers: LocaleChangerItems;
       onlineApis: OnlineApiItem[];
       translators: {
@@ -45,5 +47,25 @@ declare namespace Yagt {
     export interface Libraries {
       mecab: MeCab;
     }
+
+    export interface TextInterceptor extends Config {
+      shouldBeIgnore: string[];
+      ignoreAsciiOnly: boolean;
+    }
+
+    export interface Gui extends Config {
+      mainWindow: {
+        bounds: Electron.Rectangle;
+      };
+      translatorWindow: {
+        bounds: Electron.Rectangle;
+        alwaysOnTop: boolean;
+        originalText: FontStyle;
+        translationText: TranslationTextStyle;
+        background: string;
+      };
+    }
+
+    export interface Games extends Array<Game>, Config {}
   }
 }

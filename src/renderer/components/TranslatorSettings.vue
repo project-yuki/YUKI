@@ -16,7 +16,7 @@ import { Component, Watch } from "vue-property-decorator";
 import { State, namespace } from "vuex-class";
 
 import { ipcRenderer } from "electron";
-import ipcTypes from "../../common/ipcTypes";
+import IpcTypes from "../../common/ipcTypes";
 
 @Component
 export default class TranslatorSettings extends Vue {}

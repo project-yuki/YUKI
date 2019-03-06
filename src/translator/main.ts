@@ -27,10 +27,10 @@ new Vue({
 }).$mount("#app");
 
 import { ipcRenderer, remote } from "electron";
-import types from "../common/ipcTypes";
+import IpcTypes from "../common/ipcTypes";
 
 ipcRenderer.on(
-  types.HAS_HOOK_TEXT,
+  IpcTypes.HAS_HOOK_TEXT,
   (event: Electron.Event, hook: Yagt.TextOutputObject) => {
     if (!remote.getCurrentWindow().isVisible()) {
       remote.getCurrentWindow().show();
@@ -41,13 +41,13 @@ ipcRenderer.on(
   }
 );
 ipcRenderer.on(
-  types.HAS_CONFIG,
+  IpcTypes.HAS_CONFIG,
   (event: Electron.Event, name: string, cfgs: object) => {
     store.dispatch("Config/setConfig", { name, cfgs });
   }
 );
 ipcRenderer.on(
-  types.HAS_TRANSLATION,
+  IpcTypes.HAS_TRANSLATION,
   (event: Electron.Event, translation: Yagt.Translations["translations"]) => {
     store.dispatch("Hooks/mergeTranslation", translation);
   }
