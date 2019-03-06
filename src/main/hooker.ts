@@ -91,11 +91,13 @@ export default class Hooker {
     applicationBuilder.use(new TextMergerMiddleware());
     applicationBuilder.use(
       new TextInterceptorMiddleware(
-        ConfigManager.getInstance().get("interceptor")
+        ConfigManager.getInstance().get<Yagt.Config.Interceptor>("interceptor")
       )
     );
     applicationBuilder.use(
-      new MecabMiddleware(ConfigManager.getInstance().get("default").mecab)
+      new MecabMiddleware(
+        ConfigManager.getInstance().get<Yagt.Config.Default>("default").mecab
+      )
     );
     applicationBuilder.use(new FilterMiddleware());
     applicationBuilder.use(this.publisherMap["thread-output"]);

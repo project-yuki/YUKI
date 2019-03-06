@@ -86,7 +86,7 @@ export default function(mainWindow: Electron.BrowserWindow) {
     IpcTypes.REQUEST_SAVE_TRANSLATOR_GUI,
     (event: Electron.Event, cfg: any) => {
       debug("request saving translator gui config...");
-      ConfigManager.getInstance().set("gui", {
+      ConfigManager.getInstance().set<Yagt.Config.Gui>("gui", {
         ...ConfigManager.getInstance().get("gui"),
         translatorWindow: cfg
       });
@@ -109,7 +109,7 @@ export default function(mainWindow: Electron.BrowserWindow) {
   ipcMain.on(
     IpcTypes.REQUEST_REMOVE_GAME,
     (event: Electron.Event, game: Yagt.Game) => {
-      ConfigManager.getInstance().set(
+      ConfigManager.getInstance().set<Yagt.Config.Games>(
         "games",
         ConfigManager.getInstance()
           .get<Yagt.Config.Games>("games")

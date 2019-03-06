@@ -13,6 +13,18 @@ export default class Api implements Yagt.Translator {
 
   constructor(config: Yagt.Config.OnlineApiItem) {
     this.config = config;
+    if (
+      !this.config.url ||
+      !this.config.method ||
+      !this.config.requestBodyFormat ||
+      !this.config.responseBodyPattern
+    ) {
+      debug(
+        "[%s] config not contains enough information. ignore",
+        this.config.name
+      );
+      throw new TypeError();
+    }
     this.requestOptions = {
       url: this.config.url,
       method: this.config.method,
@@ -36,6 +48,8 @@ export default class Api implements Yagt.Translator {
   }
 
   private generateRequestBody(text: string) {
+    if (!this.config.requestBodyFormat || !this.config.responseBodyPattern)
+      return;
     let requestBodyString = this.config.requestBodyFormat.replace(
       "%TEXT%",
       `"${text}"`
@@ -58,6 +72,8 @@ export default class Api implements Yagt.Translator {
   }
 
   private parseResponse(body: string): string {
+    if (!this.config.responseBodyPattern) return "";
+
     if (this.config.responseBodyPattern.startsWith("J")) {
       return this.parseResponseByJsObject(body);
     } else if (this.config.responseBodyPattern.startsWith("R")) {
@@ -73,6 +89,8 @@ export default class Api implements Yagt.Translator {
   }
 
   private parseResponseByJsObject(body: string): string {
+    if (!this.config.responseBodyPattern) return "";
+
     this.responseVmContext.response = JSON.parse(body);
     let scriptString = this.config.responseBodyPattern
       .substring(1)
@@ -81,7 +99,9 @@ export default class Api implements Yagt.Translator {
     return this.responseVmContext.result;
   }
 
-  private parseResponseByRegExp(body: string) {
+  private parseResponseByRegExp(body: string): string {
+    if (!this.config.responseBodyPattern) return "";
+
     let pattern = new RegExp(this.config.responseBodyPattern.substring(1));
     let response = pattern.exec(body);
     if (response) {

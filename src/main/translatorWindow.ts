@@ -31,15 +31,16 @@ export default class TranslatorWindow {
         }
       },
       show: false,
-      alwaysOnTop: ConfigManager.getInstance().get("gui").translatorWindow
-        .alwaysOnTop,
+      alwaysOnTop: ConfigManager.getInstance().get<Yagt.Config.Gui>("gui")
+        .translatorWindow.alwaysOnTop,
       transparent: true,
       frame: false
     });
 
     debug(
       "alwaysOnTop -> %s",
-      ConfigManager.getInstance().get("gui").translatorWindow.alwaysOnTop
+      ConfigManager.getInstance().get<Yagt.Config.Gui>("gui").translatorWindow
+        .alwaysOnTop
     );
 
     this.window.on("ready-to-show", () => {
@@ -62,10 +63,11 @@ export default class TranslatorWindow {
         "saving translator window alwaysOnTop -> %s",
         this.window.isAlwaysOnTop()
       );
-      ConfigManager.getInstance().set("gui", {
+      ConfigManager.getInstance().set<Yagt.Config.Gui>("gui", {
         ...ConfigManager.getInstance().get("gui"),
         translatorWindow: {
-          ...ConfigManager.getInstance().get("gui").translatorWindow,
+          ...ConfigManager.getInstance().get<Yagt.Config.Gui>("gui")
+            .translatorWindow,
           bounds: this.window.getBounds(),
           alwaysOnTop: this.window.isAlwaysOnTop()
         }
@@ -73,7 +75,8 @@ export default class TranslatorWindow {
     });
 
     this.window.setBounds(
-      ConfigManager.getInstance().get("gui").translatorWindow.bounds
+      ConfigManager.getInstance().get<Yagt.Config.Gui>("gui").translatorWindow
+        .bounds
     );
 
     this.window.loadURL(this.URL);

@@ -72,7 +72,7 @@ function createWindow() {
     if (!mainWindow) return;
 
     debug("saving main window bounds -> %o", mainWindow.getBounds());
-    ConfigManager.getInstance().set("gui", {
+    ConfigManager.getInstance().set<Yagt.Config.Gui>("gui", {
       ...ConfigManager.getInstance().get("gui"),
       mainWindow: {
         bounds: mainWindow.getBounds()
@@ -85,7 +85,7 @@ function createWindow() {
   });
 
   mainWindow.setBounds(
-    ConfigManager.getInstance().get("gui").mainWindow.bounds
+    ConfigManager.getInstance().get<Yagt.Config.Gui>("gui").mainWindow.bounds
   );
 
   tray = new Tray(iconPath);

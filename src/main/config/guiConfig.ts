@@ -2,7 +2,7 @@ import Config from "./config";
 import { screen } from "electron";
 
 export default class GuiConfig extends Config {
-  protected getDefaultObject(): object {
+  protected getDefaultObject(): Yagt.Config.Gui {
     let displaySize = screen.getPrimaryDisplay().size;
     const mainWindowWidthRatio = 0.75;
     const mainWindowHeightRatio = 0.8;

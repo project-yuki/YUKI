@@ -1,7 +1,7 @@
 import Config from "./config";
 
 export default class DefaultConfig extends Config {
-  protected getDefaultObject(): object {
+  protected getDefaultObject(): Yagt.Config.Default {
     return {
       localeChangers: {
         localeEmulator: { name: "Locale Emulator", enable: false, exec: "" },

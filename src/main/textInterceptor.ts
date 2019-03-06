@@ -2,7 +2,7 @@ const debug = require("debug")("yagt:textInterceptor");
 
 export default class TextInterceptorMiddleware
   implements Yagt.Middleware<Yagt.TextOutputObject> {
-  constructor(config: Yagt.Config.TextInterceptor) {
+  constructor(config: Yagt.Config.Interceptor) {
     this.shouldBeIgnorePatterns = config.shouldBeIgnore;
     this.ignoreAsciiOnly = config.ignoreAsciiOnly;
     debug("initialized");

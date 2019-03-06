@@ -48,7 +48,7 @@ declare namespace Yagt {
       mecab: MeCab;
     }
 
-    export interface TextInterceptor extends Config {
+    export interface Interceptor extends Config {
       shouldBeIgnore: string[];
       ignoreAsciiOnly: boolean;
     }

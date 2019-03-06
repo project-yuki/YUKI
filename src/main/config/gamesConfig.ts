@@ -1,7 +1,7 @@
 import Config from "./config";
 
 export default class GamesConfig extends Config {
-  protected getDefaultObject(): object {
+  protected getDefaultObject(): { games: Yagt.Config.Games } {
     return { games: [] };
   }
 

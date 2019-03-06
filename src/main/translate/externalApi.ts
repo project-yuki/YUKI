@@ -20,10 +20,19 @@ export default class ExternalApi implements Yagt.Translator {
 
   constructor(config: Yagt.Config.OnlineApiItem) {
     this.config = config;
+    if (!this.config.jsFile) {
+      debug(
+        "[%s] config not contains enough information. ignore",
+        this.config.name
+      );
+      throw new TypeError();
+    }
     this.loadExternalJsFile();
   }
 
   loadExternalJsFile() {
+    if (!this.config.jsFile) return;
+
     let absolutePath = path.join(global.__baseDir, this.config.jsFile);
     try {
       this.scriptString = fs.readFileSync(absolutePath, "utf8");

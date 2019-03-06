@@ -16,11 +16,13 @@ export default class TranslationManager {
 
   initializeApis(apis: Yagt.Config.Default["onlineApis"]): TranslationManager {
     for (let index in apis) {
-      if (apis[index].external && apis[index].jsFile) {
-        this.apis[apis[index].name] = new ExternalApi(apis[index]);
-      } else {
-        this.apis[apis[index].name] = new Api(apis[index]);
-      }
+      try {
+        if (apis[index].external && apis[index].jsFile) {
+          this.apis[apis[index].name] = new ExternalApi(apis[index]);
+        } else {
+          this.apis[apis[index].name] = new Api(apis[index]);
+        }
+      } catch (e) {}
     }
     return this;
   }

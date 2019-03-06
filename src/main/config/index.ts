@@ -1,10 +1,3 @@
-namespace Yagt {
-  export interface Configs {
-    default: Config;
-    games: Config;
-  }
-}
-
 interface NameToConfigMap {
   [configName: string]: Config;
 }
@@ -32,16 +25,16 @@ export default class ConfigManager {
     gui: new GuiConfig()
   };
 
-  get(configName: string): any {
+  get<T extends Yagt.Config.Config>(configName: string): T {
     try {
       return this.nameToConfigMap[configName].get();
     } catch (e) {
-      debug("no config named %s", configName);
-      return null;
+      debug("no config named %s. return default", configName);
+      return this.nameToConfigMap["default"].get();
     }
   }
 
-  set(configName: string, cfg: any) {
+  set<T extends Yagt.Config.Config>(configName: string, cfg: T): void {
     try {
       return this.nameToConfigMap[configName].set(cfg);
     } catch (e) {
@@ -49,7 +42,7 @@ export default class ConfigManager {
     }
   }
 
-  save(configName: string) {
+  save(configName: string): void {
     try {
       return this.nameToConfigMap[configName].save();
     } catch (e) {
