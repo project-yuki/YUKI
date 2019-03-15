@@ -3,7 +3,7 @@ declare namespace Yagt {
     original: string;
     translations: {
       [apiName: string]: string;
-    };
+    }
   }
 
   export interface Translator {

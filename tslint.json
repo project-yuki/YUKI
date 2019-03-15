@@ -3,6 +3,7 @@
   "rules": {
     "no-var-requires": false,
     "object-literal-sort-keys": false,
-    "no-floating-promises": false
+    "no-floating-promises": false,
+    "forin": false
   }
 }

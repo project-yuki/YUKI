@@ -97,7 +97,7 @@ const mutations = {
     for (const key in payload.translation) {
       state.translationsForCurrentIndex.translations = {
         ...state.translationsForCurrentIndex.translations,
-        ...{ [key]: payload.translation[key] }
+        [key]: payload.translation[key]
       }
     }
   },
@@ -106,6 +106,9 @@ const mutations = {
     for (const key in translations) {
       translations[key] = '...'
     }
+  },
+  SET_MECAB_ENABLE (state: Yagt.TranslatorHookState, payload: { enable: boolean }) {
+    state.isMecabEnable = payload.enable
   }
 }
 
@@ -130,7 +133,7 @@ const actions = {
   ) {
     const commonActions = () => {
       if (!state.isMecabEnable && MecabMiddleware.isMeCabString(text)) {
-        state.isMecabEnable = true
+        commit('SET_MECAB_ENABLE', { enable: true })
       }
 
       let originalText
