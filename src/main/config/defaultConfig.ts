@@ -1,7 +1,6 @@
 import Config from './Config'
 
 export default class DefaultConfig extends Config {
-
   public getFilename (): string {
     return 'config'
   }

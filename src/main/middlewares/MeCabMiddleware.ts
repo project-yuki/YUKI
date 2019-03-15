@@ -116,9 +116,7 @@ export default class MecabMiddleware
       let kana = toHiragana(result[8])
       if (kana === result[0]) kana = ''
       usefulResult.push(
-        `${result[0]},${
-          MecabMiddleware.KANJI_TO_ABBR_MAP[result[1]]
-        },${kana}`
+        `${result[0]},${MecabMiddleware.KANJI_TO_ABBR_MAP[result[1]]},${kana}`
       )
     }
     context.text = `$${usefulResult.join('|')}`

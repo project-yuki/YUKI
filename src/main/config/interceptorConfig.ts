@@ -1,7 +1,6 @@
 import Config from './Config'
 
 export default class InterceptorConfig extends Config {
-
   public getFilename (): string {
     return 'interceptor'
   }

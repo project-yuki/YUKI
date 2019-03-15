@@ -3,7 +3,6 @@ import * as jsonfile from 'jsonfile'
 const debug = require('debug')('yagt:config')
 
 abstract class Config {
-
   private static readonly FILE_OPTIONS = {
     EOL: '\r\n',
     spaces: 2

@@ -1,44 +1,46 @@
-const Win32Injector = require("inject-loader!../../../../src/main/win32");
-import { expect } from "chai";
+const Win32Injector = require('inject-loader!../../../../src/main/win32')
+import { expect } from 'chai'
 
-describe("Win32", () => {
-  let callbackCalled;
+describe('Win32', () => {
+  let callbackCalled
 
   beforeEach(() => {
-    callbackCalled = false;
-  });
+    callbackCalled = false
+  })
 
-  it("callbacks when registered process exited", () => {
-    let registerProcessExitCallback = makeTestingProcessExitCallbackRegister();
+  it('callbacks when registered process exited', () => {
+    const registerProcessExitCallback = makeTestingProcessExitCallbackRegister()
 
     registerProcessExitCallback(PID, () => {
-      callbackCalled = true;
-    });
+      callbackCalled = true
+    })
 
-    assertCallbackCalledAfterMs(500);
-  });
+    assertCallbackCalledAfterMs(500)
+  })
 
   const makeTestingProcessExitCallbackRegister = () =>
     Win32Injector({
       ffi: {
-        Library() {
+        Library () {
           return {
-            OpenProcess() {},
+            OpenProcess () {
+              return
+            },
             WaitForSingleObject: {
-              async(hProc, timeout, callback) {
-                callback();
+              async (hProc, timeout, callback) {
+                callback()
               }
             }
-          };
+          }
         }
       }
-    }).registerProcessExitCallback;
+    }).registerProcessExitCallback
 
-  let PID = 100;
+  const PID = 100
 
-  const assertCallbackCalledAfterMs = timeout => {
+  const assertCallbackCalledAfterMs = (timeout) => {
     setTimeout(() => {
-      expect(callbackCalled).to.equal(true);
-    }, timeout);
-  };
-});
+      expect(callbackCalled).to.equal(true)
+    }, timeout)
+  }
+})

@@ -1,7 +1,6 @@
 import Config from './Config'
 
 export default class GamesConfig extends Config {
-
   public getFilename (): string {
     return 'games'
   }

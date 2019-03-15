@@ -53,8 +53,9 @@ export default class Game extends EventEmitter {
   }
 
   private getRawExecStringOrDefault () {
-    const localeChangers: Yagt.Config.Default['localeChangers'] =
-      ConfigManager.getInstance().get<Yagt.Config.Default>('default').localeChangers
+    const localeChangers = ConfigManager.getInstance().get<Yagt.Config.Default>(
+      'default'
+    ).localeChangers
     if (this.localeChanger) {
       debug(
         'choose %s as locale changer',

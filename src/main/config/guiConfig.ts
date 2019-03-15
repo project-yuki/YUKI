@@ -2,7 +2,6 @@ import { screen } from 'electron'
 import Config from './Config'
 
 export default class GuiConfig extends Config {
-
   public getFilename (): string {
     return 'gui'
   }

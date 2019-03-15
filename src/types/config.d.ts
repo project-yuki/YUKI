@@ -3,67 +3,67 @@ declare namespace Yagt {
     export interface Config {}
 
     export interface LocaleChangerItems {
-      [id: string]: LocaleChangerItem;
+      [id: string]: LocaleChangerItem
     }
 
     export interface LocaleChangerItem {
-      name: string;
-      enable: boolean;
-      exec: string;
+      name: string
+      enable: boolean
+      exec: string
     }
 
     export interface OnlineApiItem {
-      name: string;
-      enable: boolean;
-      url?: string;
-      method?: string;
-      needSession?: boolean;
-      requestBodyFormat?: string;
-      responseBodyPattern?: string;
-      external?: boolean;
-      jsFile?: string;
+      name: string
+      enable: boolean
+      url?: string
+      method?: string
+      needSession?: boolean
+      requestBodyFormat?: string
+      responseBodyPattern?: string
+      external?: boolean
+      jsFile?: string
     }
 
     export interface JBeijing {
-      enable: boolean;
-      path: string;
-      dictPath?: string;
-      traditionalChinese?: boolean;
+      enable: boolean
+      path: string
+      dictPath?: string
+      traditionalChinese?: boolean
     }
 
     export interface MeCab {
-      enable: boolean;
-      path: string;
+      enable: boolean
+      path: string
     }
 
     export interface Default extends Libraries, Config {
-      localeChangers: LocaleChangerItems;
-      onlineApis: OnlineApiItem[];
+      localeChangers: LocaleChangerItems
+      onlineApis: OnlineApiItem[]
       translators: {
         jBeijing: JBeijing;
-      };
+      }
     }
 
     export interface Libraries {
-      mecab: MeCab;
+      mecab: MeCab
     }
 
     export interface Interceptor extends Config {
-      shouldBeIgnore: string[];
-      ignoreAsciiOnly: boolean;
+      shouldBeIgnore: string[]
+      ignoreAsciiOnly: boolean
     }
 
     export interface Gui extends Config {
       mainWindow: {
         bounds: Electron.Rectangle;
-      };
+      }
       translatorWindow: {
         bounds: Electron.Rectangle;
         alwaysOnTop: boolean;
         originalText: FontStyle;
         translationText: TranslationTextStyle;
         background: string;
-      };
+      }
     }
 
     export interface Games extends Array<Game>, Config {}

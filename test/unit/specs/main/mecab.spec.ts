@@ -1,45 +1,46 @@
+// tslint:disable-next-line: no-reference
 /// <reference path="../../../../src/types/common.d.ts" />
 
-import { expect } from "chai";
-import * as path from "path";
-import MecabMiddleware from "../../../../src/main/mecab";
+import { expect } from 'chai'
+import * as path from 'path'
+import MecabMiddleware from '../../../../src/main/middlewares/MeCabMiddleware'
 
-describe("MeCab", () => {
-  it("returns correct patterns", () => {
+describe('MeCab', () => {
+  it('returns correct patterns', () => {
     const mecabMiddleware = new MecabMiddleware({
       enable: true,
-      path: path.resolve(__dirname, "../../../../../libraries/pos/mecab-ipadic")
-    });
+      path: path.resolve(__dirname, '../../../../../libraries/pos/mecab-ipadic')
+    })
 
     mecabMiddleware.process(
-      { text: "ボクに選択の余地は無かった。" },
-      newContext => {
+      { text: 'ボクに選択の余地は無かった。' },
+      (newContext) => {
         expect(newContext.text).to.deep.equal(
-          "$ボク,n,ぼく|に,p,|選択,n,せんたく|の,p,|余地,n,よち|は,p,|無かっ,adj,なかっ|た,aux,|。,w,"
-        );
+          '$ボク,n,ぼく|に,p,|選択,n,せんたく|の,p,|余地,n,よち|は,p,|無かっ,adj,なかっ|た,aux,|。,w,'
+        )
       }
-    );
-  });
+    )
+  })
 
-  it("converts mecab string to object", () => {
+  it('converts mecab string to object', () => {
     expect(
       MecabMiddleware.stringToObject(
-        "$ボク,n,ぼく|に,p,|選択,n,せんたく|の,p,|余地,n,よち|は,p,|無かっ,adj,なかっ|た,aux,|。,w,"
+        '$ボク,n,ぼく|に,p,|選択,n,せんたく|の,p,|余地,n,よち|は,p,|無かっ,adj,なかっ|た,aux,|。,w,'
       )
     ).to.deep.equal([
-      { word: "ボク", abbr: "n", kana: "ぼく" },
-      { word: "に", abbr: "p", kana: "" },
-      { word: "選択", abbr: "n", kana: "せんたく" },
-      { word: "の", abbr: "p", kana: "" },
-      { word: "余地", abbr: "n", kana: "よち" },
-      { word: "は", abbr: "p", kana: "" },
-      { word: "無かっ", abbr: "adj", kana: "なかっ" },
-      { word: "た", abbr: "aux", kana: "" },
-      { word: "。", abbr: "w", kana: "" }
-    ]);
+      { word: 'ボク', abbr: 'n', kana: 'ぼく' },
+      { word: 'に', abbr: 'p', kana: '' },
+      { word: '選択', abbr: 'n', kana: 'せんたく' },
+      { word: 'の', abbr: 'p', kana: '' },
+      { word: '余地', abbr: 'n', kana: 'よち' },
+      { word: 'は', abbr: 'p', kana: '' },
+      { word: '無かっ', abbr: 'adj', kana: 'なかっ' },
+      { word: 'た', abbr: 'aux', kana: '' },
+      { word: '。', abbr: 'w', kana: '' }
+    ])
 
     expect(
-      MecabMiddleware.stringToObject("ボクに選択の余地は無かった。")
-    ).to.deep.equal([]);
-  });
-});
+      MecabMiddleware.stringToObject('ボクに選択の余地は無かった。')
+    ).to.deep.equal([])
+  })
+})

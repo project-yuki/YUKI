@@ -11,10 +11,7 @@ export default class JBeijingAdapter implements Yagt.Translator {
   }
 
   public async translate (text: string) {
-    return this.jb.translate(
-      text,
-      this.config.traditionalChinese ? 950 : 936
-    )
+    return this.jb.translate(text, this.config.traditionalChinese ? 950 : 936)
   }
 
   public isEnable (): boolean {

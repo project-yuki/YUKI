@@ -2,7 +2,6 @@ const debug = require('debug')('yagt:textInterceptor')
 
 export default class TextInterceptorMiddleware
   implements Yagt.Middleware<Yagt.TextOutputObject> {
-
   public static readonly MAX_LENGTH = 255
 
   public shouldBeIgnorePatterns: string[]

@@ -14,7 +14,9 @@ export default class TranslationManager {
 
   private apis: Yagt.Translator[] = []
 
-  public initializeApis (apis: Yagt.Config.Default['onlineApis']): TranslationManager {
+  public initializeApis (
+    apis: Yagt.Config.Default['onlineApis']
+  ): TranslationManager {
     for (const api of apis) {
       try {
         if (api.external && api.jsFile) {
@@ -29,7 +31,9 @@ export default class TranslationManager {
     return this
   }
 
-  public initializeTranslators (translators: Yagt.Config.Default['translators']) {
+  public initializeTranslators (
+    translators: Yagt.Config.Default['translators']
+  ) {
     if (translators.jBeijing && translators.jBeijing.enable) {
       const jb = new JBeijingAdapter(translators.jBeijing)
       this.apis[jb.getName()] = jb
