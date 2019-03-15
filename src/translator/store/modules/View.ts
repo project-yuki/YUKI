@@ -7,14 +7,14 @@ const viewState: Yagt.TranslatorViewState = {
 const mutations = {
   SET_BUTTONS_SHOWN (
     state: Yagt.TranslatorViewState,
-    payload: { value: boolean }
+    payload: {value: boolean}
   ) {
     state.isButtonsShown = payload.value
   }
 }
 
 const actions = {
-  setButtonsShown ({ commit }: { commit: Commit }, value: boolean) {
+  setButtonsShown ({ commit }: {commit: Commit}, value: boolean) {
     commit('SET_BUTTONS_SHOWN', { value })
   }
 }

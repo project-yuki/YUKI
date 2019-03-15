@@ -16,10 +16,18 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { Component, Watch } from 'vue-property-decorator'
-import { namespace } from 'vuex-class'
+import {
+  Component,
+  Watch
+} from 'vue-property-decorator'
+import {
+  namespace
+} from 'vuex-class'
 
-import { ipcRenderer, remote } from 'electron'
+import {
+  ipcRenderer,
+  remote
+} from 'electron'
 import IpcTypes from '../common/IpcTypes'
 
 import GtTitlebar from '@/components/Titlebar.vue'

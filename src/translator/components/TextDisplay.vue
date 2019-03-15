@@ -18,8 +18,13 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { Component, Prop } from 'vue-property-decorator'
-import { namespace } from 'vuex-class'
+import {
+  Component,
+  Prop
+} from 'vue-property-decorator'
+import {
+  namespace
+} from 'vuex-class'
 
 @Component
 export default class TextDisplay extends Vue {

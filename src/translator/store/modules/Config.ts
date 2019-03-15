@@ -42,7 +42,7 @@ const getters = {
 const mutations = {
   SET_CONFIG (
     state: Yagt.TranslatorConfigState,
-    payload: { name: string; cfgs: any }
+    payload: {name: string; cfgs: any}
   ) {
     switch (payload.name) {
       case 'default':
@@ -61,7 +61,7 @@ const mutations = {
   },
   SET_ORIGINAL_TEXT_SIZE (
     state: Yagt.TranslatorConfigState,
-    payload: { size: number }
+    payload: {size: number}
   ) {
     state.gui.originalText = {
       ...state.gui.originalText,
@@ -70,7 +70,7 @@ const mutations = {
   },
   SET_TRANSLATION_TEXT_SIZE (
     state: Yagt.TranslatorConfigState,
-    payload: { size: number }
+    payload: {size: number}
   ) {
     state.gui.translationText = {
       ...state.gui.translationText,
@@ -79,7 +79,7 @@ const mutations = {
   },
   SET_TRANSLATION_TEXT_MARGIN (
     state: Yagt.TranslatorConfigState,
-    payload: { margin: number }
+    payload: {margin: number}
   ) {
     state.gui.translationText = {
       ...state.gui.translationText,
@@ -88,7 +88,7 @@ const mutations = {
   },
   SET_BACKGROUND_COLOR (
     state: Yagt.TranslatorConfigState,
-    payload: { color: { hex8: string } }
+    payload: {color: {hex8: string}}
   ) {
     state.gui.background = payload.color.hex8
   },
@@ -109,8 +109,8 @@ const mutations = {
 
 const actions = {
   setConfig (
-    { commit }: { commit: Commit },
-    { name, cfgs }: { name: string; cfgs: any }
+    { commit }: {commit: Commit},
+    { name, cfgs }: {name: string; cfgs: any}
   ) {
     commit('SET_CONFIG', { name, cfgs })
     if (name === 'game') {

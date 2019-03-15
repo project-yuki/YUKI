@@ -1,21 +1,26 @@
 <template>
-<mu-appbar class="app-header" color="primary">
-  {{title}}
-
-  <mu-button icon slot="right" class="manipulate-button" @click="minimizeWindow">
-    <mu-icon value="remove"></mu-icon>
-  </mu-button>
-  <mu-button icon slot="right" class="manipulate-button" @click="closeWindow">
-    <mu-icon value="close"></mu-icon>
-  </mu-button>
-</mu-appbar>
+  <mu-appbar class="app-header" color="primary">
+    {{title}}
+    <mu-button icon slot="right" class="manipulate-button" @click="minimizeWindow">
+      <mu-icon value="remove"></mu-icon>
+    </mu-button>
+    <mu-button icon slot="right" class="manipulate-button" @click="closeWindow">
+      <mu-icon value="close"></mu-icon>
+    </mu-button>
+  </mu-appbar>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import { Component, Prop } from 'vue-property-decorator'
+import {
+  Component,
+  Prop
+} from 'vue-property-decorator'
 
-import { ipcRenderer, remote } from 'electron'
+import {
+  ipcRenderer,
+  remote
+} from 'electron'
 import IpcTypes from '../../common/IpcTypes'
 
 @Component

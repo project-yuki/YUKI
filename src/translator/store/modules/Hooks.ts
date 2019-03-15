@@ -41,10 +41,7 @@ const getters = {
 }
 
 const mutations = {
-  ADD_HOOK (
-    state: Yagt.TranslatorHookState,
-    payload: { hook: Yagt.TextThread }
-  ) {
+  ADD_HOOK (state: Yagt.TranslatorHookState, payload: {hook: Yagt.TextThread}) {
     state.hookInfos.push(payload.hook)
     state.texts = { ...state.texts, [payload.hook.handle.toString()]: [] }
     state.patterns = {
@@ -54,7 +51,7 @@ const mutations = {
   },
   SET_HOOK_TEXT (
     state: Yagt.TranslatorHookState,
-    payload: { hookNum: number; text: string }
+    payload: {hookNum: number; text: string}
   ) {
     const texts = state.texts[payload.hookNum.toString()]
     texts.push(payload.text)
@@ -64,7 +61,7 @@ const mutations = {
   },
   SET_HOOK_PATTERNS (
     state: Yagt.TranslatorHookState,
-    payload: { hookNum: number; patterns: Yagt.MeCabPatterns }
+    payload: {hookNum: number; patterns: Yagt.MeCabPatterns}
   ) {
     const patterns = state.patterns[payload.hookNum.toString()]
     patterns.push(payload.patterns)
@@ -74,25 +71,22 @@ const mutations = {
   },
   CHOOSE_HOOK_AS_DISPLAY (
     state: Yagt.TranslatorHookState,
-    payload: { hookNum: number }
+    payload: {hookNum: number}
   ) {
     state.currentDisplayHookIndex = payload.hookNum
   },
-  INIT_DISPLAY_HOOK (
-    state: Yagt.TranslatorHookState,
-    payload: { code: string }
-  ) {
+  INIT_DISPLAY_HOOK (state: Yagt.TranslatorHookState, payload: {code: string}) {
     state.toDisplayHookCode = payload.code
   },
   SET_TRANSLATION (
     state: Yagt.TranslatorHookState,
-    payload: { translations: Yagt.Translations }
+    payload: {translations: Yagt.Translations}
   ) {
     state.translationsForCurrentIndex = payload.translations
   },
   MERGE_TRANSLATION (
     state: Yagt.TranslatorHookState,
-    payload: { translation: Yagt.Translations['translations'] }
+    payload: {translation: Yagt.Translations['translations']}
   ) {
     for (const key in payload.translation) {
       state.translationsForCurrentIndex.translations = {
@@ -107,14 +101,17 @@ const mutations = {
       translations[key] = '...'
     }
   },
-  SET_MECAB_ENABLE (state: Yagt.TranslatorHookState, payload: { enable: boolean }) {
+  SET_MECAB_ENABLE (
+    state: Yagt.TranslatorHookState,
+    payload: {enable: boolean}
+  ) {
     state.isMecabEnable = payload.enable
   }
 }
 
 const actions = {
   addHook (
-    { commit, state }: { commit: Commit; state: Yagt.TranslatorHookState },
+    { commit, state }: {commit: Commit; state: Yagt.TranslatorHookState},
     hook: Yagt.TextThread
   ) {
     commit('ADD_HOOK', { hook })
@@ -128,8 +125,8 @@ const actions = {
       dispatch,
       commit,
       state
-    }: { dispatch: Dispatch; commit: Commit; state: Yagt.TranslatorHookState },
-    { hook, text }: { hook: Yagt.TextThread; text: string }
+    }: {dispatch: Dispatch; commit: Commit; state: Yagt.TranslatorHookState},
+    { hook, text }: {hook: Yagt.TextThread; text: string}
   ) {
     const commonActions = () => {
       if (!state.isMecabEnable && MecabMiddleware.isMeCabString(text)) {
@@ -165,19 +162,16 @@ const actions = {
       commonActions()
     }
   },
-  setTranslation (
-    { commit }: { commit: Commit },
-    translations: Yagt.Translations
-  ) {
+  setTranslation ({ commit }: {commit: Commit}, translations: Yagt.Translations) {
     commit('SET_TRANSLATION', { translations })
   },
   mergeTranslation (
-    { commit }: { commit: Commit },
+    { commit }: {commit: Commit},
     translation: Yagt.Translations['translations']
   ) {
     commit('MERGE_TRANSLATION', { translation })
   },
-  chooseHookAsDisplay ({ commit }: { commit: Commit }, hookNum: number) {
+  chooseHookAsDisplay ({ commit }: {commit: Commit}, hookNum: number) {
     commit('CHOOSE_HOOK_AS_DISPLAY', { hookNum })
   }
 }

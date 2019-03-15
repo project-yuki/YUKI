@@ -51,10 +51,17 @@
 </template>
 
 <script lang="ts">
-import { ipcRenderer } from 'electron'
+import {
+  ipcRenderer
+} from 'electron'
 import Vue from 'vue'
-import { Component } from 'vue-property-decorator'
-import { namespace, State } from 'vuex-class'
+import {
+  Component
+} from 'vue-property-decorator'
+import {
+  namespace,
+  State
+} from 'vuex-class'
 import IpcTypes from '../../common/IpcTypes'
 
 import GtOneColumn from '@/components/OneColumn.vue'
@@ -97,7 +104,9 @@ export default class FavoritePage extends Vue {
     this.activeStep++
     if (this.finished) {
       ipcRenderer.once(IpcTypes.HAS_ADDED_GAME, () => {
-        this.$alert('添加成功！', { type: 'success' }).then(() => {
+        this.$alert('添加成功！', {
+          type: 'success'
+        }).then(() => {
           this.handleRedirect()
         })
       })

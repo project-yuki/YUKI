@@ -30,10 +30,18 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { Component, Prop } from 'vue-property-decorator'
-import { namespace, State } from 'vuex-class'
+import {
+  Component,
+  Prop
+} from 'vue-property-decorator'
+import {
+  namespace,
+  State
+} from 'vuex-class'
 
-import { ipcRenderer } from 'electron'
+import {
+  ipcRenderer
+} from 'electron'
 import IpcTypes from '../../common/IpcTypes'
 
 import * as _ from 'lodash'
@@ -50,7 +58,11 @@ export default class HookSettingsHookInfo extends Vue {
   public selectedLocaleChanger: string = ''
 
   public handleDeleteConfirm () {
-    this.$confirm('确认删除？', { type: 'warning' }).then(({ result }) => {
+    this.$confirm('确认删除？', {
+      type: 'warning'
+    }).then(({
+      result
+    }) => {
       if (result) {
         this.handleDeleteGame()
         this.$toast.success('删除成功！')

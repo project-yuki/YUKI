@@ -12,14 +12,22 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { Component, Watch } from 'vue-property-decorator'
-import { namespace, State } from 'vuex-class'
+import {
+  Component,
+  Watch
+} from 'vue-property-decorator'
+import {
+  namespace,
+  State
+} from 'vuex-class'
 
-import { ipcRenderer } from 'electron'
+import {
+  ipcRenderer
+} from 'electron'
 import IpcTypes from '../../common/IpcTypes'
 
 @Component
-export default class TranslatorSettings extends Vue {}
+export default class TranslatorSettings extends Vue { }
 </script>
 
 <style scoped>

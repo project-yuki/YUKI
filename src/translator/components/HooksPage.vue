@@ -1,15 +1,21 @@
 <template>
-<gt-hook-settings></gt-hook-settings>
+  <gt-hook-settings></gt-hook-settings>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import { Prop } from 'vue-property-decorator'
+import {
+  Prop
+} from 'vue-property-decorator'
 
 import GtHookSettings from '@/components/HookSettings.vue'
-import { remote } from 'electron'
-import { Route } from 'vue-router'
+import {
+  remote
+} from 'electron'
+import {
+  Route
+} from 'vue-router'
 
 @Component({
   components: {

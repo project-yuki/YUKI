@@ -16,8 +16,12 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { Component } from 'vue-property-decorator'
-import { namespace } from 'vuex-class'
+import {
+  Component
+} from 'vue-property-decorator'
+import {
+  namespace
+} from 'vuex-class'
 
 import GtGameCard from '@/components/GamesPageGameCard.vue'
 import GtPageContent from '@/components/PageContent.vue'

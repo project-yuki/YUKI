@@ -1,19 +1,23 @@
 <template>
-<div>
-  <gt-page-header title="关于Yagt" />
-  <gt-page-content style="text-align: center">
-    <img src="../assets/icon.png" style="width: 128px; height: 128px">
-    <p class="text-h1">Yet Another Galgame Translator</p>
-    <p class="text-h2">另一个Galgame翻译器</p>
-    <mu-button color="primary" @click="toggleDevTools">切换开发人员工具</mu-button>
-  </gt-page-content>
-</div>
+  <div>
+    <gt-page-header title="关于Yagt"/>
+    <gt-page-content style="text-align: center">
+      <img src="../assets/icon.png" style="width: 128px; height: 128px">
+      <p class="text-h1">Yet Another Galgame Translator</p>
+      <p class="text-h2">另一个Galgame翻译器</p>
+      <mu-button color="primary" @click="toggleDevTools">切换开发人员工具</mu-button>
+    </gt-page-content>
+  </div>
 </template>
 
 <script lang="ts">
-import { remote } from 'electron'
+import {
+  remote
+} from 'electron'
 import Vue from 'vue'
-import { Component } from 'vue-property-decorator'
+import {
+  Component
+} from 'vue-property-decorator'
 
 import GtPageContent from '@/components/PageContent.vue'
 import GtPageHeader from '@/components/PageHeader.vue'

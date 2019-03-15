@@ -23,10 +23,18 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { Component, Prop } from 'vue-property-decorator'
-import { namespace, State } from 'vuex-class'
+import {
+  Component,
+  Prop
+} from 'vue-property-decorator'
+import {
+  namespace,
+  State
+} from 'vuex-class'
 
-import { ipcRenderer } from 'electron'
+import {
+  ipcRenderer
+} from 'electron'
 import IpcTypes from '../../common/IpcTypes'
 
 @Component

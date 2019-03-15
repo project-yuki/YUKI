@@ -43,13 +43,25 @@
 </template>
 
 <script lang="ts">
-import { remote } from 'electron'
+import {
+  remote
+} from 'electron'
 import Vue from 'vue'
-import { Component, Watch } from 'vue-property-decorator'
-import { Route } from 'vue-router'
-import { namespace, State } from 'vuex-class'
+import {
+  Component,
+  Watch
+} from 'vue-property-decorator'
+import {
+  Route
+} from 'vue-router'
+import {
+  namespace,
+  State
+} from 'vuex-class'
 
-import { Chrome } from 'vue-color'
+import {
+  Chrome
+} from 'vue-color'
 
 @Component({
   components: {
@@ -68,28 +80,36 @@ export default class HookSettings extends Vue {
     return this.getOriginalText().fontSize
   }
   set originalTextSize (size: number) {
-    this.$store.commit('Config/SET_ORIGINAL_TEXT_SIZE', { size })
+    this.$store.commit('Config/SET_ORIGINAL_TEXT_SIZE', {
+      size
+    })
     this.$store.commit('Config/SAVE_GUI_CONFIG')
   }
   get translationTextSize () {
     return this.getTranslationText().fontSize
   }
   set translationTextSize (size: number) {
-    this.$store.commit('Config/SET_TRANSLATION_TEXT_SIZE', { size })
+    this.$store.commit('Config/SET_TRANSLATION_TEXT_SIZE', {
+      size
+    })
     this.$store.commit('Config/SAVE_GUI_CONFIG')
   }
   get translationTextMargin () {
     return this.getTranslationText().margin
   }
   set translationTextMargin (margin: number) {
-    this.$store.commit('Config/SET_TRANSLATION_TEXT_MARGIN', { margin })
+    this.$store.commit('Config/SET_TRANSLATION_TEXT_MARGIN', {
+      margin
+    })
     this.$store.commit('Config/SAVE_GUI_CONFIG')
   }
   get backgroundColor (): string {
     return this.getBackgroundColor()
   }
   set backgroundColor (color: string) {
-    this.$store.commit('Config/SET_BACKGROUND_COLOR', { color })
+    this.$store.commit('Config/SET_BACKGROUND_COLOR', {
+      color
+    })
     this.$store.commit('Config/SAVE_GUI_CONFIG')
   }
 

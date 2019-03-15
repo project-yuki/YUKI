@@ -18,10 +18,17 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { Component } from 'vue-property-decorator'
-import { namespace, State } from 'vuex-class'
+import {
+  Component
+} from 'vue-property-decorator'
+import {
+  namespace,
+  State
+} from 'vuex-class'
 
-import { ipcRenderer } from 'electron'
+import {
+  ipcRenderer
+} from 'electron'
 
 import GtHookInfo from '@/components/HookSettingsHookInfo.vue'
 import IpcTypes from '../../common/IpcTypes'

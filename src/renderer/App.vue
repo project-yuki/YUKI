@@ -7,11 +7,15 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { Component } from 'vue-property-decorator'
+import {
+  Component
+} from 'vue-property-decorator'
 
 import GtAppSidebar from '@/components/AppSidebar.vue'
 
-import { ipcRenderer } from 'electron'
+import {
+  ipcRenderer
+} from 'electron'
 import IpcTypes from '../common/IpcTypes'
 
 @Component({

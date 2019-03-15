@@ -28,7 +28,9 @@
 </template>
 
 <script lang="ts">
-import { remote } from 'electron'
+import {
+  remote
+} from 'electron'
 import Vue from 'vue'
 import Component from 'vue-class-component'
 

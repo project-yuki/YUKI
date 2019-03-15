@@ -18,12 +18,21 @@
 </template>
 
 <script lang="ts">
-import { remote } from 'electron'
+import {
+  remote
+} from 'electron'
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import { Prop, Watch } from 'vue-property-decorator'
-import { Route } from 'vue-router'
-import { namespace } from 'vuex-class'
+import {
+  Prop,
+  Watch
+} from 'vue-property-decorator'
+import {
+  Route
+} from 'vue-router'
+import {
+  namespace
+} from 'vuex-class'
 
 import GtHookSettings from '@/components/HookSettings.vue'
 import GtMecabText from '@/components/MecabText.vue'

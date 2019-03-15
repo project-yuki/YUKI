@@ -11,7 +11,9 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { Component } from 'vue-property-decorator'
+import {
+  Component
+} from 'vue-property-decorator'
 
 import GtPageContent from '@/components/PageContent.vue'
 import GtPageHeader from '@/components/PageHeader.vue'
@@ -22,7 +24,7 @@ import GtPageHeader from '@/components/PageHeader.vue'
     GtPageContent
   }
 })
-export default class PageContent extends Vue {}
+export default class PageContent extends Vue { }
 </script>
 
 <style>

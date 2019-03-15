@@ -32,10 +32,18 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { Component, Watch } from 'vue-property-decorator'
-import { namespace, State } from 'vuex-class'
+import {
+  Component,
+  Watch
+} from 'vue-property-decorator'
+import {
+  namespace,
+  State
+} from 'vuex-class'
 
-import { ipcRenderer } from 'electron'
+import {
+  ipcRenderer
+} from 'electron'
 import IpcTypes from '../../common/IpcTypes'
 
 @Component
@@ -44,7 +52,10 @@ export default class LibrarySettings extends Vue {
   public defaultConfig!: Yagt.ConfigState['default']
 
   public tempLibraries: Yagt.Config.Libraries = {
-    mecab: { enable: false, path: '' }
+    mecab: {
+      enable: false,
+      path: ''
+    }
   }
 
   public saveSettings () {
@@ -74,9 +85,14 @@ export default class LibrarySettings extends Vue {
     ipcRenderer.send(IpcTypes.REQUEST_PATH_WITH_FILE, filename)
   }
 
-  @Watch('defaultConfig', { immediate: true, deep: true })
+  @Watch('defaultConfig', {
+    immediate: true,
+    deep: true
+  })
   public resetSettings () {
-    this.tempLibraries.mecab = { ...this.defaultConfig.mecab }
+    this.tempLibraries.mecab = {
+      ...this.defaultConfig.mecab
+    }
   }
 }
 </script>
