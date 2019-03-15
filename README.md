@@ -1,5 +1,7 @@
 ﻿# Yagt - 另一个 Galgame 翻译器
 
+[![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
+
 [English](https://github.com/Yagt/Yagt/blob/master/docs/README_EN.md)
 
 ![它看起来的样子](https://raw.githubusercontent.com/Yagt/Yagt/master/.github/imgs/how_it_looks.png)

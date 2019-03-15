@@ -1,57 +1,58 @@
-import * as fs from "fs";
-import * as jsonfile from "jsonfile";
-const debug = require("debug")("yagt:config");
+import * as fs from 'fs'
+import * as jsonfile from 'jsonfile'
+const debug = require('debug')('yagt:config')
 
 abstract class Config {
-  protected config: any;
 
-  protected abstract getDefaultObject(): object;
-  public abstract getFilename(): string;
+  private static readonly FILE_OPTIONS = {
+    EOL: '\r\n',
+    spaces: 2
+  }
 
-  constructor() {
+  protected config: any
+
+  public constructor () {
     if (!fs.existsSync(`config/${this.getFilename()}.json`)) {
-      this.config = this.getDefaultObject();
-      this.save();
+      this.config = this.getDefaultObject()
+      this.save()
     } else {
-      this.load();
+      this.load()
     }
   }
+  public abstract getFilename (): string
 
-  load() {
+  public load () {
     try {
-      this.config = jsonfile.readFileSync(`config/${this.getFilename()}.json`);
-      debug("%s loaded", `config/${this.getFilename()}.json`);
+      this.config = jsonfile.readFileSync(`config/${this.getFilename()}.json`)
+      debug('%s loaded', `config/${this.getFilename()}.json`)
     } catch (e) {
-      debug("%s loads failed !> %s", `config/${this.getFilename()}.json`, e);
+      debug('%s loads failed !> %s', `config/${this.getFilename()}.json`, e)
     }
   }
 
-  save() {
+  public save () {
     try {
       jsonfile.writeFileSync(
         `config/${this.getFilename()}.json`,
         this.config,
         Config.FILE_OPTIONS
-      );
-      debug("%s saved", `config/${this.getFilename()}.json`);
+      )
+      debug('%s saved', `config/${this.getFilename()}.json`)
     } catch (e) {
-      debug("%s saves failed !> %s", `config/${this.getFilename()}.json`, e);
+      debug('%s saves failed !> %s', `config/${this.getFilename()}.json`, e)
     }
   }
 
-  private static readonly FILE_OPTIONS = {
-    spaces: 2,
-    EOL: "\r\n"
-  };
-
-  get() {
-    return this.config;
+  public get () {
+    return this.config
   }
 
-  set(cfg: any) {
-    this.config = cfg;
-    this.save();
+  public set (cfg: any) {
+    this.config = cfg
+    this.save()
   }
+
+  protected abstract getDefaultObject (): object
 }
 
-export default Config;
+export default Config

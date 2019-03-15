@@ -1,82 +1,84 @@
-import Api from "../translate/api";
-import JBeijingAdapter from "./jbeijing";
-const debug = require("debug")("yagt:translationManager");
-import ExternalApi from "./externalApi";
+import Api from './Api'
+import JBeijingAdapter from './JBeijingAdapter'
+const debug = require('debug')('yagt:translationManager')
+import ExternalApi from './ExternalApi'
 
 export default class TranslationManager {
-  private static instance: TranslationManager;
-  static getInstance(): TranslationManager {
-    if (this.instance == null) {
-      this.instance = new TranslationManager();
+  public static getInstance (): TranslationManager {
+    if (!this.instance) {
+      this.instance = new TranslationManager()
     }
-    return this.instance;
+    return this.instance
   }
+  private static instance: TranslationManager | undefined
 
-  private apis: Yagt.Translator[] = [];
+  private apis: Yagt.Translator[] = []
 
-  initializeApis(apis: Yagt.Config.Default["onlineApis"]): TranslationManager {
-    for (let index in apis) {
+  public initializeApis (apis: Yagt.Config.Default['onlineApis']): TranslationManager {
+    for (const api of apis) {
       try {
-        if (apis[index].external && apis[index].jsFile) {
-          this.apis[apis[index].name] = new ExternalApi(apis[index]);
+        if (api.external && api.jsFile) {
+          this.apis[api.name] = new ExternalApi(api)
         } else {
-          this.apis[apis[index].name] = new Api(apis[index]);
+          this.apis[api.name] = new Api(api)
         }
-      } catch (e) {}
+      } catch (e) {
+        continue
+      }
     }
-    return this;
+    return this
   }
 
-  initializeTranslators(translators: Yagt.Config.Default["translators"]) {
+  public initializeTranslators (translators: Yagt.Config.Default['translators']) {
     if (translators.jBeijing && translators.jBeijing.enable) {
-      let jb = new JBeijingAdapter(translators.jBeijing);
-      this.apis[jb.getName()] = jb;
+      const jb = new JBeijingAdapter(translators.jBeijing)
+      this.apis[jb.getName()] = jb
     }
   }
 
-  translate(
+  public translate (
     text: string,
-    callback: (translation: Yagt.Translations["translations"]) => void
+    callback: (translation: Yagt.Translations['translations']) => void
   ) {
-    let toTranslateCount = 0;
-    for (let key in this.apis) {
+    let toTranslateCount = 0
+    for (const key in this.apis) {
       if (this.apis[key].isEnable()) {
         toTranslateCount++;
         (async () => {
-          let translation = await this.apis[key].translate(text);
-          debug("[%s] -> %s", this.apis[key].getName(), translation);
+          const translation = await this.apis[key].translate(text)
+          debug('[%s] -> %s', this.apis[key].getName(), translation)
           callback({
             [this.apis[key].getName()]: translation
-          });
-        })();
+          })
+        })()
       }
     }
     if (toTranslateCount === 0) {
-      callback({});
+      callback({})
     }
   }
 
-  translateAll(
+  public translateAll (
     text: string,
     callback: (translations: Yagt.Translations) => void
   ) {
-    let toTranslateCount = 0;
-    let finishedCount = 0;
-    let result: Yagt.Translations = { original: text, translations: {} };
-    for (let key in this.apis) {
+    let toTranslateCount = 0
+    let finishedCount = 0
+    const result: Yagt.Translations = { original: text, translations: {} }
+    for (const key in this.apis) {
       if (this.apis[key].isEnable()) {
         toTranslateCount++;
         (async () => {
-          result.translations[key] = await this.apis[key].translate(text);
-          finishedCount++;
+          result.translations[key] = await this.apis[key].translate(text)
+          finishedCount++
           if (finishedCount === toTranslateCount) {
-            callback(result);
+            callback(result)
           }
-        })();
+        })()
       }
     }
     if (toTranslateCount === 0) {
-      callback(result);
+      callback(result)
     }
   }
 }

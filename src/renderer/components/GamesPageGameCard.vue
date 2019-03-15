@@ -29,63 +29,64 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { Component, Prop } from "vue-property-decorator";
-import { State, namespace } from "vuex-class";
+import Vue from 'vue'
+import { Component, Prop } from 'vue-property-decorator'
+import { namespace, State } from 'vuex-class'
 
-import { ipcRenderer } from "electron";
-import IpcTypes from "../../common/ipcTypes";
+import { ipcRenderer } from 'electron'
+import IpcTypes from '../../common/IpcTypes'
 
-import * as _ from "lodash";
+import * as _ from 'lodash'
 
 @Component
 export default class HookSettingsHookInfo extends Vue {
   @Prop()
-  game!: Yagt.Game;
+  public game!: Yagt.Game
 
-  @(namespace("Config").State("default"))
-  defaultConfig!: Yagt.ConfigState["default"];
-  @(namespace("Config").State("games"))
-  gamesConfig!: Yagt.ConfigState["games"];
-  selectedLocaleChanger: string = "";
+  @(namespace('Config').State('default'))
+  public defaultConfig!: Yagt.ConfigState['default']
+  @(namespace('Config').State('games'))
+  public gamesConfig!: Yagt.ConfigState['games']
+  public selectedLocaleChanger: string = ''
 
-  handleDeleteConfirm() {
-    this.$confirm("确认删除？", { type: "warning" }).then(({ result }) => {
+  public handleDeleteConfirm () {
+    this.$confirm('确认删除？', { type: 'warning' }).then(({ result }) => {
       if (result) {
-        this.handleDeleteGame();
-        this.$toast.success("删除成功！");
+        this.handleDeleteGame()
+        this.$toast.success('删除成功！')
       }
-    });
+    })
   }
-  handleRunGame() {
-    ipcRenderer.send(IpcTypes.REQUEST_RUN_GAME, this.game);
+  public handleRunGame () {
+    ipcRenderer.send(IpcTypes.REQUEST_RUN_GAME, this.game)
   }
-  handleDeleteGame() {
-    ipcRenderer.send(IpcTypes.REQUEST_REMOVE_GAME, this.game);
+  public handleDeleteGame () {
+    ipcRenderer.send(IpcTypes.REQUEST_REMOVE_GAME, this.game)
   }
 
-  updateLocaleChanger() {
-    let savingConfig = _.cloneDeep(this.gamesConfig);
-    const thisGame = savingConfig.find(game => game.name === this.game.name);
-    if (!thisGame) return;
+  public updateLocaleChanger () {
+    const savingConfig = _.cloneDeep(this.gamesConfig)
+    const thisGame = savingConfig.find((game) => game.name === this.game.name)
+    if (!thisGame) return
 
     for (const key in this.defaultConfig.localeChangers) {
       if (
         this.defaultConfig.localeChangers[key].name !==
         this.selectedLocaleChanger
-      )
-        continue;
+      ) {
+        continue
+      }
 
-      thisGame.localeChanger = key;
+      thisGame.localeChanger = key
     }
 
-    ipcRenderer.send(IpcTypes.REQUEST_SAVE_CONFIG, "games", savingConfig);
+    ipcRenderer.send(IpcTypes.REQUEST_SAVE_CONFIG, 'games', savingConfig)
   }
 
-  beforeMount() {
+  public beforeMount () {
     this.selectedLocaleChanger = this.defaultConfig.localeChangers[
       this.game.localeChanger
-    ].name;
+    ].name
   }
 }
 </script>

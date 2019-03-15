@@ -22,47 +22,47 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { Component, Prop } from "vue-property-decorator";
-import { State, namespace } from "vuex-class";
+import Vue from 'vue'
+import { Component, Prop } from 'vue-property-decorator'
+import { namespace, State } from 'vuex-class'
 
-import { ipcRenderer } from "electron";
-import IpcTypes from "../../common/ipcTypes";
+import { ipcRenderer } from 'electron'
+import IpcTypes from '../../common/IpcTypes'
 
 @Component
 export default class HookSettingsHookInfo extends Vue {
   @Prop(Object)
-  hook!: Yagt.TextThread;
+  public hook!: Yagt.TextThread
   @Prop(Boolean)
-  isChosen!: boolean;
+  public isChosen!: boolean
 
-  @(namespace("Hooks").Getter("getTextById"))
-  getTextById!: (id: number) => string[];
-  @(namespace("Hooks").Getter("getLastTextById"))
-  getLastTextById!: (id: number) => string;
-  @(namespace("Hooks").Action("chooseHookAsDisplay"))
-  chooseHookAsDisplayAction!: (id: number) => void;
+  @(namespace('Hooks').Getter('getTextById'))
+  public getTextById!: (id: number) => string[]
+  @(namespace('Hooks').Getter('getLastTextById'))
+  public getLastTextById!: (id: number) => string
+  @(namespace('Hooks').Action('chooseHookAsDisplay'))
+  public chooseHookAsDisplayAction!: (id: number) => void
 
-  openConfirm = false;
+  public openConfirm = false
 
-  get zIndex() {
-    return this.isChosen ? 5 : 1;
+  get zIndex () {
+    return this.isChosen ? 5 : 1
   }
-  get hookText() {
-    return this.getTextById(this.hook.handle).join("\n");
+  get hookText () {
+    return this.getTextById(this.hook.handle).join('\n')
   }
-  get lastHookText() {
-    return this.getLastTextById(this.hook.handle);
+  get lastHookText () {
+    return this.getLastTextById(this.hook.handle)
   }
 
-  openConfirmDialog() {
-    this.openConfirm = true;
+  public openConfirmDialog () {
+    this.openConfirm = true
   }
-  closeConfirmDialog() {
-    this.openConfirm = false;
+  public closeConfirmDialog () {
+    this.openConfirm = false
   }
-  chooseAsDisplay() {
-    this.chooseHookAsDisplayAction(this.hook.handle);
+  public chooseAsDisplay () {
+    this.chooseHookAsDisplayAction(this.hook.handle)
   }
 }
 </script>

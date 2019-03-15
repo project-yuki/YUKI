@@ -1,20 +1,20 @@
-import Config from "./config";
+import Config from './Config'
 
 export default class GamesConfig extends Config {
-  protected getDefaultObject(): { games: Yagt.Config.Games } {
-    return { games: [] };
+
+  public getFilename (): string {
+    return 'games'
   }
 
-  getFilename(): string {
-    return "games";
+  public get () {
+    return this.config.games
   }
 
-  get() {
-    return this.config.games;
+  public set (cfg: any) {
+    this.config.games = cfg
+    this.save()
   }
-
-  set(cfg: any) {
-    this.config.games = cfg;
-    this.save();
+  protected getDefaultObject (): { games: Yagt.Config.Games } {
+    return { games: [] }
   }
 }

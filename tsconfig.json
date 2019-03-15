@@ -10,7 +10,14 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "removeComments": true,
-    "suppressImplicitAnyIndexErrors": true
+    "suppressImplicitAnyIndexErrors": true,
+    "plugins": [
+      {
+        "name": "typescript-tslint-plugin",
+        "configFile": "tslint.json",
+        "alwaysShowRuleFailuresAsWarnings": true
+      }
+    ]
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "**/*.spec.ts"]

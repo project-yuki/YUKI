@@ -18,17 +18,16 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import Component from "vue-class-component";
-import { Prop, Watch } from "vue-property-decorator";
-import { Route } from "vue-router";
-import { remote } from "electron";
-import { namespace } from "vuex-class";
+import { remote } from 'electron'
+import Vue from 'vue'
+import Component from 'vue-class-component'
+import { Prop, Watch } from 'vue-property-decorator'
+import { Route } from 'vue-router'
+import { namespace } from 'vuex-class'
 
-import GtTextDisplay from "@/components/TextDisplay.vue";
-import GtHookSettings from "@/components/HookSettings.vue";
-import GtMecabText from "@/components/MecabText.vue";
-import MecabMiddleware from "../../main/mecab";
+import GtHookSettings from '@/components/HookSettings.vue'
+import GtMecabText from '@/components/MecabText.vue'
+import GtTextDisplay from '@/components/TextDisplay.vue'
 
 @Component({
   components: {
@@ -37,73 +36,73 @@ import MecabMiddleware from "../../main/mecab";
   }
 })
 export default class TranslatePage extends Vue {
-  @namespace("View").State("isButtonsShown")
-  isButtonsShown!: boolean;
+  @namespace('View').State('isButtonsShown')
+  public isButtonsShown!: boolean
 
-  @namespace("Hooks").Getter("getLastTextById")
-  getLastTextById!: (id: number) => string;
-  @namespace("Hooks").Getter("getLastPatternsById")
-  getLastPatternsById!: (id: number) => Yagt.MeCabPatterns;
+  @namespace('Hooks').Getter('getLastTextById')
+  public getLastTextById!: (id: number) => string
+  @namespace('Hooks').Getter('getLastPatternsById')
+  public getLastPatternsById!: (id: number) => Yagt.MeCabPatterns
 
-  @namespace("Hooks").State("currentDisplayHookIndex")
-  currentIndex!: number;
+  @namespace('Hooks').State('currentDisplayHookIndex')
+  public currentIndex!: number
 
-  @namespace("Hooks").State("translationsForCurrentIndex")
-  translationsForCurrentIndex!: Yagt.Translations;
+  @namespace('Hooks').State('translationsForCurrentIndex')
+  public translationsForCurrentIndex!: Yagt.Translations
 
-  @namespace("Config").Getter("getOriginalText")
-  getOriginalText!: () => Yagt.FontStyle;
+  @namespace('Config').Getter('getOriginalText')
+  public getOriginalText!: () => Yagt.FontStyle
 
-  @namespace("Hooks").State("isMecabEnable")
-  isMecabEnable!: boolean;
+  @namespace('Hooks').State('isMecabEnable')
+  public isMecabEnable!: boolean
 
-  get originalTextColor() {
-    return this.getOriginalText().color;
+  get originalTextColor () {
+    return this.getOriginalText().color
   }
-  get originalTextSize() {
-    return this.getOriginalText().fontSize;
-  }
-
-  get currentOriginText() {
-    return this.getLastTextById(this.currentIndex);
-  }
-  get currentPatterns() {
-    return this.getLastPatternsById(this.currentIndex);
+  get originalTextSize () {
+    return this.getOriginalText().fontSize
   }
 
-  beforeRouteEnter(to: Route, from: Route, next: Function) {
-    let newHeight = document.body.offsetHeight + 64;
-    let window = remote.getCurrentWindow();
-    let width = window.getSize()[0];
-    window.setSize(width, newHeight);
-    next();
+  get currentOriginText () {
+    return this.getLastTextById(this.currentIndex)
+  }
+  get currentPatterns () {
+    return this.getLastPatternsById(this.currentIndex)
   }
 
-  updateWindowHeight(offset: number) {
-    let newHeight = document.body.offsetHeight + offset;
-    let window = remote.getCurrentWindow();
-    let width = window.getSize()[0];
-    window.setSize(width, newHeight);
+  public beforeRouteEnter (to: Route, from: Route, next: () => void) {
+    const newHeight = document.body.offsetHeight + 64
+    const window = remote.getCurrentWindow()
+    const width = window.getSize()[0]
+    window.setSize(width, newHeight)
+    next()
   }
 
-  @Watch("isButtonShown")
-  onButtonShownChanged() {
+  public updateWindowHeight (offset: number) {
+    const newHeight = document.body.offsetHeight + offset
+    const window = remote.getCurrentWindow()
+    const width = window.getSize()[0]
+    window.setSize(width, newHeight)
+  }
+
+  @Watch('isButtonShown')
+  public onButtonShownChanged () {
     if (this.isButtonsShown) {
-      this.updateWindowHeight(64);
+      this.updateWindowHeight(64)
     } else {
-      this.updateWindowHeight(40);
+      this.updateWindowHeight(40)
     }
   }
 
-  updated() {
+  public updated () {
     if (this.isButtonsShown) {
       this.$nextTick(() => {
-        this.updateWindowHeight(64);
-      });
+        this.updateWindowHeight(64)
+      })
     } else {
       this.$nextTick(() => {
-        this.updateWindowHeight(40);
-      });
+        this.updateWindowHeight(40)
+      })
     }
   }
 }

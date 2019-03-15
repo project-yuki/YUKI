@@ -1,39 +1,39 @@
-import Vue from "vue";
-import Router from "vue-router";
+import Vue from 'vue'
+import Router from 'vue-router'
 
-import GamesPage from "@/components/GamesPage.vue";
-import AddGamePage from "@/components/AddGamePage.vue";
-import SettingsPage from "@/components/SettingsPage.vue";
-import LocaleChangerSettings from "@/components/LocaleChangerSettings.vue";
-import LibrarySettings from "@/components/LibrarySettings.vue";
-import TranslatorSettings from "@/components/TranslatorSettings.vue";
-import AboutPage from "@/components/AboutPage.vue";
+import AboutPage from '@/components/AboutPage.vue'
+import AddGamePage from '@/components/AddGamePage.vue'
+import GamesPage from '@/components/GamesPage.vue'
+import LibrarySettings from '@/components/LibrarySettings.vue'
+import LocaleChangerSettings from '@/components/LocaleChangerSettings.vue'
+import SettingsPage from '@/components/SettingsPage.vue'
+import TranslatorSettings from '@/components/TranslatorSettings.vue'
 
-Vue.use(Router);
+Vue.use(Router)
 
 export default new Router({
   routes: [
-    { path: "", redirect: "/games" },
-    { path: "/games", component: GamesPage },
-    { path: "/addgame", component: AddGamePage },
+    { path: '', redirect: '/games' },
+    { path: '/games', component: GamesPage },
+    { path: '/addgame', component: AddGamePage },
     {
-      path: "/settings",
+      path: '/settings',
       component: SettingsPage,
       children: [
         {
-          path: "localechanger",
+          path: 'localechanger',
           component: LocaleChangerSettings
         },
         {
-          path: "library",
+          path: 'library',
           component: LibrarySettings
         },
         {
-          path: "translator",
+          path: 'translator',
           component: TranslatorSettings
         }
       ]
     },
-    { path: "/about", component: AboutPage }
+    { path: '/about', component: AboutPage }
   ]
-});
+})

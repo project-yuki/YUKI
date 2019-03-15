@@ -3,13 +3,13 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import Component from "vue-class-component";
-import { Prop } from "vue-property-decorator";
+import Vue from 'vue'
+import Component from 'vue-class-component'
+import { Prop } from 'vue-property-decorator'
 
-import GtHookSettings from "@/components/HookSettings.vue";
-import { Route } from "vue-router";
-import { remote } from "electron";
+import GtHookSettings from '@/components/HookSettings.vue'
+import { remote } from 'electron'
+import { Route } from 'vue-router'
 
 @Component({
   components: {
@@ -17,12 +17,12 @@ import { remote } from "electron";
   }
 })
 export default class HooksPage extends Vue {
-  beforeRouteEnter(to: Route, from: Route, next: Function) {
-    let newHeight = Math.trunc(remote.screen.getPrimaryDisplay().size.height * 0.6);
-    let window = remote.getCurrentWindow();
-    let width = window.getSize()[0];
-    window.setSize(width, newHeight);
-    next();
+  public beforeRouteEnter (to: Route, from: Route, next: () => void) {
+    const newHeight = Math.trunc(remote.screen.getPrimaryDisplay().size.height * 0.6)
+    const window = remote.getCurrentWindow()
+    const width = window.getSize()[0]
+    window.setSize(width, newHeight)
+    next()
   }
 }
 </script>

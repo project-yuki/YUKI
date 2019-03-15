@@ -1,55 +1,55 @@
-import "babel-polyfill";
-import { app, BrowserWindow, Tray, Menu } from "electron";
-import * as path from "path";
-import * as fs from "fs";
-const debug = require("debug")("yagt:app");
+import 'babel-polyfill'
+import { app, BrowserWindow, Menu, Tray } from 'electron'
+import * as fs from 'fs'
+import * as path from 'path'
+const debug = require('debug')('yagt:app')
 
 // check & make ./config folder
 {
-  if (!fs.existsSync("config\\")) {
-    fs.mkdirSync("config");
-    debug("created ./config folder");
+  if (!fs.existsSync('config\\')) {
+    fs.mkdirSync('config')
+    debug('created ./config folder')
   }
 }
 
-if (process.env.NODE_ENV !== "development") {
-  global.__static = require("path")
-    .join(__dirname, "/static")
-    .replace(/\\/g, "\\\\");
+if (process.env.NODE_ENV !== 'development') {
+  global.__static = require('path')
+    .join(__dirname, '/static')
+    .replace(/\\/g, '\\\\')
 }
 
 global.__baseDir = path.resolve(
   __dirname,
-  process.env.NODE_ENV !== "development" ? "../../../.." : "../.."
-);
-debug("basePath: %s", global.__baseDir);
+  process.env.NODE_ENV !== 'development' ? '../../../..' : '../..'
+)
+debug('basePath: %s', global.__baseDir)
 
-global.__appDir = path.resolve(__dirname, "../..");
-debug("appPath: %s", global.__appDir);
+global.__appDir = path.resolve(__dirname, '../..')
+debug('appPath: %s', global.__appDir)
 
-const iconPath = path.join(global.__appDir, "build/icons/icon.png");
+const iconPath = path.join(global.__appDir, 'build/icons/icon.png')
 
-import setupIpc from "./setup/ipc";
-import ConfigManager from "./config";
+import ConfigManager from './config/ConfigManager'
+import setupIpc from './setup/Ipc'
 
-let mainWindow: Electron.BrowserWindow | null;
+let mainWindow: Electron.BrowserWindow | null
 
-let tray: Electron.Tray | null;
+let tray: Electron.Tray | null
 
 const mainWinURL =
-  process.env.NODE_ENV === "development"
+  process.env.NODE_ENV === 'development'
     ? `http://localhost:9080`
-    : `file://${__dirname}/index.html`;
+    : `file://${__dirname}/index.html`
 
-function openWindow() {
+function openWindow () {
   if (!mainWindow) {
-    createWindow();
+    createWindow()
   } else if (!mainWindow.isVisible()) {
-    mainWindow.show();
+    mainWindow.show()
   }
 }
 
-function createWindow() {
+function createWindow () {
   /**
    * Initial main window options
    */
@@ -57,70 +57,70 @@ function createWindow() {
     useContentSize: true,
     webPreferences: {
       defaultFontFamily: {
-        standard: "Microsoft Yahei UI",
-        serif: "Microsoft Yahei UI",
-        sansSerif: "Microsoft Yahei UI"
+        standard: 'Microsoft Yahei UI',
+        serif: 'Microsoft Yahei UI',
+        sansSerif: 'Microsoft Yahei UI'
       }
     },
     icon: iconPath,
     frame: false
-  });
+  })
 
-  mainWindow.loadURL(mainWinURL);
+  mainWindow.loadURL(mainWinURL)
 
-  mainWindow.on("close", () => {
-    if (!mainWindow) return;
+  mainWindow.on('close', () => {
+    if (!mainWindow) return
 
-    debug("saving main window bounds -> %o", mainWindow.getBounds());
-    ConfigManager.getInstance().set<Yagt.Config.Gui>("gui", {
-      ...ConfigManager.getInstance().get("gui"),
+    debug('saving main window bounds -> %o', mainWindow.getBounds())
+    ConfigManager.getInstance().set<Yagt.Config.Gui>('gui', {
+      ...ConfigManager.getInstance().get('gui'),
       mainWindow: {
         bounds: mainWindow.getBounds()
       }
-    });
-  });
+    })
+  })
 
-  mainWindow.on("closed", () => {
-    mainWindow = null;
-  });
+  mainWindow.on('closed', () => {
+    mainWindow = null
+  })
 
   mainWindow.setBounds(
-    ConfigManager.getInstance().get<Yagt.Config.Gui>("gui").mainWindow.bounds
-  );
+    ConfigManager.getInstance().get<Yagt.Config.Gui>('gui').mainWindow.bounds
+  )
 
-  tray = new Tray(iconPath);
+  tray = new Tray(iconPath)
   const contextMenu = Menu.buildFromTemplate([
     {
-      label: "打开主界面",
-      type: "normal",
+      label: '打开主界面',
+      type: 'normal',
       click: () => {
-        openWindow();
+        openWindow()
       }
     },
     {
-      label: "退出",
-      type: "normal",
+      label: '退出',
+      type: 'normal',
       click: () => {
-        app.quit();
+        app.quit()
       }
     }
-  ]);
-  tray.setToolTip("Yagt");
-  tray.setContextMenu(contextMenu);
-  tray.on("click", () => {
-    openWindow();
-  });
+  ])
+  tray.setToolTip('Yagt')
+  tray.setContextMenu(contextMenu)
+  tray.on('click', () => {
+    openWindow()
+  })
 
-  setupIpc(mainWindow);
+  setupIpc(mainWindow)
 }
 
-app.on("ready", createWindow);
+app.on('ready', createWindow)
 
-app.on("activate", () => {
+app.on('activate', () => {
   if (!mainWindow) {
-    createWindow();
+    createWindow()
   }
-});
+})
 
 /**
  * Auto Updater

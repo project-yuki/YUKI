@@ -17,16 +17,16 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { Component } from "vue-property-decorator";
-import { State, namespace } from "vuex-class";
+import Vue from 'vue'
+import { Component } from 'vue-property-decorator'
+import { namespace, State } from 'vuex-class'
 
-import { ipcRenderer } from "electron";
+import { ipcRenderer } from 'electron'
 
-import GtHookInfo from "@/components/HookSettingsHookInfo.vue";
-import IpcTypes from "../../common/ipcTypes";
+import GtHookInfo from '@/components/HookSettingsHookInfo.vue'
+import IpcTypes from '../../common/IpcTypes'
 
-import * as _ from "lodash";
+import * as _ from 'lodash'
 
 @Component({
   components: {
@@ -34,46 +34,44 @@ import * as _ from "lodash";
   }
 })
 export default class HookSettings extends Vue {
-  openInputHook = false;
-  errorText = "";
-  hookCode = "";
+  public openInputHook = false
+  public errorText = ''
+  public hookCode = ''
 
-  get orderedHooks() {
+  get orderedHooks () {
     return _.orderBy(
       this.hooks,
       (hook: Yagt.TextThread) => this.texts[hook.handle].length,
-      "desc"
-    );
+      'desc'
+    )
   }
 
-  @(namespace("Hooks").State("hookInfos"))
-  hooks!: Yagt.TextThread[];
-  @(namespace("Hooks").State("texts"))
-  texts!: string[];
-  @(namespace("Hooks").State("currentDisplayHookIndex"))
-  currentIndex!: number;
+  @(namespace('Hooks').State('hookInfos'))
+  public hooks!: Yagt.TextThread[]
+  @(namespace('Hooks').State('texts'))
+  public texts!: string[]
+  @(namespace('Hooks').State('currentDisplayHookIndex'))
+  public currentIndex!: number
 
-  openInputHookDialog() {
-    this.openInputHook = true;
+  public openInputHookDialog () {
+    this.openInputHook = true
   }
-  closeInputHookDialog() {
-    this.openInputHook = false;
-    this.hookCode = "";
-    this.errorText = "";
+  public closeInputHookDialog () {
+    this.openInputHook = false
+    this.hookCode = ''
+    this.errorText = ''
   }
-  addHook() {
+  public addHook () {
     if (new RegExp(/\/H\w+/).test(this.hookCode)) {
-      ipcRenderer.send(IpcTypes.REQUEST_INSERT_HOOK, this.hookCode);
-      this.closeInputHookDialog();
+      ipcRenderer.send(IpcTypes.REQUEST_INSERT_HOOK, this.hookCode)
+      this.closeInputHookDialog()
     } else {
-      this.errorText = "特殊码格式不正确";
+      this.errorText = '特殊码格式不正确'
     }
   }
-  isChosen(num: number) {
-    return this.currentIndex === num;
+  public isChosen (num: number) {
+    return this.currentIndex === num
   }
-
-  mounted() {}
 }
 </script>
 

@@ -28,23 +28,23 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import Component from "vue-class-component";
-import { remote } from "electron";
+import { remote } from 'electron'
+import Vue from 'vue'
+import Component from 'vue-class-component'
 
 @Component
 export default class Titlebar extends Vue {
-  closeWindow() {
-    remote.getCurrentWindow().hide();
+
+  public isAlwaysOnTop = remote.getCurrentWindow().isAlwaysOnTop()
+  public closeWindow () {
+    remote.getCurrentWindow().hide()
   }
 
-  isAlwaysOnTop = remote.getCurrentWindow().isAlwaysOnTop();
-
-  toggleAlwaysOnTop() {
+  public toggleAlwaysOnTop () {
     remote
       .getCurrentWindow()
-      .setAlwaysOnTop(!remote.getCurrentWindow().isAlwaysOnTop());
-    this.isAlwaysOnTop = !this.isAlwaysOnTop;
+      .setAlwaysOnTop(!remote.getCurrentWindow().isAlwaysOnTop())
+    this.isAlwaysOnTop = !this.isAlwaysOnTop
   }
 }
 </script>

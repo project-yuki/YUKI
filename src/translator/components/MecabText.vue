@@ -17,28 +17,28 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { Component, Prop } from "vue-property-decorator";
-import { namespace } from "vuex-class";
-import MecabMiddleware from "../../main/mecab";
+import Vue from 'vue'
+import { Component, Prop } from 'vue-property-decorator'
+import { namespace } from 'vuex-class'
+import MecabMiddleware from '../../main/middlewares/MeCabMiddleware'
 
 @Component
 export default class MecabText extends Vue {
   @Prop()
-  patterns!: Yagt.MeCabPatterns;
+  public patterns!: Yagt.MeCabPatterns
 
-  @namespace("Config").Getter("getOriginalText")
-  getOriginalText!: () => Yagt.FontStyle;
-  get originalTextColor() {
-    return this.getOriginalText().color;
+  @namespace('Config').Getter('getOriginalText')
+  public getOriginalText!: () => Yagt.FontStyle
+  get originalTextColor () {
+    return this.getOriginalText().color
   }
-  get originalTextSize() {
-    return this.getOriginalText().fontSize;
+  get originalTextSize () {
+    return this.getOriginalText().fontSize
   }
 
-  abbrToColor(abbr: string): string {
-    if (!MecabMiddleware.ABBR_TO_COLOR_MAP[abbr]) return "white";
-    else return MecabMiddleware.ABBR_TO_COLOR_MAP[abbr];
+  public abbrToColor (abbr: string): string {
+    if (!MecabMiddleware.ABBR_TO_COLOR_MAP[abbr]) return 'white'
+    else return MecabMiddleware.ABBR_TO_COLOR_MAP[abbr]
   }
 }
 </script>

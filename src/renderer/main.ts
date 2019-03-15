@@ -1,41 +1,41 @@
-import "../resources/material-icons/material-icons.css";
-import "muse-ui-message/dist/muse-ui-message.all.css";
-import "muse-ui-toast/dist/muse-ui-toast.all.css";
-import "muse-ui/dist/muse-ui.css";
+import 'muse-ui-message/dist/muse-ui-message.all.css'
+import 'muse-ui-toast/dist/muse-ui-toast.all.css'
+import 'muse-ui/dist/muse-ui.css'
+import '../resources/material-icons/material-icons.css'
 
-import Vue from "vue";
-import axios from "axios";
+import axios from 'axios'
+import Vue from 'vue'
 
-import App from "./App.vue";
-import router from "./router";
-import store from "./store";
+import App from './App.vue'
+import router from './router'
+import store from './store'
 
-import MuseUI from "muse-ui";
-const MuseUIMessage = require("muse-ui-message/dist/muse-ui-message.js");
-const MuseUIToast = require("muse-ui-toast/dist/muse-ui-toast.js");
-Vue.use(MuseUI);
-Vue.use(MuseUIMessage);
-Vue.use(MuseUIToast);
+import MuseUI from 'muse-ui'
+const MuseUIMessage = require('muse-ui-message/dist/muse-ui-message.js')
+const MuseUIToast = require('muse-ui-toast/dist/muse-ui-toast.js')
+Vue.use(MuseUI)
+Vue.use(MuseUIMessage)
+Vue.use(MuseUIToast)
 
 if (!process.env.IS_WEB) {
-  Vue.use(require("vue-electron"));
+  Vue.use(require('vue-electron'))
 }
-(<any>Vue).http = Vue.prototype.$http = axios;
-Vue.config.productionTip = false;
+(Vue as any).http = Vue.prototype.$http = axios
+Vue.config.productionTip = false
 
 new Vue({
   components: { App },
   router,
   store,
-  template: "<App/>"
-}).$mount("#app");
+  template: '<App/>'
+}).$mount('#app')
 
-import { ipcRenderer } from "electron";
-import IpcTypes from "../common/ipcTypes";
+import { ipcRenderer } from 'electron'
+import IpcTypes from '../common/IpcTypes'
 
 ipcRenderer.on(
   IpcTypes.HAS_CONFIG,
   (event: Electron.Event, name: string, cfgs: object) => {
-    store.dispatch("Config/setConfig", { name, cfgs });
+    store.dispatch('Config/setConfig', { name, cfgs })
   }
-);
+)

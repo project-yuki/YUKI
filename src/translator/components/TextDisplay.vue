@@ -17,22 +17,22 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { Component, Prop } from "vue-property-decorator";
-import { namespace } from "vuex-class";
+import Vue from 'vue'
+import { Component, Prop } from 'vue-property-decorator'
+import { namespace } from 'vuex-class'
 
 @Component
 export default class TextDisplay extends Vue {
   @Prop(String)
-  name!: string;
+  public name!: string
   @Prop(String)
-  translation!: string;
+  public translation!: string
 
-  @namespace("Config").State("gui")
-  guiConfig!: any;
+  @namespace('Config').State('gui')
+  public guiConfig!: any
 
-  get translationTextStyle() {
-    return this.guiConfig.translationText;
+  get translationTextStyle () {
+    return this.guiConfig.translationText
   }
 }
 </script>

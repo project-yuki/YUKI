@@ -31,52 +31,52 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { Component, Watch } from "vue-property-decorator";
-import { State, namespace } from "vuex-class";
+import Vue from 'vue'
+import { Component, Watch } from 'vue-property-decorator'
+import { namespace, State } from 'vuex-class'
 
-import { ipcRenderer } from "electron";
-import IpcTypes from "../../common/ipcTypes";
+import { ipcRenderer } from 'electron'
+import IpcTypes from '../../common/IpcTypes'
 
 @Component
 export default class LibrarySettings extends Vue {
-  @(namespace("Config").State("default"))
-  defaultConfig!: Yagt.ConfigState["default"];
+  @(namespace('Config').State('default'))
+  public defaultConfig!: Yagt.ConfigState['default']
 
-  tempLibraries: Yagt.Config.Libraries = {
-    mecab: { enable: false, path: "" }
-  };
-
-  saveSettings() {
-    let savingConfig = {
-      ...this.defaultConfig,
-      ...this.tempLibraries
-    };
-    ipcRenderer.send(IpcTypes.REQUEST_SAVE_CONFIG, "default", savingConfig);
-    this.$toast.success("保存成功！");
+  public tempLibraries: Yagt.Config.Libraries = {
+    mecab: { enable: false, path: '' }
   }
 
-  requestPath(library: string, filename: string) {
+  public saveSettings () {
+    const savingConfig = {
+      ...this.defaultConfig,
+      ...this.tempLibraries
+    }
+    ipcRenderer.send(IpcTypes.REQUEST_SAVE_CONFIG, 'default', savingConfig)
+    this.$toast.success('保存成功！')
+  }
+
+  public requestPath (library: string, filename: string) {
     ipcRenderer.once(
       IpcTypes.HAS_PATH_WITH_FILE,
       (event: Electron.Event, path: string) => {
         if (path.indexOf(filename) === -1) {
-          this.$toast.error(`请选择文件夹下的 ${filename} !`);
-          return;
+          this.$toast.error(`请选择文件夹下的 ${filename} !`)
+          return
         }
 
         this.tempLibraries[library].path = path.substring(
           0,
           path.indexOf(filename) - 1
-        );
+        )
       }
-    );
-    ipcRenderer.send(IpcTypes.REQUEST_PATH_WITH_FILE, filename);
+    )
+    ipcRenderer.send(IpcTypes.REQUEST_PATH_WITH_FILE, filename)
   }
 
-  @Watch("defaultConfig", { immediate: true, deep: true })
-  resetSettings() {
-    this.tempLibraries.mecab = { ...this.defaultConfig.mecab };
+  @Watch('defaultConfig', { immediate: true, deep: true })
+  public resetSettings () {
+    this.tempLibraries.mecab = { ...this.defaultConfig.mecab }
   }
 }
 </script>

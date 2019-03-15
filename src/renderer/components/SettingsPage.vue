@@ -10,11 +10,11 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { Component } from "vue-property-decorator";
+import Vue from 'vue'
+import { Component } from 'vue-property-decorator'
 
-import GtPageHeader from "@/components/PageHeader.vue";
-import GtPageContent from "@/components/PageContent.vue";
+import GtPageContent from '@/components/PageContent.vue'
+import GtPageHeader from '@/components/PageHeader.vue'
 
 @Component({
   components: {

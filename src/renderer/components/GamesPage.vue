@@ -15,13 +15,13 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { Component } from "vue-property-decorator";
-import { namespace } from "vuex-class";
+import Vue from 'vue'
+import { Component } from 'vue-property-decorator'
+import { namespace } from 'vuex-class'
 
-import GtPageHeader from "@/components/PageHeader.vue";
-import GtPageContent from "@/components/PageContent.vue";
-import GtGameCard from "@/components/GamesPageGameCard.vue";
+import GtGameCard from '@/components/GamesPageGameCard.vue'
+import GtPageContent from '@/components/PageContent.vue'
+import GtPageHeader from '@/components/PageHeader.vue'
 
 @Component({
   components: {
@@ -31,9 +31,9 @@ import GtGameCard from "@/components/GamesPageGameCard.vue";
   }
 })
 export default class GamesPage extends Vue {
-  @(namespace("Config").State("games")) games!: Yagt.Game[];
+  @(namespace('Config').State('games')) public games!: Yagt.Game[]
 
-  @(namespace("Gui").State("noGame")) noGame!: boolean;
+  @(namespace('Gui').State('noGame')) public noGame!: boolean
 }
 </script>
 

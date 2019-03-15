@@ -1,26 +1,26 @@
-import { Commit } from "vuex";
+import { Commit } from 'vuex'
 
-const state: Yagt.TranslatorViewState = {
+const viewState: Yagt.TranslatorViewState = {
   isButtonsShown: true
-};
+}
 
 const mutations = {
-  SET_BUTTONS_SHOWN(
+  SET_BUTTONS_SHOWN (
     state: Yagt.TranslatorViewState,
     payload: { value: boolean }
   ) {
-    state.isButtonsShown = payload.value;
+    state.isButtonsShown = payload.value
   }
-};
+}
 
 const actions = {
-  setButtonsShown({ commit }: { commit: Commit }, value: boolean) {
-    commit("SET_BUTTONS_SHOWN", { value });
+  setButtonsShown ({ commit }: { commit: Commit }, value: boolean) {
+    commit('SET_BUTTONS_SHOWN', { value })
   }
-};
+}
 
 export default {
-  state,
+  state: viewState,
   mutations,
   actions
-};
+}

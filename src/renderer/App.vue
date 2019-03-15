@@ -6,13 +6,13 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { Component } from "vue-property-decorator";
+import Vue from 'vue'
+import { Component } from 'vue-property-decorator'
 
-import GtAppSidebar from "@/components/AppSidebar.vue";
+import GtAppSidebar from '@/components/AppSidebar.vue'
 
-import { ipcRenderer } from "electron";
-import IpcTypes from "../common/ipcTypes";
+import { ipcRenderer } from 'electron'
+import IpcTypes from '../common/IpcTypes'
 
 @Component({
   components: {
@@ -20,10 +20,10 @@ import IpcTypes from "../common/ipcTypes";
   }
 })
 export default class App extends Vue {
-  mounted() {
-    ipcRenderer.send(IpcTypes.REQUEST_CONFIG, "default");
-    ipcRenderer.send(IpcTypes.REQUEST_CONFIG, "games");
-    ipcRenderer.send(IpcTypes.MAIN_PAGE_LOAD_FINISHED);
+  public mounted () {
+    ipcRenderer.send(IpcTypes.REQUEST_CONFIG, 'default')
+    ipcRenderer.send(IpcTypes.REQUEST_CONFIG, 'games')
+    ipcRenderer.send(IpcTypes.MAIN_PAGE_LOAD_FINISHED)
   }
 }
 </script>

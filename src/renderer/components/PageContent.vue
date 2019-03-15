@@ -4,9 +4,9 @@
 </div>
 </template>
 
-<script>
-import Vue from "vue";
-import { Component, Prop } from "vue-property-decorator";
+<script lang="ts">
+import Vue from 'vue'
+import { Component, Prop } from 'vue-property-decorator'
 
 @Component
 export default class PageContent extends Vue {}

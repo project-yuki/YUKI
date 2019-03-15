@@ -12,21 +12,21 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { Component, Prop } from "vue-property-decorator";
+import Vue from 'vue'
+import { Component, Prop } from 'vue-property-decorator'
 
-import { ipcRenderer, remote } from "electron";
-import IpcTypes from "../../common/ipcTypes";
+import { ipcRenderer, remote } from 'electron'
+import IpcTypes from '../../common/IpcTypes'
 
 @Component
 export default class PageContent extends Vue {
-  @Prop(String) title!: string;
+  @Prop(String) public title!: string
 
-  minimizeWindow() {
-    remote.getCurrentWindow().hide();
+  public minimizeWindow () {
+    remote.getCurrentWindow().hide()
   }
-  closeWindow() {
-    ipcRenderer.send(IpcTypes.APP_EXIT);
+  public closeWindow () {
+    ipcRenderer.send(IpcTypes.APP_EXIT)
   }
 }
 </script>

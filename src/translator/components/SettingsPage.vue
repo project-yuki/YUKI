@@ -43,66 +43,64 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { Component, Watch } from "vue-property-decorator";
-import { State, namespace } from "vuex-class";
-import { Route } from "vue-router";
-import { remote } from "electron";
+import { remote } from 'electron'
+import Vue from 'vue'
+import { Component, Watch } from 'vue-property-decorator'
+import { Route } from 'vue-router'
+import { namespace, State } from 'vuex-class'
 
-import { ipcRenderer } from "electron";
-
-import { Chrome } from "vue-color";
+import { Chrome } from 'vue-color'
 
 @Component({
   components: {
-    ChromePicker: <any>Chrome
+    ChromePicker: Chrome as any
   }
 })
 export default class HookSettings extends Vue {
-  @namespace("Config").Getter("getOriginalText")
-  getOriginalText!: () => Yagt.FontStyle;
-  @namespace("Config").Getter("getTranslationText")
-  getTranslationText!: () => Yagt.TranslationTextStyle;
-  @namespace("Config").Getter("getBackgroundColor")
-  getBackgroundColor!: () => string;
+  @namespace('Config').Getter('getOriginalText')
+  public getOriginalText!: () => Yagt.FontStyle
+  @namespace('Config').Getter('getTranslationText')
+  public getTranslationText!: () => Yagt.TranslationTextStyle
+  @namespace('Config').Getter('getBackgroundColor')
+  public getBackgroundColor!: () => string
 
-  get originalTextSize() {
-    return this.getOriginalText().fontSize;
+  get originalTextSize () {
+    return this.getOriginalText().fontSize
   }
-  set originalTextSize(size: number) {
-    this.$store.commit("Config/SET_ORIGINAL_TEXT_SIZE", { size });
-    this.$store.commit("Config/SAVE_GUI_CONFIG");
+  set originalTextSize (size: number) {
+    this.$store.commit('Config/SET_ORIGINAL_TEXT_SIZE', { size })
+    this.$store.commit('Config/SAVE_GUI_CONFIG')
   }
-  get translationTextSize() {
-    return this.getTranslationText().fontSize;
+  get translationTextSize () {
+    return this.getTranslationText().fontSize
   }
-  set translationTextSize(size: number) {
-    this.$store.commit("Config/SET_TRANSLATION_TEXT_SIZE", { size });
-    this.$store.commit("Config/SAVE_GUI_CONFIG");
+  set translationTextSize (size: number) {
+    this.$store.commit('Config/SET_TRANSLATION_TEXT_SIZE', { size })
+    this.$store.commit('Config/SAVE_GUI_CONFIG')
   }
-  get translationTextMargin() {
-    return this.getTranslationText().margin;
+  get translationTextMargin () {
+    return this.getTranslationText().margin
   }
-  set translationTextMargin(margin: number) {
-    this.$store.commit("Config/SET_TRANSLATION_TEXT_MARGIN", { margin });
-    this.$store.commit("Config/SAVE_GUI_CONFIG");
+  set translationTextMargin (margin: number) {
+    this.$store.commit('Config/SET_TRANSLATION_TEXT_MARGIN', { margin })
+    this.$store.commit('Config/SAVE_GUI_CONFIG')
   }
-  get backgroundColor(): string {
-    return this.getBackgroundColor();
+  get backgroundColor (): string {
+    return this.getBackgroundColor()
   }
-  set backgroundColor(color: string) {
-    this.$store.commit("Config/SET_BACKGROUND_COLOR", { color });
-    this.$store.commit("Config/SAVE_GUI_CONFIG");
+  set backgroundColor (color: string) {
+    this.$store.commit('Config/SET_BACKGROUND_COLOR', { color })
+    this.$store.commit('Config/SAVE_GUI_CONFIG')
   }
 
-  beforeRouteEnter(to: Route, from: Route, next: Function) {
-    let newHeight = Math.trunc(
+  public beforeRouteEnter (to: Route, from: Route, next: () => void) {
+    const newHeight = Math.trunc(
       remote.screen.getPrimaryDisplay().size.height * 0.6
-    );
-    let window = remote.getCurrentWindow();
-    let width = window.getSize()[0];
-    window.setSize(width, newHeight);
-    next();
+    )
+    const window = remote.getCurrentWindow()
+    const width = window.getSize()[0]
+    window.setSize(width, newHeight)
+    next()
   }
 }
 </script>

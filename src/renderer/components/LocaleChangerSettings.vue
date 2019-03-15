@@ -48,84 +48,86 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { Component, Watch } from "vue-property-decorator";
-import { State, namespace } from "vuex-class";
+import Vue from 'vue'
+import { Component, Watch } from 'vue-property-decorator'
+import { namespace, State } from 'vuex-class'
 
-import { ipcRenderer } from "electron";
-import IpcTypes from "../../common/ipcTypes";
+import { ipcRenderer } from 'electron'
+import IpcTypes from '../../common/IpcTypes'
 
-type TempLocaleChangerItem = Yagt.Config.LocaleChangerItem & { id: string };
+type TempLocaleChangerItem = Yagt.Config.LocaleChangerItem & { id: string }
 
 @Component
-export default class localeChangerSettings extends Vue {
-  tableColumns = [
-    { title: "ID", name: "id" },
-    { title: "名称", name: "name" },
-    { title: "执行方式", name: "exec" },
-    { title: "设为默认", name: "enable", width: 80 },
-    { title: "删除", name: "delete", width: 96 }
-  ];
+export default class LocaleChangerSettings extends Vue {
+  public tableColumns = [
+    { title: 'ID', name: 'id' },
+    { title: '名称', name: 'name' },
+    { title: '执行方式', name: 'exec' },
+    { title: '设为默认', name: 'enable', width: 80 },
+    { title: '删除', name: 'delete', width: 96 }
+  ]
 
-  @(namespace("Config").State("default"))
-  defaultConfig!: Yagt.ConfigState["default"];
+  @(namespace('Config').State('default'))
+  public defaultConfig!: Yagt.ConfigState['default']
 
-  tempLocaleChangers: TempLocaleChangerItem[] = [];
+  public tempLocaleChangers: TempLocaleChangerItem[] = []
 
-  saveSettings() {
-    let savingLocaleChangers = {};
+  public saveSettings () {
+    const savingLocaleChangers = {}
     for (const localeChanger of this.tempLocaleChangers) {
-      savingLocaleChangers[localeChanger.id] = localeChanger;
-      delete savingLocaleChangers[localeChanger.id].id;
+      savingLocaleChangers[localeChanger.id] = localeChanger
+      delete savingLocaleChangers[localeChanger.id].id
     }
 
-    let savingConfig = {
+    const savingConfig = {
       ...this.defaultConfig,
       localeChangers: savingLocaleChangers
-    };
-    ipcRenderer.send(IpcTypes.REQUEST_SAVE_CONFIG, "default", savingConfig);
-    this.$toast.success("保存成功！");
-  }
-
-  @Watch("defaultConfig", { immediate: true, deep: true })
-  resetSettings() {
-    this.tempLocaleChangers = [];
-    for (const key in this.defaultConfig.localeChangers) {
-      this.tempLocaleChangers.push({
-        ...this.defaultConfig.localeChangers[key],
-        id: key
-      });
     }
+    ipcRenderer.send(IpcTypes.REQUEST_SAVE_CONFIG, 'default', savingConfig)
+    this.$toast.success('保存成功！')
   }
 
-  setDefault(id: string) {
-    let afterLocaleChangers = [];
-    for (const localeChanger of this.tempLocaleChangers) {
-      if (localeChanger.id === id) {
-        afterLocaleChangers.push({ ...localeChanger, enable: true });
-      } else {
-        afterLocaleChangers.push({ ...localeChanger, enable: false });
+  @Watch('defaultConfig', { immediate: true, deep: true })
+  public resetSettings () {
+    this.tempLocaleChangers = []
+    for (const key in this.defaultConfig.localeChangers) {
+      if (this.defaultConfig.localeChangers.hasOwnProperty(key)) {
+        this.tempLocaleChangers.push({
+          ...this.defaultConfig.localeChangers[key],
+          id: key
+        })
       }
     }
-    this.tempLocaleChangers = afterLocaleChangers;
   }
 
-  addLocaleChanger() {
-    this.tempLocaleChangers.push({ id: "", name: "", enable: false, exec: "" });
+  public setDefault (id: string) {
+    const afterLocaleChangers = []
+    for (const localeChanger of this.tempLocaleChangers) {
+      if (localeChanger.id === id) {
+        afterLocaleChangers.push({ ...localeChanger, enable: true })
+      } else {
+        afterLocaleChangers.push({ ...localeChanger, enable: false })
+      }
+    }
+    this.tempLocaleChangers = afterLocaleChangers
   }
 
-  deleteLocaleChanger(id: string) {
+  public addLocaleChanger () {
+    this.tempLocaleChangers.push({ id: '', name: '', enable: false, exec: '' })
+  }
+
+  public deleteLocaleChanger (id: string) {
     this.tempLocaleChangers = this.tempLocaleChangers.filter(
-      value => value.id !== id
-    );
-    let hasDefault = false;
+      (value) => value.id !== id
+    )
+    let hasDefault = false
     this.tempLocaleChangers.forEach(
-      value => (hasDefault = hasDefault || value.enable)
-    );
+      (value) => (hasDefault = hasDefault || value.enable)
+    )
     if (!hasDefault) {
       for (const localeChanger of this.tempLocaleChangers) {
-        this.setDefault(localeChanger.id);
-        break;
+        this.setDefault(localeChanger.id)
+        break
       }
     }
   }

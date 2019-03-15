@@ -15,14 +15,14 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { Component, Watch } from "vue-property-decorator";
-import { namespace } from "vuex-class";
+import Vue from 'vue'
+import { Component, Watch } from 'vue-property-decorator'
+import { namespace } from 'vuex-class'
 
-import { ipcRenderer, remote } from "electron";
-import IpcTypes from "../common/ipcTypes";
+import { ipcRenderer, remote } from 'electron'
+import IpcTypes from '../common/IpcTypes'
 
-import GtTitlebar from "@/components/Titlebar.vue";
+import GtTitlebar from '@/components/Titlebar.vue'
 
 @Component({
   components: {
@@ -30,76 +30,76 @@ import GtTitlebar from "@/components/Titlebar.vue";
   }
 })
 export default class App extends Vue {
-  @(namespace("View").State("isButtonsShown"))
-  isButtonsShown!: boolean;
+  @(namespace('View').State('isButtonsShown'))
+  public isButtonsShown!: boolean
 
-  @(namespace("Hooks").Getter("getLastTextById"))
-  getLastTextById!: (id: number) => string;
+  @(namespace('Hooks').Getter('getLastTextById'))
+  public getLastTextById!: (id: number) => string
 
-  @(namespace("Hooks").State("currentDisplayHookIndex"))
-  currentIndex!: number;
+  @(namespace('Hooks').State('currentDisplayHookIndex'))
+  public currentIndex!: number
 
-  @(namespace("Config").Getter("getBackgroundColor"))
-  getBackgroundColor!: () => string;
-  get backgroundColor() {
-    return this.getBackgroundColor();
+  @(namespace('Config').Getter('getBackgroundColor'))
+  public getBackgroundColor!: () => string
+  get backgroundColor () {
+    return this.getBackgroundColor()
   }
-  @Watch("backgroundColor")
-  onBackgroundColorChange() {
-    document.body.style.backgroundColor = this.backgroundColor;
-  }
-
-  get currentOriginText() {
-    return this.getLastTextById(this.currentIndex);
+  @Watch('backgroundColor')
+  public onBackgroundColorChange () {
+    document.body.style.backgroundColor = this.backgroundColor
   }
 
-  mounted() {
-    this.$router.push("/translate");
-    document.addEventListener("mouseenter", () => {
-      this.$store.dispatch("View/setButtonsShown", true);
-    });
-    document.addEventListener("mouseleave", () => {
-      if (this.currentOriginText !== "") {
-        this.$store.dispatch("View/setButtonsShown", false);
+  get currentOriginText () {
+    return this.getLastTextById(this.currentIndex)
+  }
+
+  public mounted () {
+    this.$router.push('/translate')
+    document.addEventListener('mouseenter', () => {
+      this.$store.dispatch('View/setButtonsShown', true)
+    })
+    document.addEventListener('mouseleave', () => {
+      if (this.currentOriginText !== '') {
+        this.$store.dispatch('View/setButtonsShown', false)
       }
-    });
+    })
 
-    ipcRenderer.send(IpcTypes.REQUEST_CONFIG, "default");
-    ipcRenderer.send(IpcTypes.REQUEST_CONFIG, "game");
-    ipcRenderer.send(IpcTypes.REQUEST_CONFIG, "gui");
-    let callback = (event: Electron.Event, name: string, cfg: any) => {
-      if (name !== "game") ipcRenderer.once(IpcTypes.HAS_CONFIG, callback);
-      else if (cfg.code === "") {
-        this.$router.push("/hooks");
+    ipcRenderer.send(IpcTypes.REQUEST_CONFIG, 'default')
+    ipcRenderer.send(IpcTypes.REQUEST_CONFIG, 'game')
+    ipcRenderer.send(IpcTypes.REQUEST_CONFIG, 'gui')
+    const callback = (event: Electron.Event, name: string, cfg: any) => {
+      if (name !== 'game') ipcRenderer.once(IpcTypes.HAS_CONFIG, callback)
+      else if (cfg.code === '') {
+        this.$router.push('/hooks')
       }
-    };
-    ipcRenderer.once(IpcTypes.HAS_CONFIG, callback);
+    }
+    ipcRenderer.once(IpcTypes.HAS_CONFIG, callback)
   }
 
-  updateWindowHeight(offset: number) {
-    let newHeight = document.body.offsetHeight + offset;
-    let window = remote.getCurrentWindow();
-    let width = window.getSize()[0];
-    window.setSize(width, newHeight);
+  public updateWindowHeight (offset: number) {
+    const newHeight = document.body.offsetHeight + offset
+    const window = remote.getCurrentWindow()
+    const width = window.getSize()[0]
+    window.setSize(width, newHeight)
   }
 
-  @Watch("currentIndex")
-  onCurrentIndexChanged() {
-    this.$store.dispatch("View/setButtonsShown", false);
-    this.$router.push("/translate");
-    ipcRenderer.send(IpcTypes.REQUEST_TRANSLATION, this.currentOriginText);
+  @Watch('currentIndex')
+  public onCurrentIndexChanged () {
+    this.$store.dispatch('View/setButtonsShown', false)
+    this.$router.push('/translate')
+    ipcRenderer.send(IpcTypes.REQUEST_TRANSLATION, this.currentOriginText)
   }
 
-  updated() {
-    if (this.$router.currentRoute.path === "/translate") {
+  public updated () {
+    if (this.$router.currentRoute.path === '/translate') {
       if (this.isButtonsShown) {
         this.$nextTick(() => {
-          this.updateWindowHeight(64);
-        });
+          this.updateWindowHeight(64)
+        })
       } else {
         this.$nextTick(() => {
-          this.updateWindowHeight(40);
-        });
+          this.updateWindowHeight(40)
+        })
       }
     }
   }

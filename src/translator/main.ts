@@ -1,54 +1,54 @@
-import "muse-ui/dist/muse-ui.css";
-import "../resources/material-icons/material-icons.css";
+import 'muse-ui/dist/muse-ui.css'
+import '../resources/material-icons/material-icons.css'
 
-import "./class-component-hooks";
+import './class-component-hooks'
 
-import Vue from "vue";
-import axios from "axios";
+import axios from 'axios'
+import Vue from 'vue'
 
-import App from "./App.vue";
-import router from "./router";
-import store from "./store";
+import App from './App.vue'
+import router from './router'
+import store from './store'
 
-import MuseUI from "muse-ui";
-Vue.use(MuseUI);
+import MuseUI from 'muse-ui'
+Vue.use(MuseUI)
 
 if (!process.env.IS_WEB) {
-  Vue.use(require("vue-electron"));
+  Vue.use(require('vue-electron'))
 }
-(<any>Vue).http = Vue.prototype.$http = axios;
-Vue.config.productionTip = false;
+(Vue as any).http = Vue.prototype.$http = axios
+Vue.config.productionTip = false
 
 new Vue({
   components: { App },
   router,
   store,
-  template: "<App/>"
-}).$mount("#app");
+  template: '<App/>'
+}).$mount('#app')
 
-import { ipcRenderer, remote } from "electron";
-import IpcTypes from "../common/ipcTypes";
+import { ipcRenderer, remote } from 'electron'
+import IpcTypes from '../common/IpcTypes'
 
 ipcRenderer.on(
   IpcTypes.HAS_HOOK_TEXT,
   (event: Electron.Event, hook: Yagt.TextOutputObject) => {
     if (!remote.getCurrentWindow().isVisible()) {
-      remote.getCurrentWindow().show();
+      remote.getCurrentWindow().show()
     }
-    const text = hook.text;
-    delete hook.text;
-    store.dispatch("Hooks/setHookTextOrPatterns", { hook, text });
+    const text = hook.text
+    delete hook.text
+    store.dispatch('Hooks/setHookTextOrPatterns', { hook, text })
   }
-);
+)
 ipcRenderer.on(
   IpcTypes.HAS_CONFIG,
   (event: Electron.Event, name: string, cfgs: object) => {
-    store.dispatch("Config/setConfig", { name, cfgs });
+    store.dispatch('Config/setConfig', { name, cfgs })
   }
-);
+)
 ipcRenderer.on(
   IpcTypes.HAS_TRANSLATION,
-  (event: Electron.Event, translation: Yagt.Translations["translations"]) => {
-    store.dispatch("Hooks/mergeTranslation", translation);
+  (event: Electron.Event, translation: Yagt.Translations['translations']) => {
+    store.dispatch('Hooks/mergeTranslation', translation)
   }
-);
+)

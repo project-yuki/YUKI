@@ -1,10 +1,10 @@
-import Vue from "vue";
-import * as Vuex from "vuex";
-import modules from "./modules";
+import Vue from 'vue'
+import * as Vuex from 'vuex'
+import modules from './modules'
 
-Vue.use(Vuex);
+Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules,
-  strict: process.env.NODE_ENV !== "production"
-});
+  strict: process.env.NODE_ENV !== 'production'
+})

@@ -51,15 +51,15 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { ipcRenderer } from "electron";
-import IpcTypes from "../../common/ipcTypes";
-import { Component } from "vue-property-decorator";
-import { State, namespace } from "vuex-class";
+import { ipcRenderer } from 'electron'
+import Vue from 'vue'
+import { Component } from 'vue-property-decorator'
+import { namespace, State } from 'vuex-class'
+import IpcTypes from '../../common/IpcTypes'
 
-import GtPageHeader from "@/components/PageHeader.vue";
-import GtPageContent from "@/components/PageContent.vue";
-import GtOneColumn from "@/components/OneColumn.vue";
+import GtOneColumn from '@/components/OneColumn.vue'
+import GtPageContent from '@/components/PageContent.vue'
+import GtPageHeader from '@/components/PageHeader.vue'
 
 @Component({
   components: {
@@ -69,72 +69,72 @@ import GtOneColumn from "@/components/OneColumn.vue";
   }
 })
 export default class FavoritePage extends Vue {
-  activeStep: number = -1;
-  game: Yagt.Game = {
-    name: "",
-    path: "",
-    code: "",
-    localeChanger: ""
-  };
-
-  @(namespace("Config").State("default"))
-  defaultConfig!: Yagt.ConfigState["default"];
-
-  get showStepOne() {
-    return this.activeStep === 0;
-  }
-  get showStepTwo() {
-    return this.activeStep === 1;
-  }
-  get finished() {
-    return this.activeStep > 1;
-  }
-  get isPathNull() {
-    return this.game.path === "";
+  public activeStep: number = -1
+  public game: Yagt.Game = {
+    name: '',
+    path: '',
+    code: '',
+    localeChanger: ''
   }
 
-  handleNext() {
-    this.activeStep++;
+  @(namespace('Config').State('default'))
+  public defaultConfig!: Yagt.ConfigState['default']
+
+  get showStepOne () {
+    return this.activeStep === 0
+  }
+  get showStepTwo () {
+    return this.activeStep === 1
+  }
+  get finished () {
+    return this.activeStep > 1
+  }
+  get isPathNull () {
+    return this.game.path === ''
+  }
+
+  public handleNext () {
+    this.activeStep++
     if (this.finished) {
       ipcRenderer.once(IpcTypes.HAS_ADDED_GAME, () => {
-        this.$alert("添加成功！", { type: "success" }).then(() => {
-          this.handleRedirect();
-        });
-      });
-      let localeChangers = this.defaultConfig.localeChangers;
-      for (let key in localeChangers) {
+        this.$alert('添加成功！', { type: 'success' }).then(() => {
+          this.handleRedirect()
+        })
+      })
+      const localeChangers = this.defaultConfig.localeChangers
+      for (const key in localeChangers) {
         if (localeChangers[key].enable === true) {
-          this.game.localeChanger = key;
-          break;
+          this.game.localeChanger = key
+          break
         }
       }
-      ipcRenderer.send(IpcTypes.REQUEST_ADD_GAME, this.game);
+      ipcRenderer.send(IpcTypes.REQUEST_ADD_GAME, this.game)
     }
   }
-  handlePrev() {
-    this.activeStep--;
+  public handlePrev () {
+    this.activeStep--
   }
-  handleRequestGamePath() {
+  public handleRequestGamePath () {
     ipcRenderer.once(
       IpcTypes.HAS_NEW_GAME_PATH,
       (event: Electron.Event, gamePath: string) => {
-        this.game.path = gamePath;
-        if (this.game.name === "") {
+        this.game.path = gamePath
+        if (this.game.name === '') {
           this.game.name = gamePath.substring(
-            gamePath.lastIndexOf("\\") + 1,
-            gamePath.lastIndexOf(".exe")
-          );
+            gamePath.lastIndexOf('\\') + 1,
+            gamePath.lastIndexOf('.exe')
+          )
         }
       }
-    );
-    ipcRenderer.send(IpcTypes.REQUEST_NEW_GAME_PATH);
+    )
+    ipcRenderer.send(IpcTypes.REQUEST_NEW_GAME_PATH)
   }
-  handleRedirect() {
-    this.$router.push("/games");
+  public handleRedirect () {
+    this.$router.push('/games')
   }
 
-  mounted() {
-    this.activeStep = 0;
+  public mounted () {
+    this.activeStep = 0
   }
 }
 </script>

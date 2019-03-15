@@ -1,5 +1,7 @@
 # Yagt - Yet Another Galgame Translator
 
+[![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
+
 [中文](https://github.com/Yagt/Yagt/blob/master/README.md)
 
 ![how it looks](https://raw.githubusercontent.com/Yagt/Yagt/master/.github/imgs/how_it_looks.png)

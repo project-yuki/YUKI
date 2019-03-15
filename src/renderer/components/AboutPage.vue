@@ -11,12 +11,12 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { Component } from "vue-property-decorator";
-import { remote } from "electron";
+import { remote } from 'electron'
+import Vue from 'vue'
+import { Component } from 'vue-property-decorator'
 
-import GtPageHeader from "@/components/PageHeader.vue";
-import GtPageContent from "@/components/PageContent.vue";
+import GtPageContent from '@/components/PageContent.vue'
+import GtPageHeader from '@/components/PageHeader.vue'
 
 @Component({
   components: {
@@ -25,8 +25,8 @@ import GtPageContent from "@/components/PageContent.vue";
   }
 })
 export default class FavoritePage extends Vue {
-  toggleDevTools() {
-    remote.getCurrentWebContents().toggleDevTools();
+  public toggleDevTools () {
+    remote.getCurrentWebContents().toggleDevTools()
   }
 }
 </script>
