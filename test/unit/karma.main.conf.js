@@ -30,9 +30,10 @@ module.exports = config => {
     client: {
       useIframe: false
     },
-    coverageReporter: {
-      dir: "./coverage",
-      reporters: [{ type: "lcov", subdir: "." }, { type: "text-summary" }]
+    coverageIstanbulReporter: {
+      dir: path.join(__dirname, "./coverage"),
+      fixWebpackSourcePaths: true,
+      reporters: ['text-summary', 'html', 'lcovonly']
     },
     customLaunchers: {
       visibleElectron: {
@@ -45,7 +46,7 @@ module.exports = config => {
     preprocessors: {
       "./main.js": ["webpack", "sourcemap"]
     },
-    reporters: ["spec", "coverage"],
+    reporters: ["spec", "coverage-istanbul"],
     singleRun: true,
     webpack: webpackConfig,
     webpackMiddleware: {

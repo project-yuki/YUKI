@@ -1,4 +1,5 @@
-const ConfigInjector = require('inject-loader!../../../../src/main/config/config')
+const ConfigInjector =
+  require('inject-loader!../../../../src/main/config/config')
 import { expect } from 'chai'
 
 describe('Config', () => {

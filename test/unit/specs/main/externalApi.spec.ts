@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import ExternalApi from '../../../../src/main/translate/externalApi'
+import ExternalApi from '../../../../src/main/translate/ExternalApi'
 
 describe('ExternalApi', () => {
   before(() => {
@@ -18,7 +18,7 @@ describe('ExternalApi', () => {
       .translate('悠真くんを攻略すれば２１０円か。なるほどなぁ…')
       .then((translation) => {
         expect(translation).to.equal(
-          '如果攻略悠真的话就是210日元啊。原来如此啊……'
+          '如果进攻悠真君,210日元?原来如此啊……'
         )
       })
   }).timeout(5000)
@@ -35,7 +35,7 @@ describe('ExternalApi', () => {
       .translate('悠真くんを攻略すれば２１０円か。なるほどなぁ…')
       .then((translation) => {
         expect(translation).to.equal(
-          '如果攻略悠真的话就是210日元啊。原来如此啊……'
+          '如果进攻悠真君,210日元?原来如此啊……'
         )
       })
       .then(() =>
@@ -45,7 +45,7 @@ describe('ExternalApi', () => {
       )
       .then((translation) => {
         expect(translation).to.equal(
-          '进去了，今天泡柚子的澡剂。水也有点白的像温泉一样呢。？'
+          '喂,今天是柚子的浴盐进入了。好像也有点白温泉热水吗?'
         )
       })
   }).timeout(5000)
