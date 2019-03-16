@@ -10,15 +10,15 @@ import InterceptorConfig from './InterceptorConfig'
 const debug = require('debug')('yagt:configManager')
 
 export default class ConfigManager {
-  public static instance: ConfigManager | undefined
   public static getInstance (): ConfigManager {
-    if (!this.instance) {
+    if (this.instance === undefined) {
       this.instance = new ConfigManager()
     }
     return this.instance
   }
+  private static instance: ConfigManager | undefined
 
-  private nameToConfigMap: INameToConfigMap = {
+  public nameToConfigMap: INameToConfigMap = {
     default: new DefaultConfig(),
     games: new GamesConfig(),
     interceptor: new InterceptorConfig(),

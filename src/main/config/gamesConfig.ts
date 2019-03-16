@@ -13,6 +13,7 @@ export default class GamesConfig extends Config {
     this.config.games = cfg
     this.save()
   }
+
   protected getDefaultObject (): { games: Yagt.Config.Games } {
     return { games: [] }
   }
