@@ -3,6 +3,8 @@ import IpcTypes from '../../common/IpcTypes'
 const debug = require('debug')('yagt:ipc')
 import { extname } from 'path'
 import ConfigManager from '../config/ConfigManager'
+import { IProgressState } from '../Downloader'
+import DownloaderFactory from '../DownloaderFactory'
 import Game from '../Game'
 import Hooker from '../Hooker'
 import TranslationManager from '../translate/TranslationManager'
@@ -56,6 +58,10 @@ export default function (mainWindow: Electron.BrowserWindow) {
   ipcMain.on(IpcTypes.REQUEST_CONFIG, (event: Electron.Event, name: string) => {
     if (name === 'game') {
       requestGame(event)
+      return
+    }
+    if (name === 'librariesBaseStorePath') {
+      sendLibrariesBaseStorePath(event)
       return
     }
     debug('request config %s', ConfigManager.getInstance().getFilename(name))
@@ -164,6 +170,27 @@ export default function (mainWindow: Electron.BrowserWindow) {
       })
     }
   )
+
+  ipcMain.on(
+    IpcTypes.HAS_DOWNLOAD_PROGRESS,
+    (packName: string, state: IProgressState) => {
+      mainWindow.webContents.send(IpcTypes.HAS_DOWNLOAD_PROGRESS, packName, state)
+    }
+  )
+
+  ipcMain.on(
+    IpcTypes.HAS_DOWNLOAD_COMPLETE,
+    (packName: string) => {
+      mainWindow.webContents.send(IpcTypes.HAS_DOWNLOAD_COMPLETE, packName)
+    }
+  )
+
+  ipcMain.on(
+    IpcTypes.REQUEST_DOWNLOAD_LIBRARY,
+    (event: Electron.Event, packName: string) => {
+      DownloaderFactory.makeLibraryDownloader(packName).start()
+    }
+  )
 }
 
 function sendConfig (configName: string, event: Electron.Event) {
@@ -179,6 +206,14 @@ function sendGameInfo (event: Electron.Event) {
     IpcTypes.HAS_CONFIG,
     'game',
     (translatorWindow as TranslatorWindow).getGameInfo()
+  )
+}
+
+function sendLibrariesBaseStorePath (event: Electron.Event) {
+  event.sender.send(
+    IpcTypes.HAS_CONFIG,
+    'librariesBaseStorePath',
+    DownloaderFactory.LIBRARY_BASE_STORE_PATH
   )
 }
 

@@ -2,7 +2,7 @@ import * as fs from 'fs'
 import * as request from 'request'
 const progress = require('request-progress')
 
-interface IProgressState {
+export interface IProgressState {
   // Overall percent (between 0 to 1)
   percent: number,
   // The download speed in bytes/sec
@@ -15,9 +15,9 @@ interface IProgressState {
   },
   time: {
     // The total elapsed seconds since the start (3 decimals)
-    elapsed: number,
+    elapsed: string,
     // The remaining seconds to finish (3 decimals)
-    remaining: number
+    remaining: string
   }
 }
 

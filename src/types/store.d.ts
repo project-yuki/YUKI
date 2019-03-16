@@ -26,8 +26,9 @@ declare namespace Yagt {
     localeChanger: string
   }
   export interface ConfigState {
-    default: any
-    games: Game[]
+    default: Yagt.Config.Default
+    games: Game[],
+    librariesBaseStorePath: string
   }
 
   export interface GuiState {
@@ -49,7 +50,7 @@ declare namespace Yagt {
   }
 
   export interface TranslatorConfigState {
-    default: any
+    default: Yagt.Config.Default
     game: Game
     gui: {
       originalText: FontStyle;

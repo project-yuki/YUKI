@@ -31,7 +31,7 @@ declare namespace Yagt {
       traditionalChinese?: boolean
     }
 
-    export interface MeCab {
+    export interface LibraryItem {
       enable: boolean
       path: string
     }
@@ -39,13 +39,14 @@ declare namespace Yagt {
     export interface Default extends Libraries, Config {
       localeChangers: LocaleChangerItems
       onlineApis: OnlineApiItem[]
-      translators: {
-        jBeijing: JBeijing;
-      }
     }
 
     export interface Libraries {
-      mecab: MeCab
+      librariesRepoUrl: string
+      mecab: LibraryItem,
+      translators: {
+        jBeijing: JBeijing
+      }
     }
 
     export interface Interceptor extends Config {

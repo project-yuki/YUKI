@@ -1,9 +1,10 @@
 const debug = require('debug')('yagt:rendererWindow')
 import { Commit } from 'vuex'
 
-const configState: Yagt.ConfigState = {
+const configState: any = {
   default: {},
-  games: []
+  games: [],
+  librariesBaseStorePath: ''
 }
 
 const mutations = {
@@ -14,6 +15,9 @@ const mutations = {
         break
       case 'games':
         state.games = payload.cfgs
+        break
+      case 'librariesBaseStorePath':
+        state.librariesBaseStorePath = payload.cfgs
         break
       default:
         debug('invalid config name: %s', payload.name)

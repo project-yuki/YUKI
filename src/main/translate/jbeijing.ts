@@ -5,7 +5,7 @@ import * as ref from 'ref'
 const debug = require('debug')('yagt:jbeijing')
 
 export default class JBeijing {
-  public static readonly DICT_PATH = 'dict\\jb\\'
+  public static readonly DICT_PATH = 'lib\\dict\\jb\\'
 
   // REFERENCE: Viusal Novel Reader jbjct.py
   public static readonly TEXT_BUFFER_SIZE = 3000
@@ -85,8 +85,7 @@ export default class JBeijing {
 
   private checkAndMakeDictDir () {
     if (!fs.existsSync(JBeijing.DICT_PATH)) {
-      fs.mkdirSync(JBeijing.DICT_PATH)
-      debug('user dict path not exists. created it')
+      debug('user dict path not exists. ignore')
     }
   }
 

@@ -2,6 +2,9 @@ import 'babel-polyfill'
 import { app, BrowserWindow, Menu, Tray } from 'electron'
 import * as fs from 'fs'
 import * as path from 'path'
+import ConfigManager from './config/ConfigManager'
+import DownloaderFactory from './DownloaderFactory'
+import setupIpc from './setup/Ipc'
 const debug = require('debug')('yagt:app')
 
 // check & make ./config folder
@@ -29,8 +32,7 @@ debug('appPath: %s', global.__appDir)
 
 const iconPath = path.join(global.__appDir, 'build/icons/icon.png')
 
-import ConfigManager from './config/ConfigManager'
-import setupIpc from './setup/Ipc'
+DownloaderFactory.init()
 
 let mainWindow: Electron.BrowserWindow | null
 

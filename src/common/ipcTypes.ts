@@ -21,7 +21,13 @@ enum IpcTypes {
   APP_EXIT = 'app-exit',
   REQUEST_SAVE_TRANSLATOR_GUI = 'request-save-translator-gui',
   REQUEST_PATH_WITH_FILE = 'request-path-with-file',
-  HAS_PATH_WITH_FILE = 'has-path-with-file'
+  HAS_PATH_WITH_FILE = 'has-path-with-file',
+  HAS_DOWNLOAD_PROGRESS = 'has-download-progress',
+  HAS_DOWNLOAD_COMPLETE = 'has-download-complete',
+  REQUEST_PAUSE_DOWNLOAD = 'request-pause-download',
+  REQUEST_RESUME_DOWNLOAD = 'request-resume-download',
+  REQUEST_ABORT_DOWNLOAD = 'request-abort-download',
+  REQUEST_DOWNLOAD_LIBRARY = 'request-download-library'
 }
 
 export default IpcTypes

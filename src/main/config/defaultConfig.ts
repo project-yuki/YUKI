@@ -36,7 +36,9 @@ export default class DefaultConfig extends Config {
         }
       ],
       translators: { jBeijing: { enable: false, path: '' } },
-      mecab: { enable: false, path: '' }
+      mecab: { enable: false, path: '' },
+      jbdict: { enable: false, path: '' },
+      librariesRepoUrl: 'https://github.com/Yagt/libraries/raw/master/_pack/'
     }
   }
 }

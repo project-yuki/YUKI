@@ -27,6 +27,7 @@ export default class App extends Vue {
   public mounted () {
     ipcRenderer.send(IpcTypes.REQUEST_CONFIG, 'default')
     ipcRenderer.send(IpcTypes.REQUEST_CONFIG, 'games')
+    ipcRenderer.send(IpcTypes.REQUEST_CONFIG, 'librariesBaseStorePath')
     ipcRenderer.send(IpcTypes.MAIN_PAGE_LOAD_FINISHED)
   }
 }

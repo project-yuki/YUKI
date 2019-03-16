@@ -5,7 +5,7 @@ import IpcTypes from '../../../common/IpcTypes'
 
 let isSavingConfig = false
 
-const configState: Yagt.TranslatorConfigState = {
+const configState: any = {
   default: {},
   game: {
     name: '',
