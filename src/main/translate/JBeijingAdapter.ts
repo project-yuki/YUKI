@@ -1,3 +1,4 @@
+import { existsSync } from 'fs'
 import JBeijing from './JBeijing'
 
 export default class JBeijingAdapter implements Yagt.Translator {
@@ -7,7 +8,7 @@ export default class JBeijingAdapter implements Yagt.Translator {
   constructor (config: Yagt.Config.JBeijing) {
     this.config = config
     this.jb = new JBeijing(config.path)
-    if (config.dictPath) {
+    if (config.dictPath && existsSync(config.dictPath)) {
       this.jb.loadUserDic(config.dictPath)
     }
   }

@@ -1,8 +1,4 @@
 {
-  "jbdict": {
-    "enable": true,
-    "path": "[object Object]\\dict\\jb"
-  },
   "librariesRepoUrl": "https://github.com/Yagt/libraries/raw/master/_pack/",
   "localeChangers": {
     "alphaROMdiE": {

@@ -1,6 +1,6 @@
 <template>
 <div>
-  <mu-button color="primary" @click="saveSettings">保存</mu-button>
+  <mu-button color="primary" @click="saveSettings(true)">保存</mu-button>
   <mu-button color="warning" @click="resetSettings">重置</mu-button>
   <p class="text-h1">程序库设置</p>
   <p class="text-h2">Textractor</p>
@@ -107,13 +107,15 @@ export default class LibrarySettings extends Vue {
 
   public remainingDownloadTaskCount = 0
 
-  public saveSettings () {
+  public saveSettings (showToast: boolean) {
     const savingConfig = {
       ...this.defaultConfig,
       ...this.tempLibraries
     }
     ipcRenderer.send(IpcTypes.REQUEST_SAVE_CONFIG, 'default', savingConfig)
-    this.$toast.success('保存成功！')
+    if (showToast) {
+      this.$toast.success('保存成功！')
+    }
   }
 
   public requestPath (library: string, filename: string, suffix: string) {
@@ -148,13 +150,11 @@ export default class LibrarySettings extends Vue {
         this.$toast.success(`${name} 安装完成，重启生效`)
         switch (name) {
           case 'dict.jb':
-            // tslint:disable-next-line:no-console
-            console.log(this.librariesBaseStorePath)
             this.resetSettings()
             this.jbdictDownloadState = null
             this.tempLibraries.translators.jBeijing.dictPath =
               `${this.librariesBaseStorePath}\\dict\\jb`
-            this.saveSettings()
+            this.saveSettings(false)
             break
         }
         this.remainingDownloadTaskCount--

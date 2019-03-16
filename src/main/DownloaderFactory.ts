@@ -20,7 +20,7 @@ export default class DownloaderFactory {
   public static makeLibraryDownloader (packName: string): Downloader {
     return new Downloader(
       `${this.LIBRARY_BASE_REPO}${packName}.zip`,
-      `${this.LIBRARY_BASE_STORE_PATH}${packName}.zip`
+      `${this.LIBRARY_BASE_STORE_PATH}\\${packName}.zip`
     ).onProgress((state) => {
       debug('yagt:downloader:library')('[%s] downloading -> %O', packName, state)
       ipcMain.emit(IpcTypes.HAS_DOWNLOAD_PROGRESS, packName, state)
@@ -29,7 +29,7 @@ export default class DownloaderFactory {
     }).onEnd(() => {
       debug('yagt:downloader:library')('[%s] download complete', packName)
       extract(
-        `${this.LIBRARY_BASE_STORE_PATH}${packName}.zip`,
+        `${this.LIBRARY_BASE_STORE_PATH}\\${packName}.zip`,
         { dir: this.LIBRARY_BASE_STORE_PATH },
         (err: Error) => {
           if (err) {
@@ -38,7 +38,7 @@ export default class DownloaderFactory {
           }
 
           debug('yagt:downloader:library')('[%s] unzip complete', packName)
-          unlinkSync(`${this.LIBRARY_BASE_STORE_PATH}${packName}.zip`)
+          unlinkSync(`${this.LIBRARY_BASE_STORE_PATH}\\${packName}.zip`)
           ipcMain.emit(IpcTypes.HAS_DOWNLOAD_COMPLETE, packName)
         }
       )
