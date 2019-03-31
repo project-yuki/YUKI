@@ -1,5 +1,7 @@
+import { app } from 'electron'
 import * as fs from 'fs'
 import * as jsonfile from 'jsonfile'
+import * as path from 'path'
 const debug = require('debug')('yagt:config')
 
 abstract class Config {
@@ -10,35 +12,38 @@ abstract class Config {
 
   protected config: any
 
-  public constructor () {
-    if (!fs.existsSync(`config/${this.getFilename()}.json`)) {
+  public init () {
+    if (!fs.existsSync(
+      path.resolve(global.__baseDir, `config/${this.getFilename()}.json`))) {
       this.config = this.getDefaultObject()
       this.save()
     } else {
       this.load()
     }
+    return this
   }
+
   public abstract getFilename (): string
 
   public load () {
+    const filePath = path.resolve(global.__baseDir, `config/${this.getFilename()}.json`)
     try {
-      this.config = jsonfile.readFileSync(`config/${this.getFilename()}.json`)
-      debug('%s loaded', `config/${this.getFilename()}.json`)
+      this.config = jsonfile.readFileSync(filePath)
+      debug('%s loaded', filePath)
     } catch (e) {
-      debug('%s loads failed !> %s', `config/${this.getFilename()}.json`, e)
+      debug('%s loads failed !> %s', filePath, e)
+      app.exit(-2)
     }
   }
 
   public save () {
+    const filePath = path.resolve(global.__baseDir, `config/${this.getFilename()}.json`)
     try {
-      jsonfile.writeFileSync(
-        `config/${this.getFilename()}.json`,
-        this.config,
-        Config.FILE_OPTIONS
-      )
-      debug('%s saved', `config/${this.getFilename()}.json`)
+      jsonfile.writeFileSync(filePath, this.config, Config.FILE_OPTIONS)
+      debug('%s saved', filePath)
     } catch (e) {
-      debug('%s saves failed !> %s', `config/${this.getFilename()}.json`, e)
+      debug('%s saves failed !> %s', filePath, e)
+      app.exit(-2)
     }
   }
 

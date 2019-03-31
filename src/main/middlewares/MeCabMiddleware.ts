@@ -83,7 +83,7 @@ export default class MecabMiddleware
 
   private mecab: IMeCab | undefined
 
-  constructor (config: Yagt.Config.MeCab) {
+  constructor (config: Yagt.Config.Libraries['mecab']) {
     if (
       !config.enable ||
       !fs.existsSync(path.join(config.path, 'libmecab.dll'))

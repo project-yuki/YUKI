@@ -11,7 +11,7 @@ const debug = require('debug')('yagt:configManager')
 
 export default class ConfigManager {
   public static getInstance (): ConfigManager {
-    if (this.instance === undefined) {
+    if (!this.instance) {
       this.instance = new ConfigManager()
     }
     return this.instance
@@ -19,10 +19,10 @@ export default class ConfigManager {
   private static instance: ConfigManager | undefined
 
   public nameToConfigMap: INameToConfigMap = {
-    default: new DefaultConfig(),
-    games: new GamesConfig(),
-    interceptor: new InterceptorConfig(),
-    gui: new GuiConfig()
+    default: new DefaultConfig().init(),
+    games: new GamesConfig().init(),
+    interceptor: new InterceptorConfig().init(),
+    gui: new GuiConfig().init()
   }
 
   public get<T extends Yagt.Config.Config> (configName: string): T {

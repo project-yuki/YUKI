@@ -5,7 +5,7 @@ import ExternalApi from './ExternalApi'
 
 export default class TranslationManager {
   public static getInstance (): TranslationManager {
-    if (this.instance === undefined) {
+    if (!this.instance) {
       this.instance = new TranslationManager()
     }
     return this.instance
