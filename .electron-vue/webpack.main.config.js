@@ -9,6 +9,9 @@ const webpack = require("webpack");
 const BabelMinifyWebpackPlugin = require("babel-minify-webpack-plugin");
 
 let mainConfig = {
+  optimization: {
+    minimize: false
+  },
   mode: process.env.NODE_ENV,
   entry: {
     main: path.join(__dirname, "../src/main/index.ts")

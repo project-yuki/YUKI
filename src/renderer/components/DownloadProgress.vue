@@ -24,11 +24,10 @@ import {
 
 import GtPageContent from '@/components/PageContent.vue'
 import GtPageHeader from '@/components/PageHeader.vue'
-import { IProgressState } from '../../main/Downloader'
 
 @Component
 export default class DownloadProgress extends Vue {
-  @Prop() public state!: IProgressState
+  @Prop() public state!: RequestProgress.ProgressState
 
   get percent100 () {
     return parseFloat((this.state.percent * 100).toFixed(2))

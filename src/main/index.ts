@@ -74,8 +74,6 @@ function createWindow () {
 
   mainWindow.loadURL(mainWinURL)
 
-  mainWindow.webContents.openDevTools()
-
   mainWindow.on('close', () => {
     if (!mainWindow) return
 

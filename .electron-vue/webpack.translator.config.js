@@ -21,6 +21,9 @@ const { VueLoaderPlugin } = require("vue-loader");
 let whiteListedModules = ["vue"];
 
 let translatorConfig = {
+  optimization: {
+    minimize: false
+  },
   mode: process.env.NODE_ENV,
   devtool: "#cheap-module-eval-source-map",
   entry: {

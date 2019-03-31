@@ -21,6 +21,9 @@ const { VueLoaderPlugin } = require("vue-loader");
 let whiteListedModules = ["vue"];
 
 let rendererConfig = {
+  optimization: {
+    minimize: false
+  },
   mode: process.env.NODE_ENV,
   devtool: "#cheap-module-eval-source-map",
   entry: {
@@ -182,9 +185,7 @@ if (process.env.NODE_ENV === "production") {
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": '"production"'
     }),
-    new webpack.LoaderOptionsPlugin({
-      minimize: true
-    })
+    new webpack.LoaderOptionsPlugin({ minimize: true })
   );
 }
 

@@ -2,30 +2,11 @@ import * as fs from 'fs'
 import * as request from 'request'
 const progress = require('request-progress')
 
-export interface IProgressState {
-  // Overall percent (between 0 to 1)
-  percent: number,
-  // The download speed in bytes/sec
-  speed: number,
-  size: {
-    // The total payload size in bytes
-    total: number,
-    // The transferred payload size in bytes
-    transferred: number
-  },
-  time: {
-    // The total elapsed seconds since the start (3 decimals)
-    elapsed: string,
-    // The remaining seconds to finish (3 decimals)
-    remaining: string
-  }
-}
-
 export default class Downloader {
   private endCallback: () => void
   private errorCallback: (err: Error) => void
   private downloadRequest: request.Request | undefined
-  private progressCallback: (state: IProgressState) => void | undefined
+  private progressCallback: (state: RequestProgress.ProgressState) => void | undefined
 
   constructor (private fileUrl: string, private saveToPath: string) {
     this.progressCallback = () => { return }
@@ -36,7 +17,7 @@ export default class Downloader {
   public start () {
     this.downloadRequest = request.get(this.fileUrl)
     progress(this.downloadRequest)
-      .on('progress', (state: IProgressState) => {
+      .on('progress', (state: RequestProgress.ProgressState) => {
         this.progressCallback(state)
       })
       .on('error', (err: Error) => {
@@ -66,7 +47,7 @@ export default class Downloader {
     }
   }
 
-  public onProgress (callback: (state: IProgressState) => void) {
+  public onProgress (callback: (state: RequestProgress.ProgressState) => void) {
     this.progressCallback = callback
     return this
   }
