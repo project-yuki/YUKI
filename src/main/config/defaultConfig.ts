@@ -35,9 +35,8 @@ export default class DefaultConfig extends Config {
           name: '有道'
         }
       ],
-      translators: { jBeijing: { enable: false, path: '' } },
+      translators: { jBeijing: { enable: false, path: '', dictPath: '' } },
       mecab: { enable: false, path: '' },
-      jbdict: { enable: false, path: '' },
       librariesRepoUrl: 'https://github.com/Yagt/libraries/raw/master/_pack/'
     }
   }
