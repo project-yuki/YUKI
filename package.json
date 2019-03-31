@@ -95,7 +95,7 @@
     "del": "^3.0.0",
     "devtron": "^1.4.0",
     "electron": "^4.0.3",
-    "electron-builder": "^20.19.2",
+    "electron-builder": "^20.39.0",
     "electron-debug": "^1.5.0",
     "electron-rebuild": "^1.8.2",
     "file-loader": "^1.1.11",
