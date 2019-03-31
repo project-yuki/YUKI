@@ -18,7 +18,7 @@ interface IPublisherMap {
 
 export default class Hooker {
   public static getInstance () {
-    if (this.instance === undefined) {
+    if (!this.instance) {
       this.instance = new Hooker()
     }
     return this.instance

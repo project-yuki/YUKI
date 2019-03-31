@@ -14,7 +14,9 @@ export default class DownloaderFactory {
   public static init () {
     this.LIBRARY_BASE_REPO = ConfigManager.getInstance()
       .get<Yagt.Config.Default>('default').librariesRepoUrl
-    this.LIBRARY_BASE_STORE_PATH = path.join(global.__baseDir, 'lib')
+    this.LIBRARY_BASE_STORE_PATH = path.resolve(global.__baseDir, 'lib')
+    debug('yagt:downloader:factory')('library base repo -> %s', this.LIBRARY_BASE_REPO)
+    debug('yagt:downloader:factory')('library base store path -> %s', this.LIBRARY_BASE_STORE_PATH)
   }
 
   public static makeLibraryDownloader (packName: string): Downloader {
