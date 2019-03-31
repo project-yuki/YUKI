@@ -106,6 +106,7 @@ export default class MecabMiddleware
     next: (newContext: Yagt.TextOutputObject) => void
   ) {
     if (!this.mecab) {
+      debug(this.mecab)
       next(context)
       return
     }

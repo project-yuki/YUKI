@@ -1,5 +1,5 @@
 import IpcTypes from '../common/IpcTypes'
-const debug = require('debug')
+const debug = require('debug')('yagt:hooker')
 import * as path from 'path'
 import { Textractor } from 'textractor-wrapper'
 import ApplicationBuilder from '../common/ApplicationBuilder'
@@ -10,7 +10,7 @@ import PublishMiddleware from './middlewares/PublishMiddleware'
 import TextInterceptorMiddleware from './middlewares/TextInterceptorMiddleware'
 import TextMergerMiddleware from './middlewares/TextMergerMiddleware'
 
-const applicationBuilder = new ApplicationBuilder<Yagt.TextOutputObject>()
+let applicationBuilder: ApplicationBuilder<Yagt.TextOutputObject>
 
 interface IPublisherMap {
   ['thread-output']: PublishMiddleware
@@ -43,9 +43,14 @@ export default class Hooker {
     this.hooker.start()
   }
 
+  public rebuild () {
+    delete require.cache[require.resolve('mecab-ffi')]
+    this.buildApplication()
+  }
+
   public subscribe (on: keyof IPublisherMap, webContents: Electron.WebContents) {
     if (!this.publisherMap[on]) {
-      debug('yagt:hooker')('trying to register unknown event %s', on)
+      debug('trying to register unknown event %s', on)
     } else {
       this.publisherMap[on].subscribe(webContents)
     }
@@ -53,7 +58,7 @@ export default class Hooker {
 
   public unsubscribe (on: string, webContents: Electron.WebContents) {
     if (!this.publisherMap[on]) {
-      debug('yagt:hooker')('trying to unregister unknown event %s', on)
+      debug('trying to unregister unknown event %s', on)
     } else {
       this.publisherMap[on].unsubscribe(webContents)
     }
@@ -66,12 +71,13 @@ export default class Hooker {
   }
 
   public insertHook (pid: number, code: string) {
-    debug('yagt:hooker')('inserting hook %s to process %d...', code, pid)
+    debug('inserting hook %s to process %d...', code, pid)
     this.hooker.hook(pid, code)
-    debug('yagt:hooker')(`hook %s inserted into process %d`, code, pid)
+    debug(`hook %s inserted into process %d`, code, pid)
   }
 
   private buildApplication () {
+    applicationBuilder = new ApplicationBuilder<Yagt.TextOutputObject>()
     applicationBuilder.use(new TextMergerMiddleware())
     applicationBuilder.use(
       new TextInterceptorMiddleware(
@@ -85,6 +91,8 @@ export default class Hooker {
     )
     applicationBuilder.use(new FilterMiddleware())
     applicationBuilder.use(this.publisherMap['thread-output'])
+
+    debug('application builded')
   }
 
   private initHookerCallbacks () {

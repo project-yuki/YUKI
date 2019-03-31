@@ -83,7 +83,8 @@ export default function (mainWindow: Electron.BrowserWindow) {
       const configFileName = ConfigManager.getInstance().getFilename(name)
       debug(`request saving config %s...`, configFileName)
       ConfigManager.getInstance().set(name, cfg)
-      debug('config %s saved. resend it to window', configFileName)
+      Hooker.getInstance().rebuild()
+      debug('resend config %s to window', configFileName)
       sendConfig(name, event)
     }
   )
