@@ -21,6 +21,8 @@ if (process.env.NODE_ENV !== 'development') {
     .replace(/\\/g, '\\\\')
 }
 
+debug('__dirname: %s', path.resolve(__dirname))
+
 global.__baseDir = path.resolve(
   __dirname,
   process.env.NODE_ENV !== 'development' ? '../../../..' : '../..'
@@ -32,8 +34,6 @@ debug('appPath: %s', global.__appDir)
 
 const iconPath = path.join(global.__appDir, 'build/icons/icon.png')
 
-DownloaderFactory.init()
-
 let mainWindow: Electron.BrowserWindow | null
 
 let tray: Electron.Tray | null
@@ -42,6 +42,8 @@ const mainWinURL =
   process.env.NODE_ENV === 'development'
     ? `http://localhost:9080`
     : `file://${__dirname}/index.html`
+
+debug('mainWinURL: %s', mainWinURL)
 
 function openWindow () {
   if (!mainWindow) {
@@ -52,6 +54,8 @@ function openWindow () {
 }
 
 function createWindow () {
+  debug('creating window...')
+
   /**
    * Initial main window options
    */
@@ -69,6 +73,8 @@ function createWindow () {
   })
 
   mainWindow.loadURL(mainWinURL)
+
+  mainWindow.webContents.openDevTools()
 
   mainWindow.on('close', () => {
     if (!mainWindow) return
@@ -116,7 +122,10 @@ function createWindow () {
   setupIpc(mainWindow)
 }
 
-app.on('ready', createWindow)
+app.on('ready', () => {
+  DownloaderFactory.init()
+  createWindow()
+})
 
 app.on('activate', () => {
   if (!mainWindow) {
