@@ -3,7 +3,6 @@ import IpcTypes from '../../common/IpcTypes'
 const debug = require('debug')('yagt:ipc')
 import { extname } from 'path'
 import ConfigManager from '../config/ConfigManager'
-import { IProgressState } from '../Downloader'
 import DownloaderFactory from '../DownloaderFactory'
 import Game from '../Game'
 import Hooker from '../Hooker'
@@ -174,7 +173,7 @@ export default function (mainWindow: Electron.BrowserWindow) {
 
   ipcMain.on(
     IpcTypes.HAS_DOWNLOAD_PROGRESS,
-    (packName: string, state: IProgressState) => {
+    (packName: string, state: RequestProgress.ProgressState) => {
       mainWindow.webContents.send(IpcTypes.HAS_DOWNLOAD_PROGRESS, packName, state)
     }
   )
