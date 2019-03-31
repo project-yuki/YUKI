@@ -1,4 +1,4 @@
-const debug = require('debug')('yagt:rendererWindow')
+const debug = require('debug')('yagt:config')
 import { Commit } from 'vuex'
 
 const configState: any = {
@@ -31,11 +31,14 @@ const actions = {
     { commit }: { commit: Commit },
     { name, cfgs }: { name: string; cfgs: any }
   ) {
+    debug('[%s] get from main process -> %O', name, cfgs)
     commit('SET_CONFIG', { name, cfgs })
-    if (name === 'games' && cfgs.length === 0) {
-      commit('Gui/SET_NO_GAME', { value: true }, { root: true })
-    } else {
-      commit('Gui/SET_NO_GAME', { value: false }, { root: true })
+    if (name === 'games') {
+      if (cfgs.length === 0) {
+        commit('Gui/SET_NO_GAME', { value: true }, { root: true })
+      } else {
+        commit('Gui/SET_NO_GAME', { value: false }, { root: true })
+      }
     }
   }
 }
