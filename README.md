@@ -16,7 +16,7 @@
   <a href="/docs/README_EN.md">English</a>
 </p>
 
-![它看起来的样子](https://raw.githubusercontent.com/Yagt/Yagt/master/.github/imgs/how_it_looks.png)
+![它看起来的样子](https://raw.githubusercontent.com/Yagt/Yagt/master/.github/imgs/how_it_looks.jpg)
 
 ## 警告！
 

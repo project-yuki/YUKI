@@ -1,4 +1,4 @@
-<h1 align="center">
+﻿<h1 align="center">
   <a href="https://github.com/Yagt/Yagt"><img src="https://raw.githubusercontent.com/Yagt/Yagt/master/build/icons/icon.png" alt="Yet Another Galgame Translator" width="200" /></a>
   <br>
   Yet Another Galgame Translator
@@ -16,7 +16,7 @@
   <a href="/docs/README_EN.md">English</a>
 </p>
 
-![how it looks](https://raw.githubusercontent.com/Yagt/Yagt/master/.github/imgs/how_it_looks.png)
+![how it looks](https://raw.githubusercontent.com/Yagt/Yagt/master/.github/imgs/how_it_looks.jpg)
 
 ## WARNING
 
