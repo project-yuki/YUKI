@@ -1,8 +1,20 @@
-﻿# Yagt - 另一个 Galgame 翻译器
+﻿<h1 align="center">
+  <a href="https://github.com/Yagt/Yagt"><img src="https://raw.githubusercontent.com/Yagt/Yagt/master/build/icons/icon.png" alt="Yet Another Galgame Translator" width="200" /></a>
+  <br>
+  另一个 Galgame 翻译器
+  <br>
+  <br>
+</h1>
 
-[![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
+<p align="center">
+  <a href="https://standardjs.com"><img src="https://img.shields.io/badge/code_style-standard-brightgreen.svg" alt="JavaScript Style Guide"></a>
+  <a href="/LICENSE"><img src="https://img.shields.io/badge/license-GPL%203.0-blue.svg" alt="GPL 3.0 LICENSE"></a>
+</p>
 
-[English](https://github.com/Yagt/Yagt/blob/master/docs/README_EN.md)
+<p align="center">
+  <a href="/README.md">中文</a> •
+  <a href="/docs/README_EN.md">English</a>
+</p>
 
 ![它看起来的样子](https://raw.githubusercontent.com/Yagt/Yagt/master/.github/imgs/how_it_looks.png)
 

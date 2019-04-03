@@ -1,12 +1,24 @@
-# Yagt - Yet Another Galgame Translator
+<h1 align="center">
+  <a href="https://github.com/Yagt/Yagt"><img src="https://raw.githubusercontent.com/Yagt/Yagt/master/build/icons/icon.png" alt="Yet Another Galgame Translator" width="200" /></a>
+  <br>
+  Yet Another Galgame Translator
+  <br>
+  <br>
+</h1>
 
-[![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
+<p align="center">
+  <a href="https://standardjs.com"><img src="https://img.shields.io/badge/code_style-standard-brightgreen.svg" alt="JavaScript Style Guide"></a>
+  <a href="/LICENSE"><img src="https://img.shields.io/badge/license-GPL%203.0-blue.svg" alt="GPL 3.0 LICENSE"></a>
+</p>
 
-[中文](https://github.com/Yagt/Yagt/blob/master/README.md)
+<p align="center">
+  <a href="/README.md">中文</a> •
+  <a href="/docs/README_EN.md">English</a>
+</p>
 
 ![how it looks](https://raw.githubusercontent.com/Yagt/Yagt/master/.github/imgs/how_it_looks.png)
 
-## Warning
+## WARNING
 
 The Yagt Project is more like a propose than an actual working progress. Since I'm not a professor in either NodeJS or C++, this project can be in ugly slow progress ¯\\\_(ツ)\_/¯
 
