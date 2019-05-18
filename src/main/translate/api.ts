@@ -1,11 +1,10 @@
-const request = require('request-promise-native')
-import { Options } from 'request'
+import * as request from 'request'
 const debug = require('debug')('yuki:api')
 import * as vm from 'vm'
 
 export default class Api implements yuki.Translator {
   private config: yuki.Config.OnlineApiItem
-  private requestOptions: Options
+  private requestOptions: request.Options
   private responseVmContext: vm.Context = vm.createContext({
     response: '',
     result: ''
@@ -36,16 +35,12 @@ export default class Api implements yuki.Translator {
     }
   }
 
-  public async translate (text: string) {
+  public translate (text: string, callback: (translation: string) => void) {
     this.generateRequestBody(text)
-    try {
-      const responseBody = await this.getResponseBody()
-      const translation = this.parseResponse(responseBody)
-      return translation
-    } catch (e) {
-      debug('[%s] translate error: %s', this.config.name, e)
-      return ''
-    }
+    this.getResponseBody((body) => {
+      const result = this.parseResponse(body)
+      callback(result)
+    })
   }
 
   public isEnable () {
@@ -81,8 +76,12 @@ export default class Api implements yuki.Translator {
     }
   }
 
-  private getResponseBody () {
-    return request(this.requestOptions)
+  private getResponseBody (callback: (body: any) => void) {
+    request(this.requestOptions, (error, response, body) => {
+      if (error) debug('[%s error] %s', this.config.name, error)
+
+      callback(body)
+    })
   }
 
   private parseResponse (body: string): string {

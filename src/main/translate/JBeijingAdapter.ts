@@ -13,8 +13,8 @@ export default class JBeijingAdapter implements yuki.Translator {
     }
   }
 
-  public async translate (text: string) {
-    return this.jb.translate(text, this.config.traditionalChinese ? 950 : 936)
+  public translate (text: string, callback: (translation: string) => void) {
+    this.jb.translate(text, this.config.traditionalChinese ? 950 : 936, callback)
   }
 
   public isEnable (): boolean {

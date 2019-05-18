@@ -47,14 +47,13 @@ export default class TranslationManager {
     let toTranslateCount = 0
     for (const key in this.apis) {
       if (this.apis[key].isEnable()) {
-        toTranslateCount++;
-        (async () => {
-          const translation = await this.apis[key].translate(text)
+        toTranslateCount++
+        this.apis[key].translate(text, (translation) => {
           debug('[%s] -> %s', this.apis[key].getName(), translation)
           callback({
             [this.apis[key].getName()]: translation
           })
-        })()
+        })
       }
     }
     if (toTranslateCount === 0) {
@@ -71,14 +70,14 @@ export default class TranslationManager {
     const result: yuki.Translations = { original: text, translations: {} }
     for (const key in this.apis) {
       if (this.apis[key].isEnable()) {
-        toTranslateCount++;
-        (async () => {
-          result.translations[key] = await this.apis[key].translate(text)
+        toTranslateCount++
+        this.apis[key].translate(text, (translation) => {
+          result.translations[key] = translation
           finishedCount++
           if (finishedCount === toTranslateCount) {
             callback(result)
           }
-        })()
+        })
       }
     }
     if (toTranslateCount === 0) {

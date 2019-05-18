@@ -53,10 +53,9 @@ export default class JBeijing {
     }
   }
 
-  public async translate (text: string, destCodePage: number) {
-    return new Promise<string>((resolve) => {
-      this.initializeBuffers()
-      this.jbjct.JC_Transfer_Unicode.async(
+  public translate (text: string, destCodePage: number, callback: (translation: string) => void) {
+    this.initializeBuffers()
+    this.jbjct.JC_Transfer_Unicode.async(
         0,
         932,
         destCodePage,
@@ -68,12 +67,9 @@ export default class JBeijing {
         this.bufBuffer,
         ref.ref(this.bufferSize),
         () => {
-          resolve(
-            ref.reinterpretUntilZeros(this.outBuffer, 2).toString('ucs2')
-          )
+          callback(ref.reinterpretUntilZeros(this.outBuffer, 2).toString('ucs2'))
         }
       )
-    })
   }
 
   private checkExePathAndThrow () {

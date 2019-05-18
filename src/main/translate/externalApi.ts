@@ -10,11 +10,11 @@ export default class ExternalApi implements yuki.Translator {
   private responseVmContext: vm.Context = vm.createContext({
     Request: request,
     text: '',
-    result: '',
     md5: (data: string, encoding: crypto.HexBase64Latin1Encoding) => {
       const hash = crypto.createHash('md5')
       return hash.update(data).digest(encoding)
-    }
+    },
+    callback: undefined
   })
   private scriptString: string = ''
 
@@ -42,11 +42,11 @@ export default class ExternalApi implements yuki.Translator {
     }
   }
 
-  public async translate (text: string) {
+  public translate (text: string, callback: (translation: string) => void) {
     this.responseVmContext.text = text
-    return new Promise<string>((resolve) => {
-      vm.runInContext(this.scriptString, this.responseVmContext)
-      resolve(this.responseVmContext.result)
+    this.responseVmContext.callback = callback
+    vm.runInContext(this.scriptString, this.responseVmContext, {
+      displayErrors: true
     })
   }
 
