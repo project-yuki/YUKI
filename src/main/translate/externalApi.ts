@@ -17,6 +17,7 @@ export default class ExternalApi implements yuki.Translator {
     callback: undefined
   })
   private scriptString: string = ''
+  private absolutePath: string = ''
 
   constructor (config: yuki.Config.OnlineApiItem) {
     this.config = config
@@ -28,26 +29,38 @@ export default class ExternalApi implements yuki.Translator {
       throw new TypeError()
     }
     this.loadExternalJsFile()
+    this.registerWatchCallback()
   }
 
   public loadExternalJsFile () {
     if (!this.config.jsFile) return
 
-    const absolutePath = path.join(global.__baseDir, this.config.jsFile)
+    this.absolutePath = path.join(global.__baseDir, this.config.jsFile)
     try {
-      this.scriptString = fs.readFileSync(absolutePath, 'utf8')
-      debug('external file %s loaded', absolutePath)
+      this.scriptString = fs.readFileSync(this.absolutePath, 'utf8')
+      debug('external file %s loaded', this.absolutePath)
     } catch (e) {
-      debug('external file %s loads failed !> %s', absolutePath, e)
+      debug('external file %s loads failed !> %s', this.absolutePath, e)
     }
+  }
+
+  private registerWatchCallback() {
+    fs.watch(this.absolutePath, {}, () => {
+      debug('[%s] script file changed. reloading...', this.config.name)
+      this.loadExternalJsFile()
+    })
   }
 
   public translate (text: string, callback: (translation: string) => void) {
     this.responseVmContext.text = text
     this.responseVmContext.callback = callback
-    vm.runInContext(this.scriptString, this.responseVmContext, {
-      displayErrors: true
-    })
+    try {
+      vm.runInContext(this.scriptString, this.responseVmContext, {
+        displayErrors: true
+      })
+    } catch (e) {
+      debug('[%s] runtime error !> %s', this.config.name, e.stack)
+    }
   }
 
   public isEnable () {
