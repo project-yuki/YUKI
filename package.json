@@ -34,7 +34,8 @@
     "extraFiles": [
       "dict/**/*",
       "lib/**/*",
-      "config/youdaoApi.js"
+      "config/youdaoApi.js",
+      "config/hjdictApi.js"
     ],
     "win": {
       "icon": "build/icons/icon.png"
