@@ -4,7 +4,7 @@
 import { expect } from 'chai'
 import ApplicationBuilder from '../../../../src/common/applicationBuilder'
 
-class SubstringMiddleware implements Yagt.Middleware<string> {
+class SubstringMiddleware implements yuki.Middleware<string> {
   public process (context: string, next: (newContext: string) => void) {
     if (context.length < 1) next(context)
     else next(context.substring(0, context.length - 1))
@@ -12,7 +12,7 @@ class SubstringMiddleware implements Yagt.Middleware<string> {
 }
 
 // tslint:disable-next-line: max-classes-per-file
-export class ExpectMiddleware implements Yagt.Middleware<string> {
+export class ExpectMiddleware implements yuki.Middleware<string> {
   private expectValue: string
   private done: () => void
 

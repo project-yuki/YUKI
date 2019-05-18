@@ -1,17 +1,17 @@
 const request = require('request-promise-native')
 import { Options } from 'request'
-const debug = require('debug')('yagt:api')
+const debug = require('debug')('yuki:api')
 import * as vm from 'vm'
 
-export default class Api implements Yagt.Translator {
-  private config: Yagt.Config.OnlineApiItem
+export default class Api implements yuki.Translator {
+  private config: yuki.Config.OnlineApiItem
   private requestOptions: Options
   private responseVmContext: vm.Context = vm.createContext({
     response: '',
     result: ''
   })
 
-  constructor (config: Yagt.Config.OnlineApiItem) {
+  constructor (config: yuki.Config.OnlineApiItem) {
     this.config = config
     if (
       !this.config.url ||

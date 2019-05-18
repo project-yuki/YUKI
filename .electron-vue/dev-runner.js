@@ -171,7 +171,7 @@ function startElectron() {
   }
 
   let electronEnv = process.env;
-  electronEnv.DEBUG = "yagt:*";
+  electronEnv.DEBUG = "yuki:*";
   electronEnv.DEBUG_COLORS = true;
   electronProcess = spawn(electron, args, {
     stdio: "inherit",

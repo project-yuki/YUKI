@@ -1,19 +1,19 @@
 <template>
   <div>
     <mu-container v-if="isMecabEnable" class="text-center">
-      <gt-mecab-text :patterns="currentPatterns"></gt-mecab-text>
+      <yk-mecab-text :patterns="currentPatterns"></yk-mecab-text>
     </mu-container>
     <mu-container
       v-else
       class="text-center"
       :style="{color: originalTextColor, fontSize: `${originalTextSize}px`}"
     >{{currentOriginText}}</mu-container>
-    <gt-text-display
+    <yk-text-display
       v-for="(translation, key) in translationsForCurrentIndex.translations"
       :key="key"
       :name="key"
       :translation="translation"
-    ></gt-text-display>
+    ></yk-text-display>
   </div>
 </template>
 
@@ -34,14 +34,14 @@ import {
   namespace
 } from 'vuex-class'
 
-import GtHookSettings from '@/components/HookSettings.vue'
-import GtMecabText from '@/components/MecabText.vue'
-import GtTextDisplay from '@/components/TextDisplay.vue'
+import YkHookSettings from '@/components/HookSettings.vue'
+import YkMecabText from '@/components/MecabText.vue'
+import YkTextDisplay from '@/components/TextDisplay.vue'
 
 @Component({
   components: {
-    GtTextDisplay,
-    GtMecabText
+    YkTextDisplay,
+    YkMecabText
   }
 })
 export default class TranslatePage extends Vue {
@@ -51,16 +51,16 @@ export default class TranslatePage extends Vue {
   @namespace('Hooks').Getter('getLastTextById')
   public getLastTextById!: (id: number) => string
   @namespace('Hooks').Getter('getLastPatternsById')
-  public getLastPatternsById!: (id: number) => Yagt.MeCabPatterns
+  public getLastPatternsById!: (id: number) => yuki.MeCabPatterns
 
   @namespace('Hooks').State('currentDisplayHookIndex')
   public currentIndex!: number
 
   @namespace('Hooks').State('translationsForCurrentIndex')
-  public translationsForCurrentIndex!: Yagt.Translations
+  public translationsForCurrentIndex!: yuki.Translations
 
   @namespace('Config').Getter('getOriginalText')
-  public getOriginalText!: () => Yagt.FontStyle
+  public getOriginalText!: () => yuki.FontStyle
 
   @namespace('Hooks').State('isMecabEnable')
   public isMecabEnable!: boolean

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="top">
-      <gt-titlebar></gt-titlebar>
+      <yk-titlebar></yk-titlebar>
     </div>
     <div id="content">
       <router-view></router-view>
@@ -30,11 +30,11 @@ import {
 } from 'electron'
 import IpcTypes from '../common/IpcTypes'
 
-import GtTitlebar from '@/components/Titlebar.vue'
+import YkTitlebar from '@/components/Titlebar.vue'
 
 @Component({
   components: {
-    GtTitlebar
+    YkTitlebar
   }
 })
 export default class App extends Vue {

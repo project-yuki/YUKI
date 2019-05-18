@@ -31,7 +31,7 @@ import IpcTypes from '../common/IpcTypes'
 
 ipcRenderer.on(
   IpcTypes.HAS_HOOK_TEXT,
-  (event: Electron.Event, hook: Yagt.TextOutputObject) => {
+  (event: Electron.Event, hook: yuki.TextOutputObject) => {
     if (!remote.getCurrentWindow().isVisible()) {
       remote.getCurrentWindow().show()
     }
@@ -48,7 +48,7 @@ ipcRenderer.on(
 )
 ipcRenderer.on(
   IpcTypes.HAS_TRANSLATION,
-  (event: Electron.Event, translation: Yagt.Translations['translations']) => {
+  (event: Electron.Event, translation: yuki.Translations['translations']) => {
     store.dispatch('Hooks/mergeTranslation', translation)
   }
 )

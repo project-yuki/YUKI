@@ -2,7 +2,7 @@ import { BrowserWindow } from 'electron'
 import ConfigManager from './config/ConfigManager'
 import Game from './Game'
 import Hooker from './Hooker'
-const debug = require('debug')('yagt:translatorWindow')
+const debug = require('debug')('yuki:translatorWindow')
 const ElectronVibrancy = require('electron-vibrancy')
 
 export default class TranslatorWindow {
@@ -34,7 +34,7 @@ export default class TranslatorWindow {
     this.game = game
   }
 
-  public getGameInfo (): Yagt.Game {
+  public getGameInfo (): yuki.Game {
     return this.game.getInfo()
   }
 
@@ -48,7 +48,7 @@ export default class TranslatorWindow {
         }
       },
       show: false,
-      alwaysOnTop: ConfigManager.getInstance().get<Yagt.Config.Gui>('gui')
+      alwaysOnTop: ConfigManager.getInstance().get<yuki.Config.Gui>('gui')
         .translatorWindow.alwaysOnTop,
       transparent: true,
       frame: false
@@ -56,7 +56,7 @@ export default class TranslatorWindow {
 
     debug(
       'alwaysOnTop -> %s',
-      ConfigManager.getInstance().get<Yagt.Config.Gui>('gui').translatorWindow
+      ConfigManager.getInstance().get<yuki.Config.Gui>('gui').translatorWindow
         .alwaysOnTop
     )
 
@@ -80,10 +80,10 @@ export default class TranslatorWindow {
         'saving translator window alwaysOnTop -> %s',
         this.window.isAlwaysOnTop()
       )
-      ConfigManager.getInstance().set<Yagt.Config.Gui>('gui', {
+      ConfigManager.getInstance().set<yuki.Config.Gui>('gui', {
         ...ConfigManager.getInstance().get('gui'),
         translatorWindow: {
-          ...ConfigManager.getInstance().get<Yagt.Config.Gui>('gui')
+          ...ConfigManager.getInstance().get<yuki.Config.Gui>('gui')
             .translatorWindow,
           bounds: this.window.getBounds(),
           alwaysOnTop: this.window.isAlwaysOnTop()
@@ -92,7 +92,7 @@ export default class TranslatorWindow {
     })
 
     this.window.setBounds(
-      ConfigManager.getInstance().get<Yagt.Config.Gui>('gui').translatorWindow
+      ConfigManager.getInstance().get<yuki.Config.Gui>('gui').translatorWindow
         .bounds
     )
 

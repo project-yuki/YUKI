@@ -1,6 +1,6 @@
 <template>
   <mu-drawer :z-depth="5" class="nav-list full-height" docked open>
-    <mu-card-header title="另一个Galgame翻译器" sub-title>
+    <mu-card-header title="YUKI Galgame翻译器" sub-title>
       <mu-avatar slot="avatar" color="white">
         <img src="../assets/icon.png">
       </mu-avatar>
@@ -46,7 +46,7 @@
         <mu-list-item-action>
           <mu-icon value="feedback"></mu-icon>
         </mu-list-item-action>
-        <mu-list-item-title>关于Yagt</mu-list-item-title>
+        <mu-list-item-title>关于 YUKI</mu-list-item-title>
       </mu-list-item>
     </mu-list>
   </mu-drawer>
@@ -65,7 +65,7 @@ export default class AppSidebar extends Vue { }
 <style>
 .nav-list {
   background-color: white;
-  width: 240px;
+  width: 230px;
   position: fixed;
   z-index: 5;
 }

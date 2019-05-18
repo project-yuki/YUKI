@@ -5,7 +5,7 @@ import * as path from 'path'
 import ConfigManager from './config/ConfigManager'
 import DownloaderFactory from './DownloaderFactory'
 import setupIpc from './setup/Ipc'
-const debug = require('debug')('yagt:app')
+const debug = require('debug')('yuki:app')
 
 // check & make ./config folder
 {
@@ -78,7 +78,7 @@ function createWindow () {
     if (!mainWindow) return
 
     debug('saving main window bounds -> %o', mainWindow.getBounds())
-    ConfigManager.getInstance().set<Yagt.Config.Gui>('gui', {
+    ConfigManager.getInstance().set<yuki.Config.Gui>('gui', {
       ...ConfigManager.getInstance().get('gui'),
       mainWindow: {
         bounds: mainWindow.getBounds()
@@ -91,7 +91,7 @@ function createWindow () {
   })
 
   mainWindow.setBounds(
-    ConfigManager.getInstance().get<Yagt.Config.Gui>('gui').mainWindow.bounds
+    ConfigManager.getInstance().get<yuki.Config.Gui>('gui').mainWindow.bounds
   )
 
   tray = new Tray(iconPath)
@@ -111,7 +111,7 @@ function createWindow () {
       }
     }
   ])
-  tray.setToolTip('Yagt')
+  tray.setToolTip('yuki')
   tray.setContextMenu(contextMenu)
   tray.on('click', () => {
     openWindow()

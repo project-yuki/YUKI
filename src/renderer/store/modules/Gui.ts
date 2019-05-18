@@ -1,9 +1,9 @@
-const guiState: Yagt.GuiState = {
+const guiState: yuki.GuiState = {
   noGame: false
 }
 
 const mutations = {
-  SET_NO_GAME (state: Yagt.GuiState, payload: { value: boolean }) {
+  SET_NO_GAME (state: yuki.GuiState, payload: { value: boolean }) {
     state.noGame = payload.value
   }
 }

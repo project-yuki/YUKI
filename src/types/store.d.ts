@@ -1,9 +1,9 @@
-declare namespace Yagt {
+declare namespace yuki {
   export interface SettingsState {
     localeChangers: TempLocaleChangerItem[]
   }
 
-  type TempLocaleChangerItem = Yagt.Config.LocaleChangerItem & { id: string }
+  type TempLocaleChangerItem = yuki.Config.LocaleChangerItem & { id: string }
 
   export interface TextOutputObject extends TextThread {
     text: string
@@ -26,7 +26,7 @@ declare namespace Yagt {
     localeChanger: string
   }
   export interface ConfigState {
-    default: Yagt.Config.Default
+    default: yuki.Config.Default
     games: Game[],
     librariesBaseStorePath: string
   }
@@ -42,7 +42,7 @@ declare namespace Yagt {
       [handle: string]: string[];
     }
     patterns: {
-      [handle: string]: Yagt.MeCabPatterns[];
+      [handle: string]: yuki.MeCabPatterns[];
     }
     currentDisplayHookIndex: number
     translationsForCurrentIndex: Translations
@@ -50,7 +50,7 @@ declare namespace Yagt {
   }
 
   export interface TranslatorConfigState {
-    default: Yagt.Config.Default
+    default: yuki.Config.Default
     game: Game
     gui: {
       originalText: FontStyle;

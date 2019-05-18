@@ -1,20 +1,20 @@
-const debug = require('debug')('yagt:textInterceptor')
+const debug = require('debug')('yuki:textInterceptor')
 
 export default class TextInterceptorMiddleware
-  implements Yagt.Middleware<Yagt.TextOutputObject> {
+  implements yuki.Middleware<yuki.TextOutputObject> {
   public static readonly MAX_LENGTH = 255
 
   public shouldBeIgnorePatterns: string[]
   public ignoreAsciiOnly: boolean
-  constructor (config: Yagt.Config.Interceptor) {
+  constructor (config: yuki.Config.Interceptor) {
     this.shouldBeIgnorePatterns = config.shouldBeIgnore
     this.ignoreAsciiOnly = config.ignoreAsciiOnly
     debug('initialized')
   }
 
   public process (
-    context: Yagt.TextOutputObject,
-    next: (newContext: Yagt.TextOutputObject) => void
+    context: yuki.TextOutputObject,
+    next: (newContext: yuki.TextOutputObject) => void
   ) {
     if (this.textShouldBeIgnore(context.text)) return
     if (this.ignoreAsciiOnly && this.isAsciiOnly(context.text)) return

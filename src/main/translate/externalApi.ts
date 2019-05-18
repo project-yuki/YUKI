@@ -3,10 +3,10 @@ import * as fs from 'fs'
 import * as path from 'path'
 import * as request from 'request-promise-native'
 import * as vm from 'vm'
-const debug = require('debug')('yagt:api')
+const debug = require('debug')('yuki:api')
 
-export default class ExternalApi implements Yagt.Translator {
-  private config: Yagt.Config.OnlineApiItem
+export default class ExternalApi implements yuki.Translator {
+  private config: yuki.Config.OnlineApiItem
   private responseVmContext: vm.Context = vm.createContext({
     Request: request,
     text: '',
@@ -18,7 +18,7 @@ export default class ExternalApi implements Yagt.Translator {
   })
   private scriptString: string = ''
 
-  constructor (config: Yagt.Config.OnlineApiItem) {
+  constructor (config: yuki.Config.OnlineApiItem) {
     this.config = config
     if (!this.config.jsFile) {
       debug(

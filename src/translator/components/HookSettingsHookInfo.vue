@@ -40,7 +40,7 @@ import IpcTypes from '../../common/IpcTypes'
 @Component
 export default class HookSettingsHookInfo extends Vue {
   @Prop(Object)
-  public hook!: Yagt.TextThread
+  public hook!: yuki.TextThread
   @Prop(Boolean)
   public isChosen!: boolean
 

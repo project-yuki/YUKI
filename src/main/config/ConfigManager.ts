@@ -7,7 +7,7 @@ import DefaultConfig from './DefaultConfig'
 import GamesConfig from './GamesConfig'
 import GuiConfig from './GuiConfig'
 import InterceptorConfig from './InterceptorConfig'
-const debug = require('debug')('yagt:configManager')
+const debug = require('debug')('yuki:configManager')
 
 export default class ConfigManager {
   public static getInstance (): ConfigManager {
@@ -25,7 +25,7 @@ export default class ConfigManager {
     gui: new GuiConfig().init()
   }
 
-  public get<T extends Yagt.Config.Config> (configName: string): T {
+  public get<T extends yuki.Config.Config> (configName: string): T {
     try {
       return this.nameToConfigMap[configName].get()
     } catch (e) {
@@ -34,7 +34,7 @@ export default class ConfigManager {
     }
   }
 
-  public set<T extends Yagt.Config.Config> (configName: string, cfg: T): void {
+  public set<T extends yuki.Config.Config> (configName: string, cfg: T): void {
     try {
       return this.nameToConfigMap[configName].set(cfg)
     } catch (e) {

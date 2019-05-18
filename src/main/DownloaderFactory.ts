@@ -13,10 +13,10 @@ export default class DownloaderFactory {
 
   public static init () {
     this.LIBRARY_BASE_REPO = ConfigManager.getInstance()
-      .get<Yagt.Config.Default>('default').librariesRepoUrl
+      .get<yuki.Config.Default>('default').librariesRepoUrl
     this.LIBRARY_BASE_STORE_PATH = path.resolve(global.__baseDir, 'lib')
-    debug('yagt:downloader:factory')('library base repo -> %s', this.LIBRARY_BASE_REPO)
-    debug('yagt:downloader:factory')('library base store path -> %s', this.LIBRARY_BASE_STORE_PATH)
+    debug('yuki:downloader:factory')('library base repo -> %s', this.LIBRARY_BASE_REPO)
+    debug('yuki:downloader:factory')('library base store path -> %s', this.LIBRARY_BASE_STORE_PATH)
   }
 
   public static makeLibraryDownloader (packName: string): Downloader {
@@ -24,22 +24,22 @@ export default class DownloaderFactory {
       `${this.LIBRARY_BASE_REPO}${packName}.zip`,
       `${this.LIBRARY_BASE_STORE_PATH}\\${packName}.zip`
     ).onProgress((state) => {
-      debug('yagt:downloader:library')('[%s] downloading -> %O', packName, state)
+      debug('yuki:downloader:library')('[%s] downloading -> %O', packName, state)
       ipcMain.emit(IpcTypes.HAS_DOWNLOAD_PROGRESS, packName, state)
     }).onError((err) => {
-      debug('yagt:downloader:library')('[%s] download error !> %s', packName, err)
+      debug('yuki:downloader:library')('[%s] download error !> %s', packName, err)
     }).onEnd(() => {
-      debug('yagt:downloader:library')('[%s] download complete', packName)
+      debug('yuki:downloader:library')('[%s] download complete', packName)
       extract(
         `${this.LIBRARY_BASE_STORE_PATH}\\${packName}.zip`,
         { dir: this.LIBRARY_BASE_STORE_PATH },
         (err: Error) => {
           if (err) {
-            debug('yagt:downloader:library')('[%s] unzip error !> %s', packName, err)
+            debug('yuki:downloader:library')('[%s] unzip error !> %s', packName, err)
             return
           }
 
-          debug('yagt:downloader:library')('[%s] unzip complete', packName)
+          debug('yuki:downloader:library')('[%s] unzip complete', packName)
           unlinkSync(`${this.LIBRARY_BASE_STORE_PATH}\\${packName}.zip`)
           ipcMain.emit(IpcTypes.HAS_DOWNLOAD_COMPLETE, packName)
         }

@@ -70,9 +70,9 @@ import {
 })
 export default class HookSettings extends Vue {
   @namespace('Config').Getter('getOriginalText')
-  public getOriginalText!: () => Yagt.FontStyle
+  public getOriginalText!: () => yuki.FontStyle
   @namespace('Config').Getter('getTranslationText')
-  public getTranslationText!: () => Yagt.TranslationTextStyle
+  public getTranslationText!: () => yuki.TranslationTextStyle
   @namespace('Config').Getter('getBackgroundColor')
   public getBackgroundColor!: () => string
 

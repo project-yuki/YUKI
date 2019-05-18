@@ -1,11 +1,11 @@
 <template>
   <div>
-    <gt-page-header title="应用设置"/>
-    <gt-page-content>
+    <yk-page-header title="应用设置"/>
+    <yk-page-content>
       <mu-container>
         <router-view></router-view>
       </mu-container>
-    </gt-page-content>
+    </yk-page-content>
   </div>
 </template>
 
@@ -15,13 +15,13 @@ import {
   Component
 } from 'vue-property-decorator'
 
-import GtPageContent from '@/components/PageContent.vue'
-import GtPageHeader from '@/components/PageHeader.vue'
+import YkPageContent from '@/components/PageContent.vue'
+import YkPageHeader from '@/components/PageHeader.vue'
 
 @Component({
   components: {
-    GtPageHeader,
-    GtPageContent
+    YkPageHeader,
+    YkPageContent
   }
 })
 export default class PageContent extends Vue { }

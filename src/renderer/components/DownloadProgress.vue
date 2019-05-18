@@ -22,8 +22,8 @@ import {
   Prop
 } from 'vue-property-decorator'
 
-import GtPageContent from '@/components/PageContent.vue'
-import GtPageHeader from '@/components/PageHeader.vue'
+import YkPageContent from '@/components/PageContent.vue'
+import YkPageHeader from '@/components/PageHeader.vue'
 
 @Component
 export default class DownloadProgress extends Vue {

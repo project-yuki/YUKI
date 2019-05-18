@@ -30,7 +30,7 @@
   </mu-form>
 
   <p class="text-h2">J 北京辞書</p>
-  <gt-download-progress 
+  <yk-download-progress 
     v-if="jbdictDownloadState"
     :state="jbdictDownloadState"/>
   <mu-form :model="{}">
@@ -73,21 +73,20 @@ import {
 } from 'path'
 import IpcTypes from '../../common/IpcTypes'
 
-import GtDownloadProgress from '@/components/DownloadProgress.vue'
-import { IProgressState } from '../../main/Downloader'
+import YkDownloadProgress from '@/components/DownloadProgress.vue'
 
 @Component({
   components: {
-    GtDownloadProgress
+    YkDownloadProgress
   }
 })
 export default class LibrarySettings extends Vue {
   @(namespace('Config').State('default'))
-  public defaultConfig!: Yagt.ConfigState['default']
+  public defaultConfig!: yuki.ConfigState['default']
   @(namespace('Config').State('librariesBaseStorePath'))
   public librariesBaseStorePath!: string
 
-  public tempLibraries: Yagt.Config.Libraries = {
+  public tempLibraries: yuki.Config.Libraries = {
     librariesRepoUrl: '',
     mecab: {
       enable: false,
@@ -103,7 +102,7 @@ export default class LibrarySettings extends Vue {
     }
   }
 
-  public jbdictDownloadState: IProgressState | null = null
+  public jbdictDownloadState: RequestProgress.ProgressState | null = null
 
   public remainingDownloadTaskCount = 0
 
@@ -138,7 +137,7 @@ export default class LibrarySettings extends Vue {
 
   public startDownload (packName: string) {
     ipcRenderer.on(IpcTypes.HAS_DOWNLOAD_PROGRESS,
-      (event: Electron.Event, name: string, state: IProgressState) => {
+      (event: Electron.Event, name: string, state: RequestProgress.ProgressState) => {
         switch (name) {
           case 'dict.jb':
             this.jbdictDownloadState = state

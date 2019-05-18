@@ -1,5 +1,5 @@
 import IpcTypes from '../common/IpcTypes'
-const debug = require('debug')('yagt:hooker')
+const debug = require('debug')('yuki:hooker')
 import * as path from 'path'
 import { Textractor } from 'textractor-wrapper'
 import ApplicationBuilder from '../common/ApplicationBuilder'
@@ -10,7 +10,7 @@ import PublishMiddleware from './middlewares/PublishMiddleware'
 import TextInterceptorMiddleware from './middlewares/TextInterceptorMiddleware'
 import TextMergerMiddleware from './middlewares/TextMergerMiddleware'
 
-let applicationBuilder: ApplicationBuilder<Yagt.TextOutputObject>
+let applicationBuilder: ApplicationBuilder<yuki.TextOutputObject>
 
 interface IPublisherMap {
   ['thread-output']: PublishMiddleware
@@ -77,16 +77,16 @@ export default class Hooker {
   }
 
   private buildApplication () {
-    applicationBuilder = new ApplicationBuilder<Yagt.TextOutputObject>()
+    applicationBuilder = new ApplicationBuilder<yuki.TextOutputObject>()
     applicationBuilder.use(new TextMergerMiddleware())
     applicationBuilder.use(
       new TextInterceptorMiddleware(
-        ConfigManager.getInstance().get<Yagt.Config.Interceptor>('interceptor')
+        ConfigManager.getInstance().get<yuki.Config.Interceptor>('interceptor')
       )
     )
     applicationBuilder.use(
       new MecabMiddleware(
-        ConfigManager.getInstance().get<Yagt.Config.Default>('default').mecab
+        ConfigManager.getInstance().get<yuki.Config.Default>('default').mecab
       )
     )
     applicationBuilder.use(new FilterMiddleware())

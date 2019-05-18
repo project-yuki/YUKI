@@ -1,16 +1,16 @@
 <template>
   <div>
-    <gt-page-header title="我的游戏"/>
-    <gt-page-content>
+    <yk-page-header title="我的游戏"/>
+    <yk-page-content>
       <p v-show="noGame" class="all-center text-h3">什么都没有呢(っ °Д °;)っ
         <br>快去添加游戏吧~ヾ(•ω•`)o
       </p>
       <mu-row gutter>
         <mu-col class="margin-bottom" sm="12" md="6" lg="4" v-for="game in games" :key="game.path">
-          <gt-game-card :game="game"></gt-game-card>
+          <yk-game-card :game="game"></yk-game-card>
         </mu-col>
       </mu-row>
-    </gt-page-content>
+    </yk-page-content>
   </div>
 </template>
 
@@ -23,19 +23,19 @@ import {
   namespace
 } from 'vuex-class'
 
-import GtGameCard from '@/components/GamesPageGameCard.vue'
-import GtPageContent from '@/components/PageContent.vue'
-import GtPageHeader from '@/components/PageHeader.vue'
+import YkGameCard from '@/components/GamesPageGameCard.vue'
+import YkPageContent from '@/components/PageContent.vue'
+import YkPageHeader from '@/components/PageHeader.vue'
 
 @Component({
   components: {
-    GtPageHeader,
-    GtPageContent,
-    GtGameCard
+    YkPageHeader,
+    YkPageContent,
+    YkGameCard
   }
 })
 export default class GamesPage extends Vue {
-  @(namespace('Config').State('games')) public games!: Yagt.Game[]
+  @(namespace('Config').State('games')) public games!: yuki.Game[]
 
   @(namespace('Gui').State('noGame')) public noGame!: boolean
 }

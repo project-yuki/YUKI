@@ -1,6 +1,6 @@
 import { app, dialog, ipcMain } from 'electron'
 import IpcTypes from '../../common/IpcTypes'
-const debug = require('debug')('yagt:ipc')
+const debug = require('debug')('yuki:ipc')
 import { extname } from 'path'
 import ConfigManager from '../config/ConfigManager'
 import DownloaderFactory from '../DownloaderFactory'
@@ -16,10 +16,10 @@ export default function (mainWindow: Electron.BrowserWindow) {
   ipcMain.on(IpcTypes.MAIN_PAGE_LOAD_FINISHED, () => {
     debug('main page load finished. starting apis...')
     TranslationManager.getInstance().initializeApis(
-      ConfigManager.getInstance().get<Yagt.Config.Default>('default').onlineApis
+      ConfigManager.getInstance().get<yuki.Config.Default>('default').onlineApis
     )
     TranslationManager.getInstance().initializeTranslators(
-      ConfigManager.getInstance().get<Yagt.Config.Default>('default')
+      ConfigManager.getInstance().get<yuki.Config.Default>('default')
         .translators
     )
     debug('apis started')
@@ -27,7 +27,7 @@ export default function (mainWindow: Electron.BrowserWindow) {
 
   ipcMain.on(
     IpcTypes.REQUEST_RUN_GAME,
-    (event: Electron.Event, game: Yagt.Game) => {
+    (event: Electron.Event, game: yuki.Game) => {
       mainWindow.hide()
 
       runningGame = new Game(game)
@@ -92,7 +92,7 @@ export default function (mainWindow: Electron.BrowserWindow) {
     IpcTypes.REQUEST_SAVE_TRANSLATOR_GUI,
     (event: Electron.Event, cfg: any) => {
       debug('request saving translator gui config...')
-      ConfigManager.getInstance().set<Yagt.Config.Gui>('gui', {
+      ConfigManager.getInstance().set<yuki.Config.Gui>('gui', {
         ...ConfigManager.getInstance().get('gui'),
         translatorWindow: cfg
       })
@@ -102,9 +102,9 @@ export default function (mainWindow: Electron.BrowserWindow) {
 
   ipcMain.on(
     IpcTypes.REQUEST_ADD_GAME,
-    (event: Electron.Event, game: Yagt.Game) => {
+    (event: Electron.Event, game: yuki.Game) => {
       ConfigManager.getInstance()
-        .get<Yagt.Config.Games>('games')
+        .get<yuki.Config.Games>('games')
         .push(game)
       ConfigManager.getInstance().save('games')
       sendConfig('games', event)
@@ -114,12 +114,12 @@ export default function (mainWindow: Electron.BrowserWindow) {
 
   ipcMain.on(
     IpcTypes.REQUEST_REMOVE_GAME,
-    (event: Electron.Event, game: Yagt.Game) => {
-      ConfigManager.getInstance().set<Yagt.Config.Games>(
+    (event: Electron.Event, game: yuki.Game) => {
+      ConfigManager.getInstance().set<yuki.Config.Games>(
         'games',
         ConfigManager.getInstance()
-          .get<Yagt.Config.Games>('games')
-          .filter((item: Yagt.Game) => item.name !== game.name)
+          .get<yuki.Config.Games>('games')
+          .filter((item: yuki.Game) => item.name !== game.name)
       )
       sendConfig('games', event)
     }
@@ -219,10 +219,10 @@ function sendLibrariesBaseStorePath (event: Electron.Event) {
 
 app.on('before-quit', () => {
   if (translatorWindow) {
-    require('debug')('yagt:app')('closing translator window...')
+    require('debug')('yuki:app')('closing translator window...')
     translatorWindow.close()
     translatorWindow = null
-    require('debug')('yagt:app')('translator window closed')
+    require('debug')('yuki:app')('translator window closed')
   }
-  require('debug')('yagt:app')('app quited')
+  require('debug')('yuki:app')('app quited')
 })

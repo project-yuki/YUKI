@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <gt-app-sidebar></gt-app-sidebar>
-    <router-view class="full-height" style="margin-left: 240px;"></router-view>
+    <yk-app-sidebar></yk-app-sidebar>
+    <router-view class="full-height" style="margin-left: 230px;"></router-view>
   </div>
 </template>
 
@@ -11,7 +11,7 @@ import {
   Component
 } from 'vue-property-decorator'
 
-import GtAppSidebar from '@/components/AppSidebar.vue'
+import YkAppSidebar from '@/components/AppSidebar.vue'
 
 import {
   ipcRenderer
@@ -20,7 +20,7 @@ import IpcTypes from '../common/IpcTypes'
 
 @Component({
   components: {
-    GtAppSidebar
+    YkAppSidebar
   }
 })
 export default class App extends Vue {

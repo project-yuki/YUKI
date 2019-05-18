@@ -6,7 +6,7 @@ export default class GuiConfig extends Config {
     return 'gui'
   }
 
-  protected getDefaultObject (): Yagt.Config.Gui {
+  protected getDefaultObject (): yuki.Config.Gui {
     const displaySize = screen.getPrimaryDisplay().size
     const mainWindowWidthRatio = 0.75
     const mainWindowHeightRatio = 0.8

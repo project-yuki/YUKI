@@ -1,7 +1,7 @@
-const debug = require('debug')('yagt:publish')
+const debug = require('debug')('yuki:publish')
 
 export default class PublishMiddleware
-  implements Yagt.Middleware<Yagt.TextOutputObject> {
+  implements yuki.Middleware<yuki.TextOutputObject> {
   private subscribers: Electron.WebContents[] = []
   private type: string
   constructor (type: string) {
@@ -44,7 +44,7 @@ export default class PublishMiddleware
     }
   }
 
-  public process (context: Yagt.TextOutputObject) {
+  public process (context: yuki.TextOutputObject) {
     for (const subscriber of this.subscribers) {
       subscriber.send(this.type, context)
     }

@@ -14,7 +14,7 @@ export default class GamesConfig extends Config {
     this.save()
   }
 
-  protected getDefaultObject (): { games: Yagt.Config.Games } {
+  protected getDefaultObject (): { games: yuki.Config.Games } {
     return { games: [] }
   }
 }

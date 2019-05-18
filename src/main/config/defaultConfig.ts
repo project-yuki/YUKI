@@ -4,7 +4,7 @@ export default class DefaultConfig extends Config {
   public getFilename (): string {
     return 'config'
   }
-  protected getDefaultObject (): Yagt.Config.Default {
+  protected getDefaultObject (): yuki.Config.Default {
     return {
       localeChangers: {
         localeEmulator: { name: 'Locale Emulator', enable: false, exec: '' },
@@ -37,7 +37,7 @@ export default class DefaultConfig extends Config {
       ],
       translators: { jBeijing: { enable: false, path: '', dictPath: '' } },
       mecab: { enable: false, path: '' },
-      librariesRepoUrl: 'https://github.com/Yagt/libraries/raw/master/_pack/'
+      librariesRepoUrl: 'https://github.com/project-yuki/libraries/raw/master/_pack/'
     }
   }
 }

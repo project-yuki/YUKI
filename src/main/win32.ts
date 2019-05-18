@@ -1,5 +1,5 @@
 import * as ffi from 'ffi'
-const debug = require('debug')('yagt:win32')
+const debug = require('debug')('yuki:win32')
 
 const SYNCHRONIZE = 0x00100000
 const FALSE = 0

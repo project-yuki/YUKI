@@ -1,4 +1,4 @@
-const debug = require('debug')('yagt:config')
+const debug = require('debug')('yuki:config')
 import { Commit } from 'vuex'
 
 const configState: any = {
@@ -8,7 +8,7 @@ const configState: any = {
 }
 
 const mutations = {
-  SET_CONFIG (state: Yagt.ConfigState, payload: { name: string; cfgs: any }) {
+  SET_CONFIG (state: yuki.ConfigState, payload: { name: string; cfgs: any }) {
     switch (payload.name) {
       case 'default':
         state.default = payload.cfgs

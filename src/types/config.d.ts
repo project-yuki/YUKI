@@ -1,4 +1,4 @@
-declare namespace Yagt {
+declare namespace yuki {
   namespace Config {
     export interface Config {}
 

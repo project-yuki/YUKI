@@ -1,11 +1,11 @@
 import { existsSync } from 'fs'
 import JBeijing from './JBeijing'
 
-export default class JBeijingAdapter implements Yagt.Translator {
-  private config: Yagt.Config.JBeijing
+export default class JBeijingAdapter implements yuki.Translator {
+  private config: yuki.Config.JBeijing
   private jb: JBeijing
 
-  constructor (config: Yagt.Config.JBeijing) {
+  constructor (config: yuki.Config.JBeijing) {
     this.config = config
     this.jb = new JBeijing(config.path)
     if (config.dictPath && existsSync(config.dictPath)) {

@@ -1,8 +1,8 @@
 {
-  "name": "yagt",
+  "name": "yuki",
   "version": "0.1.0",
   "author": "tinyAdapter <tinyadapter@outlook.com>",
-  "description": "Yet Another Galgame Translator",
+  "description": "Yummy Utterance Knowledge Interface",
   "license": "GPL-3.0",
   "main": "./dist/electron/main.js",
   "scripts": {
@@ -22,8 +22,8 @@
     "tsc": "tsc --noEmit"
   },
   "build": {
-    "productName": "yagt",
-    "appId": "org.yagt.yagt",
+    "productName": "YUKI",
+    "appId": "org.project-yuki.yuki",
     "directories": {
       "output": "build"
     },

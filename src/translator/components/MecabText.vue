@@ -30,10 +30,10 @@ import MecabMiddleware from '../../main/middlewares/MeCabMiddleware'
 @Component
 export default class MecabText extends Vue {
   @Prop()
-  public patterns!: Yagt.MeCabPatterns
+  public patterns!: yuki.MeCabPatterns
 
   @namespace('Config').Getter('getOriginalText')
-  public getOriginalText!: () => Yagt.FontStyle
+  public getOriginalText!: () => yuki.FontStyle
   get originalTextColor () {
     return this.getOriginalText().color
   }

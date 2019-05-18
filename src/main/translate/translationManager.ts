@@ -1,6 +1,6 @@
 import Api from './Api'
 import JBeijingAdapter from './JBeijingAdapter'
-const debug = require('debug')('yagt:translationManager')
+const debug = require('debug')('yuki:translationManager')
 import ExternalApi from './ExternalApi'
 
 export default class TranslationManager {
@@ -12,10 +12,10 @@ export default class TranslationManager {
   }
   private static instance: TranslationManager | undefined
 
-  private apis: Yagt.Translator[] = []
+  private apis: yuki.Translator[] = []
 
   public initializeApis (
-    apis: Yagt.Config.Default['onlineApis']
+    apis: yuki.Config.Default['onlineApis']
   ): TranslationManager {
     for (const api of apis) {
       try {
@@ -32,7 +32,7 @@ export default class TranslationManager {
   }
 
   public initializeTranslators (
-    translators: Yagt.Config.Default['translators']
+    translators: yuki.Config.Default['translators']
   ) {
     if (translators.jBeijing && translators.jBeijing.enable) {
       const jb = new JBeijingAdapter(translators.jBeijing)
@@ -42,7 +42,7 @@ export default class TranslationManager {
 
   public translate (
     text: string,
-    callback: (translation: Yagt.Translations['translations']) => void
+    callback: (translation: yuki.Translations['translations']) => void
   ) {
     let toTranslateCount = 0
     for (const key in this.apis) {
@@ -64,11 +64,11 @@ export default class TranslationManager {
 
   public translateAll (
     text: string,
-    callback: (translations: Yagt.Translations) => void
+    callback: (translations: yuki.Translations) => void
   ) {
     let toTranslateCount = 0
     let finishedCount = 0
-    const result: Yagt.Translations = { original: text, translations: {} }
+    const result: yuki.Translations = { original: text, translations: {} }
     for (const key in this.apis) {
       if (this.apis[key].isEnable()) {
         toTranslateCount++;

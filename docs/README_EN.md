@@ -1,7 +1,7 @@
 ﻿<h1 align="center">
-  <a href="https://github.com/Yagt/Yagt"><img src="https://raw.githubusercontent.com/Yagt/Yagt/master/build/icons/icon.png" alt="Yet Another Galgame Translator" width="200" /></a>
+  <a href="https://github.com/project-yuki/YUKI"><img src="https://raw.githubusercontent.com/project-yuki/YUKI/master/build/icons/icon.png" alt="YUKI" width="200" /></a>
   <br>
-  Yet Another Galgame Translator
+  YUKI - Yummy Utterance Knowledge Interface
   <br>
   <br>
 </h1>
@@ -16,11 +16,11 @@
   <a href="/docs/README_EN.md">English</a>
 </p>
 
-![how it looks](https://raw.githubusercontent.com/Yagt/Yagt/master/.github/imgs/how_it_looks.jpg)
+![how it looks](https://raw.githubusercontent.com/project-yuki/yuki/master/.github/imgs/how_it_looks.jpg)
 
 ## WARNING
 
-The Yagt Project is more like a propose than an actual working progress. Since I'm not a professor in either NodeJS or C++, this project can be in ugly slow progress ¯\\\_(ツ)\_/¯
+Project YUKI is more like a propose than an actual working progress. Since I'm not a professor in either NodeJS or C++, this project can be in ugly slow progress ¯\\\_(ツ)\_/¯
 
 However, if you're interested in the same idea, forks and PRs are sincerely welcomed ╰(\*°▽°\*)╯
 
@@ -55,18 +55,18 @@ So, using Electron as frontend and traditional Windows API (Text Hooker wrapped 
 - [x] Text window UI
 - [x] Online translator API call
 - [x] JBeijing translator DLL access
-- [ ] Others: [planning repo](https://github.com/Yagt/planning/issues)
+- [ ] Others: [planning repo](https://github.com/project-yuki/planning/issues)
 
 ## Usage
 
-    git clone https://github.com/Yagt/Yagt.git
-    cd yagt
+    git clone https://github.com/project-yuki/YUKI.git
+    cd yuki
     npm install (or yarn)
     npm run rebuild
     npm run dev
 
 ## License
 
-Yagt is licensed under GPLv3.
+YUKI is licensed under GPLv3.
 
 I'd like to use MIT license, but the upstream softwares (Text Hooker for example) are licensed under GPL, so, no choice.

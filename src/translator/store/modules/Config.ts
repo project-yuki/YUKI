@@ -1,5 +1,5 @@
 import { Commit } from 'vuex'
-const debug = require('debug')('yagt:translatorWindow')
+const debug = require('debug')('yuki:translatorWindow')
 import { ipcRenderer, remote } from 'electron'
 import IpcTypes from '../../../common/IpcTypes'
 
@@ -28,20 +28,20 @@ const configState: any = {
 }
 
 const getters = {
-  getOriginalText: (state: Yagt.TranslatorConfigState) => () => {
+  getOriginalText: (state: yuki.TranslatorConfigState) => () => {
     return state.gui.originalText
   },
-  getTranslationText: (state: Yagt.TranslatorConfigState) => () => {
+  getTranslationText: (state: yuki.TranslatorConfigState) => () => {
     return state.gui.translationText
   },
-  getBackgroundColor: (state: Yagt.TranslatorConfigState) => () => {
+  getBackgroundColor: (state: yuki.TranslatorConfigState) => () => {
     return state.gui.background
   }
 }
 
 const mutations = {
   SET_CONFIG (
-    state: Yagt.TranslatorConfigState,
+    state: yuki.TranslatorConfigState,
     payload: { name: string; cfgs: any }
   ) {
     switch (payload.name) {
@@ -60,7 +60,7 @@ const mutations = {
     }
   },
   SET_ORIGINAL_TEXT_SIZE (
-    state: Yagt.TranslatorConfigState,
+    state: yuki.TranslatorConfigState,
     payload: { size: number }
   ) {
     state.gui.originalText = {
@@ -69,7 +69,7 @@ const mutations = {
     }
   },
   SET_TRANSLATION_TEXT_SIZE (
-    state: Yagt.TranslatorConfigState,
+    state: yuki.TranslatorConfigState,
     payload: { size: number }
   ) {
     state.gui.translationText = {
@@ -78,7 +78,7 @@ const mutations = {
     }
   },
   SET_TRANSLATION_TEXT_MARGIN (
-    state: Yagt.TranslatorConfigState,
+    state: yuki.TranslatorConfigState,
     payload: { margin: number }
   ) {
     state.gui.translationText = {
@@ -87,12 +87,12 @@ const mutations = {
     }
   },
   SET_BACKGROUND_COLOR (
-    state: Yagt.TranslatorConfigState,
+    state: yuki.TranslatorConfigState,
     payload: { color: { hex8: string } }
   ) {
     state.gui.background = payload.color.hex8
   },
-  SAVE_GUI_CONFIG (state: Yagt.TranslatorConfigState) {
+  SAVE_GUI_CONFIG (state: yuki.TranslatorConfigState) {
     if (!isSavingConfig) {
       setTimeout(() => {
         ipcRenderer.send(IpcTypes.REQUEST_SAVE_TRANSLATOR_GUI, {

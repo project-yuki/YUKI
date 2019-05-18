@@ -1,7 +1,7 @@
 export default class ApplicationBuilder<T> {
-  private middlewares: Array<Yagt.Middleware<T>> = []
+  private middlewares: Array<yuki.Middleware<T>> = []
 
-  public use (middleware: Yagt.Middleware<T>) {
+  public use (middleware: yuki.Middleware<T>) {
     this.middlewares.push(middleware)
   }
 

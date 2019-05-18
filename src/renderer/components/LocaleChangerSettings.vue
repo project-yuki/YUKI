@@ -63,7 +63,7 @@ import {
 } from 'electron'
 import IpcTypes from '../../common/IpcTypes'
 
-type TempLocaleChangerItem = Yagt.Config.LocaleChangerItem & {
+type TempLocaleChangerItem = yuki.Config.LocaleChangerItem & {
   id: string
 }
 
@@ -94,7 +94,7 @@ export default class LocaleChangerSettings extends Vue {
   ]
 
   @(namespace('Config').State('default'))
-  public defaultConfig!: Yagt.ConfigState['default']
+  public defaultConfig!: yuki.ConfigState['default']
 
   public tempLocaleChangers: TempLocaleChangerItem[] = []
 

@@ -1,7 +1,7 @@
 <template>
   <div>
-    <gt-page-header title="添加游戏"/>
-    <gt-page-content>
+    <yk-page-header title="添加游戏"/>
+    <yk-page-content>
       <mu-container>
         <mu-stepper :active-step="activeStep" orientation="vertical">
           <mu-step>
@@ -46,7 +46,7 @@
           </mu-step>
         </mu-stepper>
       </mu-container>
-    </gt-page-content>
+    </yk-page-content>
   </div>
 </template>
 
@@ -64,20 +64,20 @@ import {
 } from 'vuex-class'
 import IpcTypes from '../../common/IpcTypes'
 
-import GtOneColumn from '@/components/OneColumn.vue'
-import GtPageContent from '@/components/PageContent.vue'
-import GtPageHeader from '@/components/PageHeader.vue'
+import YkOneColumn from '@/components/OneColumn.vue'
+import YkPageContent from '@/components/PageContent.vue'
+import YkPageHeader from '@/components/PageHeader.vue'
 
 @Component({
   components: {
-    GtPageHeader,
-    GtPageContent,
-    GtOneColumn
+    YkPageHeader,
+    YkPageContent,
+    YkOneColumn
   }
 })
 export default class FavoritePage extends Vue {
   public activeStep: number = -1
-  public game: Yagt.Game = {
+  public game: yuki.Game = {
     name: '',
     path: '',
     code: '',
@@ -85,7 +85,7 @@ export default class FavoritePage extends Vue {
   }
 
   @(namespace('Config').State('default'))
-  public defaultConfig!: Yagt.ConfigState['default']
+  public defaultConfig!: yuki.ConfigState['default']
 
   get showStepOne () {
     return this.activeStep === 0

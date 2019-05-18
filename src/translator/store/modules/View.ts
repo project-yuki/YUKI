@@ -1,12 +1,12 @@
 import { Commit } from 'vuex'
 
-const viewState: Yagt.TranslatorViewState = {
+const viewState: yuki.TranslatorViewState = {
   isButtonsShown: true
 }
 
 const mutations = {
   SET_BUTTONS_SHOWN (
-    state: Yagt.TranslatorViewState,
+    state: yuki.TranslatorViewState,
     payload: { value: boolean }
   ) {
     state.isButtonsShown = payload.value

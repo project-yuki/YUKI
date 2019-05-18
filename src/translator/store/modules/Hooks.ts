@@ -5,7 +5,7 @@ import MecabMiddleware from '../../../main/middlewares/MeCabMiddleware'
 
 const MAX_STORE_COUNT = 16
 
-const hooksState: Yagt.TranslatorHookState = {
+const hooksState: yuki.TranslatorHookState = {
   isMecabEnable: false,
   hookInfos: [],
   texts: {},
@@ -19,19 +19,19 @@ const hooksState: Yagt.TranslatorHookState = {
 }
 
 const getters = {
-  getTextById: (state: Yagt.TranslatorHookState) => (id: number): string[] => {
+  getTextById: (state: yuki.TranslatorHookState) => (id: number): string[] => {
     return state.texts[id.toString()]
   },
-  getLastTextById: (state: Yagt.TranslatorHookState) => (
+  getLastTextById: (state: yuki.TranslatorHookState) => (
     id: number
   ): string => {
     if (!state.texts[id.toString()]) return ''
 
     return state.texts[id.toString()][state.texts[id.toString()].length - 1]
   },
-  getLastPatternsById: (state: Yagt.TranslatorHookState) => (
+  getLastPatternsById: (state: yuki.TranslatorHookState) => (
     id: number
-  ): Yagt.MeCabPatterns => {
+  ): yuki.MeCabPatterns => {
     if (!state.patterns[id.toString()]) return []
 
     return state.patterns[id.toString()][
@@ -42,8 +42,8 @@ const getters = {
 
 const mutations = {
   ADD_HOOK (
-    state: Yagt.TranslatorHookState,
-    payload: { hook: Yagt.TextThread }
+    state: yuki.TranslatorHookState,
+    payload: { hook: yuki.TextThread }
   ) {
     state.hookInfos.push(payload.hook)
     state.texts = { ...state.texts, [payload.hook.handle.toString()]: [] }
@@ -53,7 +53,7 @@ const mutations = {
     }
   },
   SET_HOOK_TEXT (
-    state: Yagt.TranslatorHookState,
+    state: yuki.TranslatorHookState,
     payload: { hookNum: number; text: string }
   ) {
     const texts = state.texts[payload.hookNum.toString()]
@@ -63,8 +63,8 @@ const mutations = {
     }
   },
   SET_HOOK_PATTERNS (
-    state: Yagt.TranslatorHookState,
-    payload: { hookNum: number; patterns: Yagt.MeCabPatterns }
+    state: yuki.TranslatorHookState,
+    payload: { hookNum: number; patterns: yuki.MeCabPatterns }
   ) {
     const patterns = state.patterns[payload.hookNum.toString()]
     patterns.push(payload.patterns)
@@ -73,26 +73,26 @@ const mutations = {
     }
   },
   CHOOSE_HOOK_AS_DISPLAY (
-    state: Yagt.TranslatorHookState,
+    state: yuki.TranslatorHookState,
     payload: { hookNum: number }
   ) {
     state.currentDisplayHookIndex = payload.hookNum
   },
   INIT_DISPLAY_HOOK (
-    state: Yagt.TranslatorHookState,
+    state: yuki.TranslatorHookState,
     payload: { code: string }
   ) {
     state.toDisplayHookCode = payload.code
   },
   SET_TRANSLATION (
-    state: Yagt.TranslatorHookState,
-    payload: { translations: Yagt.Translations }
+    state: yuki.TranslatorHookState,
+    payload: { translations: yuki.Translations }
   ) {
     state.translationsForCurrentIndex = payload.translations
   },
   MERGE_TRANSLATION (
-    state: Yagt.TranslatorHookState,
-    payload: { translation: Yagt.Translations['translations'] }
+    state: yuki.TranslatorHookState,
+    payload: { translation: yuki.Translations['translations'] }
   ) {
     for (const key in payload.translation) {
       state.translationsForCurrentIndex.translations = {
@@ -101,14 +101,14 @@ const mutations = {
       }
     }
   },
-  CLEAR_TRANSLATION (state: Yagt.TranslatorHookState) {
+  CLEAR_TRANSLATION (state: yuki.TranslatorHookState) {
     const translations = state.translationsForCurrentIndex.translations
     for (const key in translations) {
       translations[key] = '...'
     }
   },
   SET_MECAB_ENABLE (
-    state: Yagt.TranslatorHookState,
+    state: yuki.TranslatorHookState,
     payload: { enable: boolean }
   ) {
     state.isMecabEnable = payload.enable
@@ -117,8 +117,8 @@ const mutations = {
 
 const actions = {
   addHook (
-    { commit, state }: { commit: Commit; state: Yagt.TranslatorHookState },
-    hook: Yagt.TextThread
+    { commit, state }: { commit: Commit; state: yuki.TranslatorHookState },
+    hook: yuki.TextThread
   ) {
     commit('ADD_HOOK', { hook })
     if (hook.code.toLowerCase() === state.toDisplayHookCode.toLowerCase()) {
@@ -131,8 +131,8 @@ const actions = {
       dispatch,
       commit,
       state
-    }: { dispatch: Dispatch; commit: Commit; state: Yagt.TranslatorHookState },
-    { hook, text }: { hook: Yagt.TextThread; text: string }
+    }: { dispatch: Dispatch; commit: Commit; state: yuki.TranslatorHookState },
+    { hook, text }: { hook: yuki.TextThread; text: string }
   ) {
     const commonActions = () => {
       if (!state.isMecabEnable && MecabMiddleware.isMeCabString(text)) {
@@ -170,13 +170,13 @@ const actions = {
   },
   setTranslation (
     { commit }: { commit: Commit },
-    translations: Yagt.Translations
+    translations: yuki.Translations
   ) {
     commit('SET_TRANSLATION', { translations })
   },
   mergeTranslation (
     { commit }: { commit: Commit },
-    translation: Yagt.Translations['translations']
+    translation: yuki.Translations['translations']
   ) {
     commit('MERGE_TRANSLATION', { translation })
   },

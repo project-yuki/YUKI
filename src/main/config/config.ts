@@ -2,7 +2,7 @@ import { app } from 'electron'
 import * as fs from 'fs'
 import * as jsonfile from 'jsonfile'
 import * as path from 'path'
-const debug = require('debug')('yagt:config')
+const debug = require('debug')('yuki:config')
 
 abstract class Config {
   private static readonly FILE_OPTIONS = {

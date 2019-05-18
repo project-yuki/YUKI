@@ -1,5 +1,5 @@
 {
-  "librariesRepoUrl": "https://github.com/Yagt/libraries/raw/master/_pack/",
+  "librariesRepoUrl": "https://github.com/project-yuki/libraries/raw/master/_pack/",
   "localeChangers": {
     "alphaROMdiE": {
       "enable": false,
@@ -24,7 +24,7 @@
   },
   "mecab": {
     "enable": true,
-    "path": "E:\\yagt\\libraries\\pos\\mecab-ipadic"
+    "path": "E:\\yuki\\libraries\\pos\\mecab-ipadic"
   },
   "onlineApis": [
     {
@@ -52,7 +52,7 @@
   ],
   "translators": {
     "jBeijing": {
-      "dictPath": "E:\\yagt\\yagt\\lib\\dict\\jb",
+      "dictPath": "E:\\yuki\\yuki\\lib\\dict\\jb",
       "enable": true,
       "path": "D:\\Visual Novel Reader V2\\JBeijing7"
     }

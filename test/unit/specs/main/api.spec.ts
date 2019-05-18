@@ -37,7 +37,7 @@ describe('Api', () => {
       })
   }).timeout(5000)
 
-  it('combines multiple translations into Yagt.Translations object', (done) => {
+  it('combines multiple translations into yuki.Translations object', (done) => {
     const apis = [
       {
         name: 'baidu',

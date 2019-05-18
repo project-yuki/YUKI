@@ -49,12 +49,12 @@ import * as _ from 'lodash'
 @Component
 export default class HookSettingsHookInfo extends Vue {
   @Prop()
-  public game!: Yagt.Game
+  public game!: yuki.Game
 
   @(namespace('Config').State('default'))
-  public defaultConfig!: Yagt.ConfigState['default']
+  public defaultConfig!: yuki.ConfigState['default']
   @(namespace('Config').State('games'))
-  public gamesConfig!: Yagt.ConfigState['games']
+  public gamesConfig!: yuki.ConfigState['games']
   public selectedLocaleChanger: string = ''
 
   public handleDeleteConfirm () {

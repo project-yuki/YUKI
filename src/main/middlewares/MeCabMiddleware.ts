@@ -1,6 +1,6 @@
 import * as fs from 'fs'
 import * as path from 'path'
-const debug = require('debug')('yagt:mecab')
+const debug = require('debug')('yuki:mecab')
 const toHiragana = require('wanakana').toHiragana
 
 interface IMeCab {
@@ -8,7 +8,7 @@ interface IMeCab {
 }
 
 export default class MecabMiddleware
-  implements Yagt.Middleware<Yagt.TextOutputObject> {
+  implements yuki.Middleware<yuki.TextOutputObject> {
   /**
    * Role type
    * See: https://answers.yahoo.com/question/index?qid=20110805070212AAdpWZf
@@ -61,11 +61,11 @@ export default class MecabMiddleware
     return mstring.startsWith('$')
   }
 
-  public static stringToObject (mstring: string): Yagt.MeCabPatterns {
+  public static stringToObject (mstring: string): yuki.MeCabPatterns {
     if (!this.isMeCabString(mstring)) return []
 
     const validString = mstring.substring(1)
-    const result: Yagt.MeCabPatterns = []
+    const result: yuki.MeCabPatterns = []
     validString.split('|').forEach((value) => {
       const aWord = value.split(',')
       result.push({ word: aWord[0], abbr: aWord[1], kana: aWord[2] })
@@ -73,7 +73,7 @@ export default class MecabMiddleware
     return result
   }
 
-  public static objectToOriginalText (patterns: Yagt.MeCabPatterns): string {
+  public static objectToOriginalText (patterns: yuki.MeCabPatterns): string {
     let result = ''
     for (const pattern of patterns) {
       result += pattern.word
@@ -83,7 +83,7 @@ export default class MecabMiddleware
 
   private mecab: IMeCab | undefined
 
-  constructor (config: Yagt.Config.Libraries['mecab']) {
+  constructor (config: yuki.Config.Libraries['mecab']) {
     if (
       !config.enable ||
       !fs.existsSync(path.join(config.path, 'libmecab.dll'))
@@ -102,8 +102,8 @@ export default class MecabMiddleware
   }
 
   public process (
-    context: Yagt.TextOutputObject,
-    next: (newContext: Yagt.TextOutputObject) => void
+    context: yuki.TextOutputObject,
+    next: (newContext: yuki.TextOutputObject) => void
   ) {
     if (!this.mecab) {
       debug(this.mecab)

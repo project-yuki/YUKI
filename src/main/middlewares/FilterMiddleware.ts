@@ -1,10 +1,10 @@
-const debug = require('debug')('yagt:filter')
+const debug = require('debug')('yuki:filter')
 
 export default class FilterMiddleware
-  implements Yagt.Middleware<Yagt.TextOutputObject> {
+  implements yuki.Middleware<yuki.TextOutputObject> {
   public process (
-    context: Yagt.TextOutputObject,
-    next: (newContext: Yagt.TextOutputObject) => void
+    context: yuki.TextOutputObject,
+    next: (newContext: yuki.TextOutputObject) => void
   ) {
     debug('[%d] %s', context.handle, context.text)
     context.code = `/${context.code}`

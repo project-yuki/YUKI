@@ -1,6 +1,6 @@
 <template>
   <div class="titlebar">
-    <p class="text-h3 text-center title">YET ANOTHER GALGAME TRANSLATOR</p>
+    <p class="text-h3 text-center title">YUKI GALGAME TRANSLATOR</p>
     <mu-button
       v-if="isAlwaysOnTop"
       icon

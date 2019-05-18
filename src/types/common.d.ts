@@ -1,4 +1,4 @@
-declare namespace Yagt {
+declare namespace yuki {
   export interface Middleware<T> {
     process: (context: T, next: (newContext: T) => void) => void
   }

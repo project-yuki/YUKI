@@ -3,19 +3,19 @@ interface ITextStore {
 }
 
 interface IThreadStore {
-  [handle: number]: Yagt.TextOutputObject | undefined
+  [handle: number]: yuki.TextOutputObject | undefined
 }
 
 export default class TextMergerMiddleware
-  implements Yagt.Middleware<Yagt.TextOutputObject> {
+  implements yuki.Middleware<yuki.TextOutputObject> {
   public static TIMEOUT = 500
 
   private textStore: ITextStore = {}
   private threadStore: IThreadStore = {}
 
   public process (
-    context: Yagt.TextOutputObject,
-    next: (newContext: Yagt.TextOutputObject) => void
+    context: yuki.TextOutputObject,
+    next: (newContext: yuki.TextOutputObject) => void
   ) {
     if (!this.isStoreEmpty(context.handle)) {
       this.textStore[context.handle].push(context.text)

@@ -1,4 +1,4 @@
-declare namespace Yagt {
+declare namespace yuki {
   export interface Translations {
     original: string
     translations: {

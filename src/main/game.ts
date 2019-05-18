@@ -1,5 +1,5 @@
 import { exec } from 'child_process'
-const debug = require('debug')('yagt:game')
+const debug = require('debug')('yuki:game')
 import { EventEmitter } from 'events'
 import ConfigManager from './config/ConfigManager'
 import Hooker from './Hooker'
@@ -16,7 +16,7 @@ export default class Game extends EventEmitter {
   private localeChanger: string
   private exeName: string
 
-  constructor (game: Yagt.Game) {
+  constructor (game: yuki.Game) {
     super()
     this.path = game.path
     this.execString = ''
@@ -36,7 +36,7 @@ export default class Game extends EventEmitter {
     return this.pid
   }
 
-  public getInfo (): Yagt.Game {
+  public getInfo (): yuki.Game {
     return {
       name: this.name,
       code: this.code,
@@ -53,7 +53,7 @@ export default class Game extends EventEmitter {
   }
 
   private getRawExecStringOrDefault () {
-    const localeChangers = ConfigManager.getInstance().get<Yagt.Config.Default>(
+    const localeChangers = ConfigManager.getInstance().get<yuki.Config.Default>(
       'default'
     ).localeChangers
     if (this.localeChanger) {

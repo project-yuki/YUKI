@@ -39,7 +39,7 @@ export default class PageContent extends Vue {
 <style scoped>
 .app-header {
   top: 0;
-  left: 240px;
+  left: 230px;
   right: 0;
   position: fixed;
   -webkit-app-region: drag;

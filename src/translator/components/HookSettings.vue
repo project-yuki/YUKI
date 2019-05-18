@@ -6,7 +6,7 @@
       <mu-button slot="actions" flat @click="closeInputHookDialog">取消</mu-button>
       <mu-button slot="actions" flat color="primary" @click="addHook">确定</mu-button>
     </mu-dialog>
-    <gt-hook-info
+    <yk-hook-info
       v-for="hook in orderedHooks"
       :hook="hook"
       :isChosen="isChosen(hook.handle)"
@@ -30,14 +30,14 @@ import {
   ipcRenderer
 } from 'electron'
 
-import GtHookInfo from '@/components/HookSettingsHookInfo.vue'
+import YkHookInfo from '@/components/HookSettingsHookInfo.vue'
 import IpcTypes from '../../common/IpcTypes'
 
 import * as _ from 'lodash'
 
 @Component({
   components: {
-    GtHookInfo
+    YkHookInfo
   }
 })
 export default class HookSettings extends Vue {
@@ -48,13 +48,13 @@ export default class HookSettings extends Vue {
   get orderedHooks () {
     return _.orderBy(
       this.hooks,
-      (hook: Yagt.TextThread) => this.texts[hook.handle].length,
+      (hook: yuki.TextThread) => this.texts[hook.handle].length,
       'desc'
     )
   }
 
   @(namespace('Hooks').State('hookInfos'))
-  public hooks!: Yagt.TextThread[]
+  public hooks!: yuki.TextThread[]
   @(namespace('Hooks').State('texts'))
   public texts!: string[]
   @(namespace('Hooks').State('currentDisplayHookIndex'))

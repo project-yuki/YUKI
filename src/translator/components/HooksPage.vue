@@ -1,5 +1,5 @@
 <template>
-  <gt-hook-settings></gt-hook-settings>
+  <yk-hook-settings></yk-hook-settings>
 </template>
 
 <script lang="ts">
@@ -9,7 +9,7 @@ import {
   Prop
 } from 'vue-property-decorator'
 
-import GtHookSettings from '@/components/HookSettings.vue'
+import YkHookSettings from '@/components/HookSettings.vue'
 import {
   remote
 } from 'electron'
@@ -19,7 +19,7 @@ import {
 
 @Component({
   components: {
-    GtHookSettings
+    YkHookSettings
   }
 })
 export default class HooksPage extends Vue {

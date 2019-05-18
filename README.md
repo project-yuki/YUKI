@@ -1,7 +1,7 @@
 ﻿<h1 align="center">
-  <a href="https://github.com/Yagt/Yagt"><img src="https://raw.githubusercontent.com/Yagt/Yagt/master/build/icons/icon.png" alt="Yet Another Galgame Translator" width="200" /></a>
+  <a href="https://github.com/project-yuki/YUKI"><img src="https://raw.githubusercontent.com/project-yuki/YUKI/master/build/icons/icon.png" alt="Yet Another Galgame Translator" width="200" /></a>
   <br>
-  另一个 Galgame 翻译器
+  YUKI Galgame 翻译器
   <br>
   <br>
 </h1>
@@ -16,11 +16,11 @@
   <a href="/docs/README_EN.md">English</a>
 </p>
 
-![它看起来的样子](https://raw.githubusercontent.com/Yagt/Yagt/master/.github/imgs/how_it_looks.jpg)
+![它看起来的样子](https://raw.githubusercontent.com/project-yuki/YUKI/master/.github/imgs/how_it_looks.jpg)
 
 ## 警告！
 
-与实际正在推进的项目相比，Yagt 更像是一个倡议。因为我本人并不是 Node.js 或者 C++方面的专家，所以本项目很可能只会以极其缓慢的进度向前推进... ¯\\\_(ツ)\_/¯
+与实际正在推进的项目相比，YUKI 更像是一个倡议。因为我本人并不是 Node.js 或者 C++方面的专家，所以本项目很可能只会以极其缓慢的进度向前推进... ¯\\\_(ツ)\_/¯
 
 但是，如果你和我一样对本项目感兴趣，欢迎各种 fork 和 PR！ ╰(\*°▽°\*)╯
 
@@ -55,20 +55,20 @@
 - [x] 文本展示窗口 UI
 - [x] 在线翻译 API 调用
 - [x] J 北京翻译 DLL 调用
-- [ ] 其它最新的：[计划仓库（英文）](https://github.com/Yagt/planning/issues)
+- [ ] 其它最新的：[计划仓库（英文）](https://github.com/project-yuki/planning/issues)
 
 ## 尝个鲜？
 
 随便找个文件夹，运行以下代码：
 
-    git clone https://github.com/Yagt/Yagt.git
-    cd yagt
+    git clone https://github.com/project-yuki/YUKI.git
+    cd yuki
     npm install (或 yarn)
     npm run rebuild
     npm run dev
 
 ## 许可证
 
-Yagt 使用 GPLv3 许可证开源。
+YUKI 使用 GPLv3 许可证开源。
 
 我本来是想用 MIT 的，但是由于上游依赖（如文本提取器）用的是 GPL，所以我也很为难啊。

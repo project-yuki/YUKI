@@ -2,7 +2,7 @@ import * as ffi from 'ffi'
 import * as fs from 'fs'
 import * as path from 'path'
 import * as ref from 'ref'
-const debug = require('debug')('yagt:jbeijing')
+const debug = require('debug')('yuki:jbeijing')
 
 export default class JBeijing {
   public static readonly DICT_PATH = 'lib\\dict\\jb\\'

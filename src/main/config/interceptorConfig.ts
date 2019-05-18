@@ -4,7 +4,7 @@ export default class InterceptorConfig extends Config {
   public getFilename (): string {
     return 'interceptor'
   }
-  protected getDefaultObject (): Yagt.Config.Interceptor {
+  protected getDefaultObject (): yuki.Config.Interceptor {
     return {
       shouldBeIgnore: [
         'value',
