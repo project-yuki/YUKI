@@ -9,6 +9,7 @@
 <p align="center">
   <a href="https://standardjs.com"><img src="https://img.shields.io/badge/code_style-standard-brightgreen.svg" alt="JavaScript Style Guide"></a>
   <a href="/LICENSE"><img src="https://img.shields.io/badge/license-GPL%203.0-blue.svg" alt="GPL 3.0 LICENSE"></a>
+  <a href="https://ci.appveyor.com/project/tinyAdapter/yuki"><img src="https://ci.appveyor.com/api/projects/status/g54ttjac4w36v5hx?svg=true" alt="Build status"></a>
 </p>
 
 <p align="center">
