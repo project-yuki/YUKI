@@ -8,7 +8,7 @@ branches:
 
 image: Visual Studio 2017
 platform:
-  - x64
+  - x86
 
 cache:
   - node_modules
@@ -20,13 +20,13 @@ init:
   - git config --global core.autocrlf input
 
 install:
-  - ps: Install-Product node 8 x64
+  - ps: Install-Product node 10 x86
   - git reset --hard HEAD
   - yarn
   - node --version
 
 build_script:
   #- yarn test
-  - yarn build
+  - yarn build:dir
 
 test: off
