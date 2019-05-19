@@ -30,3 +30,15 @@ build_script:
   - yarn build:dir
 
 test: off
+
+deploy:
+  release: v$(appveyor_build_version)
+  provider: GitHub
+  auth_token:
+    secure: jrOwWRtwmimOB6Wn0mZkhkzdoXCVg7kpYi8RHYWLKYNF/5C/MNY/+E0Px+OvGc58
+  artifact: build\win-ia32-unpacked\*.*
+  draft: true
+  prerelease: false
+  on:
+    branch: master
+    APPVEYOR_REPO_TAG: false
