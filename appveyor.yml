@@ -29,14 +29,21 @@ build_script:
   #- yarn test
   - yarn build:dir
 
+after_build:
+  7z a YUKI.zip %APPVEYOR_BUILD_FOLDER%\build\win-ia32-unpacked\*.*
+
 test: off
+
+artifacts:
+  - path: YUKI.zip
+    name: YUKI
 
 deploy:
   release: v$(appveyor_build_version)
   provider: GitHub
   auth_token:
     secure: jrOwWRtwmimOB6Wn0mZkhkzdoXCVg7kpYi8RHYWLKYNF/5C/MNY/+E0Px+OvGc58
-  artifact: build\win-ia32-unpacked\*.*
+  artifact: YUKI.zip
   draft: true
   prerelease: false
   on:
