@@ -30,7 +30,8 @@ build_script:
   - yarn build:dir
 
 after_build:
-  7z a YUKI.zip %APPVEYOR_BUILD_FOLDER%\build\win-ia32-unpacked\*.*
+  - ps: Rename-Item -path %APPVEYOR_BUILD_FOLDER%\build\win-ia32-unpacked -newName YUKI
+  - 7z a -t7z YUKI.zip %APPVEYOR_BUILD_FOLDER%\build\YUKI\*.*
 
 test: off
 
