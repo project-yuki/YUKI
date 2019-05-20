@@ -13,12 +13,10 @@ export default class DefaultConfig extends Config {
       },
       onlineApis: [
         {
-          enable: true,
-          method: 'POST',
-          name: '百度',
-          requestBodyFormat: 'X{"query": %TEXT%, "from": "jp", "to": "zh"}',
-          responseBodyPattern: 'J%RESPONSE%.data[0].dst',
-          url: 'https://fanyi.baidu.com/transapi'
+          "enable": true,
+          "external": true,
+          "jsFile": "config\\hjdictApi.js",
+          "name": "沪江"
         },
         {
           enable: true,
