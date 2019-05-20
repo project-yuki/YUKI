@@ -44,13 +44,6 @@ export default class ExternalApi implements yuki.Translator {
     }
   }
 
-  private registerWatchCallback() {
-    fs.watch(this.absolutePath, {}, () => {
-      debug('[%s] script file changed. reloading...', this.config.name)
-      this.loadExternalJsFile()
-    })
-  }
-
   public translate (text: string, callback: (translation: string) => void) {
     this.responseVmContext.text = text
     this.responseVmContext.callback = callback
@@ -73,5 +66,12 @@ export default class ExternalApi implements yuki.Translator {
 
   public getName () {
     return this.config.name
+  }
+
+  private registerWatchCallback () {
+    fs.watch(this.absolutePath, {}, () => {
+      debug('[%s] script file changed. reloading...', this.config.name)
+      this.loadExternalJsFile()
+    })
   }
 }

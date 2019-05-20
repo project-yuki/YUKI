@@ -28,10 +28,16 @@
   },
   "onlineApis": [
     {
-      "enable": true,
+      "enable": false,
       "external": true,
       "jsFile": "config\\hjdictApi.js",
       "name": "沪江"
+    },
+    {
+      "enable": true,
+      "external": true,
+      "jsFile": "config\\qqApi.js",
+      "name": "腾讯"
     },
     {
       "enable": true,

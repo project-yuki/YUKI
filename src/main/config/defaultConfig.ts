@@ -13,10 +13,10 @@ export default class DefaultConfig extends Config {
       },
       onlineApis: [
         {
-          "enable": true,
-          "external": true,
-          "jsFile": "config\\hjdictApi.js",
-          "name": "沪江"
+          enable: false,
+          external: true,
+          jsFile: 'config\\hjdictApi.js',
+          name: '沪江'
         },
         {
           enable: true,
@@ -31,6 +31,12 @@ export default class DefaultConfig extends Config {
           external: true,
           jsFile: 'config\\youdaoApi.js',
           name: '有道'
+        },
+        {
+          enable: true,
+          external: true,
+          jsFile: 'config\\qqApi.js',
+          name: '腾讯'
         }
       ],
       translators: { jBeijing: { enable: false, path: '', dictPath: '' } },
