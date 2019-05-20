@@ -35,7 +35,8 @@
       "dict/**/*",
       "lib/**/*",
       "config/youdaoApi.js",
-      "config/hjdictApi.js"
+      "config/hjdictApi.js",
+      "config/qqApi.js"
     ],
     "win": {
       "icon": "build/icons/icon.png"
