@@ -31,7 +31,7 @@ Request.post(TRANSLATE_URL, {
   .then(body => {
     var result = JSON.parse(body).data.content
     // eliminate weird per word translations
-    result = result.replace(/({[^}]*})|(\([^\)]*\))/g, '')
+    result = result.replace(/({[^}]*})|(\(\([^\)]*\)\))/g, '')
     callback(result)
   })
   .catch(err => {

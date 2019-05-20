@@ -7,15 +7,7 @@ const debug = require('debug')('yuki:api')
 
 export default class ExternalApi implements yuki.Translator {
   private config: yuki.Config.OnlineApiItem
-  private responseVmContext: vm.Context = vm.createContext({
-    Request: request,
-    text: '',
-    md5: (data: string, encoding: crypto.HexBase64Latin1Encoding) => {
-      const hash = crypto.createHash('md5')
-      return hash.update(data).digest(encoding)
-    },
-    callback: undefined
-  })
+  private responseVmContext!: vm.Context
   private scriptString: string = ''
   private absolutePath: string = ''
 
@@ -29,26 +21,8 @@ export default class ExternalApi implements yuki.Translator {
       throw new TypeError()
     }
     this.loadExternalJsFile()
+    this.createVmContext()
     this.registerWatchCallback()
-  }
-
-  public loadExternalJsFile () {
-    if (!this.config.jsFile) return
-
-    this.absolutePath = path.join(global.__baseDir, this.config.jsFile)
-    try {
-      this.scriptString = fs.readFileSync(this.absolutePath, 'utf8')
-      debug('external file %s loaded', this.absolutePath)
-    } catch (e) {
-      debug('external file %s loads failed !> %s', this.absolutePath, e)
-    }
-  }
-
-  private registerWatchCallback() {
-    fs.watch(this.absolutePath, {}, () => {
-      debug('[%s] script file changed. reloading...', this.config.name)
-      this.loadExternalJsFile()
-    })
   }
 
   public translate (text: string, callback: (translation: string) => void) {
@@ -73,5 +47,37 @@ export default class ExternalApi implements yuki.Translator {
 
   public getName () {
     return this.config.name
+  }
+
+  private loadExternalJsFile () {
+    if (!this.config.jsFile) return
+
+    this.absolutePath = path.join(global.__baseDir, this.config.jsFile)
+    try {
+      this.scriptString = fs.readFileSync(this.absolutePath, 'utf8')
+      debug('external file %s loaded', this.absolutePath)
+    } catch (e) {
+      debug('external file %s loads failed !> %s', this.absolutePath, e)
+    }
+  }
+
+  private createVmContext () {
+    this.responseVmContext = vm.createContext({
+      Request: request,
+      text: '',
+      md5: (data: string, encoding: crypto.HexBase64Latin1Encoding) => {
+        const hash = crypto.createHash('md5')
+        return hash.update(data).digest(encoding)
+      },
+      callback: undefined
+    })
+  }
+
+  private registerWatchCallback () {
+    fs.watch(this.absolutePath, {}, () => {
+      debug('[%s] script file changed. reloading...', this.config.name)
+      this.loadExternalJsFile()
+      this.createVmContext()
+    })
   }
 }
