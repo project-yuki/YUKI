@@ -126,6 +126,7 @@ function startMain() {
       path.join(__dirname, "../src/main/index.dev.ts")
     ].concat(mainConfig.entry.main);
     mainConfig.mode = "development";
+    mainConfig.devtool = "#inline-source-map";
     const compiler = webpack(mainConfig);
 
     compiler.hooks.watchRun.tapAsync("watch-run", (compilation, done) => {
