@@ -206,158 +206,161 @@
     source-map "^0.5.6"
     vue-template-es2015-compiler "^1.6.0"
 
-"@webassemblyjs/ast@1.7.11":
-  version "1.7.11"
-  resolved "http://registry.npm.taobao.org/@webassemblyjs/ast/download/@webassemblyjs/ast-1.7.11.tgz#b988582cafbb2b095e8b556526f30c90d057cace"
-  integrity sha1-uYhYLK+7Kwlei1VlJvMMkNBXys4=
+"@webassemblyjs/ast@1.8.5":
+  version "1.8.5"
+  resolved "https://registry.npm.taobao.org/@webassemblyjs/ast/download/@webassemblyjs/ast-1.8.5.tgz#51b1c5fe6576a34953bf4b253df9f0d490d9e359"
+  integrity sha1-UbHF/mV2o0lTv0slPfnw1JDZ41k=
   dependencies:
-    "@webassemblyjs/helper-module-context" "1.7.11"
-    "@webassemblyjs/helper-wasm-bytecode" "1.7.11"
-    "@webassemblyjs/wast-parser" "1.7.11"
+    "@webassemblyjs/helper-module-context" "1.8.5"
+    "@webassemblyjs/helper-wasm-bytecode" "1.8.5"
+    "@webassemblyjs/wast-parser" "1.8.5"
 
-"@webassemblyjs/floating-point-hex-parser@1.7.11":
-  version "1.7.11"
-  resolved "http://registry.npm.taobao.org/@webassemblyjs/floating-point-hex-parser/download/@webassemblyjs/floating-point-hex-parser-1.7.11.tgz#a69f0af6502eb9a3c045555b1a6129d3d3f2e313"
-  integrity sha1-pp8K9lAuuaPARVVbGmEp09Py4xM=
+"@webassemblyjs/floating-point-hex-parser@1.8.5":
+  version "1.8.5"
+  resolved "https://registry.npm.taobao.org/@webassemblyjs/floating-point-hex-parser/download/@webassemblyjs/floating-point-hex-parser-1.8.5.tgz#1ba926a2923613edce496fd5b02e8ce8a5f49721"
+  integrity sha1-G6kmopI2E+3OSW/VsC6M6KX0lyE=
 
-"@webassemblyjs/helper-api-error@1.7.11":
-  version "1.7.11"
-  resolved "http://registry.npm.taobao.org/@webassemblyjs/helper-api-error/download/@webassemblyjs/helper-api-error-1.7.11.tgz#c7b6bb8105f84039511a2b39ce494f193818a32a"
-  integrity sha1-x7a7gQX4QDlRGis5zklPGTgYoyo=
+"@webassemblyjs/helper-api-error@1.8.5":
+  version "1.8.5"
+  resolved "https://registry.npm.taobao.org/@webassemblyjs/helper-api-error/download/@webassemblyjs/helper-api-error-1.8.5.tgz#c49dad22f645227c5edb610bdb9697f1aab721f7"
+  integrity sha1-xJ2tIvZFInxe22EL25aX8aq3Ifc=
 
-"@webassemblyjs/helper-buffer@1.7.11":
-  version "1.7.11"
-  resolved "http://registry.npm.taobao.org/@webassemblyjs/helper-buffer/download/@webassemblyjs/helper-buffer-1.7.11.tgz#3122d48dcc6c9456ed982debe16c8f37101df39b"
-  integrity sha1-MSLUjcxslFbtmC3r4WyPNxAd85s=
+"@webassemblyjs/helper-buffer@1.8.5":
+  version "1.8.5"
+  resolved "https://registry.npm.taobao.org/@webassemblyjs/helper-buffer/download/@webassemblyjs/helper-buffer-1.8.5.tgz#fea93e429863dd5e4338555f42292385a653f204"
+  integrity sha1-/qk+Qphj3V5DOFVfQikjhaZT8gQ=
 
-"@webassemblyjs/helper-code-frame@1.7.11":
-  version "1.7.11"
-  resolved "http://registry.npm.taobao.org/@webassemblyjs/helper-code-frame/download/@webassemblyjs/helper-code-frame-1.7.11.tgz#cf8f106e746662a0da29bdef635fcd3d1248364b"
-  integrity sha1-z48QbnRmYqDaKb3vY1/NPRJINks=
+"@webassemblyjs/helper-code-frame@1.8.5":
+  version "1.8.5"
+  resolved "https://registry.npm.taobao.org/@webassemblyjs/helper-code-frame/download/@webassemblyjs/helper-code-frame-1.8.5.tgz#9a740ff48e3faa3022b1dff54423df9aa293c25e"
+  integrity sha1-mnQP9I4/qjAisd/1RCPfmqKTwl4=
   dependencies:
-    "@webassemblyjs/wast-printer" "1.7.11"
+    "@webassemblyjs/wast-printer" "1.8.5"
 
-"@webassemblyjs/helper-fsm@1.7.11":
-  version "1.7.11"
-  resolved "http://registry.npm.taobao.org/@webassemblyjs/helper-fsm/download/@webassemblyjs/helper-fsm-1.7.11.tgz#df38882a624080d03f7503f93e3f17ac5ac01181"
-  integrity sha1-3ziIKmJAgNA/dQP5Pj8XrFrAEYE=
+"@webassemblyjs/helper-fsm@1.8.5":
+  version "1.8.5"
+  resolved "https://registry.npm.taobao.org/@webassemblyjs/helper-fsm/download/@webassemblyjs/helper-fsm-1.8.5.tgz#ba0b7d3b3f7e4733da6059c9332275d860702452"
+  integrity sha1-ugt9Oz9+RzPaYFnJMyJ12GBwJFI=
 
-"@webassemblyjs/helper-module-context@1.7.11":
-  version "1.7.11"
-  resolved "http://registry.npm.taobao.org/@webassemblyjs/helper-module-context/download/@webassemblyjs/helper-module-context-1.7.11.tgz#d874d722e51e62ac202476935d649c802fa0e209"
-  integrity sha1-2HTXIuUeYqwgJHaTXWScgC+g4gk=
-
-"@webassemblyjs/helper-wasm-bytecode@1.7.11":
-  version "1.7.11"
-  resolved "http://registry.npm.taobao.org/@webassemblyjs/helper-wasm-bytecode/download/@webassemblyjs/helper-wasm-bytecode-1.7.11.tgz#dd9a1e817f1c2eb105b4cf1013093cb9f3c9cb06"
-  integrity sha1-3ZoegX8cLrEFtM8QEwk8ufPJywY=
-
-"@webassemblyjs/helper-wasm-section@1.7.11":
-  version "1.7.11"
-  resolved "http://registry.npm.taobao.org/@webassemblyjs/helper-wasm-section/download/@webassemblyjs/helper-wasm-section-1.7.11.tgz#9c9ac41ecf9fbcfffc96f6d2675e2de33811e68a"
-  integrity sha1-nJrEHs+fvP/8lvbSZ14t4zgR5oo=
+"@webassemblyjs/helper-module-context@1.8.5":
+  version "1.8.5"
+  resolved "https://registry.npm.taobao.org/@webassemblyjs/helper-module-context/download/@webassemblyjs/helper-module-context-1.8.5.tgz#def4b9927b0101dc8cbbd8d1edb5b7b9c82eb245"
+  integrity sha1-3vS5knsBAdyMu9jR7bW3ucguskU=
   dependencies:
-    "@webassemblyjs/ast" "1.7.11"
-    "@webassemblyjs/helper-buffer" "1.7.11"
-    "@webassemblyjs/helper-wasm-bytecode" "1.7.11"
-    "@webassemblyjs/wasm-gen" "1.7.11"
+    "@webassemblyjs/ast" "1.8.5"
+    mamacro "^0.0.3"
 
-"@webassemblyjs/ieee754@1.7.11":
-  version "1.7.11"
-  resolved "http://registry.npm.taobao.org/@webassemblyjs/ieee754/download/@webassemblyjs/ieee754-1.7.11.tgz#c95839eb63757a31880aaec7b6512d4191ac640b"
-  integrity sha1-yVg562N1ejGICq7HtlEtQZGsZAs=
+"@webassemblyjs/helper-wasm-bytecode@1.8.5":
+  version "1.8.5"
+  resolved "https://registry.npm.taobao.org/@webassemblyjs/helper-wasm-bytecode/download/@webassemblyjs/helper-wasm-bytecode-1.8.5.tgz#537a750eddf5c1e932f3744206551c91c1b93e61"
+  integrity sha1-U3p1Dt31weky83RCBlUckcG5PmE=
+
+"@webassemblyjs/helper-wasm-section@1.8.5":
+  version "1.8.5"
+  resolved "https://registry.npm.taobao.org/@webassemblyjs/helper-wasm-section/download/@webassemblyjs/helper-wasm-section-1.8.5.tgz#74ca6a6bcbe19e50a3b6b462847e69503e6bfcbf"
+  integrity sha1-dMpqa8vhnlCjtrRihH5pUD5r/L8=
+  dependencies:
+    "@webassemblyjs/ast" "1.8.5"
+    "@webassemblyjs/helper-buffer" "1.8.5"
+    "@webassemblyjs/helper-wasm-bytecode" "1.8.5"
+    "@webassemblyjs/wasm-gen" "1.8.5"
+
+"@webassemblyjs/ieee754@1.8.5":
+  version "1.8.5"
+  resolved "https://registry.npm.taobao.org/@webassemblyjs/ieee754/download/@webassemblyjs/ieee754-1.8.5.tgz#712329dbef240f36bf57bd2f7b8fb9bf4154421e"
+  integrity sha1-cSMp2+8kDza/V70ve4+5v0FUQh4=
   dependencies:
     "@xtuc/ieee754" "^1.2.0"
 
-"@webassemblyjs/leb128@1.7.11":
-  version "1.7.11"
-  resolved "http://registry.npm.taobao.org/@webassemblyjs/leb128/download/@webassemblyjs/leb128-1.7.11.tgz#d7267a1ee9c4594fd3f7e37298818ec65687db63"
-  integrity sha1-1yZ6HunEWU/T9+NymIGOxlaH22M=
+"@webassemblyjs/leb128@1.8.5":
+  version "1.8.5"
+  resolved "https://registry.npm.taobao.org/@webassemblyjs/leb128/download/@webassemblyjs/leb128-1.8.5.tgz#044edeb34ea679f3e04cd4fd9824d5e35767ae10"
+  integrity sha1-BE7es06mefPgTNT9mCTV41dnrhA=
   dependencies:
-    "@xtuc/long" "4.2.1"
+    "@xtuc/long" "4.2.2"
 
-"@webassemblyjs/utf8@1.7.11":
-  version "1.7.11"
-  resolved "http://registry.npm.taobao.org/@webassemblyjs/utf8/download/@webassemblyjs/utf8-1.7.11.tgz#06d7218ea9fdc94a6793aa92208160db3d26ee82"
-  integrity sha1-Btchjqn9yUpnk6qSIIFg2z0m7oI=
+"@webassemblyjs/utf8@1.8.5":
+  version "1.8.5"
+  resolved "https://registry.npm.taobao.org/@webassemblyjs/utf8/download/@webassemblyjs/utf8-1.8.5.tgz#a8bf3b5d8ffe986c7c1e373ccbdc2a0915f0cedc"
+  integrity sha1-qL87XY/+mGx8Hjc8y9wqCRXwztw=
 
-"@webassemblyjs/wasm-edit@1.7.11":
-  version "1.7.11"
-  resolved "http://registry.npm.taobao.org/@webassemblyjs/wasm-edit/download/@webassemblyjs/wasm-edit-1.7.11.tgz#8c74ca474d4f951d01dbae9bd70814ee22a82005"
-  integrity sha1-jHTKR01PlR0B266b1wgU7iKoIAU=
+"@webassemblyjs/wasm-edit@1.8.5":
+  version "1.8.5"
+  resolved "https://registry.npm.taobao.org/@webassemblyjs/wasm-edit/download/@webassemblyjs/wasm-edit-1.8.5.tgz#962da12aa5acc1c131c81c4232991c82ce56e01a"
+  integrity sha1-li2hKqWswcExyBxCMpkcgs5W4Bo=
   dependencies:
-    "@webassemblyjs/ast" "1.7.11"
-    "@webassemblyjs/helper-buffer" "1.7.11"
-    "@webassemblyjs/helper-wasm-bytecode" "1.7.11"
-    "@webassemblyjs/helper-wasm-section" "1.7.11"
-    "@webassemblyjs/wasm-gen" "1.7.11"
-    "@webassemblyjs/wasm-opt" "1.7.11"
-    "@webassemblyjs/wasm-parser" "1.7.11"
-    "@webassemblyjs/wast-printer" "1.7.11"
+    "@webassemblyjs/ast" "1.8.5"
+    "@webassemblyjs/helper-buffer" "1.8.5"
+    "@webassemblyjs/helper-wasm-bytecode" "1.8.5"
+    "@webassemblyjs/helper-wasm-section" "1.8.5"
+    "@webassemblyjs/wasm-gen" "1.8.5"
+    "@webassemblyjs/wasm-opt" "1.8.5"
+    "@webassemblyjs/wasm-parser" "1.8.5"
+    "@webassemblyjs/wast-printer" "1.8.5"
 
-"@webassemblyjs/wasm-gen@1.7.11":
-  version "1.7.11"
-  resolved "http://registry.npm.taobao.org/@webassemblyjs/wasm-gen/download/@webassemblyjs/wasm-gen-1.7.11.tgz#9bbba942f22375686a6fb759afcd7ac9c45da1a8"
-  integrity sha1-m7upQvIjdWhqb7dZr816ycRdoag=
+"@webassemblyjs/wasm-gen@1.8.5":
+  version "1.8.5"
+  resolved "https://registry.npm.taobao.org/@webassemblyjs/wasm-gen/download/@webassemblyjs/wasm-gen-1.8.5.tgz#54840766c2c1002eb64ed1abe720aded714f98bc"
+  integrity sha1-VIQHZsLBAC62TtGr5yCt7XFPmLw=
   dependencies:
-    "@webassemblyjs/ast" "1.7.11"
-    "@webassemblyjs/helper-wasm-bytecode" "1.7.11"
-    "@webassemblyjs/ieee754" "1.7.11"
-    "@webassemblyjs/leb128" "1.7.11"
-    "@webassemblyjs/utf8" "1.7.11"
+    "@webassemblyjs/ast" "1.8.5"
+    "@webassemblyjs/helper-wasm-bytecode" "1.8.5"
+    "@webassemblyjs/ieee754" "1.8.5"
+    "@webassemblyjs/leb128" "1.8.5"
+    "@webassemblyjs/utf8" "1.8.5"
 
-"@webassemblyjs/wasm-opt@1.7.11":
-  version "1.7.11"
-  resolved "http://registry.npm.taobao.org/@webassemblyjs/wasm-opt/download/@webassemblyjs/wasm-opt-1.7.11.tgz#b331e8e7cef8f8e2f007d42c3a36a0580a7d6ca7"
-  integrity sha1-szHo5874+OLwB9QsOjagWAp9bKc=
+"@webassemblyjs/wasm-opt@1.8.5":
+  version "1.8.5"
+  resolved "https://registry.npm.taobao.org/@webassemblyjs/wasm-opt/download/@webassemblyjs/wasm-opt-1.8.5.tgz#b24d9f6ba50394af1349f510afa8ffcb8a63d264"
+  integrity sha1-sk2fa6UDlK8TSfUQr6j/y4pj0mQ=
   dependencies:
-    "@webassemblyjs/ast" "1.7.11"
-    "@webassemblyjs/helper-buffer" "1.7.11"
-    "@webassemblyjs/wasm-gen" "1.7.11"
-    "@webassemblyjs/wasm-parser" "1.7.11"
+    "@webassemblyjs/ast" "1.8.5"
+    "@webassemblyjs/helper-buffer" "1.8.5"
+    "@webassemblyjs/wasm-gen" "1.8.5"
+    "@webassemblyjs/wasm-parser" "1.8.5"
 
-"@webassemblyjs/wasm-parser@1.7.11":
-  version "1.7.11"
-  resolved "http://registry.npm.taobao.org/@webassemblyjs/wasm-parser/download/@webassemblyjs/wasm-parser-1.7.11.tgz#6e3d20fa6a3519f6b084ef9391ad58211efb0a1a"
-  integrity sha1-bj0g+mo1GfawhO+Tka1YIR77Cho=
+"@webassemblyjs/wasm-parser@1.8.5":
+  version "1.8.5"
+  resolved "https://registry.npm.taobao.org/@webassemblyjs/wasm-parser/download/@webassemblyjs/wasm-parser-1.8.5.tgz#21576f0ec88b91427357b8536383668ef7c66b8d"
+  integrity sha1-IVdvDsiLkUJzV7hTY4NmjvfGa40=
   dependencies:
-    "@webassemblyjs/ast" "1.7.11"
-    "@webassemblyjs/helper-api-error" "1.7.11"
-    "@webassemblyjs/helper-wasm-bytecode" "1.7.11"
-    "@webassemblyjs/ieee754" "1.7.11"
-    "@webassemblyjs/leb128" "1.7.11"
-    "@webassemblyjs/utf8" "1.7.11"
+    "@webassemblyjs/ast" "1.8.5"
+    "@webassemblyjs/helper-api-error" "1.8.5"
+    "@webassemblyjs/helper-wasm-bytecode" "1.8.5"
+    "@webassemblyjs/ieee754" "1.8.5"
+    "@webassemblyjs/leb128" "1.8.5"
+    "@webassemblyjs/utf8" "1.8.5"
 
-"@webassemblyjs/wast-parser@1.7.11":
-  version "1.7.11"
-  resolved "http://registry.npm.taobao.org/@webassemblyjs/wast-parser/download/@webassemblyjs/wast-parser-1.7.11.tgz#25bd117562ca8c002720ff8116ef9072d9ca869c"
-  integrity sha1-Jb0RdWLKjAAnIP+BFu+QctnKhpw=
+"@webassemblyjs/wast-parser@1.8.5":
+  version "1.8.5"
+  resolved "https://registry.npm.taobao.org/@webassemblyjs/wast-parser/download/@webassemblyjs/wast-parser-1.8.5.tgz#e10eecd542d0e7bd394f6827c49f3df6d4eefb8c"
+  integrity sha1-4Q7s1ULQ5705T2gnxJ899tTu+4w=
   dependencies:
-    "@webassemblyjs/ast" "1.7.11"
-    "@webassemblyjs/floating-point-hex-parser" "1.7.11"
-    "@webassemblyjs/helper-api-error" "1.7.11"
-    "@webassemblyjs/helper-code-frame" "1.7.11"
-    "@webassemblyjs/helper-fsm" "1.7.11"
-    "@xtuc/long" "4.2.1"
+    "@webassemblyjs/ast" "1.8.5"
+    "@webassemblyjs/floating-point-hex-parser" "1.8.5"
+    "@webassemblyjs/helper-api-error" "1.8.5"
+    "@webassemblyjs/helper-code-frame" "1.8.5"
+    "@webassemblyjs/helper-fsm" "1.8.5"
+    "@xtuc/long" "4.2.2"
 
-"@webassemblyjs/wast-printer@1.7.11":
-  version "1.7.11"
-  resolved "http://registry.npm.taobao.org/@webassemblyjs/wast-printer/download/@webassemblyjs/wast-printer-1.7.11.tgz#c4245b6de242cb50a2cc950174fdbf65c78d7813"
-  integrity sha1-xCRbbeJCy1CizJUBdP2/ZceNeBM=
+"@webassemblyjs/wast-printer@1.8.5":
+  version "1.8.5"
+  resolved "https://registry.npm.taobao.org/@webassemblyjs/wast-printer/download/@webassemblyjs/wast-printer-1.8.5.tgz#114bbc481fd10ca0e23b3560fa812748b0bae5bc"
+  integrity sha1-EUu8SB/RDKDiOzVg+oEnSLC65bw=
   dependencies:
-    "@webassemblyjs/ast" "1.7.11"
-    "@webassemblyjs/wast-parser" "1.7.11"
-    "@xtuc/long" "4.2.1"
+    "@webassemblyjs/ast" "1.8.5"
+    "@webassemblyjs/wast-parser" "1.8.5"
+    "@xtuc/long" "4.2.2"
 
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
   resolved "http://registry.npm.taobao.org/@xtuc/ieee754/download/@xtuc/ieee754-1.2.0.tgz#eef014a3145ae477a1cbc00cd1e552336dceb790"
   integrity sha1-7vAUoxRa5Hehy8AM0eVSM23Ot5A=
 
-"@xtuc/long@4.2.1":
-  version "4.2.1"
-  resolved "http://registry.npm.taobao.org/@xtuc/long/download/@xtuc/long-4.2.1.tgz#5c85d662f76fa1d34575766c5dcd6615abcd30d8"
-  integrity sha1-XIXWYvdvodNFdXZsXc1mFavNMNg=
+"@xtuc/long@4.2.2":
+  version "4.2.2"
+  resolved "https://registry.npm.taobao.org/@xtuc/long/download/@xtuc/long-4.2.2.tgz#d291c6a4e97989b5c61d9acf396ae4fe133a718d"
+  integrity sha1-0pHGpOl5ibXGHZrPOWrk/hM6cY0=
 
 abbrev@1:
   version "1.1.1"
@@ -377,17 +380,15 @@ accessibility-developer-tools@^2.11.0:
   resolved "http://registry.npm.taobao.org/accessibility-developer-tools/download/accessibility-developer-tools-2.12.0.tgz#3da0cce9d6ec6373964b84f35db7cfc3df7ab514"
   integrity sha1-PaDM6dbsY3OWS4TzXbfPw996tRQ=
 
-acorn-dynamic-import@^3.0.0:
-  version "3.0.0"
-  resolved "http://registry.npm.taobao.org/acorn-dynamic-import/download/acorn-dynamic-import-3.0.0.tgz#901ceee4c7faaef7e07ad2a47e890675da50a278"
-  integrity sha1-kBzu5Mf6rvfgetKkfokGddpQong=
-  dependencies:
-    acorn "^5.0.0"
+acorn-dynamic-import@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.npm.taobao.org/acorn-dynamic-import/download/acorn-dynamic-import-4.0.0.tgz#482210140582a36b83c3e342e1cfebcaa9240948"
+  integrity sha1-SCIQFAWCo2uDw+NC4c/ryqkkCUg=
 
-acorn@^5.0.0, acorn@^5.6.2:
-  version "5.7.3"
-  resolved "http://registry.npm.taobao.org/acorn/download/acorn-5.7.3.tgz#67aa231bf8812974b85235a96771eb6bd07ea279"
-  integrity sha1-Z6ojG/iBKXS4UjWpZ3Hra9B+onk=
+acorn@^6.0.5:
+  version "6.1.1"
+  resolved "https://registry.npm.taobao.org/acorn/download/acorn-6.1.1.tgz#7d25ae05bb8ad1f9b699108e1094ecd7884adc1f"
+  integrity sha1-fSWuBbuK0fm2mRCOEJTs14hK3B8=
 
 after@0.8.2:
   version "0.8.2"
@@ -6341,6 +6342,11 @@ make-dir@^1.0.0, make-dir@^1.3.0:
   dependencies:
     pify "^3.0.0"
 
+mamacro@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.npm.taobao.org/mamacro/download/mamacro-0.0.3.tgz#ad2c9576197c9f1abf308d0787865bd975a3f3e4"
+  integrity sha1-rSyVdhl8nxq/MI0Hh4Zb2XWj8+Q=
+
 map-age-cleaner@^0.1.1:
   version "0.1.3"
   resolved "http://registry.npm.taobao.org/map-age-cleaner/download/map-age-cleaner-0.1.3.tgz#7d583a7306434c055fe474b0f45078e6e1b4b92a"
@@ -8540,7 +8546,7 @@ scanf@^1.0.2:
   resolved "https://registry.yarnpkg.com/scanf/-/scanf-1.0.2.tgz#391cad4beff248b170e5bf968cdec8e3c8549026"
   integrity sha512-3WTLRdIAypK0117Fqep8rXlUesYyz8kcMsC4ATSFO6tqGmxmzohFizIKOIrgKCs1b7RYR9QI6XOFrvH5ZGP/iA==
 
-schema-utils@^0.4.4, schema-utils@^0.4.5:
+schema-utils@^0.4.5:
   version "0.4.7"
   resolved "http://registry.npm.taobao.org/schema-utils/download/schema-utils-0.4.7.tgz#ba74f597d2be2ea880131746ee17d0a093c68187"
   integrity sha1-unT1l9K+LqiAExdG7hfQoJPGgYc=
@@ -10194,17 +10200,17 @@ webpack-sources@^1.0.1, webpack-sources@^1.1.0, webpack-sources@^1.3.0:
     source-list-map "^2.0.0"
     source-map "~0.6.1"
 
-webpack@^4.15.1:
-  version "4.26.1"
-  resolved "http://registry.npm.taobao.org/webpack/download/webpack-4.26.1.tgz#ff3a9283d363c07b3494dfa702d08f4f2ef6cb39"
-  integrity sha1-/zqSg9NjwHs0lN+nAtCPTy72yzk=
+webpack@^4.19.1:
+  version "4.32.2"
+  resolved "https://registry.npm.taobao.org/webpack/download/webpack-4.32.2.tgz#3639375364a617e84b914ddb2c770aed511e5bc8"
+  integrity sha1-Njk3U2SmF+hLkU3bLHcK7VEeW8g=
   dependencies:
-    "@webassemblyjs/ast" "1.7.11"
-    "@webassemblyjs/helper-module-context" "1.7.11"
-    "@webassemblyjs/wasm-edit" "1.7.11"
-    "@webassemblyjs/wasm-parser" "1.7.11"
-    acorn "^5.6.2"
-    acorn-dynamic-import "^3.0.0"
+    "@webassemblyjs/ast" "1.8.5"
+    "@webassemblyjs/helper-module-context" "1.8.5"
+    "@webassemblyjs/wasm-edit" "1.8.5"
+    "@webassemblyjs/wasm-parser" "1.8.5"
+    acorn "^6.0.5"
+    acorn-dynamic-import "^4.0.0"
     ajv "^6.1.0"
     ajv-keywords "^3.1.0"
     chrome-trace-event "^1.0.0"
@@ -10218,7 +10224,7 @@ webpack@^4.15.1:
     mkdirp "~0.5.0"
     neo-async "^2.5.0"
     node-libs-browser "^2.0.0"
-    schema-utils "^0.4.4"
+    schema-utils "^1.0.0"
     tapable "^1.1.0"
     terser-webpack-plugin "^1.1.0"
     watchpack "^1.5.0"

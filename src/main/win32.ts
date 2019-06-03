@@ -10,19 +10,26 @@ const knl32 = ffi.Library('kernel32.dll', {
   WaitForSingleObject: ['uint32', ['uint32', 'uint32']]
 })
 
-let hProc: Buffer
-
 export function registerProcessExitCallback (
-  pid: number,
+  pids: number[],
   callback: () => void
 ): void {
-  debug('registering process exit callback at pid %d...', pid)
+  doRegister(pids, callback, 0)
+}
 
-  hProc = knl32.OpenProcess(SYNCHRONIZE, FALSE, pid)
+function doRegister (pids: number[], callback: () => void, index: number) {
+  if (index === pids.length) {
+    callback()
+    return
+  }
+
+  debug('registering process exit callback at pid %d...', pids[index])
+
+  const hProc = knl32.OpenProcess(SYNCHRONIZE, FALSE, pids[index])
   debug('process handle: %d', hProc)
 
   knl32.WaitForSingleObject.async(hProc, INFINITE, () => {
-    callback()
+    doRegister(pids, callback, index + 1)
   })
   debug('process exit callback registered')
 }

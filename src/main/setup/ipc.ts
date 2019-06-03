@@ -49,7 +49,9 @@ export default function (mainWindow: Electron.BrowserWindow) {
     IpcTypes.REQUEST_INSERT_HOOK,
     (event: Electron.Event, code: string) => {
       if (code !== '') {
-        Hooker.getInstance().insertHook(runningGame.getPid(), code)
+        runningGame.getPids().map((pid) => {
+          Hooker.getInstance().insertHook(pid, code)
+        })
       }
     }
   )
