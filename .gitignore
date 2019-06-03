@@ -8,6 +8,6 @@ npm-debug.log
 npm-debug.log.*
 thumbs.db
 !.gitkeep
-.vscode/
+.vscode/yuki.code-workspace
 config/games.json
 config/gui.json

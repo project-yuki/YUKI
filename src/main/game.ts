@@ -11,7 +11,7 @@ export default class Game extends EventEmitter {
   private execString: string
   private path: string
   private code: string
-  private pid: number
+  private pids: number[]
   private name: string
   private localeChanger: string
   private exeName: string
@@ -20,7 +20,7 @@ export default class Game extends EventEmitter {
     super()
     this.path = game.path
     this.execString = ''
-    this.pid = -1
+    this.pids = []
     this.code = game.code
     this.name = game.name
     this.localeChanger = game.localeChanger
@@ -32,8 +32,8 @@ export default class Game extends EventEmitter {
     this.registerHookerWithPid()
   }
 
-  public getPid () {
-    return this.pid
+  public getPids () {
+    return this.pids
   }
 
   public getInfo (): yuki.Game {
@@ -76,7 +76,7 @@ export default class Game extends EventEmitter {
     this.exeName = this.path.substring(this.path.lastIndexOf('\\') + 1)
     debug('finding pid of %s...', this.exeName)
     try {
-      await this.findPid()
+      await this.findPids()
     } catch (e) {
       debug('could not find game %s. abort', this.exeName)
       this.emit('exited')
@@ -87,7 +87,7 @@ export default class Game extends EventEmitter {
     this.registerProcessExitCallback()
   }
 
-  private findPid () {
+  private findPids () {
     return new Promise((resolve, reject) => {
       let retryTimes = 0
       const pidGetterInterval = setInterval(() => {
@@ -100,10 +100,10 @@ export default class Game extends EventEmitter {
               clearInterval(pidGetterInterval)
               reject()
             }
-            if (this.findsPidIn(stdout)) {
+            if (this.findsPidsIn(stdout)) {
               clearInterval(pidGetterInterval)
-              this.pid = this.parsePidFrom(stdout)
-              debug('found game. pid %d', this.pid)
+              this.pids = this.parsePidsFrom(stdout)
+              debug('found game. pids %o', this.pids)
               resolve()
             } else {
               retryTimes++
@@ -115,21 +115,30 @@ export default class Game extends EventEmitter {
     })
   }
 
-  private findsPidIn (value: string) {
+  private findsPidsIn (value: string) {
     return value.startsWith('"')
   }
 
-  private parsePidFrom (value: string) {
-    return parseInt(value.replace(/"/g, '').split(',')[1], 10)
+  private parsePidsFrom (value: string) {
+    const pids: number[] = []
+
+    const regexResult = value.match(/"[^"]+"/g)
+    if (!regexResult) return []
+
+    for (let i = 0; i < regexResult.length; i++) {
+      if (i % 5 !== 1) continue
+
+      pids.push(parseInt(regexResult[i].replace('"', ''), 10))
+    }
+    return pids
   }
 
   private injectProcessByPid () {
-    Hooker.getInstance().injectProcess(this.pid)
+    this.pids.map((pid) => Hooker.getInstance().injectProcess(pid))
   }
 
   private registerProcessExitCallback () {
-    registerProcessExitCallback(this.pid, () => {
-      this.pid = -1
+    registerProcessExitCallback(this.pids, () => {
       this.emit('exited', this)
     })
   }
