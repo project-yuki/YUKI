@@ -43,15 +43,22 @@ declare namespace yuki {
 
     export interface Libraries {
       librariesRepoUrl: string
-      mecab: LibraryItem,
+      mecab: LibraryItem
       translators: {
-        jBeijing: JBeijing
+        jBeijing: JBeijing;
       }
     }
 
-    export interface Interceptor extends Config {
-      shouldBeIgnore: string[]
-      ignoreAsciiOnly: boolean
+    export interface Texts extends Config {
+      interceptor: {
+        shouldBeIgnore: string[];
+        ignoreAsciiOnly: boolean;
+        maxLength: number;
+      }
+      modifier: {
+        removeAscii: boolean;
+        deduplicate: boolean;
+      }
     }
 
     export interface Gui extends Config {

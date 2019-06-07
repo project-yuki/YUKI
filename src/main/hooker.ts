@@ -9,6 +9,7 @@ import MecabMiddleware from './middlewares/MeCabMiddleware'
 import PublishMiddleware from './middlewares/PublishMiddleware'
 import TextInterceptorMiddleware from './middlewares/TextInterceptorMiddleware'
 import TextMergerMiddleware from './middlewares/TextMergerMiddleware'
+import TextModifierMiddleware from './middlewares/TextModifierMiddleware'
 
 let applicationBuilder: ApplicationBuilder<yuki.TextOutputObject>
 
@@ -81,7 +82,12 @@ export default class Hooker {
     applicationBuilder.use(new TextMergerMiddleware())
     applicationBuilder.use(
       new TextInterceptorMiddleware(
-        ConfigManager.getInstance().get<yuki.Config.Interceptor>('interceptor')
+        ConfigManager.getInstance().get<yuki.Config.Texts>('texts').interceptor
+      )
+    )
+    applicationBuilder.use(
+      new TextModifierMiddleware(
+        ConfigManager.getInstance().get<yuki.Config.Texts>('texts').modifier
       )
     )
     applicationBuilder.use(

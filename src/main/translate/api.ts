@@ -1,10 +1,11 @@
-import * as request from 'request'
+const request = require('request')
+import { Options } from 'request'
 const debug = require('debug')('yuki:api')
 import * as vm from 'vm'
 
 export default class Api implements yuki.Translator {
   private config: yuki.Config.OnlineApiItem
-  private requestOptions: request.Options
+  private requestOptions: Options
   private responseVmContext: vm.Context = vm.createContext({
     response: '',
     result: ''
@@ -77,7 +78,7 @@ export default class Api implements yuki.Translator {
   }
 
   private getResponseBody (callback: (body: any) => void) {
-    request(this.requestOptions, (error, response, body) => {
+    request(this.requestOptions, (error: Error, response: any, body: any) => {
       if (error) debug('[%s error] %s', this.config.name, error)
 
       callback(body)

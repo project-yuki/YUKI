@@ -11,7 +11,7 @@ describe('Win32', () => {
   it('callbacks when registered process exited', () => {
     const registerProcessExitCallback = makeTestingProcessExitCallbackRegister()
 
-    registerProcessExitCallback(PID, () => {
+    registerProcessExitCallback([PID], () => {
       callbackCalled = true
     })
 

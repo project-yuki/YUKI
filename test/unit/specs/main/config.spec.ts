@@ -1,5 +1,4 @@
-const ConfigInjector =
-  require('inject-loader!../../../../src/main/config/config')
+const ConfigInjector = require('inject-loader!../../../../src/main/config/config')
 import { expect } from 'chai'
 
 describe('Config', () => {
@@ -29,7 +28,7 @@ describe('Config', () => {
     const Config = makeLoadTestingConfig()
     Config.prototype.getFilename = () => 'valid/path/name'
 
-    const testConfig = new Config()
+    const testConfig = new Config().init()
 
     expect(testConfig.get()).to.deep.equal(expected)
   })
@@ -41,6 +40,9 @@ describe('Config', () => {
       },
       jsonfile: {
         readFileSync: () => expected
+      },
+      path: {
+        resolve: () => 'valid/path/name'
       }
     }).default
 
@@ -49,7 +51,7 @@ describe('Config', () => {
     Config.prototype.getFilename = () => 'invalid/path/name'
     Config.prototype.getDefaultObject = () => expected
 
-    const testConfig = new Config()
+    const testConfig = new Config().init()
 
     expect(fileWritten).to.equal(true)
     expect(testConfig.get()).to.deep.equal(expected)
@@ -61,6 +63,9 @@ describe('Config', () => {
         writeFileSync: () => {
           fileWritten = true
         }
+      },
+      path: {
+        resolve: () => 'invalid/path/name'
       }
     }).default
 
@@ -68,7 +73,7 @@ describe('Config', () => {
     const Config = makeSaveTestingConfig()
     Config.prototype.getFilename = () => 'valid/path/name'
 
-    const testConfig = new Config()
+    const testConfig = new Config().init()
 
     testConfig.get().test.content =
       '『如果分手的恋人还能做朋友，要不从没爱过，要不还在爱着。』-「九ちのセカィ」'
@@ -82,7 +87,7 @@ describe('Config', () => {
     const Config = makeSaveTestingConfig()
     Config.prototype.getFilename = () => 'valid/path/name'
 
-    const testConfig = new Config()
+    const testConfig = new Config().init()
 
     testConfig.set(expectedModified)
   })
@@ -94,10 +99,13 @@ describe('Config', () => {
       },
       jsonfile: {
         readFileSync: () => expected,
-        writeFileSync: (obj) => {
+        writeFileSync: (filePath, obj) => {
           fileWritten = true
           expect(obj).to.deep.equal(expectedModified)
         }
+      },
+      path: {
+        resolve: () => 'valid/path/name'
       }
     }).default
 })

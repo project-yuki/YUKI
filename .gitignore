@@ -11,3 +11,4 @@ thumbs.db
 .vscode/yuki.code-workspace
 config/games.json
 config/gui.json
+config/texts.json

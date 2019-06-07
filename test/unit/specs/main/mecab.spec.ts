@@ -6,7 +6,7 @@ import * as path from 'path'
 import MecabMiddleware from '../../../../src/main/middlewares/MeCabMiddleware'
 
 describe('MeCab', () => {
-  it('returns correct patterns', () => {
+  it('returns correct patterns', (done) => {
     const mecabMiddleware = new MecabMiddleware({
       enable: true,
       path: path.resolve(__dirname, '../../../../../libraries/pos/mecab-ipadic')
@@ -15,9 +15,14 @@ describe('MeCab', () => {
     mecabMiddleware.process(
       { text: 'ボクに選択の余地は無かった。' },
       (newContext) => {
-        expect(newContext.text).to.deep.equal(
-          '$ボク,n,ぼく|に,p,|選択,n,せんたく|の,p,|余地,n,よち|は,p,|無かっ,adj,なかっ|た,aux,|。,w,'
-        )
+        try {
+          expect(newContext.text).to.deep.equal(
+            '$ボク,n,ぼく|に,p,|選択,n,せんたく|の,p,|余地,n,よち|は,p,|無かっ,adj,なかっ|た,aux,|。,w,'
+          )
+        } catch (e) {
+          return done(e)
+        }
+        done()
       }
     )
   })

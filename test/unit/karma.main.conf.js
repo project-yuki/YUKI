@@ -33,7 +33,7 @@ module.exports = config => {
     coverageIstanbulReporter: {
       dir: path.join(__dirname, "./coverage"),
       fixWebpackSourcePaths: true,
-      reporters: ['text-summary', 'html', 'lcovonly']
+      reporters: ["text-summary", "html", "lcovonly"]
     },
     customLaunchers: {
       visibleElectron: {
