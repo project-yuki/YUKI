@@ -57,6 +57,7 @@ declare namespace yuki {
       }
       modifier: {
         removeAscii: boolean;
+        deduplicate: boolean;
       }
     }
 

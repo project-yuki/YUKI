@@ -20,7 +20,8 @@ export default class TextsConfig extends Config {
         maxLength: 1000
       },
       modifier: {
-        removeAscii: false
+        removeAscii: false,
+        deduplicate: false
       }
     }
   }
