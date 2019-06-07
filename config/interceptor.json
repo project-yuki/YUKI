@@ -8,5 +8,6 @@
     "menu",
     "WndDisp"
   ],
-  "ignoreAsciiOnly": true
+  "ignoreAsciiOnly": true,
+  "maxLength": 1000
 }

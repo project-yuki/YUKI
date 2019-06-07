@@ -2,13 +2,18 @@ const debug = require('debug')('yuki:textInterceptor')
 
 export default class TextInterceptorMiddleware
   implements yuki.Middleware<yuki.TextOutputObject> {
-  public static readonly MAX_LENGTH = 255
+  private static DEFAULT_MAX_LENGTH = 1000
 
-  public shouldBeIgnorePatterns: string[]
-  public ignoreAsciiOnly: boolean
+  private maxLength: number
+  private shouldBeIgnorePatterns: string[]
+  private ignoreAsciiOnly: boolean
+
   constructor (config: yuki.Config.Interceptor) {
     this.shouldBeIgnorePatterns = config.shouldBeIgnore
     this.ignoreAsciiOnly = config.ignoreAsciiOnly
+    this.maxLength = config.maxLength
+      ? config.maxLength
+      : TextInterceptorMiddleware.DEFAULT_MAX_LENGTH
     debug('initialized')
   }
 
@@ -27,7 +32,7 @@ export default class TextInterceptorMiddleware
   }
 
   private isTooLong (text: string) {
-    return text.length > TextInterceptorMiddleware.MAX_LENGTH
+    return text.length > this.maxLength
   }
 
   private containsShouldBeIgnorePattern (text: string) {

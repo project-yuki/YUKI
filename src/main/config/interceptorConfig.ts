@@ -15,7 +15,8 @@ export default class InterceptorConfig extends Config {
         'menu',
         'WndDisp'
       ],
-      ignoreAsciiOnly: false
+      ignoreAsciiOnly: false,
+      maxLength: 1000
     }
   }
 }
