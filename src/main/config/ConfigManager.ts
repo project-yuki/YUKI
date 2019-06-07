@@ -6,7 +6,7 @@ import Config from './Config'
 import DefaultConfig from './DefaultConfig'
 import GamesConfig from './GamesConfig'
 import GuiConfig from './GuiConfig'
-import InterceptorConfig from './InterceptorConfig'
+import TextsConfig from './TextsConfig'
 const debug = require('debug')('yuki:configManager')
 
 export default class ConfigManager {
@@ -21,7 +21,7 @@ export default class ConfigManager {
   public nameToConfigMap: INameToConfigMap = {
     default: new DefaultConfig().init(),
     games: new GamesConfig().init(),
-    interceptor: new InterceptorConfig().init(),
+    texts: new TextsConfig().init(),
     gui: new GuiConfig().init()
   }
 

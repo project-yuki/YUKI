@@ -49,10 +49,15 @@ declare namespace yuki {
       }
     }
 
-    export interface Interceptor extends Config {
-      shouldBeIgnore: string[]
-      ignoreAsciiOnly: boolean
-      maxLength: number
+    export interface Texts extends Config {
+      interceptor: {
+        shouldBeIgnore: string[];
+        ignoreAsciiOnly: boolean;
+        maxLength: number;
+      }
+      modifier: {
+        removeAscii: boolean;
+      }
     }
 
     export interface Gui extends Config {

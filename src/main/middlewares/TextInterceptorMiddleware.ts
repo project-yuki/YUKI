@@ -8,7 +8,7 @@ export default class TextInterceptorMiddleware
   private shouldBeIgnorePatterns: string[]
   private ignoreAsciiOnly: boolean
 
-  constructor (config: yuki.Config.Interceptor) {
+  constructor (config: yuki.Config.Texts['interceptor']) {
     this.shouldBeIgnorePatterns = config.shouldBeIgnore
     this.ignoreAsciiOnly = config.ignoreAsciiOnly
     this.maxLength = config.maxLength
