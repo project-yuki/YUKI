@@ -67,11 +67,13 @@
     "vue": "^2.5.17",
     "vue-color": "^2.7.0",
     "vue-electron": "^1.0.6",
+    "vue-i18n": "^8.11.2",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1",
     "wanakana": "^4.0.2"
   },
   "devDependencies": {
+    "@kazupon/vue-i18n-loader": "^0.3.0",
     "@types/chai": "^4.1.7",
     "@types/ffi": "^0.2.1",
     "@types/jsonfile": "^4.0.1",

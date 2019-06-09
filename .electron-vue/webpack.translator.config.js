@@ -90,6 +90,11 @@ let translatorConfig = {
         ]
       },
       {
+        resourceQuery: /blockType=i18n/,
+        type: "javascript/auto",
+        loader: "@kazupon/vue-i18n-loader"
+      },
+      {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         use: {
           loader: "url-loader",

@@ -1,10 +1,24 @@
+<i18n src="../../common/locales.json"></i18n>
+<i18n>
+{
+  "zh": {
+    "addHook": "加载钩子",
+    "invalidHookFormat": "特殊码格式不正确"
+  },
+  "en": {
+    "addHook": "Add Hook",
+    "invalidHookFormat": "Invalid hook format"
+  }
+}
+</i18n>
+
 <template>
   <div class="small-margin fixed-scroll">
-    <mu-button type="primary" @click="openInputHookDialog">加载钩子</mu-button>
-    <mu-dialog title="请输入特殊码" :open.sync="openInputHook">
+    <mu-button type="primary" @click="openInputHookDialog">{{$t('addHook')}}</mu-button>
+    <mu-dialog :title="$t('inputSpecialCode')" :open.sync="openInputHook">
       <mu-text-field v-model="hookCode" :error-text="errorText"></mu-text-field>
-      <mu-button slot="actions" flat @click="closeInputHookDialog">取消</mu-button>
-      <mu-button slot="actions" flat color="primary" @click="addHook">确定</mu-button>
+      <mu-button slot="actions" flat @click="closeInputHookDialog">{{$t('cancel')}}</mu-button>
+      <mu-button slot="actions" flat color="primary" @click="addHook">{{$t('ok')}}</mu-button>
     </mu-dialog>
     <yk-hook-info
       v-for="hook in orderedHooks"
@@ -73,7 +87,7 @@ export default class HookSettings extends Vue {
       ipcRenderer.send(IpcTypes.REQUEST_INSERT_HOOK, this.hookCode)
       this.closeInputHookDialog()
     } else {
-      this.errorText = '特殊码格式不正确'
+      this.errorText = this.$i18n.t('invalidHookFormat').toString()
     }
   }
   public isChosen (num: number) {

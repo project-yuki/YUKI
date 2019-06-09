@@ -1,19 +1,45 @@
+<i18n src="../../common/locales.json"></i18n>
+<i18n>
+{
+  "zh": {
+    "chooseGamePath": "选择游戏路径",
+    "gameName": "游戏名称",
+    "gamePath": "游戏路径",
+    "nextStep": "下一步",
+    "pleaseInputSpecialCodeEmptyIfNotNeeded": "请输入特殊码（如果无需则为空）",
+    "specialCode": "特殊码",
+    "prevStep": "上一步",
+    "finish": "完成"
+  },
+  "en": {
+    "chooseGamePath": "Choose Game Path",
+    "gameName": "Game Name",
+    "gamePath": "Game Path",
+    "nextStep": "Next",
+    "pleaseInputSpecialCodeEmptyIfNotNeeded": "Please input special code (empty if not needed)",
+    "specialCode": "Special Code",
+    "prevStep": "Prev",
+    "finish": "Finish"
+  }
+}
+</i18n>
+
 <template>
   <div>
-    <yk-page-header title="添加游戏"/>
+    <yk-page-header :title="$t('addGame')"/>
     <yk-page-content>
       <mu-container>
         <mu-stepper :active-step="activeStep" orientation="vertical">
           <mu-step>
-            <mu-step-label>选择游戏路径</mu-step-label>
+            <mu-step-label>{{$t('chooseGamePath')}}</mu-step-label>
             <mu-step-content>
               <mu-container style="padding-top: 16px">
-                <mu-button color="secondary" @click="handleRequestGamePath">选择游戏路径</mu-button>
+                <mu-button color="secondary" @click="handleRequestGamePath">{{$t('chooseGamePath')}}</mu-button>
                 <br>
                 <br>
-                <p>游戏名称</p>
+                <p>{{$t('gameName')}}</p>
                 <mu-text-field full-width v-model="game.name" icon="videogame_asset"></mu-text-field>
-                <p>游戏路径</p>
+                <p>{{$t('gamePath')}}</p>
                 <mu-text-field
                   full-width
                   v-model="game.path"
@@ -28,19 +54,29 @@
                   color="primary"
                   @click="handleNext"
                   :disabled="isPathNull"
-                >下一步</mu-button>
+                >{{$t('nextStep')}}</mu-button>
               </mu-container>
             </mu-step-content>
           </mu-step>
           <mu-step>
-            <mu-step-label>输入特殊码</mu-step-label>
+            <mu-step-label>{{$t('inputSpecialCode')}}</mu-step-label>
             <mu-step-content>
               <mu-container>
-                <p>请输入特殊码（如果无需则为空）</p>
-                <mu-text-field full-width v-model="game.code" label="特殊码" label-float icon="code"></mu-text-field>
+                <p>{{$t('pleaseInputSpecialCodeEmptyIfNotNeeded')}}</p>
+                <mu-text-field
+                  full-width
+                  v-model="game.code"
+                  :label="$t('specialCode')"
+                  label-float
+                  icon="code"
+                ></mu-text-field>
                 <br>
-                <mu-button flat class="demo-step-button" @click="handlePrev">上一步</mu-button>
-                <mu-button class="demo-step-button" color="primary" @click="handleNext">完成</mu-button>
+                <mu-button flat class="demo-step-button" @click="handlePrev">{{$t('prevStep')}}</mu-button>
+                <mu-button
+                  class="demo-step-button"
+                  color="primary"
+                  @click="handleNext"
+                >{{$t('finish')}}</mu-button>
               </mu-container>
             </mu-step-content>
           </mu-step>

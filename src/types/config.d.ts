@@ -37,6 +37,7 @@ declare namespace yuki {
     }
 
     export interface Default extends Libraries, Config {
+      language: string
       localeChangers: LocaleChangerItems
       onlineApis: OnlineApiItem[]
     }

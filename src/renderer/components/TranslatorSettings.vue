@@ -1,11 +1,30 @@
+<i18n src="../../common/locales.json"></i18n>
+<i18n>
+{
+  "zh": {
+    "underConstruction": "开发中m( _ _ )m",
+    "pleaseModifyConfigurationFile": "请通过修改配置文件 config\\config.json 来配置翻译器",
+    "defaultTranslators": "（默认提供腾讯，沪江，谷歌，有道翻译）"
+  },
+  "en": {
+    "underConstruction": "Under construction m( _ _ )m",
+    "pleaseModifyConfigurationFile": "Please modify configuration file config\\config.json to configure translators",
+    "defaultTranslators": "（Defualt translators are QQ, HuJiang, Google, YouDao. These are all Japanese-Chinese translators）"
+  }
+}
+</i18n>
+
 <template>
   <div>
-    <mu-button color="primary">保存</mu-button>
-    <mu-button color="warning">重置</mu-button>
-    <p class="text-h1">翻译器设置</p>
-    <p class="all-center text-h3">开发中m( _ _ )m
-      <br>请通过修改配置文件 config\config.json 来配置翻译器
-      <br>（默认提供百度，谷歌，有道翻译）
+    <mu-button color="primary">{{$t('save')}}</mu-button>
+    <mu-button color="warning">{{$t('reset')}}</mu-button>
+    <p class="text-h1">{{$t('translatorSettings')}}</p>
+    <p class="all-center text-h3">
+      {{$t('underConstruction')}}
+      <br>
+      {{$t('pleaseModifyConfigurationFile')}}
+      <br>
+      {{$t('defaultTranslators')}}
     </p>
   </div>
 </template>

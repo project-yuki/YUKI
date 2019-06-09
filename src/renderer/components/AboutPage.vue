@@ -1,11 +1,23 @@
+<i18n src="../../common/locales.json"></i18n>
+<i18n>
+{
+  "zh": {
+    "toggleDevTools": "切换开发人员工具"
+  },
+  "en": {
+    "toggleDevTools": "Toggle Dev Tools"
+  }
+}
+</i18n>
+
 <template>
   <div>
-    <yk-page-header title="关于 YUKI"/>
+    <yk-page-header :title="$t('aboutYUKI')"/>
     <yk-page-content style="text-align: center">
       <img src="../assets/icon.png" style="width: 128px; height: 128px">
       <p class="text-h1">Yummy Utterance Knowledge Interface</p>
-      <p class="text-h2">YUKI Galgame翻译器</p>
-      <mu-button color="primary" @click="toggleDevTools">切换开发人员工具</mu-button>
+      <p class="text-h2">{{$t('YUKIGalgameTranslator')}}</p>
+      <mu-button color="primary" @click="toggleDevTools">{{$t('toggleDevTools')}}</mu-button>
     </yk-page-content>
   </div>
 </template>

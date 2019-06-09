@@ -1,3 +1,17 @@
+<i18n src="../common/locales.json"></i18n>
+<i18n>
+{
+  "zh": {
+    "translate": "翻译",
+    "textHookSettings": "文本钩子设置"
+  },
+  "en": {
+    "translate": "Translate",
+    "textHookSettings": "Text Hook Settings"
+  }
+}
+</i18n>
+
 <template>
   <div id="app">
     <div id="top">
@@ -6,9 +20,21 @@
     <div id="content">
       <router-view></router-view>
       <div id="buttons" v-if="isButtonsShown">
-        <mu-button small flat to="/translate" color="white" style="width: 32%">翻译</mu-button>
-        <mu-button small flat to="/hooks" color="white" style="width: 32%">文本钩子设置</mu-button>
-        <mu-button small flat to="/settings" color="white" style="width: 32%">翻译器设置</mu-button>
+        <mu-button small flat to="/translate" color="white" style="width: 32%">{{$t('translate')}}</mu-button>
+        <mu-button
+          small
+          flat
+          to="/hooks"
+          color="white"
+          style="width: 32%"
+        >{{$t('textHookSettings')}}</mu-button>
+        <mu-button
+          small
+          flat
+          to="/settings"
+          color="white"
+          style="width: 32%"
+        >{{$t('translatorSettings')}}</mu-button>
       </div>
     </div>
   </div>
@@ -62,6 +88,21 @@ export default class App extends Vue {
   }
 
   public mounted () {
+    let receivedCount = 0
+    const callback = (event: Electron.Event, name: string, cfg: any) => {
+      receivedCount++
+      if (receivedCount < 3) ipcRenderer.once(IpcTypes.HAS_CONFIG, callback)
+
+      if (name === 'game' && cfg.code === '') {
+        this.$router.push('/hooks')
+      }
+    }
+    ipcRenderer.once(IpcTypes.HAS_CONFIG, callback)
+
+    ipcRenderer.send(IpcTypes.REQUEST_CONFIG, 'default')
+    ipcRenderer.send(IpcTypes.REQUEST_CONFIG, 'game')
+    ipcRenderer.send(IpcTypes.REQUEST_CONFIG, 'gui')
+
     this.$router.push('/translate')
     document.addEventListener('mouseenter', () => {
       this.$store.dispatch('View/setButtonsShown', true)
@@ -71,17 +112,6 @@ export default class App extends Vue {
         this.$store.dispatch('View/setButtonsShown', false)
       }
     })
-
-    ipcRenderer.send(IpcTypes.REQUEST_CONFIG, 'default')
-    ipcRenderer.send(IpcTypes.REQUEST_CONFIG, 'game')
-    ipcRenderer.send(IpcTypes.REQUEST_CONFIG, 'gui')
-    const callback = (event: Electron.Event, name: string, cfg: any) => {
-      if (name !== 'game') ipcRenderer.once(IpcTypes.HAS_CONFIG, callback)
-      else if (cfg.code === '') {
-        this.$router.push('/hooks')
-      }
-    }
-    ipcRenderer.once(IpcTypes.HAS_CONFIG, callback)
   }
 
   public updateWindowHeight (offset: number) {
