@@ -1,4 +1,4 @@
-const Win32Injector = require('inject-loader!../../../../src/main/win32')
+const Win32Injector = require('inject-loader!../../../../src/main/Win32')
 import { expect } from 'chai'
 
 describe('Win32', () => {

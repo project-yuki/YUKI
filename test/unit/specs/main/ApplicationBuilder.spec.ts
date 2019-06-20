@@ -2,7 +2,7 @@
 /// <reference path="../../../../src/types/common.d.ts" />
 
 import { expect } from 'chai'
-import ApplicationBuilder from '../../../../src/common/applicationBuilder'
+import ApplicationBuilder from '../../../../src/common/ApplicationBuilder'
 
 class SubstringMiddleware implements yuki.Middleware<string> {
   public process (context: string, next: (newContext: string) => void) {
