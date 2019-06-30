@@ -1,6 +1,8 @@
+<i18n src="../../common/locales.json"></i18n>
+
 <template>
   <div>
-    <yk-page-header title="应用设置"/>
+    <yk-page-header :title="$t('applicationSettings')"/>
     <yk-page-content>
       <mu-container>
         <router-view></router-view>

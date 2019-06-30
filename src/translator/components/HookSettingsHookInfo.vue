@@ -1,3 +1,17 @@
+<i18n src="../../common/locales.json"></i18n>
+<i18n>
+{
+  "zh": {
+    "waitForTexts...": "等待文本获取...",
+    "choose": "选择"
+  },
+  "en": {
+    "waitForTexts...": "Wait for texts...",
+    "choose": "Choose"
+  }
+}
+</i18n>
+
 <template>
   <mu-scale-transition>
     <mu-paper :z-depth="zIndex" class="hook-info">
@@ -9,10 +23,17 @@
           <div>{{hook.code}}</div>
         </mu-col>
         <mu-col sm="12" md="8" lg="5" class="vertical-center">
-          <mu-text-field solo full-width disabled :value="lastHookText" placeholder="等待文本获取..."/>
+          <mu-text-field
+            solo
+            full-width
+            disabled
+            :value="lastHookText"
+            :placeholder="$t('waitForTexts...')"
+          />
         </mu-col>
         <mu-col sm="12" md="4" lg="2" class="vertical-center">
-          <mu-button flat color="success" @click="chooseAsDisplay" v-show="!isChosen">选择
+          <mu-button flat color="success" @click="chooseAsDisplay" v-show="!isChosen">
+            {{$t('choose')}}
             <mu-icon right value="done"></mu-icon>
           </mu-button>
         </mu-col>

@@ -1,3 +1,19 @@
+<i18n src="../../common/locales.json"></i18n>
+<i18n>
+{
+  "zh": {
+    "run": "运行",
+    "confirmDelete": "确认删除？",
+    "deleteSuccess": "删除成功！"
+  },
+  "en": {
+    "run": "Run",
+    "confirmDelete": "Are you sure to delete this game?",
+    "deleteSuccess": "Successfully deleted!"
+  }
+}
+</i18n>
+
 <template>
   <mu-scale-transition>
     <mu-card>
@@ -6,11 +22,11 @@
       <mu-card-actions style="padding: 8px 0">
         <mu-expansion-panel :zDepth="0">
           <div slot="header">
-            <mu-button color="primary" @click.stop="handleRunGame">运行</mu-button>
-            <mu-button color="error" @click.stop="handleDeleteConfirm">删除</mu-button>
+            <mu-button color="primary" @click.stop="handleRunGame">{{$t('run')}}</mu-button>
+            <mu-button color="error" @click.stop="handleDeleteConfirm">{{$t('delete')}}</mu-button>
           </div>
           <mu-select
-            label="区域转换器"
+            :label="$t('localeChanger')"
             v-model="selectedLocaleChanger"
             full-width
             @change="updateLocaleChanger"
@@ -58,14 +74,16 @@ export default class HookSettingsHookInfo extends Vue {
   public selectedLocaleChanger: string = ''
 
   public handleDeleteConfirm () {
-    this.$confirm('确认删除？', {
-      type: 'warning'
+    this.$confirm(this.$i18n.t('confirmDelete').toString(), {
+      type: 'warning',
+      okLabel: this.$i18n.t('ok').toString(),
+      cancelLabel: this.$i18n.t('cancel').toString()
     }).then(({
       result
     }) => {
       if (result) {
         this.handleDeleteGame()
-        this.$toast.success('删除成功！')
+        this.$toast.success(this.$i18n.t('deleteSuccess').toString())
       }
     })
   }

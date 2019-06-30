@@ -1,12 +1,32 @@
+<i18n src="../../common/locales.json"></i18n>
+<i18n>
+{
+  "zh": {
+    "originalText": "原始文本",
+    "translatedText": "翻译文本",
+    "size": "大小",
+    "margin": "间距",
+    "backgroundColor": "背景色"
+  },
+  "en": {
+    "originalText": "Original Text",
+    "translatedText": "Translated Text",
+    "size": "Size",
+    "margin": "Margin",
+    "backgroundColor": "Background Color"
+  }
+}
+</i18n>
+
 <template>
   <div class="small-margin fixed-scroll">
     <mu-row gutter>
       <mu-col span="3">
-        <div class="text-h3 text-center">原始文本</div>
+        <div class="text-h3 text-center">{{$t('originalText')}}</div>
       </mu-col>
       <mu-col span="8">
         <mu-form :model="{}">
-          <mu-form-item label="大小" :style="{color: 'white'}">
+          <mu-form-item :label="$t('size')" :style="{color: 'white'}">
             <mu-slider class="margin-top" :step="1" v-model="originalTextSize"></mu-slider>
           </mu-form-item>
         </mu-form>
@@ -14,18 +34,18 @@
     </mu-row>
     <mu-row gutter>
       <mu-col span="3">
-        <div class="text-h3 text-center">翻译文本</div>
+        <div class="text-h3 text-center">{{$t('translatedText')}}</div>
       </mu-col>
       <mu-col span="4">
         <mu-form :model="{}">
-          <mu-form-item label="大小" :style="{color: 'white'}">
+          <mu-form-item :label="$t('size')" :style="{color: 'white'}">
             <mu-slider class="margin-top" :step="1" v-model="translationTextSize"></mu-slider>
           </mu-form-item>
         </mu-form>
       </mu-col>
       <mu-col span="4">
         <mu-form :model="{}">
-          <mu-form-item label="间距" :style="{color: 'white'}">
+          <mu-form-item :label="$t('margin')" :style="{color: 'white'}">
             <mu-slider class="margin-top" :step="1" v-model="translationTextMargin"></mu-slider>
           </mu-form-item>
         </mu-form>
@@ -33,7 +53,7 @@
     </mu-row>
     <mu-row gutter>
       <mu-col span="3">
-        <div class="text-h3 text-center">背景色</div>
+        <div class="text-h3 text-center">{{$t('backgroundColor')}}</div>
       </mu-col>
       <mu-col span="9">
         <chrome-picker v-model="backgroundColor"></chrome-picker>

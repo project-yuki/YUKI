@@ -95,6 +95,11 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
+"@kazupon/vue-i18n-loader@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.npm.taobao.org/@kazupon/vue-i18n-loader/download/@kazupon/vue-i18n-loader-0.3.0.tgz#e068de2d75d891275814ae28ad1fcaf1b537694f"
+  integrity sha1-4GjeLXXYkSdYFK4orR/K8bU3aU8=
+
 "@types/caseless@*":
   version "0.12.1"
   resolved "http://registry.npm.taobao.org/@types/caseless/download/@types/caseless-0.12.1.tgz#9794c69c8385d0192acc471a540d1f8e0d16218a"
@@ -9379,10 +9384,10 @@ test-exclude@^4.2.1:
     read-pkg-up "^1.0.1"
     require-main-filename "^1.0.1"
 
-textractor-wrapper@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/textractor-wrapper/-/textractor-wrapper-1.1.0.tgz#34a95d0c927087a2a7baf3344e3f93442dbca32b"
-  integrity sha512-/9gElY7VBeZap114duWUgVLawGRI+IIwBBpkcVbohH7akFczGdB50gEMGWqyQU2o7rfAOpvOzBEjWO7YX/UrnA==
+textractor-wrapper@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npm.taobao.org/textractor-wrapper/download/textractor-wrapper-2.0.0.tgz#35e951459702f3285787b0ae121b5b81032c3f12"
+  integrity sha1-NelRRZcC8yhXh7CuEhtbgQMsPxI=
   dependencies:
     scanf "^1.0.2"
     split "^1.0.1"
@@ -9976,6 +9981,11 @@ vue-html-loader@^1.2.4:
     html-minifier "^2.1.5"
     loader-utils "^1.0.2"
     object-assign "^4.1.0"
+
+vue-i18n@^8.11.2:
+  version "8.11.2"
+  resolved "https://registry.npm.taobao.org/vue-i18n/download/vue-i18n-8.11.2.tgz#92827fc42449f4602d2a0ddb437dfc4e3370d9d7"
+  integrity sha1-koJ/xCRJ9GAtKg3bQ338TjNw2dc=
 
 vue-loader@^15.2.4:
   version "15.4.2"

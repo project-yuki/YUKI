@@ -1,57 +1,81 @@
+<i18n src="../../common/locales.json"></i18n>
+<i18n>
+{
+  "zh": {
+    "appLibrariesSettings": "程序库设置",
+    "providedByDefault": "默认已提供，位于lib\\textractor目录下",
+    "choose...": "选择...",
+    "jBeijingDict": "J 北京辞書"
+  },
+  "en": {
+    "appLibrariesSettings": "App Libraries Settings",
+    "providedByDefault": "Provided by default, located in lib\\textractor directory",
+    "choose...": "Choose...",
+    "jBeijingDict": "JBeijing Dict (Chinese only)"
+  }
+}
+</i18n>
+
 <template>
-<div>
-  <mu-button color="primary" @click="saveSettings(true)">保存</mu-button>
-  <mu-button color="warning" @click="resetSettings">重置</mu-button>
-  <p class="text-h1">程序库设置</p>
-  <p class="text-h2">Textractor</p>
-  <p class="text-h3">默认已提供，位于lib\textractor目录下</p>
+  <div>
+    <mu-button color="primary" @click="saveSettings(true)">{{$t('save')}}</mu-button>
+    <mu-button color="warning" @click="resetSettings">{{$t('reset')}}</mu-button>
+    <p class="text-h1">{{$t('appLibrariesSettings')}}</p>
+    <p class="text-h2">Textractor</p>
+    <p class="text-h3">{{$t('providedByDefault')}}</p>
 
-  <p class="text-h2">MeCab</p>
-  <mu-form :model="{}">
-    <mu-row gutter>
-      <mu-col span="10">
-        <mu-form-item label="路径">
-          <mu-text-field v-model="tempLibraries.mecab.path" full-width label-float disabled />
-        </mu-form-item>
-      </mu-col>
-      <mu-col span="1">
-        <mu-form-item label="选择...">
-          <mu-button icon small color="primary" @click="requestPath('mecab', 'libmecab.dll', '.')">
-            <mu-icon value="more_horiz"></mu-icon>
-          </mu-button>
-        </mu-form-item>
-      </mu-col>
-      <mu-col span="1">
-        <mu-form-item label="启用">
-          <mu-switch v-model="tempLibraries.mecab.enable"></mu-switch>
-        </mu-form-item>
-      </mu-col>
-    </mu-row>
-  </mu-form>
+    <p class="text-h2">MeCab</p>
+    <mu-form :model="{}">
+      <mu-row gutter>
+        <mu-col span="10">
+          <mu-form-item :label="$t('path')">
+            <mu-text-field v-model="tempLibraries.mecab.path" full-width label-float disabled/>
+          </mu-form-item>
+        </mu-col>
+        <mu-col span="1">
+          <mu-form-item :label="$t('choose...')">
+            <mu-button
+              icon
+              small
+              color="primary"
+              @click="requestPath('mecab', 'libmecab.dll', '.')"
+            >
+              <mu-icon value="more_horiz"></mu-icon>
+            </mu-button>
+          </mu-form-item>
+        </mu-col>
+        <mu-col span="1">
+          <mu-form-item :label="$t('enable')">
+            <mu-switch v-model="tempLibraries.mecab.enable"></mu-switch>
+          </mu-form-item>
+        </mu-col>
+      </mu-row>
+    </mu-form>
 
-  <p class="text-h2">J 北京辞書</p>
-  <yk-download-progress 
-    v-if="jbdictDownloadState"
-    :state="jbdictDownloadState"/>
-  <mu-form :model="{}">
-    <mu-row gutter>
-      <mu-col span="11">
-        <mu-form-item label="路径">
-          <mu-text-field 
-            v-model="tempLibraries.translators.jBeijing.dictPath" 
-            full-width label-float disabled />
-        </mu-form-item>
-      </mu-col>
-      <mu-col span="1">
-        <mu-form-item label="下载">
-          <mu-button icon small color="primary" @click="startDownload('dict.jb')">
-            <mu-icon value="cloud_download"></mu-icon>
-          </mu-button>
-        </mu-form-item>
-      </mu-col>
-    </mu-row>
-  </mu-form>
-</div>
+    <p class="text-h2">{{$t('jBeijingDict')}}</p>
+    <yk-download-progress v-if="jbdictDownloadState" :state="jbdictDownloadState"/>
+    <mu-form :model="{}">
+      <mu-row gutter>
+        <mu-col span="11">
+          <mu-form-item :label="$t('path')">
+            <mu-text-field
+              v-model="tempLibraries.translators.jBeijing.dictPath"
+              full-width
+              label-float
+              disabled
+            />
+          </mu-form-item>
+        </mu-col>
+        <mu-col span="1">
+          <mu-form-item :label="$t('download')">
+            <mu-button icon small color="primary" @click="startDownload('dict.jb')">
+              <mu-icon value="cloud_download"></mu-icon>
+            </mu-button>
+          </mu-form-item>
+        </mu-col>
+      </mu-row>
+    </mu-form>
+  </div>
 </template>
 
 <script lang="ts">

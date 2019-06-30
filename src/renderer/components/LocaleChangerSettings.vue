@@ -1,10 +1,32 @@
+<i18n src="../../common/locales.json"></i18n>
+<i18n>
+{
+  "zh": {
+    "localeChangerSettings": "区域转换器设置",
+    "clickTableRowToUnfoldEditView": "点击表格行展开编辑界面",
+    "executionType": "执行方式",
+    "parameter": "参数",
+    "%GAME_PATH%": "%GAME_PATH% - 游戏所在路径",
+    "setToDefault": "设为默认"
+  },
+  "en": {
+    "localeChangerSettings": "Locale Changer Settings",
+    "clickTableRowToUnfoldEditView": "Click table row to unfold edit view",
+    "executionType": "Execution Type",
+    "parameter": "Parameter",
+    "%GAME_PATH%": "%GAME_PATH% - Path to the game",
+    "setToDefault": "Default"
+  }
+}
+</i18n>
+
 <template>
   <div>
-    <mu-button color="primary" @click="saveSettings">保存</mu-button>
-    <mu-button color="warning" @click="resetSettings">重置</mu-button>
-    <p class="text-h1">区域转换器设置</p>
-    <p>点击表格行展开编辑界面</p>
-    <mu-button @click="addLocaleChanger">添加</mu-button>
+    <mu-button color="primary" @click="saveSettings">{{$t('save')}}</mu-button>
+    <mu-button color="warning" @click="resetSettings">{{$t('reset')}}</mu-button>
+    <p class="text-h1">{{$t('localeChangerSettings')}}</p>
+    <p>{{$t('clickTableRowToUnfoldEditView')}}</p>
+    <mu-button @click="addLocaleChanger">{{$t('add')}}</mu-button>
     <br>
     <mu-paper :z-depth="1" style="margin-top: 24px">
       <mu-data-table stripe :columns="tableColumns" :data="tempLocaleChangers">
@@ -15,18 +37,18 @@
                 <mu-text-field v-model="prop.row.id" label="ID" full-width label-float></mu-text-field>
               </mu-col>
               <mu-col span="6">
-                <mu-text-field v-model="prop.row.name" label="名称" full-width label-float></mu-text-field>
+                <mu-text-field v-model="prop.row.name" :label="$t('name')" full-width label-float></mu-text-field>
               </mu-col>
             </mu-row>
             <mu-text-field
               v-model="prop.row.exec"
-              label="执行方式"
+              :label="$t('executionType')"
               full-width
               multi-line
               :rows-max="10"
             ></mu-text-field>
-            <p>参数</p>
-            <p>%GAME_PATH% - 游戏所在路径</p>
+            <p>{{$t('parameter')}}</p>
+            <p>{{$t('%GAME_PATH%')}}</p>
           </div>
         </template>
         <template slot-scope="scope">
@@ -69,34 +91,39 @@ type TempLocaleChangerItem = yuki.Config.LocaleChangerItem & {
 
 @Component
 export default class LocaleChangerSettings extends Vue {
-  public tableColumns = [{
-    title: 'ID',
-    name: 'id'
-  },
-  {
-    title: '名称',
-    name: 'name'
-  },
-  {
-    title: '执行方式',
-    name: 'exec'
-  },
-  {
-    title: '设为默认',
-    name: 'enable',
-    width: 80
-  },
-  {
-    title: '删除',
-    name: 'delete',
-    width: 96
-  }
-  ]
+  public tableColumns: Array<{title: string, name: string, width?: number}> = []
 
   @(namespace('Config').State('default'))
   public defaultConfig!: yuki.ConfigState['default']
 
   public tempLocaleChangers: TempLocaleChangerItem[] = []
+
+  public mounted () {
+    this.tableColumns = [
+      {
+        title: 'ID',
+        name: 'id'
+      },
+      {
+        title: this.$i18n.t('name').toString(),
+        name: 'name'
+      },
+      {
+        title: this.$i18n.t('executionType').toString(),
+        name: 'exec'
+      },
+      {
+        title: this.$i18n.t('setToDefault').toString(),
+        name: 'enable',
+        width: 80
+      },
+      {
+        title: this.$i18n.t('delete').toString(),
+        name: 'delete',
+        width: 96
+      }
+    ]
+  }
 
   public saveSettings () {
     const savingLocaleChangers = {}
