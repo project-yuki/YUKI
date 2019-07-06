@@ -9384,10 +9384,10 @@ test-exclude@^4.2.1:
     read-pkg-up "^1.0.1"
     require-main-filename "^1.0.1"
 
-textractor-wrapper@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.npm.taobao.org/textractor-wrapper/download/textractor-wrapper-2.0.0.tgz#35e951459702f3285787b0ae121b5b81032c3f12"
-  integrity sha1-NelRRZcC8yhXh7CuEhtbgQMsPxI=
+textractor-wrapper@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.npm.taobao.org/textractor-wrapper/download/textractor-wrapper-2.0.1.tgz?cache=0&sync_timestamp=1562157255550&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ftextractor-wrapper%2Fdownload%2Ftextractor-wrapper-2.0.1.tgz#f80cdbd3358b81bc5231a2596fad1724e2ef8088"
+  integrity sha1-+Azb0zWLgbxSMaJZb60XJOLvgIg=
   dependencies:
     scanf "^1.0.2"
     split "^1.0.1"
