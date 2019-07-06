@@ -60,6 +60,10 @@ declare namespace yuki {
         removeAscii: boolean;
         deduplicate: boolean;
       }
+      merger: {
+        enable: boolean;
+        timeOut: boolean;
+      }
     }
 
     export interface Gui extends Config {
