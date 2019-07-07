@@ -22,6 +22,10 @@ export default class TextsConfig extends Config {
       modifier: {
         removeAscii: false,
         deduplicate: false
+      },
+      merger: {
+        enable: true,
+        timeOut: 500
       }
     }
   }
