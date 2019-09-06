@@ -7,43 +7,57 @@ describe('ExternalApi', () => {
   })
 
   it('gets translation from external JS file', (done) => {
-    const youdao = new ExternalApi({
+    const qq = new ExternalApi({
       enable: true,
       external: true,
-      jsFile: '..\\..\\temp\\youdaoApi.js',
-      name: 'youdao'
+      jsFile: '..\\..\\temp\\qqApi.js',
+      name: 'qq'
     })
 
-    youdao.translate(
+    qq.translate(
       '悠真くんを攻略すれば２１０円か。なるほどなぁ…',
       (translation) => {
-        expect(translation).to.equal('如果进攻悠真君,210日元?原来如此啊……')
+        try {
+          expect(translation).to.equal(
+            '攻略悠真君的话是210日元啊。原来如此'
+          )
+        } catch (e) {
+          return done(e)
+        }
         done()
       }
     )
   }).timeout(5000)
 
   it('keeps session when request multiple times', (done) => {
-    const youdao = new ExternalApi({
+    const qq = new ExternalApi({
       enable: true,
       external: true,
-      jsFile: '..\\..\\temp\\youdaoApi.js',
-      name: 'youdao'
+      jsFile: '..\\..\\temp\\qqApi.js',
+      name: 'qq'
     })
 
-    youdao.translate(
+    qq.translate(
       '悠真くんを攻略すれば２１０円か。なるほどなぁ…',
       (translation1) => {
-        expect(translation1).to.equal('如果进攻悠真君,210日元?原来如此啊……')
-        youdao.translate(
+        try {
+          expect(translation1).to.equal('攻略悠真君的话是210日元啊。原来如此')
+          qq.translate(
           'はいっ、今日は柚子の入浴剤が入ってました。お湯も少し白くて温泉みたいでしたよ？',
           (translation2) => {
-            expect(translation2).to.equal(
-              '喂,今天是柚子的浴盐进入了。好像也有点白温泉热水吗?'
-            )
-            done()
+            try {
+              expect(translation2).to.equal(
+                '是的，今天放了柚子的沐浴剂.。热水也有些白，像温泉一样呢？'
+              )
+              done()
+            } catch (e) {
+              return done(e)
+            }
           }
         )
+        } catch (e) {
+          return done(e)
+        }
       }
     )
   }).timeout(5000)
