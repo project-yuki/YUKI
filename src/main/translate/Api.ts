@@ -60,10 +60,13 @@ export default class Api implements yuki.Translator {
     if (!this.config.requestBodyFormat || !this.config.responseBodyPattern) {
       return
     }
-    const requestBodyString = this.config.requestBodyFormat.replace(
+    const [requestBodyString, requestHeadersString] = this.config.requestBodyFormat.replace(
       '%TEXT%',
       `"${text}"`
-    )
+    ).split('$H')
+    if (requestHeadersString) {
+      this.requestOptions.headers = JSON.parse(requestHeadersString)
+    }
     if (this.config.requestBodyFormat.startsWith('X')) {
       this.requestOptions.form = JSON.parse(requestBodyString.substring(1))
     } else if (this.config.requestBodyFormat.startsWith('J')) {
@@ -105,7 +108,9 @@ export default class Api implements yuki.Translator {
   private parseResponseByJsObject (body: string): string {
     if (!this.config.responseBodyPattern) return ''
 
-    this.responseVmContext.response = JSON.parse(body)
+    debug('[%s] get raw response: %o', this.config.name, body)
+    if (typeof body === 'string') body = JSON.parse(body)
+    this.responseVmContext.response = body
     const scriptString = this.config.responseBodyPattern
       .substring(1)
       .replace('%RESPONSE%', `result = response`)
