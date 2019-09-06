@@ -28,9 +28,14 @@ export default class DefaultConfig extends Config {
         },
         {
           enable: true,
-          external: true,
-          jsFile: 'config\\youdaoApi.js',
-          name: '有道'
+          method: 'POST',
+          name: '彩云',
+          requestBodyFormat: 'J{"source": %TEXT%, "trans_type": "ja2zh", ' +
+                              '"request_id": "web_fanyi", "os_type": "web", ' +
+                              '"dict": "false", "cached": "false", "replaced": "false"}' +
+                              '$H{"X-Authorization": "token:cy4fgbil24jucmh8jfr5"}',
+          responseBodyPattern: 'J%RESPONSE%.target',
+          url: 'https://api.interpreter.caiyunai.com/v1/translator'
         },
         {
           enable: true,

@@ -17,7 +17,7 @@ describe('Api', () => {
       (translation) => {
         try {
           expect(translation).to.equal(
-            '如果你捕获Akira Makoto-kun，它将是210日元。我明白了......'
+            '如果捕获Toma-kun，是210日元吗？我明白了......'
           )
         } catch (e) {
           return done(e)
@@ -36,6 +36,17 @@ describe('Api', () => {
         requestBodyFormat: 'X{"q": %TEXT%, "sl": "ja", "hl": "zh-CN"}',
         responseBodyPattern: 'Rclass="t0">([^<]*)<',
         enable: true
+      },
+      {
+        enable: true,
+        method: 'POST',
+        name: 'caiyun',
+        requestBodyFormat: 'J{"source": %TEXT%, "trans_type": "ja2zh", ' +
+                            '"request_id": "web_fanyi", "os_type": "web", ' +
+                            '"dict": "false", "cached": "false", "replaced": "false"}' +
+                            '$H{"X-Authorization": "token:cy4fgbil24jucmh8jfr5"}',
+        responseBodyPattern: 'J%RESPONSE%.target',
+        url: 'https://api.interpreter.caiyunai.com/v1/translator'
       }
     ]
 
@@ -44,12 +55,15 @@ describe('Api', () => {
       .translateAll(
         '悠真くんを攻略すれば２１０円か。なるほどなぁ…',
         (translations) => {
+          // tslint:disable-next-line: no-console
+          console.log(translations)
           try {
             expect(translations).to.deep.equal({
               original: '悠真くんを攻略すれば２１０円か。なるほどなぁ…',
               translations: {
                 googleCN:
-                  '如果你捕获Akira Makoto-kun，它将是210日元。我明白了......'
+                  '如果捕获Toma-kun，是210日元吗？我明白了......',
+                caiyun: '攻下悠真的话是210日元吗。 原来如此'
               }
             })
           } catch (e) {
@@ -107,6 +121,16 @@ describe('Api', () => {
         requestBodyFormat: 'X{"q": %TEXT%, "sl": "ja", "hl": "zh-CN"}',
         responseBodyPattern: 'Rclass="t0">([^<]*)<',
         enable: true
+      },
+      {
+        enable: false,
+        method: 'POST',
+        name: 'caiyun',
+        requestBodyFormat: 'J{"source": %TEXT%, "trans_type": "ja2zh", ' +
+                            '"request_id": "web_fanyi", "os_type": "web", ' +
+                            '"dict": "false", "cached": "false", "replaced": "false"}',
+        responseBodyPattern: 'J%RESPONSE%.target',
+        url: 'https://api.interpreter.caiyunai.com/v1/translator'
       }
     ]
 
@@ -120,7 +144,7 @@ describe('Api', () => {
               original: '悠真くんを攻略すれば２１０円か。なるほどなぁ…',
               translations: {
                 googleCN:
-                  '如果你捕获Akira Makoto-kun，它将是210日元。我明白了......'
+                  '如果捕获Toma-kun，是210日元吗？我明白了......'
               }
             })
           } catch (e) {
