@@ -15,12 +15,12 @@ export default class TextMergerMiddleware
   private textStore: ITextStore = {}
   private threadStore: IThreadStore = {}
   private enable: boolean
-  private timeOut: number
+  private timeout: number
 
   constructor (config: yuki.Config.Texts['merger']) {
     this.enable = config.enable
-    this.timeOut = config.timeOut
-      ? config.timeOut
+    this.timeout = config.timeout
+      ? config.timeout
       : TextMergerMiddleware.DEFAULT_TIMEOUT
     debug('initialized', this.enable)
   }
@@ -29,7 +29,7 @@ export default class TextMergerMiddleware
     context: yuki.TextOutputObject,
     next: (newContext: yuki.TextOutputObject) => void
   ) {
-    if (!enable){
+    if (!this.enable) {
       this.textStore[context.handle] = []
       this.textStore[context.handle].push(context.text)
       this.threadStore[context.handle] = context
@@ -52,7 +52,7 @@ export default class TextMergerMiddleware
       delete this.textStore[context.handle]
       this.threadStore[context.handle] = undefined
       next(context)
-    }, this.timeOut)
+    }, this.timeout)
   }
 
   private isStoreEmpty (handle: number): boolean {

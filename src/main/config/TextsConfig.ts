@@ -25,7 +25,7 @@ export default class TextsConfig extends Config {
       },
       merger: {
         enable: true,
-        timeOut: 500
+        timeout: 500
       }
     }
   }

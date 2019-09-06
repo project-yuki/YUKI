@@ -62,7 +62,7 @@ declare namespace yuki {
       }
       merger: {
         enable: boolean;
-        timeOut: number;
+        timeout: number;
       }
     }
 
