@@ -60,12 +60,12 @@ export default class Api implements yuki.Translator {
     if (!this.config.requestBodyFormat || !this.config.responseBodyPattern) {
       return
     }
-    const [requestBodyString, requestHeadersString] = this.config.requestBodyFormat.replace(
+    const requestBodyString = this.config.requestBodyFormat.replace(
       '%TEXT%',
       `"${text}"`
-    ).split('$H')
-    if (requestHeadersString) {
-      this.requestOptions.headers = JSON.parse(requestHeadersString)
+    )
+    if (this.config.requestHeaders) {
+      this.requestOptions.headers = JSON.parse(this.config.requestHeaders)
     }
     if (this.config.requestBodyFormat.startsWith('X')) {
       this.requestOptions.form = JSON.parse(requestBodyString.substring(1))
@@ -105,7 +105,7 @@ export default class Api implements yuki.Translator {
     }
   }
 
-  private parseResponseByJsObject (body: string): string {
+  private parseResponseByJsObject (body: string | object): string {
     if (!this.config.responseBodyPattern) return ''
 
     debug('[%s] get raw response: %o', this.config.name, body)

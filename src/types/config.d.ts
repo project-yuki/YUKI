@@ -19,6 +19,7 @@ declare namespace yuki {
       method?: string
       needSession?: boolean
       requestBodyFormat?: string
+      requestHeaders?: string
       responseBodyPattern?: string
       external?: boolean
       jsFile?: string

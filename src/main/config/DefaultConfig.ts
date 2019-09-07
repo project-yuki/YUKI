@@ -32,8 +32,8 @@ export default class DefaultConfig extends Config {
           name: '彩云',
           requestBodyFormat: 'J{"source": %TEXT%, "trans_type": "ja2zh", ' +
                               '"request_id": "web_fanyi", "os_type": "web", ' +
-                              '"dict": "false", "cached": "false", "replaced": "false"}' +
-                              '$H{"X-Authorization": "token:cy4fgbil24jucmh8jfr5"}',
+                              '"dict": "false", "cached": "false", "replaced": "false"}',
+          requestHeaders: '{"X-Authorization": "token:cy4fgbil24jucmh8jfr5"}',
           responseBodyPattern: 'J%RESPONSE%.target',
           url: 'https://api.interpreter.caiyunai.com/v1/translator'
         },
