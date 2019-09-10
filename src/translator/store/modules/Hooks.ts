@@ -87,9 +87,9 @@ const mutations = {
     state.texts[handleString].push(payload.text)
 
     const texts = state.texts[handleString]
-    if (texts[texts.length - MAX_STORE_COUNT]) {
-      texts[handleString].shift()
-      state.translations[handleString].shift()
+    if (texts[texts.length - MAX_STORE_COUNT - 1]) {
+      delete texts[handleString][texts.length - MAX_STORE_COUNT - 1]
+      delete state.translations[handleString][texts.length - MAX_STORE_COUNT - 1]
     }
   },
   SET_HOOK_PATTERNS (
@@ -100,10 +100,10 @@ const mutations = {
     state.patterns[handleString].push(payload.patterns)
 
     const patterns = state.patterns[handleString]
-    if (patterns[patterns.length - MAX_STORE_COUNT]) {
-      patterns[handleString].shift()
-      state.texts[handleString].shift()
-      state.translations[handleString].shift()
+    if (patterns[patterns.length - MAX_STORE_COUNT - 1]) {
+      delete patterns[patterns.length - MAX_STORE_COUNT - 1]
+      delete state.texts[handleString][patterns.length - MAX_STORE_COUNT - 1]
+      delete state.translations[handleString][patterns.length - MAX_STORE_COUNT - 1]
     }
   },
   CHOOSE_HOOK_AS_DISPLAY (
