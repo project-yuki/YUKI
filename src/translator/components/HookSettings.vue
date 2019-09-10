@@ -60,11 +60,22 @@ export default class HookSettings extends Vue {
   public hookCode = ''
 
   get orderedHooks () {
-    return _.orderBy(
-      this.hooks,
-      (hook: yuki.TextThread) => this.texts[hook.handle].length,
-      'desc'
-    )
+    const selected = this.hooks.find((h) => h.handle === this.currentIndex)
+    if (selected) {
+      const result = _.orderBy(
+        _.without(this.hooks, selected),
+        (hook: yuki.TextThread) => this.texts[hook.handle].length,
+        'desc'
+      )
+      result.unshift(selected)
+      return result
+    } else {
+      return _.orderBy(
+        this.hooks,
+        (hook: yuki.TextThread) => this.texts[hook.handle].length,
+        'desc'
+      )
+    }
   }
 
   @(namespace('Hooks').State('hookInfos'))
