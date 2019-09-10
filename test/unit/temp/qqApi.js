@@ -12,7 +12,7 @@ var qtv
 var qtk
 
 if (!session) {
-  session = Request.jar();
+  session = Request.jar()
 
   requestTranslation = () => {
     return new Promise((resolve, reject) => {
@@ -35,10 +35,11 @@ if (!session) {
           let sentences = JSON.parse(body).translate.records
           let result = "";
           for (let i in sentences) {
-            result += sentences[i].targetText;
+            result += sentences[i].targetText
           }
           result = result.replace(/({[^}]*})|(\(\([^\)]*\)\))/g, '')
-          callback(result);
+          if (result === '') initSession()
+          else callback(result)
         })
         .catch(err => {
           callback(qtv, qtk)
@@ -59,10 +60,10 @@ if (!session) {
         qtv = /var qtv = "([^\"]+)";/.exec(body)[1]
         qtk = /var qtk = "([^\"]+)";/.exec(body)[1]
       })
-      .then(requestTranslation);
+      .then(requestTranslation)
   };
 
-  initSession();
+  initSession()
 } else {
-  requestTranslation();
+  requestTranslation()
 }

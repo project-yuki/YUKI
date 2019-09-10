@@ -19,6 +19,11 @@ declare namespace yuki {
     code: string
   }
 
+  export interface TranslationMessage {
+    id: number
+    translation: Translations['translations']
+  }
+
   export interface Game {
     name: string
     path: string
@@ -39,13 +44,15 @@ declare namespace yuki {
     isMecabEnable: boolean
     hookInfos: TextThread[]
     texts: {
-      [handle: string]: string[];
+      [handle: string]: string[]
     }
     patterns: {
-      [handle: string]: yuki.MeCabPatterns[];
+      [handle: string]: yuki.MeCabPatterns[]
     }
     currentDisplayHookIndex: number
-    translationsForCurrentIndex: Translations
+    translations: {
+      [handle: string]: Translations['translations'][]
+    }
     toDisplayHookCode: string
   }
 
