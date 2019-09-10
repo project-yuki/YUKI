@@ -67,8 +67,10 @@ export default class App extends Vue {
   @(namespace('View').State('isButtonsShown'))
   public isButtonsShown!: boolean
 
-  @(namespace('Hooks').Getter('getLastTextById'))
-  public getLastTextById!: (id: number) => string
+  @(namespace('Hooks').Getter('getTextByHandleAndId'))
+  public getTextByHandleAndId!: (handle: number, id: number) => string
+  @(namespace('Hooks').Getter('getLastIndexByHandle'))
+  public getLastIndexByHandle!: (handle: number) => number
 
   @(namespace('Hooks').State('currentDisplayHookIndex'))
   public currentIndex!: number
@@ -83,8 +85,11 @@ export default class App extends Vue {
     document.body.style.backgroundColor = this.backgroundColor
   }
 
+  get currentId () {
+    return this.getLastIndexByHandle(this.currentIndex)
+  }
   get currentOriginText () {
-    return this.getLastTextById(this.currentIndex)
+    return this.getTextByHandleAndId(this.currentIndex, this.currentId)
   }
 
   public mounted () {
@@ -125,7 +130,10 @@ export default class App extends Vue {
   public onCurrentIndexChanged () {
     this.$store.dispatch('View/setButtonsShown', false)
     this.$router.push('/translate')
-    ipcRenderer.send(IpcTypes.REQUEST_TRANSLATION, this.currentOriginText)
+    ipcRenderer.send(IpcTypes.REQUEST_TRANSLATION, {
+      id: this.currentId,
+      text: this.currentOriginText
+    })
   }
 
   public updated () {

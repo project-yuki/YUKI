@@ -166,9 +166,9 @@ export default function (mainWindow: Electron.BrowserWindow) {
 
   ipcMain.on(
     IpcTypes.REQUEST_TRANSLATION,
-    (event: Electron.Event, text: string) => {
-      TranslationManager.getInstance().translate(text, (translation) => {
-        event.sender.send(IpcTypes.HAS_TRANSLATION, translation)
+    (event: Electron.Event, message: { id: number, text: string }) => {
+      TranslationManager.getInstance().translate(message.text, (translation) => {
+        event.sender.send(IpcTypes.HAS_TRANSLATION, { id: message.id, translation })
       })
     }
   )
