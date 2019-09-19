@@ -88,8 +88,8 @@ const mutations = {
 
     const texts = state.texts[handleString]
     if (texts[texts.length - MAX_STORE_COUNT - 1]) {
-      delete texts[handleString][texts.length - MAX_STORE_COUNT - 1]
-      delete state.translations[handleString][texts.length - MAX_STORE_COUNT - 1]
+      delete texts[texts.length - MAX_STORE_COUNT - 1]
+      delete state.translations[texts.length - MAX_STORE_COUNT - 1]
     }
   },
   SET_HOOK_PATTERNS (
