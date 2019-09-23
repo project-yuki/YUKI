@@ -22,9 +22,14 @@
       ></yk-text-display>
     </div>
 
-    <mu-button icon v-if="isNextTextValid" @click="goToNextText">
-      <mu-icon class="navigation-button" color="white" value="keyboard_arrow_right"></mu-icon>
-    </mu-button>
+    <div v-if="isNextTextValid" class="navigation-button">
+      <mu-button icon @click="goToNextText">
+        <mu-icon color="white" value="keyboard_arrow_right"></mu-icon>
+      </mu-button>
+      <mu-button icon @click="goToLatestText">
+        <mu-icon color="white" value="redo"></mu-icon>
+      </mu-button>
+    </div>
     <div class="navigation-button" v-else></div>
   </div>
 </template>
@@ -135,6 +140,11 @@ export default class TranslatePage extends Vue {
   }
   public goToNextText () {
     this.idOffset++
+  }
+  public goToLatestText () {
+    while (this.isNextTextValid) {
+      this.idOffset++
+    }
   }
 
   public beforeRouteEnter (to: Route, from: Route, next: () => void) {
