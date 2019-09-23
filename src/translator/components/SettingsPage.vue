@@ -6,14 +6,32 @@
     "translatedText": "翻译文本",
     "size": "大小",
     "margin": "间距",
-    "backgroundColor": "背景色"
+    "backgroundColor": "背景色",
+    "help": "帮助",
+    "previousText": "上一文本",
+    "nextText": "下一文本",
+    "returnToLatestText": "回到最近文本",
+    "alwaysOnTop": "窗口置顶",
+    "notAlwaysOnTop": "窗口非置顶",
+    "hide": "窗口隐藏（当有新文本时恢复）",
+    "pauseNewText": "暂停新文本获取",
+    "restoreNewText": "恢复新文本获取"
   },
   "en": {
     "originalText": "Original Text",
     "translatedText": "Translated Text",
     "size": "Size",
     "margin": "Margin",
-    "backgroundColor": "Background Color"
+    "backgroundColor": "Background Color",
+    "help": "Help",
+    "previousText": "Previous Text",
+    "nextText": "Next Text",
+    "returnToLatestText": "Return to Latest Text",
+    "alwaysOnTop": "Always On Top",
+    "notAlwaysOnTop": "Not Always On Top",
+    "hide": "Hide Window (Restore When New Text Comes)",
+    "pauseNewText": "Pause New Text Coming",
+    "restoreNewText": "Restore New Text Coming"
   }
 }
 </i18n>
@@ -32,7 +50,7 @@
         </mu-form>
       </mu-col>
     </mu-row>
-    <mu-row gutter>
+    <mu-row gutter class="margin-top">
       <mu-col span="3">
         <div class="text-h3 text-center">{{$t('translatedText')}}</div>
       </mu-col>
@@ -51,12 +69,27 @@
         </mu-form>
       </mu-col>
     </mu-row>
-    <mu-row gutter>
+    <mu-row gutter class="margin-top">
       <mu-col span="3">
         <div class="text-h3 text-center">{{$t('backgroundColor')}}</div>
       </mu-col>
       <mu-col span="9">
         <chrome-picker v-model="backgroundColor"></chrome-picker>
+      </mu-col>
+    </mu-row>
+    <mu-row gutter class="margin-top">
+      <mu-col span="3">
+        <div class="text-h3 text-center">{{$t('help')}}</div>
+      </mu-col>
+      <mu-col span="8">
+        <div class="helpers">
+          <div v-for="item in helperItems">
+            <mu-button icon>
+              <mu-icon color="white" :value="item.icon"></mu-icon>
+            </mu-button>
+            <p class="text-helper text-p">{{$t(item.text)}}</p>
+          </div>
+        </div>
       </mu-col>
     </mu-row>
   </div>
@@ -89,13 +122,6 @@ import {
   }
 })
 export default class HookSettings extends Vue {
-  @namespace('Config').Getter('getOriginalText')
-  public getOriginalText!: () => yuki.FontStyle
-  @namespace('Config').Getter('getTranslationText')
-  public getTranslationText!: () => yuki.TranslationTextStyle
-  @namespace('Config').Getter('getBackgroundColor')
-  public getBackgroundColor!: () => string
-
   get originalTextSize () {
     return this.getOriginalText().fontSize
   }
@@ -132,6 +158,23 @@ export default class HookSettings extends Vue {
     })
     this.$store.commit('Config/SAVE_GUI_CONFIG')
   }
+  @namespace('Config').Getter('getOriginalText')
+  public getOriginalText!: () => yuki.FontStyle
+  @namespace('Config').Getter('getTranslationText')
+  public getTranslationText!: () => yuki.TranslationTextStyle
+  @namespace('Config').Getter('getBackgroundColor')
+  public getBackgroundColor!: () => string
+
+  public helperItems: Array<{text: string, icon: string}> = [
+    { text: 'previousText', icon: 'keyboard_arrow_left' },
+    { text: 'nextText', icon: 'keyboard_arrow_right' },
+    { text: 'returnToLatestText', icon: 'redo' },
+    { text: 'alwaysOnTop', icon: 'lock' },
+    { text: 'notAlwaysOnTop', icon: 'lock_open' },
+    { text: 'hide', icon: 'close' },
+    { text: 'pauseNewText', icon: 'pause' },
+    { text: 'restoreNewText', icon: 'play_arrow' }
+  ]
 
   public beforeRouteEnter (to: Route, from: Route, next: () => void) {
     const newHeight = Math.trunc(
@@ -154,8 +197,21 @@ export default class HookSettings extends Vue {
   margin-top: 18px;
 }
 
-.text-center {
-  text-align: center;
+.helpers {
+  display: box;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.text-center,
+.text-helper {
   vertical-align: middle;
+}
+
+.text-helper {
+  height: 48px;
+  line-height: 48px;
+  padding-right: 16px;
+  float: right;
 }
 </style>

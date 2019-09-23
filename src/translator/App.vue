@@ -177,7 +177,8 @@ body {
 
 .text-h1,
 .text-h2,
-.text-h3 {
+.text-h3,
+.text-p {
   color: white;
 }
 
@@ -191,6 +192,10 @@ body {
 
 .text-h3 {
   font-size: 18px;
+}
+
+.text-p {
+  font-size: 14px;
 }
 
 .text-center {
