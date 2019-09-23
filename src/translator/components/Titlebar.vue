@@ -2,6 +2,26 @@
   <div class="titlebar">
     <p class="text-h3 text-center title">YUKI GALGAME TRANSLATOR</p>
     <mu-button
+      v-if="pauseNewText"
+      icon
+      small
+      class="manipulate-button-pause"
+      @click="disablePauseNewText"
+      color="#FFFFFF"
+    >
+      <mu-icon value="play_arrow"></mu-icon>
+    </mu-button>
+    <mu-button
+      v-else
+      icon
+      small
+      class="manipulate-button-pause"
+      @click="enablePauseNewText"
+      color="#FFFFFF"
+    >
+      <mu-icon value="pause"></mu-icon>
+    </mu-button>
+    <mu-button
       v-if="isAlwaysOnTop"
       icon
       small
@@ -21,7 +41,14 @@
     >
       <mu-icon value="lock_open"></mu-icon>
     </mu-button>
-    <mu-button icon small class="manipulate-button-close" @click="closeWindow" color="#FFFFFF">
+    <mu-button
+      icon
+      small
+      class="manipulate-button-close"
+      @click="closeWindow"
+      color="#FFFFFF"
+      :disabled="!isHideWindowValid"
+    >
       <mu-icon value="close"></mu-icon>
     </mu-button>
   </div>
@@ -33,9 +60,18 @@ import {
 } from 'electron'
 import Vue from 'vue'
 import Component from 'vue-class-component'
+import {
+  namespace
+} from 'vuex-class'
 
 @Component
 export default class Titlebar extends Vue {
+  @namespace('View').State('pauseNewText')
+  public pauseNewText!: boolean
+  @namespace('View').Action('setPauseNewText')
+  public setPauseNewText!: (value: boolean) => void
+
+  public isHideWindowValid: boolean = true
 
   public isAlwaysOnTop = remote.getCurrentWindow().isAlwaysOnTop()
   public closeWindow () {
@@ -47,6 +83,15 @@ export default class Titlebar extends Vue {
       .getCurrentWindow()
       .setAlwaysOnTop(!remote.getCurrentWindow().isAlwaysOnTop())
     this.isAlwaysOnTop = !this.isAlwaysOnTop
+  }
+
+  public enablePauseNewText() {
+    this.setPauseNewText(true)
+    this.isHideWindowValid = false
+  }
+  public disablePauseNewText() {
+    this.setPauseNewText(false)
+    this.isHideWindowValid = true
   }
 }
 </script>
@@ -64,6 +109,13 @@ export default class Titlebar extends Vue {
   width: 100%;
   height: 100%;
   float: left;
+}
+
+.manipulate-button-pause {
+  -webkit-app-region: no-drag;
+  position: fixed;
+  right: 64px;
+  top: 0;
 }
 
 .manipulate-button-top {
