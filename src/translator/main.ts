@@ -49,6 +49,8 @@ function next () {
   ipcRenderer.on(
     IpcTypes.HAS_HOOK_TEXT,
     (event: Electron.Event, hook: yuki.TextOutputObject) => {
+      if ((store.state as any).View.pauseNewText) return
+
       if (!remote.getCurrentWindow().isVisible()) {
         remote.getCurrentWindow().show()
       }
