@@ -122,10 +122,6 @@ const mutations = {
     state: yuki.TranslatorHookState,
     payload: yuki.TranslationMessage
   ) {
-    if (!state.translations[payload.id.toString()]) {
-      state.translations[payload.id.toString()] = []
-    }
-
     state.translations[state.currentDisplayHookIndex] = {
       ...state.translations[state.currentDisplayHookIndex],
       [payload.id.toString()]: {
