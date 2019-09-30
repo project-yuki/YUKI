@@ -42,6 +42,12 @@
     },
     {
       "enable": true,
+      "external": true,
+      "jsFile": "config\\youdaoApi.js",
+      "name": "有道"
+    },
+    {
+      "enable": true,
       "method": "POST",
       "name": "谷歌",
       "requestBodyFormat": "X{\"q\": %TEXT%, \"sl\": \"ja\", \"hl\": \"zh-CN\"}",
@@ -52,8 +58,8 @@
       "enable": true,
       "method": "POST",
       "name": "彩云",
-      "requestBodyFormat": "J{\"source\": %TEXT%, \"trans_type\": \"ja2zh\", \"request_id\": \"web_fanyi\", \"os_type\": \"web\", \"dict\": \"false\", \"cached\": \"false\", \"replaced\": \"false\"}",
-      "requestHeaders": "{\"X-Authorization\": \"token:cy4fgbil24jucmh8jfr5\"}",
+      "requestBodyFormat": "J{\"source\": %TEXT%, \"trans_type\": \"ja2zh\", \"request_id\": \"demo\", \"detect\": \"true\"}",
+      "requestHeaders": "{\"X-Authorization\": \"token 3975l6lr5pcbvidl6jl2\"}",
       "responseBodyPattern": "J%RESPONSE%.target",
       "url": "https://api.interpreter.caiyunai.com/v1/translator"
     }
