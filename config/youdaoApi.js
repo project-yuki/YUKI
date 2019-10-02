@@ -17,7 +17,7 @@ if (!session) {
       let ts = "" + new Date().getTime();
       let salt = ts + parseInt(10 * Math.random(), 10);
       let sign = md5(
-        "fanyideskweb" + text + salt + "p09@Bn{h02_BIEe]$P^nG",
+        "fanyideskweb" + text + salt + "n%A-rKaT5fb[Gy?;N5@Tj",
         "hex"
       );
 
@@ -69,7 +69,7 @@ if (!session) {
       }
     })
       .then(() => {
-        bv = md5("5.0 (Windows)", "hex");
+        bv = md5("5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3915.0 Safari/537.36 Edg/79.0.287.0", "hex");
         let ts = "" + new Date().getTime();
         session.setCookie(Request.cookie(`___rl__test__cookies=${ts - 10}`));
       })

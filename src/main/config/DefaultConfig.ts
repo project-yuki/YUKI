@@ -20,6 +20,12 @@ export default class DefaultConfig extends Config {
         },
         {
           enable: true,
+          external: true,
+          jsFile: 'config\\hjdictApi.js',
+          name: '有道'
+        },
+        {
+          enable: true,
           method: 'POST',
           name: '谷歌',
           requestBodyFormat: 'X{"q": %TEXT%, "sl": "ja", "hl": "zh-CN"}',
@@ -31,9 +37,8 @@ export default class DefaultConfig extends Config {
           method: 'POST',
           name: '彩云',
           requestBodyFormat: 'J{"source": %TEXT%, "trans_type": "ja2zh", ' +
-                              '"request_id": "web_fanyi", "os_type": "web", ' +
-                              '"dict": "false", "cached": "false", "replaced": "false"}',
-          requestHeaders: '{"X-Authorization": "token:cy4fgbil24jucmh8jfr5"}',
+                              '"request_id": "demo", "detect": "true"}',
+          requestHeaders: '{"X-Authorization": "token 3975l6lr5pcbvidl6jl2"}',
           responseBodyPattern: 'J%RESPONSE%.target',
           url: 'https://api.interpreter.caiyunai.com/v1/translator'
         },

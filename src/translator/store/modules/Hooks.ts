@@ -89,7 +89,7 @@ const mutations = {
     const texts = state.texts[handleString]
     if (texts[texts.length - MAX_STORE_COUNT - 1]) {
       delete texts[texts.length - MAX_STORE_COUNT - 1]
-      delete state.translations[texts.length - MAX_STORE_COUNT - 1]
+      delete state.translations[handleString][texts.length - MAX_STORE_COUNT - 1]
     }
   },
   SET_HOOK_PATTERNS (
@@ -122,10 +122,6 @@ const mutations = {
     state: yuki.TranslatorHookState,
     payload: yuki.TranslationMessage
   ) {
-    if (!state.translations[payload.id.toString()]) {
-      state.translations[payload.id.toString()] = []
-    }
-
     state.translations[state.currentDisplayHookIndex] = {
       ...state.translations[state.currentDisplayHookIndex],
       [payload.id.toString()]: {
