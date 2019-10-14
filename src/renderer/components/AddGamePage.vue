@@ -30,36 +30,30 @@
   <div>
     <yk-page-header :title="$t('addGame')" />
     <yk-page-content>
-      <v-container>
-        <v-stepper v-model="activeStep" vertical>
-          <v-stepper-step :complete="activeStep > 1" step="1">{{$t('chooseGamePath')}}</v-stepper-step>
-          <v-stepper-content step="1">
-            <v-btn color="secondary" @click="handleRequestGamePath">{{$t('chooseGamePath')}}</v-btn>
-            <br />
-            <br />
-            <br />
-            <p>{{$t('gameName')}}</p>
-            <v-text-field v-model="game.name" prepend-icon="videogame_asset"></v-text-field>
-            <p>{{$t('gamePath')}}</p>
-            <v-textarea v-model="game.path" disabled rows="1" auto-grow prepend-icon="folder"></v-textarea>
-            <br />
-            <v-btn
-              color="primary"
-              @click="handleNext"
-              :disabled="isNameOrPathNull"
-            >{{$t('nextStep')}}</v-btn>
-          </v-stepper-content>
+      <v-stepper v-model="activeStep" vertical class="elevation-0" style="background: none">
+        <v-stepper-step :complete="activeStep > 1" step="1">{{$t('chooseGamePath')}}</v-stepper-step>
+        <v-stepper-content step="1">
+          <v-btn color="secondary" @click="handleRequestGamePath">{{$t('chooseGamePath')}}</v-btn>
+          <br />
+          <br />
+          <br />
+          <p>{{$t('gameName')}}</p>
+          <v-text-field v-model="game.name" prepend-icon="videogame_asset"></v-text-field>
+          <p>{{$t('gamePath')}}</p>
+          <v-textarea v-model="game.path" disabled rows="1" auto-grow prepend-icon="folder"></v-textarea>
+          <br />
+          <v-btn color="primary" @click="handleNext" :disabled="isNameOrPathNull">{{$t('nextStep')}}</v-btn>
+        </v-stepper-content>
 
-          <v-stepper-step :complete="activeStep > 2" step="2">{{$t('inputSpecialCode')}}</v-stepper-step>
-          <v-stepper-content step="2">
-            <p>{{$t('pleaseInputSpecialCodeEmptyIfNotNeeded')}}</p>
-            <v-text-field v-model="game.code" :label="$t('specialCode')" prepend-icon="code"></v-text-field>
-            <br />
-            <v-btn @click="handlePrev">{{$t('prevStep')}}</v-btn>
-            <v-btn color="primary" @click="handleNext">{{$t('finish')}}</v-btn>
-          </v-stepper-content>
-        </v-stepper>
-      </v-container>
+        <v-stepper-step :complete="activeStep > 2" step="2">{{$t('inputSpecialCode')}}</v-stepper-step>
+        <v-stepper-content step="2">
+          <p>{{$t('pleaseInputSpecialCodeEmptyIfNotNeeded')}}</p>
+          <v-text-field v-model="game.code" :label="$t('specialCode')" prepend-icon="code"></v-text-field>
+          <br />
+          <v-btn @click="handlePrev">{{$t('prevStep')}}</v-btn>
+          <v-btn color="primary" @click="handleNext">{{$t('finish')}}</v-btn>
+        </v-stepper-content>
+      </v-stepper>
     </yk-page-content>
   </div>
 </template>
