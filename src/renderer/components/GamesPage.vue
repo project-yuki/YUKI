@@ -14,18 +14,23 @@
 
 <template>
   <div>
-    <yk-page-header :title="$t('myGames')"/>
+    <yk-page-header :title="$t('myGames')" />
     <yk-page-content>
       <p v-show="noGame" class="all-center text-h3">
         {{$t('nothingHere')}}
-        <br>
+        <br />
         {{$t('goAddSomeGames')}}
       </p>
-      <mu-row gutter>
-        <mu-col class="margin-bottom" sm="12" md="6" lg="4" v-for="game in games" :key="game.path">
-          <yk-game-card :game="game"></yk-game-card>
-        </mu-col>
-      </mu-row>
+      <v-container>
+        <v-row>
+          <v-col sm="12" md="6" lg="4" v-for="game in games" :key="game.path">
+            <yk-game-card :game="game"></yk-game-card>
+          </v-col>
+        </v-row>
+      </v-container>
+      <!-- <mu-col sm="12" md="6" lg="4" v-for="game in games" :key="game.path">
+        <yk-game-card :game="game"></yk-game-card>
+      </mu-col>-->
     </yk-page-content>
   </div>
 </template>

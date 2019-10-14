@@ -15,33 +15,41 @@
 </i18n>
 
 <template>
-  <mu-scale-transition>
-    <mu-card>
-      <mu-card-title :title="game.name" :sub-title="game.code"></mu-card-title>
-      <mu-card-text>{{game.path}}</mu-card-text>
-      <mu-card-actions style="padding: 8px 0">
-        <mu-expansion-panel :zDepth="0">
-          <div slot="header">
-            <mu-button color="primary" @click.stop="handleRunGame">{{$t('run')}}</mu-button>
-            <mu-button color="error" @click.stop="handleDeleteConfirm">{{$t('delete')}}</mu-button>
-          </div>
-          <mu-select
-            :label="$t('localeChanger')"
+  <v-card shaped>
+    <v-card-title>{{game.name}}</v-card-title>
+    <v-card-subtitle>{{game.code}}</v-card-subtitle>
+    <v-card-text>{{game.path}}</v-card-text>
+    <v-card-actions>
+      <v-btn text color="primary" @click.stop="handleRunGame">{{$t('run')}}</v-btn>
+      <v-btn text color="error" @click.stop="handleDeleteConfirm">{{$t('delete')}}</v-btn>
+      <v-spacer></v-spacer>
+
+      <v-btn icon @click="showExpansion = !showExpansion">
+        <v-icon>{{ showExpansion ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
+      </v-btn>
+    </v-card-actions>
+
+    <v-expand-transition>
+      <div v-show="showExpansion">
+        <v-divider></v-divider>
+
+        <v-container>
+          <v-radio-group
             v-model="selectedLocaleChanger"
-            full-width
             @change="updateLocaleChanger"
+            :label="$t('localeChanger')"
           >
-            <mu-option
+            <v-radio
               v-for="(value, key) in defaultConfig.localeChangers"
               :key="game.name+'-changer-'+key"
               :value="value.name"
               :label="value.name"
-            ></mu-option>
-          </mu-select>
-        </mu-expansion-panel>
-      </mu-card-actions>
-    </mu-card>
-  </mu-scale-transition>
+            ></v-radio>
+          </v-radio-group>
+        </v-container>
+      </div>
+    </v-expand-transition>
+  </v-card>
 </template>
 
 <script lang="ts">
@@ -71,7 +79,9 @@ export default class HookSettingsHookInfo extends Vue {
   public defaultConfig!: yuki.ConfigState['default']
   @(namespace('Config').State('games'))
   public gamesConfig!: yuki.ConfigState['games']
+
   public selectedLocaleChanger: string = ''
+  public showExpansion: boolean = false
 
   public handleDeleteConfirm () {
     this.$confirm(this.$i18n.t('confirmDelete').toString(), {
@@ -122,11 +132,4 @@ export default class HookSettingsHookInfo extends Vue {
 </script>
 
 <style scoped>
-.hooker-textarea {
-  padding: 8px;
-}
-
-.half-width {
-  width: 49%;
-}
 </style>

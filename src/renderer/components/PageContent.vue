@@ -18,10 +18,10 @@ export default class PageContent extends Vue { }
 <style scoped>
 .app-content {
   position: absolute;
-  top: 88px;
-  bottom: 24px;
-  left: 264px;
-  right: 24px;
+  top: 64px;
+  bottom: 0px;
+  left: 240px;
+  right: 0px;
   /* padding: 88px 24px 24px 24px; */
 }
 </style>
