@@ -26,7 +26,7 @@
 
 <template>
   <div>
-    <yk-page-header :title="$t('addGame')"/>
+    <yk-page-header :title="$t('addGame')" />
     <yk-page-content>
       <mu-container>
         <mu-stepper :active-step="activeStep" orientation="vertical">
@@ -35,8 +35,8 @@
             <mu-step-content>
               <mu-container style="padding-top: 16px">
                 <mu-button color="secondary" @click="handleRequestGamePath">{{$t('chooseGamePath')}}</mu-button>
-                <br>
-                <br>
+                <br />
+                <br />
                 <p>{{$t('gameName')}}</p>
                 <mu-text-field full-width v-model="game.name" icon="videogame_asset"></mu-text-field>
                 <p>{{$t('gamePath')}}</p>
@@ -48,7 +48,7 @@
                   :rows-max="3"
                   icon="folder"
                 ></mu-text-field>
-                <br>
+                <br />
                 <mu-button
                   class="demo-step-button"
                   color="primary"
@@ -70,7 +70,7 @@
                   label-float
                   icon="code"
                 ></mu-text-field>
-                <br>
+                <br />
                 <mu-button flat class="demo-step-button" @click="handlePrev">{{$t('prevStep')}}</mu-button>
                 <mu-button
                   class="demo-step-button"
@@ -120,7 +120,7 @@ export default class FavoritePage extends Vue {
     localeChanger: ''
   }
 
-  @(namespace('Config').State('default'))
+  @namespace('Config').State('default')
   public defaultConfig!: yuki.ConfigState['default']
 
   get showStepOne () {
