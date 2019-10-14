@@ -15,41 +15,49 @@
 </i18n>
 
 <template>
-  <v-card shaped>
-    <v-card-title>{{game.name}}</v-card-title>
-    <v-card-subtitle>{{game.code}}</v-card-subtitle>
-    <v-card-text>{{game.path}}</v-card-text>
-    <v-card-actions>
-      <v-btn outlined color="primary" @click.stop="handleRunGame">{{$t('run')}}</v-btn>
-      <v-btn outlined color="error" @click.stop="handleDeleteConfirm">{{$t('delete')}}</v-btn>
-      <v-spacer></v-spacer>
+  <v-hover v-slot:default="{ hover }">
+    <v-card :elevation="hover ? 8 : 2">
+      <v-card-title>{{game.name}}</v-card-title>
+      <v-card-subtitle>{{game.code}}</v-card-subtitle>
+      <v-card-text>{{game.path}}</v-card-text>
+      <v-card-actions>
+        <v-btn rounded color="primary" min-width="40%" @click.stop="handleRunGame">
+          {{$t('run')}}
+          <v-icon right dark>mdi-play</v-icon>
+        </v-btn>
+        <v-btn rounded color="error" min-width="40%" @click.stop="handleDeleteConfirm">
+          {{$t('delete')}}
+          <v-icon right dark>mdi-delete</v-icon>
+        </v-btn>
+        <v-spacer></v-spacer>
 
-      <v-btn icon @click="showExpansion = !showExpansion">
-        <v-icon>{{ showExpansion ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
-      </v-btn>
-    </v-card-actions>
+        <v-btn icon @click="showExpansion = !showExpansion">
+          <v-icon>{{ showExpansion ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
+        </v-btn>
+      </v-card-actions>
 
-    <v-expand-transition>
-      <div v-show="showExpansion">
-        <v-divider></v-divider>
+      <v-expand-transition>
+        <div v-show="showExpansion">
+          <v-divider></v-divider>
 
-        <v-container>
-          <v-radio-group
-            v-model="selectedLocaleChanger"
-            @change="updateLocaleChanger"
-            :label="$t('localeChanger')"
-          >
-            <v-radio
-              v-for="(value, key) in defaultConfig.localeChangers"
-              :key="game.name+'-changer-'+key"
-              :value="value.name"
-              :label="value.name"
-            ></v-radio>
-          </v-radio-group>
-        </v-container>
-      </div>
-    </v-expand-transition>
-  </v-card>
+          <v-container>
+            <v-radio-group
+              v-model="selectedLocaleChanger"
+              @change="updateLocaleChanger"
+              :label="$t('localeChanger')"
+            >
+              <v-radio
+                v-for="(value, key) in defaultConfig.localeChangers"
+                :key="game.name+'-changer-'+key"
+                :value="value.name"
+                :label="value.name"
+              ></v-radio>
+            </v-radio-group>
+          </v-container>
+        </div>
+      </v-expand-transition>
+    </v-card>
+  </v-hover>
 </template>
 
 <script lang="ts">
