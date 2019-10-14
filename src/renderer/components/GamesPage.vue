@@ -21,13 +21,11 @@
         <br />
         {{$t('goAddSomeGames')}}
       </p>
-      <v-container>
-        <v-row>
-          <v-col sm="12" md="6" lg="4" v-for="game in games" :key="game.path">
-            <yk-game-card :game="game"></yk-game-card>
-          </v-col>
-        </v-row>
-      </v-container>
+      <v-row>
+        <v-col sm="12" md="6" lg="4" v-for="game in games" :key="game.path">
+          <yk-game-card :game="game"></yk-game-card>
+        </v-col>
+      </v-row>
       <!-- <mu-col sm="12" md="6" lg="4" v-for="game in games" :key="game.path">
         <yk-game-card :game="game"></yk-game-card>
       </mu-col>-->

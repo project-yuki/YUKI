@@ -1,6 +1,8 @@
 <template>
   <div class="app-content">
-    <slot></slot>
+    <v-container>
+      <slot></slot>
+    </v-container>
   </div>
 </template>
 
