@@ -9,7 +9,8 @@
     "pleaseInputSpecialCodeEmptyIfNotNeeded": "请输入特殊码（如果无需则为空）",
     "specialCode": "特殊码",
     "prevStep": "上一步",
-    "finish": "完成"
+    "finish": "完成",
+    "gameAdded": "添加成功！"
   },
   "en": {
     "chooseGamePath": "Choose Game Path",
@@ -19,7 +20,8 @@
     "pleaseInputSpecialCodeEmptyIfNotNeeded": "Please input special code (empty if not needed)",
     "specialCode": "Special Code",
     "prevStep": "Prev",
-    "finish": "Finish"
+    "finish": "Finish",
+    "gameAdded": "Game Added!"
   }
 }
 </i18n>
@@ -116,7 +118,9 @@ export default class FavoritePage extends Vue {
     this.activeStep++
     if (this.finished) {
       ipcRenderer.once(IpcTypes.HAS_ADDED_GAME, () => {
-        this.$alert('添加成功！', {
+        this.$dialog.error({
+          title: this.$i18n.t('prompt').toString(),
+          text: this.$i18n.t('gameAdded').toString(),
           type: 'success'
         }).then(() => {
           this.handleRedirect()

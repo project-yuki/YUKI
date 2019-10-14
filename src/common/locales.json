@@ -3,7 +3,7 @@
     "YUKIGalgameTranslator": "Galgame翻译器",
     "myGames": "我的游戏",
     "addGame": "添加游戏",
-    "applicationSettings": "应用设置",
+    "applicationSettings": "设置",
     "localeChangers": "区域转换器",
     "localeChanger": "区域转换器",
     "applicationLibraries": "程序库",
@@ -20,7 +20,8 @@
     "download": "下载",
     "translatorSettings": "翻译器设置",
     "inputSpecialCode": "输入特殊码",
-    "add": "添加"
+    "add": "添加",
+    "prompt": "提示"
   },
   "en": {
     "YUKIGalgameTranslator": "Galgame Translator",
@@ -43,6 +44,7 @@
     "download": "Download",
     "translatorSettings": "Translator Settings",
     "inputSpecialCode": "Input Special Code",
-    "add": "Add"
+    "add": "Add",
+    "prompt": "Prompt"
   }
 }

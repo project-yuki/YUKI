@@ -18,7 +18,7 @@ const { VueLoaderPlugin } = require("vue-loader");
  * that provide pure *.vue files that need compiling
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/webpack-configurations.html#white-listing-externals
  */
-let whiteListedModules = ["vue", "vuetify"];
+let whiteListedModules = ["vue", "vuetify", "vuetify-dialog"];
 
 let rendererConfig = {
   optimization: {
@@ -37,8 +37,8 @@ let rendererConfig = {
   module: {
     rules: [
       {
-        test: /\.less$/,
-        use: ["vue-style-loader", "css-loader", "less-loader"]
+        test: /\.sass$/,
+        use: ["vue-style-loader", "css-loader", "sass-loader"]
       },
       {
         test: /\.d\.ts$/,

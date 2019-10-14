@@ -7,7 +7,12 @@ import 'muse-ui/dist/muse-ui.css'
 import '../resources/material-icons/material-icons.css'
 
 import '@mdi/font/css/materialdesignicons.css'
+import 'vuetify-dialog/dist/vuetify-dialog.css'
 import 'vuetify/dist/vuetify.min.css'
+
+import Vuetify from 'vuetify'
+import VuetifyDialog from 'vuetify-dialog'
+Vue.use(Vuetify)
 
 import axios from 'axios'
 import Vue from 'vue'
@@ -25,9 +30,6 @@ const MuseUIToast = require('muse-ui-toast/dist/muse-ui-toast.js')
 Vue.use(MuseUI)
 Vue.use(MuseUIMessage)
 Vue.use(MuseUIToast)
-
-import Vuetify from 'vuetify'
-Vue.use(Vuetify)
 
 if (!process.env.IS_WEB) {
   Vue.use(require('vue-electron'))
@@ -48,12 +50,20 @@ function next () {
     locale
   })
 
+  const vuetify = new Vuetify({
+    icons: {
+      iconfont: 'mdi'
+    }
+  })
+
+  Vue.use(VuetifyDialog, {
+    context: {
+      vuetify
+    }
+  })
+
   new Vue({
-    vuetify: new Vuetify({
-      icons: {
-        iconfont: 'mdi'
-      }
-    }),
+    vuetify,
     router,
     store,
     i18n,
