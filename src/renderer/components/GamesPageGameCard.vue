@@ -20,8 +20,8 @@
     <v-card-subtitle>{{game.code}}</v-card-subtitle>
     <v-card-text>{{game.path}}</v-card-text>
     <v-card-actions>
-      <v-btn text color="primary" @click.stop="handleRunGame">{{$t('run')}}</v-btn>
-      <v-btn text color="error" @click.stop="handleDeleteConfirm">{{$t('delete')}}</v-btn>
+      <v-btn outlined color="primary" @click.stop="handleRunGame">{{$t('run')}}</v-btn>
+      <v-btn outlined color="error" @click.stop="handleDeleteConfirm">{{$t('delete')}}</v-btn>
       <v-spacer></v-spacer>
 
       <v-btn icon @click="showExpansion = !showExpansion">
