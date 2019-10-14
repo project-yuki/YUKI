@@ -6,6 +6,9 @@ import 'muse-ui-toast/dist/muse-ui-toast.all.css'
 import 'muse-ui/dist/muse-ui.css'
 import '../resources/material-icons/material-icons.css'
 
+import '@mdi/font/css/materialdesignicons.css'
+import 'vuetify/dist/vuetify.min.css'
+
 import axios from 'axios'
 import Vue from 'vue'
 
@@ -22,6 +25,9 @@ const MuseUIToast = require('muse-ui-toast/dist/muse-ui-toast.js')
 Vue.use(MuseUI)
 Vue.use(MuseUIMessage)
 Vue.use(MuseUIToast)
+
+import Vuetify from 'vuetify'
+Vue.use(Vuetify)
 
 if (!process.env.IS_WEB) {
   Vue.use(require('vue-electron'))
@@ -43,11 +49,15 @@ function next () {
   })
 
   new Vue({
-    components: { App },
+    vuetify: new Vuetify({
+      icons: {
+        iconfont: 'mdi'
+      }
+    }),
     router,
     store,
     i18n,
-    template: '<App/>'
+    render: (h) => h(App)
   }).$mount('#app')
 
   ipcRenderer.on(
