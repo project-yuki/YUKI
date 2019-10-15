@@ -92,16 +92,18 @@ export default class HookSettingsHookInfo extends Vue {
   public showExpansion: boolean = false
 
   public handleDeleteConfirm () {
-    this.$confirm(this.$i18n.t('confirmDelete').toString(), {
+    this.$dialog.confirm({
+      text: this.$i18n.t('confirmDelete').toString(),
       type: 'warning',
-      okLabel: this.$i18n.t('ok').toString(),
-      cancelLabel: this.$i18n.t('cancel').toString()
-    }).then(({
-      result
-    }) => {
-      if (result) {
-        this.handleDeleteGame()
-        this.$toast.success(this.$i18n.t('deleteSuccess').toString())
+      actions: {
+        false: this.$i18n.t('cancel').toString(),
+        true: {
+          text: this.$i18n.t('ok').toString(),
+          handle: () => {
+            this.handleDeleteGame()
+            this.$dialog.notify.success(this.$i18n.t('deleteSuccess').toString())
+          }
+        }
       }
     })
   }

@@ -27,7 +27,7 @@
     <p class="text-h1">{{$t('localeChangerSettings')}}</p>
     <p>{{$t('clickTableRowToUnfoldEditView')}}</p>
     <mu-button @click="addLocaleChanger">{{$t('add')}}</mu-button>
-    <br>
+    <br />
     <mu-paper :z-depth="1" style="margin-top: 24px">
       <mu-data-table stripe :columns="tableColumns" :data="tempLocaleChangers">
         <template slot="expand" slot-scope="prop">
@@ -137,7 +137,7 @@ export default class LocaleChangerSettings extends Vue {
       localeChangers: savingLocaleChangers
     }
     ipcRenderer.send(IpcTypes.REQUEST_SAVE_CONFIG, 'default', savingConfig)
-    this.$toast.success('保存成功！')
+    this.$dialog.notify.success(this.$i18n.t('saved').toString())
   }
 
   @Watch('defaultConfig', {

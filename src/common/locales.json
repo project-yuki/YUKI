@@ -21,7 +21,8 @@
     "translatorSettings": "翻译器设置",
     "inputSpecialCode": "输入特殊码",
     "add": "添加",
-    "prompt": "提示"
+    "prompt": "提示",
+    "saved": "已保存"
   },
   "en": {
     "YUKIGalgameTranslator": "Galgame Translator",
@@ -45,6 +46,7 @@
     "translatorSettings": "Translator Settings",
     "inputSpecialCode": "Input Special Code",
     "add": "Add",
-    "prompt": "Prompt"
+    "prompt": "Prompt",
+    "saved": "Saved"
   }
 }

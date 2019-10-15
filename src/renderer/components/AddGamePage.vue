@@ -112,13 +112,8 @@ export default class FavoritePage extends Vue {
     this.activeStep++
     if (this.finished) {
       ipcRenderer.once(IpcTypes.HAS_ADDED_GAME, () => {
-        this.$dialog.error({
-          title: this.$i18n.t('prompt').toString(),
-          text: this.$i18n.t('gameAdded').toString(),
-          type: 'success'
-        }).then(() => {
-          this.handleRedirect()
-        })
+        this.$dialog.notify.success(this.$i18n.t('gameAdded').toString())
+        this.handleRedirect()
       })
       const localeChangers = this.defaultConfig.localeChangers
       for (const key in localeChangers) {

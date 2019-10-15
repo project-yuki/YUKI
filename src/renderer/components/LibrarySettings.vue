@@ -5,13 +5,21 @@
     "appLibrariesSettings": "程序库设置",
     "providedByDefault": "默认已提供，位于lib\\textractor目录下",
     "choose...": "选择...",
-    "jBeijingDict": "J 北京辞書"
+    "jBeijingDict": "J 北京辞書",
+    "pleaseSelect1": "请选择目录下的",
+    "pleaseSelect2": "",
+    "nowDownloading": "正在下载",
+    "installed": "安装完成，重启生效"
   },
   "en": {
     "appLibrariesSettings": "App Libraries Settings",
     "providedByDefault": "Provided by default, located in lib\\textractor directory",
     "choose...": "Choose...",
-    "jBeijingDict": "JBeijing Dict (Chinese only)"
+    "jBeijingDict": "JBeijing Dict (Chinese only)",
+    "pleaseSelect1": "Please select",
+    "pleaseSelect2": "in the directory",
+    "nowDownloading": "Now downloading",
+    "installed": "installed. Restart to take effect"
   }
 }
 </i18n>
@@ -29,7 +37,7 @@
       <mu-row gutter>
         <mu-col span="10">
           <mu-form-item :label="$t('path')">
-            <mu-text-field v-model="tempLibraries.mecab.path" full-width label-float disabled/>
+            <mu-text-field v-model="tempLibraries.mecab.path" full-width label-float disabled />
           </mu-form-item>
         </mu-col>
         <mu-col span="1">
@@ -53,7 +61,7 @@
     </mu-form>
 
     <p class="text-h2">{{$t('jBeijingDict')}}</p>
-    <yk-download-progress v-if="jbdictDownloadState" :state="jbdictDownloadState"/>
+    <yk-download-progress v-if="jbdictDownloadState" :state="jbdictDownloadState" />
     <mu-form :model="{}">
       <mu-row gutter>
         <mu-col span="11">
@@ -137,7 +145,7 @@ export default class LibrarySettings extends Vue {
     }
     ipcRenderer.send(IpcTypes.REQUEST_SAVE_CONFIG, 'default', savingConfig)
     if (showToast) {
-      this.$toast.success('保存成功！')
+      this.$dialog.notify.success(this.$i18n.t('saved').toString())
     }
   }
 
@@ -146,7 +154,11 @@ export default class LibrarySettings extends Vue {
       IpcTypes.HAS_PATH_WITH_FILE,
       (event: Electron.Event, path: string) => {
         if (path.indexOf(filename) === -1) {
-          this.$toast.error(`请选择文件夹下的 ${filename} !`)
+          this.$dialog.notify.error(`${
+            this.$i18n.t('pleaseSelect1').toString()
+          } ${filename} ${
+            this.$i18n.t('pleaseSelect2').toString()
+          }!`)
           return
         }
 
@@ -170,7 +182,7 @@ export default class LibrarySettings extends Vue {
       })
     ipcRenderer.on(IpcTypes.HAS_DOWNLOAD_COMPLETE,
       (event: Electron.Event, name: string) => {
-        this.$toast.success(`${name} 安装完成，重启生效`)
+        this.$dialog.notify.success(`${name} ${this.$i18n.t('installed').toString()}`)
         switch (name) {
           case 'dict.jb':
             this.resetSettings()
@@ -187,7 +199,7 @@ export default class LibrarySettings extends Vue {
         }
       })
 
-    this.$toast.info(`正在下载 ${packName}...`)
+    this.$dialog.notify.info(`${this.$i18n.t('nowDownloading').toString()} ${packName}...`)
     this.remainingDownloadTaskCount++
     ipcRenderer.send(IpcTypes.REQUEST_DOWNLOAD_LIBRARY, packName)
   }
