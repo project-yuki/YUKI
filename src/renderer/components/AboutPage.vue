@@ -16,7 +16,7 @@
     <yk-page-content style="text-align: center">
       <img src="../assets/icon.png" style="width: 128px; height: 128px" />
       <p class="text-h1">Yummy Utterance Knowledge Interface</p>
-      <p class="text-h2">YUKI {{$t('YUKIGalgameTranslator')}}</p>
+      <p class="text-h2" style="padding-bottom: 16px">YUKI {{$t('YUKIGalgameTranslator')}}</p>
       <v-btn color="primary" @click="toggleDevTools">{{$t('toggleDevTools')}}</v-btn>
     </yk-page-content>
   </div>

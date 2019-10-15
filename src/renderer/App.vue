@@ -43,14 +43,17 @@ body,
 }
 
 .text-h1 {
+  padding-top: 16px;
   font-size: 2em;
 }
 
 .text-h2 {
+  padding-top: 16px;
   font-size: 1.5em;
 }
 
 .text-h3 {
+  padding-top: 16px;
   font-size: 1.2em;
 }
 

@@ -16,8 +16,8 @@
 
 <template>
   <div>
-    <mu-button color="primary">{{$t('save')}}</mu-button>
-    <mu-button color="warning">{{$t('reset')}}</mu-button>
+    <v-btn rounded large color="primary">{{$t('save')}}</v-btn>
+    <v-btn rounded large color="warning">{{$t('reset')}}</v-btn>
     <p class="text-h1">{{$t('translatorSettings')}}</p>
     <p class="all-center text-h3">
       {{$t('underConstruction')}}
@@ -50,11 +50,11 @@ export default class TranslatorSettings extends Vue { }
 </script>
 
 <style scoped>
-.mu-button {
+.v-btn {
   margin: 8px;
 }
 
-.mu-button:first-child {
+.v-btn:first-child {
   margin: 0;
 }
 </style>

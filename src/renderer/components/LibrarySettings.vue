@@ -26,63 +26,49 @@
 
 <template>
   <div>
-    <mu-button color="primary" @click="saveSettings(true)">{{$t('save')}}</mu-button>
-    <mu-button color="warning" @click="resetSettings">{{$t('reset')}}</mu-button>
+    <v-btn rounded large color="primary" @click="saveSettings(true)">{{$t('save')}}</v-btn>
+    <v-btn rounded large color="warning" @click="resetSettings">{{$t('reset')}}</v-btn>
     <p class="text-h1">{{$t('appLibrariesSettings')}}</p>
     <p class="text-h2">Textractor</p>
     <p class="text-h3">{{$t('providedByDefault')}}</p>
 
     <p class="text-h2">MeCab</p>
-    <mu-form :model="{}">
-      <mu-row gutter>
-        <mu-col span="10">
-          <mu-form-item :label="$t('path')">
-            <mu-text-field v-model="tempLibraries.mecab.path" full-width label-float disabled />
-          </mu-form-item>
-        </mu-col>
-        <mu-col span="1">
-          <mu-form-item :label="$t('choose...')">
-            <mu-button
-              icon
-              small
-              color="primary"
-              @click="requestPath('mecab', 'libmecab.dll', '.')"
-            >
-              <mu-icon value="more_horiz"></mu-icon>
-            </mu-button>
-          </mu-form-item>
-        </mu-col>
-        <mu-col span="1">
-          <mu-form-item :label="$t('enable')">
-            <mu-switch v-model="tempLibraries.mecab.enable"></mu-switch>
-          </mu-form-item>
-        </mu-col>
-      </mu-row>
-    </mu-form>
+    <v-row>
+      <v-col cols="10">
+        <v-text-field
+          :label="$t('path')"
+          v-model="tempLibraries.mecab.path"
+          readonly
+          outlined
+          rounded
+          append-icon="mdi-dots-horizontal"
+          @click:append="requestPath('mecab', 'libmecab.dll', '.')"
+        />
+      </v-col>
+      <v-col cols="2">
+        <v-switch :label="$t('enable')" v-model="tempLibraries.mecab.enable" inset></v-switch>
+      </v-col>
+    </v-row>
 
     <p class="text-h2">{{$t('jBeijingDict')}}</p>
     <yk-download-progress v-if="jbdictDownloadState" :state="jbdictDownloadState" />
-    <mu-form :model="{}">
-      <mu-row gutter>
-        <mu-col span="11">
-          <mu-form-item :label="$t('path')">
-            <mu-text-field
-              v-model="tempLibraries.translators.jBeijing.dictPath"
-              full-width
-              label-float
-              disabled
-            />
-          </mu-form-item>
-        </mu-col>
-        <mu-col span="1">
-          <mu-form-item :label="$t('download')">
-            <mu-button icon small color="primary" @click="startDownload('dict.jb')">
-              <mu-icon value="cloud_download"></mu-icon>
-            </mu-button>
-          </mu-form-item>
-        </mu-col>
-      </mu-row>
-    </mu-form>
+    <v-row>
+      <v-col cols="10">
+        <v-text-field
+          :label="$t('path')"
+          v-model="tempLibraries.translators.jBeijing.dictPath"
+          readonly
+          outlined
+          rounded
+        />
+      </v-col>
+      <v-col cols="2" class="vertical-center">
+        <v-btn color="primary" @click="startDownload('dict.jb')" outlined rounded>
+          {{$t('download')}}&nbsp;
+          <v-icon>mdi-cloud-download</v-icon>
+        </v-btn>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
@@ -221,15 +207,15 @@ export default class LibrarySettings extends Vue {
 </script>
 
 <style scoped>
-.mu-button {
+.v-btn {
   margin: 8px;
 }
 
-.mu-button:first-child {
+.v-btn:first-child {
   margin: 0;
 }
 
-.center-width {
-  text-align: center;
+.vertical-center {
+  padding-top: 22px;
 }
 </style>

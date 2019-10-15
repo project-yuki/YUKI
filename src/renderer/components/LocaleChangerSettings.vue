@@ -22,8 +22,8 @@
 
 <template>
   <div>
-    <mu-button color="primary" @click="saveSettings">{{$t('save')}}</mu-button>
-    <mu-button color="warning" @click="resetSettings">{{$t('reset')}}</mu-button>
+    <v-btn rounded large color="primary" @click="saveSettings">{{$t('save')}}</v-btn>
+    <v-btn rounded large color="warning" @click="resetSettings">{{$t('reset')}}</v-btn>
     <p class="text-h1">{{$t('localeChangerSettings')}}</p>
     <p>{{$t('clickTableRowToUnfoldEditView')}}</p>
     <mu-button @click="addLocaleChanger">{{$t('add')}}</mu-button>
@@ -202,11 +202,11 @@ export default class LocaleChangerSettings extends Vue {
 </script>
 
 <style scoped>
-.mu-button {
+.v-btn {
   margin: 8px;
 }
 
-.mu-button:first-child {
+.v-btn:first-child {
   margin: 0;
 }
 </style>
