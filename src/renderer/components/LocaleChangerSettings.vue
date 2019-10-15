@@ -7,7 +7,11 @@
     "executionType": "执行方式",
     "parameter": "参数",
     "%GAME_PATH%": "%GAME_PATH% - 游戏所在路径",
-    "setToDefault": "设为默认"
+    "setToDefault": "设为默认",
+    "noLocaleChanger": "没有区域转换器呢ㄟ( ▔, ▔ )ㄏ",
+    "localeChangers": "区域转换器",
+    "editLocaleChanger": "编辑区域转换器",
+    "actions": "操作"
   },
   "en": {
     "localeChangerSettings": "Locale Changer Settings",
@@ -15,7 +19,11 @@
     "executionType": "Execution Type",
     "parameter": "Parameter",
     "%GAME_PATH%": "%GAME_PATH% - Path to the game",
-    "setToDefault": "Default"
+    "setToDefault": "Default",
+    "noLocaleChanger": "No Locale Changerㄟ( ▔, ▔ )ㄏ",
+    "localeChangers": "Locale Changers",
+    "editLocaleChanger": "Edit Locale Changer",
+    "actions": "Actions"
   }
 }
 </i18n>
@@ -25,7 +33,7 @@
     <v-btn rounded large color="primary" @click="saveSettings">{{$t('save')}}</v-btn>
     <v-btn rounded large color="warning" @click="resetSettings">{{$t('reset')}}</v-btn>
     <p class="text-h1">{{$t('localeChangerSettings')}}</p>
-    <p>{{$t('clickTableRowToUnfoldEditView')}}</p>
+    <!-- <p>{{$t('clickTableRowToUnfoldEditView')}}</p>
     <mu-button @click="addLocaleChanger">{{$t('add')}}</mu-button>
     <br />
     <mu-paper :z-depth="1" style="margin-top: 24px">
@@ -65,7 +73,71 @@
           </td>
         </template>
       </mu-data-table>
-    </mu-paper>
+    </mu-paper>-->
+
+    <v-data-table
+      :headers="tableColumns"
+      :items="tempLocaleChangers"
+      disable-sort
+      class="elevation-1"
+    >
+      <template v-slot:top>
+        <v-toolbar flat color="white">
+          <v-toolbar-title>{{$t('localeChangers')}}</v-toolbar-title>
+          <v-divider class="mx-4" inset vertical></v-divider>
+          <v-spacer></v-spacer>
+          <v-btn color="primary" dark class="mb-2" @click="addLocaleChanger">{{$t('add')}}</v-btn>
+        </v-toolbar>
+      </template>
+
+      <template v-slot:item.enable="{ item }">
+        <v-switch v-model="item.enable" @click.stop="setDefault(item.id)" inset></v-switch>
+      </template>
+
+      <template v-slot:item.actions="{ item }">
+        <v-icon class="mr-2" @click="editLocaleChanger(item.id)">edit</v-icon>
+        <v-icon @click="deleteLocaleChanger(item.id)">delete</v-icon>
+      </template>
+
+      <template v-slot:no-data>
+        <p class="text-h3">{{$t('noLocaleChanger')}}</p>
+      </template>
+    </v-data-table>
+
+    <v-dialog v-model="showDialog" max-width="500px">
+      <v-card>
+        <v-card-title>
+          <span class="headline">{{$t('editLocaleChanger')}}</span>
+        </v-card-title>
+
+        <v-card-text>
+          <v-container>
+            <v-row>
+              <v-col cols="6">
+                <v-text-field v-model="editedItem.id" label="ID"></v-text-field>
+              </v-col>
+              <v-col cols="6">
+                <v-text-field v-model="editedItem.name" :label="$t('name')"></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-textarea
+                  rows="1"
+                  auto-grow
+                  v-model="editedItem.exec"
+                  :label="$t('executionType')"
+                ></v-textarea>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" text @click="closeDialog">{{$t('cancel')}}</v-btn>
+          <v-btn color="blue darken-1" text @click="finishDialog">{{$t('ok')}}</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -91,38 +163,66 @@ type TempLocaleChangerItem = yuki.Config.LocaleChangerItem & {
 
 @Component
 export default class LocaleChangerSettings extends Vue {
-  public tableColumns: Array<{title: string, name: string, width?: number}> = []
+  public tableColumns: Array<{text: string, value: string, width?: number}> = []
 
   @(namespace('Config').State('default'))
   public defaultConfig!: yuki.ConfigState['default']
 
   public tempLocaleChangers: TempLocaleChangerItem[] = []
+  public showDialog: boolean = false
+  public itemPattern: TempLocaleChangerItem = {
+    name: '',
+    enable: false,
+    exec: '',
+    id: ''
+  }
+  public editedItem: TempLocaleChangerItem = { ...this.itemPattern }
 
   public mounted () {
     this.tableColumns = [
       {
-        title: 'ID',
-        name: 'id'
+        text: 'ID',
+        value: 'id'
       },
       {
-        title: this.$i18n.t('name').toString(),
-        name: 'name'
+        text: this.$i18n.t('name').toString(),
+        value: 'name'
       },
       {
-        title: this.$i18n.t('executionType').toString(),
-        name: 'exec'
+        text: this.$i18n.t('executionType').toString(),
+        value: 'exec'
       },
       {
-        title: this.$i18n.t('setToDefault').toString(),
-        name: 'enable',
+        text: this.$i18n.t('setToDefault').toString(),
+        value: 'enable',
         width: 80
       },
       {
-        title: this.$i18n.t('delete').toString(),
-        name: 'delete',
+        text: this.$i18n.t('actions').toString(),
+        value: 'actions',
         width: 96
       }
     ]
+  }
+
+  public closeDialog () {
+    this.showDialog = false
+  }
+  public finishDialog () {
+    for (const index in this.tempLocaleChangers) {
+      if (this.tempLocaleChangers[index].id === this.editedItem.id) {
+        this.tempLocaleChangers[index] = this.editedItem
+      }
+    }
+    this.tempLocaleChangers = [...this.tempLocaleChangers]
+    this.editedItem = { ...this.itemPattern }
+    this.closeDialog()
+  }
+  public editLocaleChanger (id: string) {
+    this.editedItem = { ...this.tempLocaleChangers.filter(
+      (value) => value.id === id
+    )[0] }
+    this.showDialog = true
   }
 
   public saveSettings () {
@@ -175,12 +275,7 @@ export default class LocaleChangerSettings extends Vue {
   }
 
   public addLocaleChanger () {
-    this.tempLocaleChangers.push({
-      id: '',
-      name: '',
-      enable: false,
-      exec: ''
-    })
+    this.tempLocaleChangers.push({ ...this.itemPattern })
   }
 
   public deleteLocaleChanger (id: string) {
