@@ -21,9 +21,9 @@
     <p class="text-h1">{{$t('translatorSettings')}}</p>
     <p class="all-center text-h3">
       {{$t('underConstruction')}}
-      <br>
+      <br />
       {{$t('pleaseModifyConfigurationFile')}}
-      <br>
+      <br />
       {{$t('defaultTranslators')}}
     </p>
   </div>
