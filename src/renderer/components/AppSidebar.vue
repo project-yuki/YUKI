@@ -47,21 +47,21 @@
 
             <v-list-item to="/settings/localechanger">
               <v-list-item-action>
-                <v-icon value="location_on"></v-icon>
+                <v-icon>mdi-map-marker</v-icon>
               </v-list-item-action>
               <v-list-item-title>{{$t('localeChangers')}}</v-list-item-title>
             </v-list-item>
 
             <v-list-item to="/settings/library">
               <v-list-item-action>
-                <v-icon value="apps"></v-icon>
+                <v-icon>mdi-apps</v-icon>
               </v-list-item-action>
               <v-list-item-title>{{$t('applicationLibraries')}}</v-list-item-title>
             </v-list-item>
 
             <v-list-item to="/settings/translator">
               <v-list-item-action>
-                <v-icon value="translate"></v-icon>
+                <v-icon>mdi-translate</v-icon>
               </v-list-item-action>
               <v-list-item-title>{{$t('translators')}}</v-list-item-title>
             </v-list-item>
