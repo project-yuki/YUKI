@@ -107,6 +107,12 @@
         </div>
       </v-col>
     </v-row>
+
+    <v-row class="margin-top">
+      <v-col cols="12" align="center">
+        <v-btn color="primary" @click="toggleDevTools">{{$t('toggleDevTools')}}</v-btn>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
@@ -199,6 +205,10 @@ export default class HookSettings extends Vue {
     const width = window.getSize()[0]
     window.setSize(width, newHeight)
     next()
+  }
+
+  public toggleDevTools () {
+    remote.getCurrentWebContents().toggleDevTools()
   }
 }
 </script>
