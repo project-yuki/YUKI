@@ -32,7 +32,7 @@ declare namespace yuki {
   }
   export interface ConfigState {
     default: yuki.Config.Default
-    games: Game[],
+    games: Game[]
     librariesBaseStorePath: string
   }
 
@@ -44,14 +44,14 @@ declare namespace yuki {
     isMecabEnable: boolean
     hookInfos: TextThread[]
     texts: {
-      [handle: string]: string[]
+      [handle: string]: string[];
     }
     patterns: {
-      [handle: string]: yuki.MeCabPatterns[]
+      [handle: string]: yuki.MeCabPatterns[];
     }
     currentDisplayHookIndex: number
     translations: {
-      [handle: string]: Translations['translations'][]
+      [handle: string]: Array<Translations['translations']>;
     }
     toDisplayHookCode: string
   }

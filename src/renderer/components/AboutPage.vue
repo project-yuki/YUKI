@@ -12,12 +12,12 @@
 
 <template>
   <div>
-    <yk-page-header :title="$t('aboutYUKI')"/>
+    <yk-page-header :title="$t('aboutYUKI')" />
     <yk-page-content style="text-align: center">
-      <img src="../assets/icon.png" style="width: 128px; height: 128px">
+      <img src="../assets/icon.png" style="width: 128px; height: 128px" />
       <p class="text-h1">Yummy Utterance Knowledge Interface</p>
-      <p class="text-h2">{{$t('YUKIGalgameTranslator')}}</p>
-      <mu-button color="primary" @click="toggleDevTools">{{$t('toggleDevTools')}}</mu-button>
+      <p class="text-h2" style="padding-bottom: 16px">YUKI {{$t('YUKIGalgameTranslator')}}</p>
+      <v-btn color="primary" @click="toggleDevTools">{{$t('toggleDevTools')}}</v-btn>
     </yk-page-content>
   </div>
 </template>

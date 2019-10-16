@@ -13,31 +13,26 @@
 </i18n>
 
 <template>
-  <div id="app">
+  <v-app id="app">
     <div id="top">
       <yk-titlebar></yk-titlebar>
     </div>
     <div id="content">
       <router-view></router-view>
       <div id="buttons" v-if="isButtonsShown">
-        <mu-button small flat to="/translate" color="white" style="width: 32%">{{$t('translate')}}</mu-button>
-        <mu-button
+        <v-btn small text dark to="/translate" style="width: 32%">{{$t('translate')}}</v-btn>
+        <v-btn small text dark to="/hooks" style="width: 32%">{{$t('textHookSettings')}}</v-btn>
+        <v-btn
           small
-          flat
-          to="/hooks"
-          color="white"
-          style="width: 32%"
-        >{{$t('textHookSettings')}}</mu-button>
-        <mu-button
-          small
-          flat
+          text
+          dark
           to="/settings"
           color="white"
           style="width: 32%"
-        >{{$t('translatorSettings')}}</mu-button>
+        >{{$t('translatorSettings')}}</v-btn>
       </div>
     </div>
-  </div>
+  </v-app>
 </template>
 
 <script lang="ts">
@@ -140,11 +135,11 @@ export default class App extends Vue {
     if (this.$router.currentRoute.path === '/translate') {
       if (this.isButtonsShown) {
         this.$nextTick(() => {
-          this.updateWindowHeight(64)
+          this.updateWindowHeight(24)
         })
       } else {
         this.$nextTick(() => {
-          this.updateWindowHeight(40)
+          this.updateWindowHeight(0)
         })
       }
     }
@@ -155,6 +150,13 @@ export default class App extends Vue {
 <style>
 * {
   margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+.v-application--wrap {
+  min-height: 0;
+  height: inherit;
 }
 
 html::-webkit-scrollbar {
@@ -164,11 +166,10 @@ html::-webkit-scrollbar {
 html,
 body,
 #app {
-  min-width: 100%;
-  min-height: 100%;
   margin: 0;
   padding: 0;
   background: none;
+  display: block;
 }
 
 body {
@@ -191,7 +192,7 @@ body {
 }
 
 .text-h3 {
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .text-p {
@@ -243,7 +244,7 @@ body {
   left: 16px;
 }
 
-#app #content #buttons .mu-button {
+#app #content #buttons .v-btn {
   text-align: center;
 }
 

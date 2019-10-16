@@ -1,13 +1,16 @@
 <template>
-  <mu-appbar class="app-header" color="primary">
-    {{title}}
-    <mu-button icon slot="right" class="manipulate-button" @click="minimizeWindow">
-      <mu-icon value="remove"></mu-icon>
-    </mu-button>
-    <mu-button icon slot="right" class="manipulate-button" @click="closeWindow">
-      <mu-icon value="close"></mu-icon>
-    </mu-button>
-  </mu-appbar>
+  <div class="app-header">
+    <v-app-bar color="primary" dark>
+      <v-toolbar-title>{{title}}</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn icon class="manipulate-button" @click="minimizeWindow">
+        <v-icon>mdi-window-minimize</v-icon>
+      </v-btn>
+      <v-btn icon class="manipulate-button" @click="closeWindow">
+        <v-icon>mdi-window-close</v-icon>
+      </v-btn>
+    </v-app-bar>
+  </div>
 </template>
 
 <script lang="ts">
@@ -42,6 +45,7 @@ export default class PageContent extends Vue {
   left: 230px;
   right: 0;
   position: fixed;
+  z-index: 5;
   -webkit-app-region: drag;
 }
 

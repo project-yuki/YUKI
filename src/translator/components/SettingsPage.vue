@@ -38,60 +38,75 @@
 
 <template>
   <div class="small-margin fixed-scroll">
-    <mu-row gutter>
-      <mu-col span="3">
+    <v-row>
+      <v-col cols="3">
         <div class="text-h3 text-center">{{$t('originalText')}}</div>
-      </mu-col>
-      <mu-col span="8">
-        <mu-form :model="{}">
-          <mu-form-item :label="$t('size')" :style="{color: 'white'}">
-            <mu-slider class="margin-top" :step="1" v-model="originalTextSize"></mu-slider>
-          </mu-form-item>
-        </mu-form>
-      </mu-col>
-    </mu-row>
-    <mu-row gutter class="margin-top">
-      <mu-col span="3">
+      </v-col>
+      <v-col cols="8">
+        <p style="color: white">{{$t('size')}}</p>
+        <v-slider
+          class="margin-top"
+          thumb-label="always"
+          ticks
+          min="1"
+          max="36"
+          v-model="originalTextSize"
+        ></v-slider>
+      </v-col>
+    </v-row>
+
+    <v-row class="margin-top">
+      <v-col cols="3">
         <div class="text-h3 text-center">{{$t('translatedText')}}</div>
-      </mu-col>
-      <mu-col span="4">
-        <mu-form :model="{}">
-          <mu-form-item :label="$t('size')" :style="{color: 'white'}">
-            <mu-slider class="margin-top" :step="1" v-model="translationTextSize"></mu-slider>
-          </mu-form-item>
-        </mu-form>
-      </mu-col>
-      <mu-col span="4">
-        <mu-form :model="{}">
-          <mu-form-item :label="$t('margin')" :style="{color: 'white'}">
-            <mu-slider class="margin-top" :step="1" v-model="translationTextMargin"></mu-slider>
-          </mu-form-item>
-        </mu-form>
-      </mu-col>
-    </mu-row>
-    <mu-row gutter class="margin-top">
-      <mu-col span="3">
+      </v-col>
+      <v-col cols="4">
+        <p style="color: white">{{$t('size')}}</p>
+        <v-slider
+          class="margin-top"
+          thumb-label="always"
+          ticks
+          min="1"
+          max="36"
+          v-model="translationTextSize"
+        ></v-slider>
+      </v-col>
+      <v-col cols="4">
+        <p style="color: white">{{$t('margin')}}</p>
+        <v-slider
+          class="margin-top"
+          thumb-label="always"
+          ticks
+          min="1"
+          max="36"
+          v-model="translationTextMargin"
+        ></v-slider>
+      </v-col>
+    </v-row>
+
+    <v-row class="margin-top">
+      <v-col cols="3">
         <div class="text-h3 text-center">{{$t('backgroundColor')}}</div>
-      </mu-col>
-      <mu-col span="9">
+      </v-col>
+      <v-col cols="9">
         <chrome-picker v-model="backgroundColor"></chrome-picker>
-      </mu-col>
-    </mu-row>
-    <mu-row gutter class="margin-top">
-      <mu-col span="3">
+      </v-col>
+    </v-row>
+
+    <v-row class="margin-top">
+      <v-col cols="3">
         <div class="text-h3 text-center">{{$t('help')}}</div>
-      </mu-col>
-      <mu-col span="8">
+      </v-col>
+      <v-col cols="8">
         <div class="helpers">
           <div v-for="item in helperItems">
-            <mu-button icon>
-              <mu-icon color="white" :value="item.icon"></mu-icon>
-            </mu-button>
-            <p class="text-helper text-p">{{$t(item.text)}}</p>
+            <v-btn text icon dark large>
+              <v-icon dark>{{item.icon}}</v-icon>
+            </v-btn>
+            <p style="color: white" class="text-helper">{{$t(item.text)}}</p>
           </div>
         </div>
-      </mu-col>
-    </mu-row>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
@@ -166,14 +181,14 @@ export default class HookSettings extends Vue {
   public getBackgroundColor!: () => string
 
   public helperItems: Array<{text: string, icon: string}> = [
-    { text: 'previousText', icon: 'keyboard_arrow_left' },
-    { text: 'nextText', icon: 'keyboard_arrow_right' },
-    { text: 'returnToLatestText', icon: 'redo' },
-    { text: 'alwaysOnTop', icon: 'lock' },
-    { text: 'notAlwaysOnTop', icon: 'lock_open' },
-    { text: 'hide', icon: 'close' },
-    { text: 'pauseNewText', icon: 'pause' },
-    { text: 'restoreNewText', icon: 'play_arrow' }
+    { text: 'previousText', icon: 'mdi-chevron-left' },
+    { text: 'nextText', icon: 'mdi-chevron-right' },
+    { text: 'returnToLatestText', icon: 'mdi-chevron-triple-right' },
+    { text: 'alwaysOnTop', icon: 'mdi-lock' },
+    { text: 'notAlwaysOnTop', icon: 'mdi-lock-open-outline' },
+    { text: 'hide', icon: 'mdi-close' },
+    { text: 'pauseNewText', icon: 'mdi-pause' },
+    { text: 'restoreNewText', icon: 'mdi-play' }
   ]
 
   public beforeRouteEnter (to: Route, from: Route, next: () => void) {

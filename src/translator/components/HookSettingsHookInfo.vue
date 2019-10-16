@@ -3,43 +3,49 @@
 {
   "zh": {
     "waitForTexts...": "等待文本获取...",
-    "choose": "选择"
+    "choose": "选择",
+    "lastText": "最新文本"
   },
   "en": {
     "waitForTexts...": "Wait for texts...",
-    "choose": "Choose"
+    "choose": "Choose",
+    "lastText": "Last Text"
   }
 }
 </i18n>
 
 <template>
-  <mu-scale-transition>
-    <mu-paper :z-depth="zIndex" class="hook-info">
-      <mu-row gutter align-content="center" wrap="wrap">
-        <mu-col sm="12" md="4" lg="2" class="vertical-center">
-          <strong>{{hook.name}}</strong>
-        </mu-col>
-        <mu-col sm="12" md="8" lg="3" class="vertical-center selectable">
-          <div>{{hook.code}}</div>
-        </mu-col>
-        <mu-col sm="12" md="8" lg="5" class="vertical-center">
-          <mu-text-field
-            solo
-            full-width
-            disabled
+  <v-scroll-y-transition :appear="true">
+    <v-card class="hook-info">
+      <v-row justify="center" wrap="wrap">
+        <v-col sm="12" md="12" lg="4" align="center" align-self="center">
+          <v-list-item two-line>
+            <v-list-item-content>
+              <v-list-item-title>{{hook.name}}</v-list-item-title>
+              <v-list-item-subtitle>{{hook.code}}</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+        </v-col>
+        <v-col sm="12" md="8" lg="6" align="center" align-self="center">
+          <v-text-field
+            readonly
+            dense
+            persistent-hint
+            counter
             :value="lastHookText"
+            :hint="$t('lastText')"
             :placeholder="$t('waitForTexts...')"
           />
-        </mu-col>
-        <mu-col sm="12" md="4" lg="2" class="vertical-center">
-          <mu-button flat color="success" @click="chooseAsDisplay" v-show="!isChosen">
+        </v-col>
+        <v-col sm="12" md="4" lg="2" align="center" align-self="center">
+          <v-btn rounded color="green" dark @click="chooseAsDisplay" v-show="!isChosen">
             {{$t('choose')}}
-            <mu-icon right value="done"></mu-icon>
-          </mu-button>
-        </mu-col>
-      </mu-row>
-    </mu-paper>
-  </mu-scale-transition>
+            <v-icon dark right>mdi-check</v-icon>
+          </v-btn>
+        </v-col>
+      </v-row>
+    </v-card>
+  </v-scroll-y-transition>
 </template>
 
 <script lang="ts">

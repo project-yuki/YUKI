@@ -2,11 +2,11 @@
 
 <template>
   <div>
-    <yk-page-header :title="$t('applicationSettings')"/>
+    <yk-page-header :title="$t('applicationSettings')" />
     <yk-page-content>
-      <mu-container>
+      <v-container>
         <router-view></router-view>
-      </mu-container>
+      </v-container>
     </yk-page-content>
   </div>
 </template>

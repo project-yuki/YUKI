@@ -1,8 +1,8 @@
 <template>
-  <div id="app">
+  <v-app>
     <yk-app-sidebar></yk-app-sidebar>
     <router-view class="full-height" style="margin-left: 230px;"></router-view>
-  </div>
+  </v-app>
 </template>
 
 <script lang="ts">
@@ -43,14 +43,17 @@ body,
 }
 
 .text-h1 {
+  padding-top: 16px;
   font-size: 2em;
 }
 
 .text-h2 {
+  padding-top: 16px;
   font-size: 1.5em;
 }
 
 .text-h3 {
+  padding-top: 16px;
   font-size: 1.2em;
 }
 
@@ -60,12 +63,12 @@ body,
 }
 
 .full-height {
-  height: 100%;
+  min-height: 100%;
 }
 
 .full {
-  width: 100%;
-  height: 100%;
+  min-width: 100%;
+  min-height: 100%;
 }
 
 .all-center {

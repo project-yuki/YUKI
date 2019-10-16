@@ -1,47 +1,52 @@
 <template>
   <div class="titlebar">
-    <p class="text-h3 text-center title">YUKI GALGAME TRANSLATOR</p>
-    <mu-button
+    <p class="text-h3 title">YUKI GALGAME TRANSLATOR</p>
+    <v-btn
       v-if="pauseNewText"
+      text
       icon
       small
       class="manipulate-button-pause"
       @click="disablePauseNewText"
       color="#FFFFFF"
     >
-      <mu-icon value="play_arrow"></mu-icon>
-    </mu-button>
-    <mu-button
+      <v-icon dark>mdi-play</v-icon>
+    </v-btn>
+    <v-btn
       v-else
+      text
       icon
       small
       class="manipulate-button-pause"
       @click="enablePauseNewText"
       color="#FFFFFF"
     >
-      <mu-icon value="pause"></mu-icon>
-    </mu-button>
-    <mu-button
+      <v-icon dark>mdi-pause</v-icon>
+    </v-btn>
+    <v-btn
       v-if="isAlwaysOnTop"
+      text
       icon
       small
       class="manipulate-button-top"
       @click="toggleAlwaysOnTop"
       color="#FFFFFF"
     >
-      <mu-icon value="lock"></mu-icon>
-    </mu-button>
-    <mu-button
+      <v-icon dark>mdi-lock</v-icon>
+    </v-btn>
+    <v-btn
       v-else
+      text
       icon
       small
       class="manipulate-button-top"
       @click="toggleAlwaysOnTop"
       color="#FFFFFF"
     >
-      <mu-icon value="lock_open"></mu-icon>
-    </mu-button>
-    <mu-button
+      <v-icon dark>mdi-lock-open-outline</v-icon>
+    </v-btn>
+    <v-btn
+      text
       icon
       small
       class="manipulate-button-close"
@@ -49,8 +54,8 @@
       color="#FFFFFF"
       :disabled="!isHideWindowValid"
     >
-      <mu-icon value="close"></mu-icon>
-    </mu-button>
+      <v-icon dark>mdi-close</v-icon>
+    </v-btn>
   </div>
 </template>
 
@@ -85,11 +90,11 @@ export default class Titlebar extends Vue {
     this.isAlwaysOnTop = !this.isAlwaysOnTop
   }
 
-  public enablePauseNewText() {
+  public enablePauseNewText () {
     this.setPauseNewText(true)
     this.isHideWindowValid = false
   }
-  public disablePauseNewText() {
+  public disablePauseNewText () {
     this.setPauseNewText(false)
     this.isHideWindowValid = true
   }
@@ -97,6 +102,11 @@ export default class Titlebar extends Vue {
 </script>
 
 <style scoped>
+.v-btn {
+  width: 32px;
+  height: 32px;
+}
+
 .titlebar {
   width: 100%;
   -webkit-app-region: drag;
@@ -109,6 +119,7 @@ export default class Titlebar extends Vue {
   width: 100%;
   height: 100%;
   float: left;
+  text-align: center;
 }
 
 .manipulate-button-pause {
