@@ -10200,10 +10200,10 @@ vuetify-dialog@^1.0.0-alpha.5:
   resolved "https://registry.npm.taobao.org/vuetify-dialog/download/vuetify-dialog-1.0.0-alpha.5.tgz#92b8d1e63f2730d3111a99c2d9382b48d60c3020"
   integrity sha1-krjR5j8nMNMRGpnC2TgrSNYMMCA=
 
-vuetify@^2.1.3:
-  version "2.1.3"
-  resolved "https://registry.npm.taobao.org/vuetify/download/vuetify-2.1.3.tgz#88245154fff84e8da9c498182d3a16f55c73e3c1"
-  integrity sha1-iCRRVP/4To2pxJgYLToW9Vxz48E=
+vuetify@^2.1.4:
+  version "2.1.4"
+  resolved "https://registry.npm.taobao.org/vuetify/download/vuetify-2.1.4.tgz#0ea1a7bb25a8aab2ff0ec680f3f6bb7e74f7f890"
+  integrity sha1-DqGnuyWoqrL/DsaA8/a7fnT3+JA=
 
 vuex-class@^0.3.1:
   version "0.3.1"
