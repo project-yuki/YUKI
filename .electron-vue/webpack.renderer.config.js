@@ -10,6 +10,7 @@ const BabelMinifyWebpackPlugin = require("babel-minify-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { VueLoaderPlugin } = require("vue-loader");
+const VuetifyLoaderPlugin = require("vuetify-loader/lib/plugin");
 
 /**
  * List of node_modules to include in webpack bundle
@@ -37,8 +38,22 @@ let rendererConfig = {
   module: {
     rules: [
       {
-        test: /\.sass$/,
-        use: ["vue-style-loader", "css-loader", "sass-loader"]
+        test: /\.s(c|a)ss$/,
+        use: [
+          "vue-style-loader",
+          "css-loader",
+          {
+            loader: "sass-loader",
+            // Requires sass-loader@^8.0.0
+            options: {
+              implementation: require("sass"),
+              sassOptions: {
+                fiber: require("fibers"),
+                indentedSyntax: true // optional
+              }
+            }
+          }
+        ]
       },
       {
         test: /\.d\.ts$/,
@@ -135,6 +150,7 @@ let rendererConfig = {
     __filename: process.env.NODE_ENV !== "production"
   },
   plugins: [
+    new VuetifyLoaderPlugin(),
     new VueLoaderPlugin(),
     new MiniCssExtractPlugin({ filename: "styles.css" }),
     new HtmlWebpackPlugin({

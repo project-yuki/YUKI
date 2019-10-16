@@ -1,18 +1,7 @@
 import { ipcRenderer } from 'electron'
 import IpcTypes from '../common/IpcTypes'
 
-import 'muse-ui-message/dist/muse-ui-message.all.css'
-import 'muse-ui-toast/dist/muse-ui-toast.all.css'
-import 'muse-ui/dist/muse-ui.css'
-import '../resources/material-icons/material-icons.css'
-
-import '@mdi/font/css/materialdesignicons.css'
-import 'vuetify-dialog/dist/vuetify-dialog.css'
-import 'vuetify/dist/vuetify.min.css'
-
-import Vuetify from 'vuetify'
-import VuetifyDialog from 'vuetify-dialog'
-Vue.use(Vuetify)
+import vuetify from './vuetify'
 
 import axios from 'axios'
 import Vue from 'vue'
@@ -23,13 +12,6 @@ import store from './store'
 
 import VueI18n from 'vue-i18n'
 Vue.use(VueI18n)
-
-import MuseUI from 'muse-ui'
-const MuseUIMessage = require('muse-ui-message/dist/muse-ui-message.js')
-const MuseUIToast = require('muse-ui-toast/dist/muse-ui-toast.js')
-Vue.use(MuseUI)
-Vue.use(MuseUIMessage)
-Vue.use(MuseUIToast)
 
 if (!process.env.IS_WEB) {
   Vue.use(require('vue-electron'))
@@ -48,18 +30,6 @@ ipcRenderer.send(IpcTypes.REQUEST_CONFIG, 'default')
 function next () {
   const i18n = new VueI18n({
     locale
-  })
-
-  const vuetify = new Vuetify({
-    icons: {
-      iconfont: 'mdi'
-    }
-  })
-
-  Vue.use(VuetifyDialog, {
-    context: {
-      vuetify
-    }
   })
 
   new Vue({

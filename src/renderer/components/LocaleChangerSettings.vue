@@ -33,47 +33,6 @@
     <v-btn rounded large color="primary" @click="saveSettings">{{$t('save')}}</v-btn>
     <v-btn rounded large color="warning" @click="resetSettings">{{$t('reset')}}</v-btn>
     <p class="text-h1">{{$t('localeChangerSettings')}}</p>
-    <!-- <p>{{$t('clickTableRowToUnfoldEditView')}}</p>
-    <mu-button @click="addLocaleChanger">{{$t('add')}}</mu-button>
-    <br />
-    <mu-paper :z-depth="1" style="margin-top: 24px">
-      <mu-data-table stripe :columns="tableColumns" :data="tempLocaleChangers">
-        <template slot="expand" slot-scope="prop">
-          <div style="padding: 24px">
-            <mu-row gutter>
-              <mu-col span="6">
-                <mu-text-field v-model="prop.row.id" label="ID" full-width label-float></mu-text-field>
-              </mu-col>
-              <mu-col span="6">
-                <mu-text-field v-model="prop.row.name" :label="$t('name')" full-width label-float></mu-text-field>
-              </mu-col>
-            </mu-row>
-            <mu-text-field
-              v-model="prop.row.exec"
-              :label="$t('executionType')"
-              full-width
-              multi-line
-              :rows-max="10"
-            ></mu-text-field>
-            <p>{{$t('parameter')}}</p>
-            <p>{{$t('%GAME_PATH%')}}</p>
-          </div>
-        </template>
-        <template slot-scope="scope">
-          <td>{{scope.row.id}}</td>
-          <td>{{scope.row.name}}</td>
-          <td>{{scope.row.exec}}</td>
-          <td>
-            <mu-switch v-model="scope.row.enable" @click.stop="setDefault(scope.row.id)"></mu-switch>
-          </td>
-          <td>
-            <mu-button color="secondary" icon @click.stop="deleteLocaleChanger(scope.row.id)">
-              <mu-icon value="delete"></mu-icon>
-            </mu-button>
-          </td>
-        </template>
-      </mu-data-table>
-    </mu-paper>-->
 
     <v-data-table
       :headers="tableColumns"
@@ -95,8 +54,8 @@
       </template>
 
       <template v-slot:item.actions="{ item }">
-        <v-icon class="mr-2" @click="editLocaleChanger(item.id)">edit</v-icon>
-        <v-icon @click="deleteLocaleChanger(item.id)">delete</v-icon>
+        <v-icon class="mr-2" @click="editLocaleChanger(item.id)">mdi-pencil</v-icon>
+        <v-icon @click="deleteLocaleChanger(item.id)">mdi-delete</v-icon>
       </template>
 
       <template v-slot:no-data>

@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "types": ["vuetify"],
     "sourceMap": true,
     "strict": true,
     "target": "es6",

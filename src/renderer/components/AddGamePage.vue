@@ -38,9 +38,9 @@
           <br />
           <br />
           <p>{{$t('gameName')}}</p>
-          <v-text-field v-model="game.name" prepend-icon="videogame_asset"></v-text-field>
+          <v-text-field v-model="game.name" prepend-icon="mdi-gamepad-square"></v-text-field>
           <p>{{$t('gamePath')}}</p>
-          <v-textarea v-model="game.path" disabled rows="1" auto-grow prepend-icon="folder"></v-textarea>
+          <v-textarea v-model="game.path" disabled rows="1" auto-grow prepend-icon="mdi-folder"></v-textarea>
           <br />
           <v-btn color="primary" @click="handleNext" :disabled="isNameOrPathNull">{{$t('nextStep')}}</v-btn>
         </v-stepper-content>
@@ -48,7 +48,7 @@
         <v-stepper-step :complete="activeStep > 2" step="2">{{$t('inputSpecialCode')}}</v-stepper-step>
         <v-stepper-content step="2">
           <p>{{$t('pleaseInputSpecialCodeEmptyIfNotNeeded')}}</p>
-          <v-text-field v-model="game.code" :label="$t('specialCode')" prepend-icon="code"></v-text-field>
+          <v-text-field v-model="game.code" :label="$t('specialCode')" prepend-icon="mdi-code-tags"></v-text-field>
           <br />
           <v-btn @click="handlePrev">{{$t('prevStep')}}</v-btn>
           <v-btn color="primary" @click="handleNext">{{$t('finish')}}</v-btn>

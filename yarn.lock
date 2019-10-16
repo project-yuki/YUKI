@@ -3303,6 +3303,11 @@ deep-extend@^0.6.0:
   resolved "http://registry.npm.taobao.org/deep-extend/download/deep-extend-0.6.0.tgz#c4fa7c95404a17a9c3e8ca7e1537312b736330ac"
   integrity sha1-xPp8lUBKF6nD6Mp+FTcxK3NjMKw=
 
+deepmerge@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.npm.taobao.org/deepmerge/download/deepmerge-4.1.1.tgz#ee0866e4019fe62c1276b9062d4c4803d9aea14c"
+  integrity sha1-7ghm5AGf5iwSdrkGLUxIA9muoUw=
+
 deepmerge@~2.0.1:
   version "2.0.1"
   resolved "http://registry.npm.taobao.org/deepmerge/download/deepmerge-2.0.1.tgz#25c1c24f110fb914f80001b925264dd77f3f4312"
@@ -4228,6 +4233,13 @@ fd-slicer@~1.0.1:
     nan "2"
     ref "1"
     ref-struct "1"
+
+fibers@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.npm.taobao.org/fibers/download/fibers-4.0.1.tgz#34fe8a8d010db7f9096adb2558a45bbc1d03fe45"
+  integrity sha1-NP6KjQENt/kJatslWKRbvB0D/kU=
+  dependencies:
+    detect-libc "^1.0.3"
 
 figgy-pudding@^3.1.0, figgy-pudding@^3.5.1:
   version "3.5.1"
@@ -6125,7 +6137,7 @@ loader-utils@^1.0.2, loader-utils@^1.1.0:
     emojis-list "^2.0.0"
     json5 "^0.5.0"
 
-loader-utils@^1.2.3:
+loader-utils@^1.2.0, loader-utils@^1.2.3:
   version "1.2.3"
   resolved "https://registry.npm.taobao.org/loader-utils/download/loader-utils-1.2.3.tgz#1ff5dc6911c9f0a062531a4c04b609406108c2c7"
   integrity sha1-H/XcaRHJ8KBiUxpMBLYJQGEIwsc=
@@ -10199,6 +10211,13 @@ vuetify-dialog@^1.0.0-alpha.5:
   version "1.0.0-alpha.5"
   resolved "https://registry.npm.taobao.org/vuetify-dialog/download/vuetify-dialog-1.0.0-alpha.5.tgz#92b8d1e63f2730d3111a99c2d9382b48d60c3020"
   integrity sha1-krjR5j8nMNMRGpnC2TgrSNYMMCA=
+
+vuetify-loader@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.npm.taobao.org/vuetify-loader/download/vuetify-loader-1.3.0.tgz#759f1d16f3f211eddbeeffc5c0b24105f2582b07"
+  integrity sha1-dZ8dFvPyEe3b7v/FwLJBBfJYKwc=
+  dependencies:
+    loader-utils "^1.2.0"
 
 vuetify@^2.1.4:
   version "2.1.4"
