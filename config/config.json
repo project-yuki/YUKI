@@ -50,7 +50,7 @@
       "enable": true,
       "method": "POST",
       "name": "谷歌",
-      "requestBodyFormat": "X{\"q\": %TEXT%, \"sl\": \"ja\", \"hl\": \"zh-CN\"}",
+      "requestBodyFormat": "X{\"q\": %TEXT%, \"sl\": \"ja\", \"tl\": \"zh-CN\"}",
       "responseBodyPattern": "Rclass=\"t0\">([^<]*)<",
       "url": "https://translate.google.cn/m"
     },
