@@ -20,6 +20,7 @@
     "download": "下载",
     "translatorSettings": "翻译器设置",
     "inputSpecialCode": "输入特殊码",
+    "specialCode": "特殊码",
     "add": "添加",
     "prompt": "提示",
     "saved": "已保存"
@@ -45,6 +46,7 @@
     "download": "Download",
     "translatorSettings": "Translator Settings",
     "inputSpecialCode": "Input Special Code",
+    "specialCode": "Special Code",
     "add": "Add",
     "prompt": "Prompt",
     "saved": "Saved"

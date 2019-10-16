@@ -15,11 +15,27 @@
 <template>
   <div class="small-margin fixed-scroll">
     <v-btn type="primary" @click="openInputHookDialog">{{$t('addHook')}}</v-btn>
-    <mu-dialog :title="$t('inputSpecialCode')" :open.sync="openInputHook">
-      <mu-text-field v-model="hookCode" :error-text="errorText"></mu-text-field>
-      <v-btn slot="actions" text @click="closeInputHookDialog">{{$t('cancel')}}</v-btn>
-      <v-btn slot="actions" text color="primary" @click="addHook">{{$t('ok')}}</v-btn>
-    </mu-dialog>
+
+    <v-dialog v-model="openInputHook" max-width="500px">
+      <v-card>
+        <v-card-title>
+          <span class="headline">{{$t('inputSpecialCode')}}</span>
+        </v-card-title>
+
+        <v-card-text>
+          <v-container>
+            <v-text-field v-model="hookCode" :error-messages="errorText" :label="$t('specialCode')"></v-text-field>
+          </v-container>
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" text @click="closeInputHookDialog">{{$t('cancel')}}</v-btn>
+          <v-btn color="primary" text @click="addHook">{{$t('ok')}}</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
     <yk-hook-info
       v-for="hook in orderedHooks"
       :hook="hook"
