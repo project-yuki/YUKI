@@ -15,7 +15,7 @@
 </i18n>
 
 <template>
-  <div transition="scroll-y-transition">
+  <v-scroll-y-transition :appear="true">
     <v-card class="hook-info">
       <v-row justify="center" wrap="wrap">
         <v-col sm="12" md="12" lg="4" align="center" align-self="center">
@@ -45,7 +45,7 @@
         </v-col>
       </v-row>
     </v-card>
-  </div>
+  </v-scroll-y-transition>
 </template>
 
 <script lang="ts">

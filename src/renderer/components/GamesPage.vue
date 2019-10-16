@@ -23,12 +23,11 @@
       </p>
       <v-row>
         <v-col sm="12" md="6" lg="4" v-for="game in games" :key="game.path">
-          <yk-game-card :game="game"></yk-game-card>
+          <v-scroll-y-transition :appear="true">
+            <yk-game-card :game="game"></yk-game-card>
+          </v-scroll-y-transition>
         </v-col>
       </v-row>
-      <!-- <mu-col sm="12" md="6" lg="4" v-for="game in games" :key="game.path">
-        <yk-game-card :game="game"></yk-game-card>
-      </mu-col>-->
     </yk-page-content>
   </div>
 </template>
