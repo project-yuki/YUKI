@@ -72,15 +72,13 @@ import {
 } from 'vuex-class'
 import IpcTypes from '../../common/IpcTypes'
 
-import YkOneColumn from '@/components/OneColumn.vue'
 import YkPageContent from '@/components/PageContent.vue'
 import YkPageHeader from '@/components/PageHeader.vue'
 
 @Component({
   components: {
     YkPageHeader,
-    YkPageContent,
-    YkOneColumn
+    YkPageContent
   }
 })
 export default class FavoritePage extends Vue {

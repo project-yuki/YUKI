@@ -36,10 +36,10 @@ describe('GamesPage.vue', () => {
     )
   })
   it('renders correct game card', () => {
-    expect(vm.$el.querySelector('.mu-card-title').textContent).to.contain(
+    expect(vm.$el.querySelector('.v-card-title').textContent).to.contain(
       '処女はお姉さまに恋してる３'
     )
-    expect(vm.$el.querySelector('.mu-card-text').textContent).to.contain(
+    expect(vm.$el.querySelector('.v-card-text').textContent).to.contain(
       'D:\\Program Files\\処女はお姉さまに恋してる３\\処女はお姉さまに恋してる３.exe'
     )
   })

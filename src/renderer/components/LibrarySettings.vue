@@ -52,7 +52,7 @@
 
     <p class="text-h2">{{$t('jBeijingDict')}}</p>
     <yk-download-progress v-if="jbdictDownloadState" :state="jbdictDownloadState" />
-    <v-row>
+    <v-row style="width: 100%">
       <v-col cols="10">
         <v-text-field
           :label="$t('path')"

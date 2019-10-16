@@ -15,9 +15,6 @@ import store from './store'
 import VueI18n from 'vue-i18n'
 Vue.use(VueI18n)
 
-import MuseUI from 'muse-ui'
-Vue.use(MuseUI)
-
 if (!process.env.IS_WEB) {
   Vue.use(require('vue-electron'))
 }
