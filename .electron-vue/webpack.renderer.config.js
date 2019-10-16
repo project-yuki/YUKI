@@ -40,6 +40,7 @@ let rendererConfig = {
       {
         test: /\.s(c|a)ss$/,
         use: [
+          "thread-loader",
           "vue-style-loader",
           "css-loader",
           {
@@ -75,7 +76,7 @@ let rendererConfig = {
       },
       {
         test: /\.css$/,
-        use: ["vue-style-loader", "css-loader"]
+        use: ["thread-loader", "vue-style-loader", "css-loader"]
       },
       {
         test: /\.html$/,

@@ -10,6 +10,7 @@ const BabelMinifyWebpackPlugin = require("babel-minify-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { VueLoaderPlugin } = require("vue-loader");
+const VuetifyLoaderPlugin = require("vuetify-loader/lib/plugin");
 
 /**
  * List of node_modules to include in webpack bundle
@@ -18,7 +19,7 @@ const { VueLoaderPlugin } = require("vue-loader");
  * that provide pure *.vue files that need compiling
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/webpack-configurations.html#white-listing-externals
  */
-let whiteListedModules = ["vue"];
+let whiteListedModules = ["vue", "vuetify", "vuetify-dialog"];
 
 let translatorConfig = {
   optimization: {
@@ -36,6 +37,25 @@ let translatorConfig = {
   ],
   module: {
     rules: [
+      {
+        test: /\.s(c|a)ss$/,
+        use: [
+          "thread-loader",
+          "vue-style-loader",
+          "css-loader",
+          {
+            loader: "sass-loader",
+            // Requires sass-loader@^8.0.0
+            options: {
+              implementation: require("sass"),
+              sassOptions: {
+                fiber: require("fibers"),
+                indentedSyntax: true // optional
+              }
+            }
+          }
+        ]
+      },
       {
         test: /\.d\.ts$/,
         use: "ignore-loader"
@@ -56,7 +76,7 @@ let translatorConfig = {
       },
       {
         test: /\.css$/,
-        use: ["vue-style-loader", "css-loader"]
+        use: ["thread-loader", "vue-style-loader", "css-loader"]
       },
       {
         test: /\.html$/,
@@ -129,6 +149,7 @@ let translatorConfig = {
     __filename: process.env.NODE_ENV !== "production"
   },
   plugins: [
+    new VuetifyLoaderPlugin(),
     new VueLoaderPlugin(),
     new MiniCssExtractPlugin({ filename: "styles-translator.css" }),
     new HtmlWebpackPlugin({

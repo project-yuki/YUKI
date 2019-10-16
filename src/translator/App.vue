@@ -13,31 +13,26 @@
 </i18n>
 
 <template>
-  <div id="app">
+  <v-app id="app">
     <div id="top">
       <yk-titlebar></yk-titlebar>
     </div>
     <div id="content">
       <router-view></router-view>
       <div id="buttons" v-if="isButtonsShown">
-        <mu-button small flat to="/translate" color="white" style="width: 32%">{{$t('translate')}}</mu-button>
-        <mu-button
+        <v-btn small text dark to="/translate" style="width: 32%">{{$t('translate')}}</v-btn>
+        <v-btn small text dark to="/hooks" style="width: 32%">{{$t('textHookSettings')}}</v-btn>
+        <v-btn
           small
-          flat
-          to="/hooks"
-          color="white"
-          style="width: 32%"
-        >{{$t('textHookSettings')}}</mu-button>
-        <mu-button
-          small
-          flat
+          text
+          dark
           to="/settings"
           color="white"
           style="width: 32%"
-        >{{$t('translatorSettings')}}</mu-button>
+        >{{$t('translatorSettings')}}</v-btn>
       </div>
     </div>
-  </div>
+  </v-app>
 </template>
 
 <script lang="ts">
@@ -155,6 +150,13 @@ export default class App extends Vue {
 <style>
 * {
   margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+.v-application--wrap {
+  display: block;
+  min-height: 0;
 }
 
 html::-webkit-scrollbar {
@@ -164,8 +166,6 @@ html::-webkit-scrollbar {
 html,
 body,
 #app {
-  min-width: 100%;
-  min-height: 100%;
   margin: 0;
   padding: 0;
   background: none;
@@ -233,7 +233,8 @@ body {
 }
 
 #app #content {
-  margin-top: 32px;
+  position: fixed;
+  top: 32px;
 }
 
 #app #content #buttons {
@@ -243,7 +244,7 @@ body {
   left: 16px;
 }
 
-#app #content #buttons .mu-button {
+#app #content #buttons .v-btn {
   text-align: center;
 }
 

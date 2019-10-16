@@ -1,7 +1,7 @@
 import { ipcRenderer } from 'electron'
 import IpcTypes from '../common/IpcTypes'
 
-import vuetify from './vuetify'
+import vuetify from '../common/vuetify'
 
 import axios from 'axios'
 import Vue from 'vue'

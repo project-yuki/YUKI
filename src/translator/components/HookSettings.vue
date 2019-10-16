@@ -14,11 +14,11 @@
 
 <template>
   <div class="small-margin fixed-scroll">
-    <mu-button type="primary" @click="openInputHookDialog">{{$t('addHook')}}</mu-button>
+    <v-btn type="primary" @click="openInputHookDialog">{{$t('addHook')}}</v-btn>
     <mu-dialog :title="$t('inputSpecialCode')" :open.sync="openInputHook">
       <mu-text-field v-model="hookCode" :error-text="errorText"></mu-text-field>
-      <mu-button slot="actions" flat @click="closeInputHookDialog">{{$t('cancel')}}</mu-button>
-      <mu-button slot="actions" flat color="primary" @click="addHook">{{$t('ok')}}</mu-button>
+      <v-btn slot="actions" text @click="closeInputHookDialog">{{$t('cancel')}}</v-btn>
+      <v-btn slot="actions" text color="primary" @click="addHook">{{$t('ok')}}</v-btn>
     </mu-dialog>
     <yk-hook-info
       v-for="hook in orderedHooks"
@@ -110,10 +110,5 @@ export default class HookSettings extends Vue {
 <style scoped>
 .margin-top {
   margin-top: 1em;
-}
-
-.hook-info {
-  margin: 8px 0;
-  text-align: center;
 }
 </style>

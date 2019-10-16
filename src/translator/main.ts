@@ -1,10 +1,9 @@
 import { ipcRenderer, remote } from 'electron'
 import IpcTypes from '../common/IpcTypes'
 
-import 'muse-ui/dist/muse-ui.css'
-import '../resources/material-icons/material-icons.css'
-
 import './class-component-hooks'
+
+import vuetify from '../common/vuetify'
 
 import axios from 'axios'
 import Vue from 'vue'
@@ -39,11 +38,11 @@ function next () {
   })
 
   new Vue({
-    components: { App },
+    vuetify,
     router,
     store,
     i18n,
-    template: '<App/>'
+    render: (h) => h(App)
   }).$mount('#app')
 
   ipcRenderer.on(

@@ -1,6 +1,5 @@
 import '@mdi/font/css/materialdesignicons.css'
 import 'vuetify-dialog/dist/vuetify-dialog.min.css'
-import 'vuetify/dist/vuetify.min.css'
 
 import Vue from 'vue'
 import VuetifyDialog from 'vuetify-dialog'
