@@ -1,7 +1,15 @@
 <template>
   <div class="three-columns">
-    <v-btn text icon large dark v-if="isPreviousTextValid" @click="goToPreviousText">
-      <v-icon class="navigation-button" color="white">mdi-chevron-left</v-icon>
+    <v-btn
+      text
+      icon
+      large
+      dark
+      v-if="isPreviousTextValid"
+      @click="goToPreviousText"
+      class="navigation-button"
+    >
+      <v-icon dark>mdi-chevron-left</v-icon>
     </v-btn>
     <div class="navigation-button" v-else></div>
 
@@ -24,10 +32,10 @@
 
     <div v-if="isNextTextValid" class="navigation-button">
       <v-btn text icon large dark @click="goToNextText">
-        <v-icon color="white">mdi-chevron-right</v-icon>
+        <v-icon dark>mdi-chevron-right</v-icon>
       </v-btn>
       <v-btn text icon large dark @click="goToLatestText">
-        <v-icon color="white">mdi-chevron-triple-right</v-icon>
+        <v-icon dark>mdi-chevron-triple-right</v-icon>
       </v-btn>
     </div>
     <div class="navigation-button" v-else></div>

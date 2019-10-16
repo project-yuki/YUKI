@@ -10,7 +10,7 @@
       @click="disablePauseNewText"
       color="#FFFFFF"
     >
-      <v-icon>mdi-play</v-icon>
+      <v-icon dark>mdi-play</v-icon>
     </v-btn>
     <v-btn
       v-else
@@ -21,7 +21,7 @@
       @click="enablePauseNewText"
       color="#FFFFFF"
     >
-      <v-icon>mdi-pause</v-icon>
+      <v-icon dark>mdi-pause</v-icon>
     </v-btn>
     <v-btn
       v-if="isAlwaysOnTop"
@@ -32,7 +32,7 @@
       @click="toggleAlwaysOnTop"
       color="#FFFFFF"
     >
-      <v-icon>mdi-lock</v-icon>
+      <v-icon dark>mdi-lock</v-icon>
     </v-btn>
     <v-btn
       v-else
@@ -43,7 +43,7 @@
       @click="toggleAlwaysOnTop"
       color="#FFFFFF"
     >
-      <v-icon>mdi-lock-open-outline</v-icon>
+      <v-icon dark>mdi-lock-open-outline</v-icon>
     </v-btn>
     <v-btn
       text
@@ -54,7 +54,7 @@
       color="#FFFFFF"
       :disabled="!isHideWindowValid"
     >
-      <v-icon>mdi-close</v-icon>
+      <v-icon dark>mdi-close</v-icon>
     </v-btn>
   </div>
 </template>

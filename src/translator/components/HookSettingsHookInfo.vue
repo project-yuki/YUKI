@@ -40,7 +40,7 @@
         <v-col sm="12" md="4" lg="2" align="center" align-self="center">
           <v-btn rounded color="green" dark @click="chooseAsDisplay" v-show="!isChosen">
             {{$t('choose')}}
-            <v-icon right>mdi-check</v-icon>
+            <v-icon dark right>mdi-check</v-icon>
           </v-btn>
         </v-col>
       </v-row>
