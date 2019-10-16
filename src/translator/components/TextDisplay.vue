@@ -1,19 +1,19 @@
 <template>
-  <mu-container :style="{marginTop: `${translationTextStyle.margin}px`}">
-    <mu-row>
-      <mu-col span="2">
+  <div :style="{marginTop: `${translationTextStyle.margin}px`}">
+    <v-row no-gutters>
+      <v-col cols="2" align="center">
         <div class="name" :style="{fontSize: `${translationTextStyle.fontSize}px`}">{{name}}</div>
-      </mu-col>
-      <mu-col span="10">
+      </v-col>
+      <v-col cols="10">
         <div
           :style="{
             color: translationTextStyle.color, 
             fontSize: `${translationTextStyle.fontSize}px`
           }"
         >{{translation}}</div>
-      </mu-col>
-    </mu-row>
-  </mu-container>
+      </v-col>
+    </v-row>
+  </div>
 </template>
 
 <script lang="ts">

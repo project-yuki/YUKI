@@ -1,34 +1,34 @@
 <template>
   <div class="three-columns">
-    <mu-button icon v-if="isPreviousTextValid" @click="goToPreviousText">
-      <mu-icon class="navigation-button" color="white" value="keyboard_arrow_left"></mu-icon>
-    </mu-button>
+    <v-btn text icon large dark v-if="isPreviousTextValid" @click="goToPreviousText">
+      <v-icon class="navigation-button" color="white">mdi-chevron-left</v-icon>
+    </v-btn>
     <div class="navigation-button" v-else></div>
 
-    <div style="flex: 1;">
-      <mu-container v-if="isMecabEnable" class="text-center">
+    <v-container style="flex: 1;">
+      <div v-if="isMecabEnable" class="text-center">
         <yk-mecab-text :patterns="currentPatterns"></yk-mecab-text>
-      </mu-container>
-      <mu-container
+      </div>
+      <div
         v-else
         class="text-center"
         :style="{color: originalTextColor, fontSize: `${originalTextSize}px`}"
-      >{{currentOriginText}}</mu-container>
+      >{{currentOriginText}}</div>
       <yk-text-display
         v-for="(translation, key) in currentTranslations"
         :key="key"
         :name="key"
         :translation="translation"
       ></yk-text-display>
-    </div>
+    </v-container>
 
     <div v-if="isNextTextValid" class="navigation-button">
-      <mu-button icon @click="goToNextText">
-        <mu-icon color="white" value="keyboard_arrow_right"></mu-icon>
-      </mu-button>
-      <mu-button icon @click="goToLatestText">
-        <mu-icon color="white" value="redo"></mu-icon>
-      </mu-button>
+      <v-btn text icon large dark @click="goToNextText">
+        <v-icon color="white">mdi-chevron-right</v-icon>
+      </v-btn>
+      <v-btn text icon large dark @click="goToLatestText">
+        <v-icon color="white">mdi-chevron-triple-right</v-icon>
+      </v-btn>
     </div>
     <div class="navigation-button" v-else></div>
   </div>
@@ -148,7 +148,7 @@ export default class TranslatePage extends Vue {
   }
 
   public beforeRouteEnter (to: Route, from: Route, next: () => void) {
-    const newHeight = document.body.offsetHeight + 64
+    const newHeight = document.body.offsetHeight + 24
     const window = remote.getCurrentWindow()
     const width = window.getSize()[0]
     window.setSize(width, newHeight)
@@ -165,20 +165,20 @@ export default class TranslatePage extends Vue {
   @Watch('isButtonShown')
   public onButtonShownChanged () {
     if (this.isButtonsShown) {
-      this.updateWindowHeight(64)
+      this.updateWindowHeight(24)
     } else {
-      this.updateWindowHeight(40)
+      this.updateWindowHeight(0)
     }
   }
 
   public updated () {
     if (this.isButtonsShown) {
       this.$nextTick(() => {
-        this.updateWindowHeight(64)
+        this.updateWindowHeight(24)
       })
     } else {
       this.$nextTick(() => {
-        this.updateWindowHeight(40)
+        this.updateWindowHeight(0)
       })
     }
   }

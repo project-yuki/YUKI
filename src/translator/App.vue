@@ -135,11 +135,11 @@ export default class App extends Vue {
     if (this.$router.currentRoute.path === '/translate') {
       if (this.isButtonsShown) {
         this.$nextTick(() => {
-          this.updateWindowHeight(64)
+          this.updateWindowHeight(24)
         })
       } else {
         this.$nextTick(() => {
-          this.updateWindowHeight(40)
+          this.updateWindowHeight(0)
         })
       }
     }
@@ -155,8 +155,8 @@ export default class App extends Vue {
 }
 
 .v-application--wrap {
-  display: block;
   min-height: 0;
+  height: inherit;
 }
 
 html::-webkit-scrollbar {
@@ -169,6 +169,7 @@ body,
   margin: 0;
   padding: 0;
   background: none;
+  display: block;
 }
 
 body {
@@ -233,8 +234,7 @@ body {
 }
 
 #app #content {
-  position: fixed;
-  top: 32px;
+  margin-top: 32px;
 }
 
 #app #content #buttons {

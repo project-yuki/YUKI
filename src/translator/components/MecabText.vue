@@ -1,7 +1,7 @@
 <template>
-  <mu-flex direction="row" justify-content="center" wrap="wrap">
+  <v-row justify="center" align="center">
     <div v-for="(pattern, index) in patterns" :key="`mecab-text-${index}`" class="gutter">
-      <mu-flex direction="column" align-items="center">
+      <div>
         <div
           :style="{color: abbrToColor(pattern.abbr), fontSize: `${originalTextSize*0.8}px`}"
         >{{pattern.kana ? pattern.kana : "&nbsp;"}}</div>
@@ -11,9 +11,9 @@
         <div
           :style="{color: abbrToColor(pattern.abbr), fontSize: `${originalTextSize*0.6}px`}"
         >{{pattern.abbr !== "undefined" ? pattern.abbr : "&nbsp;"}}</div>
-      </mu-flex>
+      </div>
     </div>
-  </mu-flex>
+  </v-row>
 </template>
 
 <script lang="ts">
