@@ -6,8 +6,6 @@ const path = require("path");
 const { dependencies, devDependencies } = require("../package.json");
 const webpack = require("webpack");
 
-const BabelMinifyWebpackPlugin = require("babel-minify-webpack-plugin");
-
 let mainConfig = {
   optimization: {
     minimize: false
@@ -83,7 +81,6 @@ if (process.env.NODE_ENV !== "production") {
  */
 if (process.env.NODE_ENV === "production") {
   mainConfig.plugins.push(
-    new BabelMinifyWebpackPlugin(),
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": '"production"'
     })

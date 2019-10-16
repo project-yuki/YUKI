@@ -1,14 +1,4 @@
 <i18n src="../../common/locales.json"></i18n>
-<i18n>
-{
-  "zh": {
-    "toggleDevTools": "切换开发人员工具"
-  },
-  "en": {
-    "toggleDevTools": "Toggle Dev Tools"
-  }
-}
-</i18n>
 
 <template>
   <div>

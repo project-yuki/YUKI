@@ -1,15 +1,11 @@
 <template>
-<div class="container">
-  <mu-linear-progress :value="percent100" mode="determinate" color="green" />
-  <div>
-    <div class="left">
-      {{ speedKB }} KB/s - {{ remainingTime }} s
-    </div>
-    <div class="right">
-      {{ transferedSizeMB }} MB / {{ totalSizeMB }} MB
+  <div class="container">
+    <v-progress-linear :value="percent100" color="green" />
+    <div>
+      <div class="left">{{ speedKB }} KB/s - {{ remainingTime }} s</div>
+      <div class="right">{{ transferedSizeMB }} MB / {{ totalSizeMB }} MB</div>
     </div>
   </div>
-</div>
 </template>
 
 <script lang="ts">
@@ -57,7 +53,8 @@ export default class DownloadProgress extends Vue {
 }
 
 .container {
-  width: 100%;
+  margin-left: 12px;
+  width: 90%;
   height: 32px;
 }
 </style>

@@ -6,7 +6,6 @@ const path = require("path");
 const { dependencies } = require("../package.json");
 const webpack = require("webpack");
 
-const BabelMinifyWebpackPlugin = require("babel-minify-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { VueLoaderPlugin } = require("vue-loader");
@@ -165,7 +164,6 @@ let translatorConfig = {
           ? path.resolve(__dirname, "../node_modules")
           : false
     }),
-    new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin()
   ],
   output: {
@@ -188,6 +186,7 @@ let translatorConfig = {
  */
 if (process.env.NODE_ENV !== "production") {
   translatorConfig.plugins.push(
+    new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
       __static: `"${path.join(__dirname, "../static").replace(/\\/g, "\\\\")}"`
     })
@@ -198,14 +197,10 @@ if (process.env.NODE_ENV !== "production") {
  * Adjust translatorConfig for production settings
  */
 if (process.env.NODE_ENV === "production") {
-  translatorConfig.devtool = "";
-
   translatorConfig.plugins.push(
-    new BabelMinifyWebpackPlugin(),
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": '"production"'
-    }),
-    new webpack.LoaderOptionsPlugin({ minimize: true })
+    })
   );
 }
 

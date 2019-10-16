@@ -154,7 +154,7 @@ export default class App extends Vue {
   padding: 0;
 }
 
-.v-application--wrap {
+#app .v-application--wrap {
   min-height: 0;
   height: inherit;
 }
