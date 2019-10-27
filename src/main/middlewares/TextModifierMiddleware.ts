@@ -20,7 +20,7 @@ export default class TextInterceptorMiddleware
       if (context.text === '') return
     }
     if (this.deduplicate) {
-      context.text = context.text.replace(/(\S+)\1/g, '$1')
+      context.text = context.text.replace(/(\S+?)\1+/g, '$1')
       if (context.text === '') return
     }
 
