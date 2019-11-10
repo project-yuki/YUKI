@@ -61,11 +61,13 @@ So, using Electron as frontend and traditional Windows API (Text Hooker wrapped 
 
 ## Usage
 
+After installing Node.js and yarn, run the following commands in any folder:
+
     git clone https://github.com/project-yuki/YUKI.git
     cd yuki
-    npm install (or yarn)
-    npm run rebuild
-    npm run dev
+    yarn
+    yarn rebuild
+    yarn dev
 
 ## License
 

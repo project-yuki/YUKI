@@ -49,6 +49,10 @@
 - 自定义在线 API 翻译获取方式: URL、请求方法、请求报头格式、响应的解析方式等
 - 支持扩展
 
+## 文档
+
+- [YUKI 配置文件详解](/docs/ConfigFiles_CN.md)
+
 ## 计划
 
 - [x] 技术可行性评估
@@ -61,13 +65,13 @@
 
 ## 尝个鲜？
 
-随便找个文件夹，运行以下代码：
+安装好 Node.js 和 yarn 后，随便找个文件夹，运行以下代码：
 
     git clone https://github.com/project-yuki/YUKI.git
     cd yuki
-    npm install (或 yarn)
-    npm run rebuild
-    npm run dev
+    yarn
+    yarn rebuild
+    yarn dev
 
 ## 许可证
 
