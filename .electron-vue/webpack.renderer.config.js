@@ -10,6 +10,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const VuetifyLoaderPlugin = require("vuetify-loader/lib/plugin");
+const HardSourceWebpackPlugin = require("hard-source-webpack-plugin");
 
 /**
  * List of node_modules to include in webpack bundle
@@ -144,6 +145,7 @@ let rendererConfig = {
     __filename: process.env.NODE_ENV !== "production"
   },
   plugins: [
+    new HardSourceWebpackPlugin(),
     new VuetifyLoaderPlugin(),
     new VueLoaderPlugin(),
     new MiniCssExtractPlugin({ filename: "styles.css" }),
