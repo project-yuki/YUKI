@@ -11,10 +11,25 @@ const webpackHotMiddleware = require("webpack-hot-middleware");
 const mainConfig = require("./webpack.main.config");
 const rendererConfig = require("./webpack.renderer.config");
 const translatorConfig = require("./webpack.translator.config");
+const ProgressPlugin = require("webpack/lib/ProgressPlugin");
 
 let electronProcess = null;
 let manualRestart = false;
 let hotMiddleware;
+
+const threadLoader = require("thread-loader");
+
+threadLoader.warmup({}, [
+    // modules to load
+    // can be any module, i. e.
+    "ts-loader",
+    "babel-loader",
+    "vue-loader",
+    "vue-style-loader",
+    "css-loader",
+    "sass-loader"
+  ]
+);
 
 function logStats(proc, data) {
   let log = "";
@@ -49,6 +64,38 @@ function startRenderer() {
       log: false,
       heartbeat: 2500
     });
+
+    // rendererCompiler.apply(
+    //   new ProgressPlugin(function(
+    //     percentage,
+    //     msg,
+    //     current,
+    //     active,
+    //     modulepath
+    //   ) {
+    //     if (process.stdout.isTTY && percentage < 1) {
+    //       // process.stdout.cursorTo(0);
+    //       // modulepath = modulepath
+    //       //   ? " …" + modulepath.substr(modulepath.length - 30)
+    //       //   : "";
+    //       current = current ? " " + current : "";
+    //       active = active ? " " + active : "";
+    //       process.stdout.write(
+    //         (percentage * 100).toFixed(0) +
+    //           "% " +
+    //           msg +
+    //           current +
+    //           active +
+    //           modulepath +
+    //           "\n"
+    //       );
+    //       // process.stdout.clearLine(1);
+    //     } else if (percentage === 1) {
+    //       process.stdout.write("\n");
+    //       console.log("webpack: done.");
+    //     }
+    //   })
+    // );
 
     rendererCompiler.hooks.compilation.tap("compilation", compilation => {
       compilation.hooks.htmlWebpackPluginAfterEmit.tapAsync(
