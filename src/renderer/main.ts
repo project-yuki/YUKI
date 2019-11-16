@@ -31,10 +31,14 @@ ipcRenderer.send(IpcTypes.REQUEST_CONFIG, 'default')
 
 function next () {
   const i18n = new VueI18n({
-    locale
+    locale,
+    messages: {
+      zh: { gameAborted: '游戏运行失败，请参考调试信息' },
+      en: { gameAborted: 'Game aborted. Please refer to debug messages' }
+    }
   })
 
-  new Vue({
+  const vue = new Vue({
     vuetify,
     router,
     store,
@@ -52,6 +56,12 @@ function next () {
     IpcTypes.HAS_NEW_DEBUG_MESSAGE,
     (event: Electron.Event, message: string) => {
       store.commit('Gui/NEW_DEBUG_MESSAGE', { value: message })
+    }
+  )
+  ipcRenderer.on(
+    IpcTypes.GAME_ABORTED,
+    () => {
+      vue.$dialog.notify.error(vue.$i18n.t('gameAborted').toString())
     }
   )
 }

@@ -51,6 +51,9 @@ export default function (mainWindow: Electron.BrowserWindow) {
         translatorWindow = null
         mainWindow.show()
       })
+      runningGame.on('abort', () => {
+        mainWindow.webContents.send(IpcTypes.GAME_ABORTED)
+      })
       runningGame.start()
     }
   )
