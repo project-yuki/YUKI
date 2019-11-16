@@ -1,6 +1,6 @@
 <template>
   <div class="app-content">
-    <v-container>
+    <v-container style="min-height: 100%">
       <slot></slot>
     </v-container>
   </div>

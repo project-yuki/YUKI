@@ -27,7 +27,8 @@ enum IpcTypes {
   REQUEST_PAUSE_DOWNLOAD = 'request-pause-download',
   REQUEST_RESUME_DOWNLOAD = 'request-resume-download',
   REQUEST_ABORT_DOWNLOAD = 'request-abort-download',
-  REQUEST_DOWNLOAD_LIBRARY = 'request-download-library'
+  REQUEST_DOWNLOAD_LIBRARY = 'request-download-library',
+  HAS_NEW_DEBUG_MESSAGE = 'has-new-debug-message'
 }
 
 export default IpcTypes

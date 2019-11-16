@@ -69,7 +69,9 @@
     "vuetify": "^2.1.4",
     "vuetify-dialog": "^1.0.0-alpha.5",
     "vuex": "^3.0.1",
-    "wanakana": "^4.0.2"
+    "wanakana": "^4.0.2",
+    "xterm": "^4.2.0-vscode1",
+    "xterm-addon-fit": "^0.3.0"
   },
   "devDependencies": {
     "@kazupon/vue-i18n-loader": "^0.3.0",

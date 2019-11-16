@@ -2,6 +2,7 @@ import { app, dialog, ipcMain } from 'electron'
 import IpcTypes from '../../common/IpcTypes'
 const debug = require('debug')('yuki:ipc')
 import { extname } from 'path'
+import { format } from 'util'
 import ConfigManager from '../config/ConfigManager'
 import DownloaderFactory from '../DownloaderFactory'
 import Game from '../Game'
@@ -13,6 +14,15 @@ let runningGame: Game
 let translatorWindow: TranslatorWindow | null
 
 export default function (mainWindow: Electron.BrowserWindow) {
+  require('debug').log = (message: any, ...optionalParams: any[]) => {
+    // tslint:disable-next-line: no-console
+    console.log(message, ...optionalParams)
+    mainWindow.webContents.send(
+      IpcTypes.HAS_NEW_DEBUG_MESSAGE,
+      format(message, ...optionalParams)
+    )
+  }
+
   ipcMain.on(IpcTypes.MAIN_PAGE_LOAD_FINISHED, () => {
     debug('main page load finished. starting apis...')
     TranslationManager.getInstance().initializeApis(

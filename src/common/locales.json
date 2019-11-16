@@ -24,7 +24,10 @@
     "add": "添加",
     "prompt": "提示",
     "saved": "已保存",
-    "toggleDevTools": "切换开发人员工具"
+    "toggleDevTools": "切换开发人员工具",
+    "debugMessages": "调试信息",
+    "debugMsg": "调试信息",
+    "description": "说明"
   },
   "en": {
     "YUKIGalgameTranslator": "Galgame Translator",
@@ -51,6 +54,9 @@
     "add": "Add",
     "prompt": "Prompt",
     "saved": "Saved",
-    "toggleDevTools": "Toggle Dev Tools"
+    "toggleDevTools": "Toggle Dev Tools",
+    "debugMessages": "Debug Messages",
+    "debugMsg": "Debug Msg",
+    "description": "Description"
   }
 }

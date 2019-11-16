@@ -67,6 +67,15 @@
             </v-list-item>
           </v-list-group>
 
+          <v-list-item to="/debugMessages">
+            <v-list-item-icon>
+              <v-icon>mdi-alert</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>{{$t('debugMsg')}}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+
           <v-list-item to="/about">
             <v-list-item-icon>
               <v-icon>mdi-information</v-icon>

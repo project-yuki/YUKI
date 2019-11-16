@@ -13,6 +13,8 @@ import store from './store'
 import VueI18n from 'vue-i18n'
 Vue.use(VueI18n)
 
+import 'xterm/css/xterm.css'
+
 if (!process.env.IS_WEB) {
   Vue.use(require('vue-electron'))
 }
@@ -44,6 +46,12 @@ function next () {
     IpcTypes.HAS_CONFIG,
     (event: Electron.Event, name: string, cfgs: object) => {
       store.dispatch('Config/setConfig', { name, cfgs })
+    }
+  )
+  ipcRenderer.on(
+    IpcTypes.HAS_NEW_DEBUG_MESSAGE,
+    (event: Electron.Event, message: string) => {
+      store.commit('Gui/NEW_DEBUG_MESSAGE', { value: message })
     }
   )
 }
