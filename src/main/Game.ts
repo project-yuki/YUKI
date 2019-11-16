@@ -27,9 +27,14 @@ export default class Game extends EventEmitter {
     this.exeName = ''
   }
 
-  public start () {
-    this.execGameProcess()
-    this.registerHookerWithPid()
+  public async start () {
+    try {
+      await this.execGameProcess()
+      this.registerHookerWithPid()
+    } catch (e) {
+      this.emit('abort')
+      this.emit('exited')
+    }
   }
 
   public getPids () {
@@ -46,10 +51,20 @@ export default class Game extends EventEmitter {
   }
 
   private execGameProcess () {
-    this.getRawExecStringOrDefault()
-    this.replaceExecStringTokensWithActualValues()
-    debug('exec string: %s', this.execString)
-    exec(this.execString)
+    return new Promise((resolve, reject) => {
+      this.getRawExecStringOrDefault()
+      this.replaceExecStringTokensWithActualValues()
+      debug('exec string: %s', this.execString)
+      exec(this.execString, (err, stdout, stderr) => {
+        if (err) {
+          debug('program exited unexpectedly with code %d', err.code)
+          reject()
+        }
+        if (stdout) debug('program stdout: %s', stdout)
+        if (stderr) debug('program stderr: %s', stderr)
+        resolve()
+      })
+    })
   }
 
   private getRawExecStringOrDefault () {
@@ -79,6 +94,7 @@ export default class Game extends EventEmitter {
       await this.findPids()
     } catch (e) {
       debug('could not find game %s. abort', this.exeName)
+      this.emit('abort')
       this.emit('exited')
       return
     }

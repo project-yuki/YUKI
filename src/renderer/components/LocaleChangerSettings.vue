@@ -11,7 +11,9 @@
     "noLocaleChanger": "没有区域转换器呢ㄟ( ▔, ▔ )ㄏ",
     "localeChangers": "区域转换器",
     "editLocaleChanger": "编辑区域转换器",
-    "actions": "操作"
+    "actions": "操作",
+    "escapePatterns": "转义段",
+    "gamePath": "游戏所在路径"
   },
   "en": {
     "localeChangerSettings": "Locale Changer Settings",
@@ -23,7 +25,9 @@
     "noLocaleChanger": "No Locale Changerㄟ( ▔, ▔ )ㄏ",
     "localeChangers": "Locale Changers",
     "editLocaleChanger": "Edit Locale Changer",
-    "actions": "Actions"
+    "actions": "Actions",
+    "escapePatterns": "Escape Patterns",
+    "gamePath": "The path where game is located"
   }
 }
 </i18n>
@@ -62,6 +66,10 @@
         <p class="text-h3">{{$t('noLocaleChanger')}}</p>
       </template>
     </v-data-table>
+
+    <p class="text-h2">{{$t('escapePatterns')}}</p>
+    <p class="text-h3">%GAME_PATH%</p>
+    <p>{{$t('gamePath')}}</p>
 
     <v-dialog v-model="showDialog" max-width="500px">
       <v-card>

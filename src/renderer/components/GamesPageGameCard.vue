@@ -4,60 +4,60 @@
   "zh": {
     "run": "运行",
     "confirmDelete": "确认删除？",
-    "deleteSuccess": "删除成功！"
+    "deleteSuccess": "删除成功！",
+    "saveSuccess": "保存成功！"
   },
   "en": {
     "run": "Run",
     "confirmDelete": "Are you sure to delete this game?",
-    "deleteSuccess": "Successfully deleted!"
+    "deleteSuccess": "Successfully deleted!",
+    "saveSuccess": "Successfully saved!"
   }
 }
 </i18n>
 
 <template>
-  <v-hover v-slot:default="{ hover }">
-    <v-card :elevation="hover ? 8 : 2">
-      <v-card-title>{{game.name}}</v-card-title>
-      <v-card-subtitle>{{game.code}}</v-card-subtitle>
-      <v-card-text>{{game.path}}</v-card-text>
-      <v-card-actions>
-        <v-btn rounded color="primary" min-width="40%" @click.stop="handleRunGame">
-          {{$t('run')}}
-          <v-icon right dark>mdi-play</v-icon>
-        </v-btn>
-        <v-btn rounded color="error" min-width="40%" @click.stop="handleDeleteConfirm">
-          {{$t('delete')}}
-          <v-icon right dark>mdi-delete</v-icon>
-        </v-btn>
-        <v-spacer></v-spacer>
+<v-hover v-slot:default="{ hover }">
+  <v-card :elevation="hover ? 8 : 2">
+    <v-card-title>{{game.name}}</v-card-title>
+    <v-card-subtitle>{{game.code}}</v-card-subtitle>
+    <v-card-text>{{game.path}}</v-card-text>
+    <v-card-actions>
+      <v-btn rounded color="primary" min-width="40%" @click.stop="handleRunGame">
+        {{$t('run')}}
+        <v-icon right dark>mdi-play</v-icon>
+      </v-btn>
+      <v-btn rounded color="error" min-width="40%" @click.stop="handleDeleteConfirm">
+        {{$t('delete')}}
+        <v-icon right dark>mdi-delete</v-icon>
+      </v-btn>
+      <v-spacer></v-spacer>
 
-        <v-btn icon @click="showExpansion = !showExpansion">
-          <v-icon>{{ showExpansion ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
-        </v-btn>
-      </v-card-actions>
+      <v-btn icon @click="showExpansion = !showExpansion">
+        <v-icon>{{ showExpansion ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
+      </v-btn>
+    </v-card-actions>
 
-      <v-expand-transition>
-        <div v-show="showExpansion">
-          <v-divider></v-divider>
+    <v-expand-transition>
+      <div v-show="showExpansion">
+        <v-divider></v-divider>
 
-          <v-container>
-            <v-radio-group
-              v-model="selectedLocaleChanger"
-              @change="updateLocaleChanger"
-              :label="$t('localeChanger')"
-            >
-              <v-radio
-                v-for="(value, key) in defaultConfig.localeChangers"
-                :key="game.name+'-changer-'+key"
-                :value="value.name"
-                :label="value.name"
-              ></v-radio>
-            </v-radio-group>
-          </v-container>
-        </div>
-      </v-expand-transition>
-    </v-card>
-  </v-hover>
+        <v-container>
+          <v-radio-group v-model="selectedLocaleChanger" @change="updateLocaleChanger" :label="$t('localeChanger')">
+            <v-radio v-for="(value, key) in defaultConfig.localeChangers" :key="game.name+'-changer-'+key" :value="value.name" :label="value.name"></v-radio>
+          </v-radio-group>
+
+          <v-text-field v-model="code" :label="$t('specialCode')">
+          </v-text-field>
+
+          <v-btn @click="save">
+            {{$t('save')}}
+          </v-btn>
+        </v-container>
+      </div>
+    </v-expand-transition>
+  </v-card>
+</v-hover>
 </template>
 
 <script lang="ts">
@@ -89,6 +89,7 @@ export default class HookSettingsHookInfo extends Vue {
   public gamesConfig!: yuki.ConfigState['games']
 
   public selectedLocaleChanger: string = ''
+  public code: string = ''
   public showExpansion: boolean = false
 
   public handleDeleteConfirm () {
@@ -114,7 +115,7 @@ export default class HookSettingsHookInfo extends Vue {
     ipcRenderer.send(IpcTypes.REQUEST_REMOVE_GAME, this.game)
   }
 
-  public updateLocaleChanger () {
+  public save () {
     const savingConfig = _.cloneDeep(this.gamesConfig)
     const thisGame = savingConfig.find((game) => game.name === this.game.name)
     if (!thisGame) return
@@ -128,15 +129,18 @@ export default class HookSettingsHookInfo extends Vue {
       }
 
       thisGame.localeChanger = key
+      thisGame.code = this.code
     }
 
     ipcRenderer.send(IpcTypes.REQUEST_SAVE_CONFIG, 'games', savingConfig)
+    this.$dialog.notify.success(this.$i18n.t('saveSuccess').toString())
   }
 
   public beforeMount () {
     this.selectedLocaleChanger = this.defaultConfig.localeChangers[
       this.game.localeChanger
     ].name
+    this.code = this.game.code
   }
 }
 </script>

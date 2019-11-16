@@ -8,8 +8,9 @@ const webpack = require("webpack");
 
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const { VueLoaderPlugin } = require("vue-loader");
+const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const VuetifyLoaderPlugin = require("vuetify-loader/lib/plugin");
+const HardSourceWebpackPlugin = require("hard-source-webpack-plugin");
 
 /**
  * List of node_modules to include in webpack bundle
@@ -97,13 +98,7 @@ let translatorConfig = {
           {
             loader: "vue-loader",
             options: {
-              extractCSS: process.env.NODE_ENV === "production",
-              loaders: {
-                sass:
-                  "vue-style-loader!css-loader!sass-loader?indentedSyntax=1",
-                scss: "vue-style-loader!css-loader!sass-loader",
-                less: "vue-style-loader!css-loader!less-loader"
-              }
+              extractCSS: process.env.NODE_ENV === "production"
             }
           }
         ]
@@ -148,6 +143,7 @@ let translatorConfig = {
     __filename: process.env.NODE_ENV !== "production"
   },
   plugins: [
+    new HardSourceWebpackPlugin(),
     new VuetifyLoaderPlugin(),
     new VueLoaderPlugin(),
     new MiniCssExtractPlugin({ filename: "styles-translator.css" }),

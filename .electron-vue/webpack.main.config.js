@@ -5,6 +5,7 @@ process.env.BABEL_ENV = "main";
 const path = require("path");
 const { dependencies, devDependencies } = require("../package.json");
 const webpack = require("webpack");
+const HardSourceWebpackPlugin = require("hard-source-webpack-plugin");
 
 let mainConfig = {
   optimization: {
@@ -58,7 +59,10 @@ let mainConfig = {
     libraryTarget: "commonjs2",
     path: path.join(__dirname, "../dist/electron")
   },
-  plugins: [new webpack.NoEmitOnErrorsPlugin()],
+  plugins: [
+    new HardSourceWebpackPlugin(),
+    new webpack.NoEmitOnErrorsPlugin()
+  ],
   resolve: {
     extensions: [".ts", ".js", ".json", ".node"]
   },

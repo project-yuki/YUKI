@@ -57,7 +57,6 @@
         <v-text-field
           :label="$t('path')"
           v-model="tempLibraries.translators.jBeijing.dictPath"
-          readonly
           outlined
           rounded
         />

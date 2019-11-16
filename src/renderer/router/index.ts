@@ -3,6 +3,7 @@ import Router from 'vue-router'
 
 import AboutPage from '@/components/AboutPage.vue'
 import AddGamePage from '@/components/AddGamePage.vue'
+import DebugMessagesPage from '@/components/DebugMessagesPage.vue'
 import GamesPage from '@/components/GamesPage.vue'
 import LibrarySettings from '@/components/LibrarySettings.vue'
 import LocaleChangerSettings from '@/components/LocaleChangerSettings.vue'
@@ -34,6 +35,7 @@ export default new Router({
         }
       ]
     },
+    { path: '/debugMessages', component: DebugMessagesPage },
     { path: '/about', component: AboutPage }
   ]
 })
