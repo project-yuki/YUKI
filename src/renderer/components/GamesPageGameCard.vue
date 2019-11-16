@@ -4,12 +4,14 @@
   "zh": {
     "run": "运行",
     "confirmDelete": "确认删除？",
-    "deleteSuccess": "删除成功！"
+    "deleteSuccess": "删除成功！",
+    "saveSuccess": "保存成功！"
   },
   "en": {
     "run": "Run",
     "confirmDelete": "Are you sure to delete this game?",
-    "deleteSuccess": "Successfully deleted!"
+    "deleteSuccess": "Successfully deleted!",
+    "saveSuccess": "Successfully saved!"
   }
 }
 </i18n>
@@ -131,6 +133,7 @@ export default class HookSettingsHookInfo extends Vue {
     }
 
     ipcRenderer.send(IpcTypes.REQUEST_SAVE_CONFIG, 'games', savingConfig)
+    this.$dialog.notify.success(this.$i18n.t('saveSuccess').toString())
   }
 
   public beforeMount () {
