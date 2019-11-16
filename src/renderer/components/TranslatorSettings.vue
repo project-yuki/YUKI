@@ -4,7 +4,7 @@
   "zh": {
     "underConstruction": "开发中m( _ _ )m",
     "pleaseModifyConfigurationFile": "请通过修改配置文件 config\\config.json 来配置翻译器",
-    "defaultTranslators": "（默认提供腾讯，沪江，谷歌，有道翻译）"
+    "defaultTranslators": "（默认提供腾讯，沪江，谷歌，有道，彩云翻译）"
   },
   "en": {
     "underConstruction": "Under construction m( _ _ )m",
