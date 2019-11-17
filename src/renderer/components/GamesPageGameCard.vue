@@ -43,7 +43,7 @@
         <v-divider></v-divider>
 
         <v-container>
-          <v-radio-group v-model="selectedLocaleChanger" @change="updateLocaleChanger" :label="$t('localeChanger')">
+          <v-radio-group v-model="selectedLocaleChanger" :label="$t('localeChanger')">
             <v-radio v-for="(value, key) in defaultConfig.localeChangers" :key="game.name+'-changer-'+key" :value="value.name" :label="value.name"></v-radio>
           </v-radio-group>
 
