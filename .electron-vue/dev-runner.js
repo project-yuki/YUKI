@@ -218,12 +218,8 @@ function startElectron() {
     args = args.concat(process.argv.slice(2));
   }
 
-  let electronEnv = process.env;
-  electronEnv.DEBUG = "yuki:*";
-  electronEnv.DEBUG_COLORS = true;
   electronProcess = spawn(electron, args, {
-    stdio: "inherit",
-    env: electronEnv
+    stdio: "inherit"
   });
 
   electronProcess.on("close", () => {

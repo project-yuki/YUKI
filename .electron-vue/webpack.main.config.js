@@ -5,6 +5,7 @@ process.env.BABEL_ENV = "main";
 const path = require("path");
 const { dependencies, devDependencies } = require("../package.json");
 const webpack = require("webpack");
+const InjectPlugin = require("webpack-inject-plugin");
 const HardSourceWebpackPlugin = require("hard-source-webpack-plugin");
 
 let mainConfig = {
@@ -60,7 +61,12 @@ let mainConfig = {
     path: path.join(__dirname, "../dist/electron")
   },
   plugins: [
-    new HardSourceWebpackPlugin(),
+    new InjectPlugin.default(
+      function() {
+        return "process.env.DEBUG = 'yuki:*';process.env.DEBUG_COLORS = '1';";
+      },
+      { entryOrder: InjectPlugin.ENTRY_ORDER.First }
+    ),
     new webpack.NoEmitOnErrorsPlugin()
   ],
   resolve: {
