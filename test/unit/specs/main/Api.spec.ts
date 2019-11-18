@@ -16,9 +16,7 @@ describe('Api', () => {
       '悠真くんを攻略すれば２１０円か。なるほどなぁ…',
       (translation) => {
         try {
-          expect(translation).to.equal(
-            '如果捕获Toma-kun，是210日元吗？我明白了......'
-          )
+          expect(translation).to.equal('捉住To君的话是210日元吗？我知道了')
         } catch (e) {
           return done(e)
         }
@@ -41,10 +39,9 @@ describe('Api', () => {
         enable: true,
         method: 'POST',
         name: 'caiyun',
-        requestBodyFormat: 'J{"source": %TEXT%, "trans_type": "ja2zh", ' +
-                            '"request_id": "web_fanyi", "os_type": "web", ' +
-                            '"dict": "false", "cached": "false", "replaced": "false"}',
-        requestHeaders: '{"X-Authorization": "token:cy4fgbil24jucmh8jfr5"}',
+        requestBodyFormat:
+          'J{"source": %TEXT%, "trans_type": "ja2zh", "request_id": "demo", "detect": "true"}',
+        requestHeaders: '{"X-Authorization": "token 3975l6lr5pcbvidl6jl2"}',
         responseBodyPattern: 'J%RESPONSE%.target',
         url: 'https://api.interpreter.caiyunai.com/v1/translator'
       }
@@ -61,8 +58,7 @@ describe('Api', () => {
             expect(translations).to.deep.equal({
               original: '悠真くんを攻略すれば２１０円か。なるほどなぁ…',
               translations: {
-                googleCN:
-                  '如果捕获Toma-kun，是210日元吗？我明白了......',
+                googleCN: '捉住To君的话是210日元吗？我知道了',
                 caiyun: '攻下悠真的话是210日元吗。 原来如此'
               }
             })
@@ -100,6 +96,8 @@ describe('Api', () => {
         '悠真くんを攻略すれば２１０円か。なるほどなぁ…',
         (translations) => {
           try {
+            // tslint:disable-next-line: no-console
+            console.log(translations)
             expect(translations).to.deep.equal({
               original: '悠真くんを攻略すれば２１０円か。なるほどなぁ…',
               translations: {}
@@ -143,8 +141,7 @@ describe('Api', () => {
             expect(translations).to.deep.equal({
               original: '悠真くんを攻略すれば２１０円か。なるほどなぁ…',
               translations: {
-                googleCN:
-                  '如果捕获Toma-kun，是210日元吗？我明白了......'
+                googleCN: '捉住To君的话是210日元吗？我知道了'
               }
             })
           } catch (e) {
