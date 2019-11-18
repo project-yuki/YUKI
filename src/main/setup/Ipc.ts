@@ -7,6 +7,7 @@ import ConfigManager from '../config/ConfigManager'
 import DownloaderFactory from '../DownloaderFactory'
 import Game from '../Game'
 import Hooker from '../Hooker'
+import DictManager from '../translate/DictManager'
 import TranslationManager from '../translate/TranslationManager'
 import TranslatorWindow from '../TranslatorWindow'
 
@@ -182,6 +183,15 @@ export default function (mainWindow: Electron.BrowserWindow) {
     (event: Electron.Event, message: { id: number, text: string }) => {
       TranslationManager.getInstance().translate(message.text, (translation) => {
         event.sender.send(IpcTypes.HAS_TRANSLATION, { id: message.id, translation })
+      })
+    }
+  )
+
+  ipcMain.on(
+    IpcTypes.REQUEST_DICT,
+    (event: Electron.Event, message: { dict: string, word: string }) => {
+      DictManager.find(message, (result) => {
+        event.sender.send(IpcTypes.HAS_DICT, result)
       })
     }
   )

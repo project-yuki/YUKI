@@ -29,7 +29,9 @@ enum IpcTypes {
   REQUEST_ABORT_DOWNLOAD = 'request-abort-download',
   REQUEST_DOWNLOAD_LIBRARY = 'request-download-library',
   HAS_NEW_DEBUG_MESSAGE = 'has-new-debug-message',
-  GAME_ABORTED = 'game-aborted'
+  GAME_ABORTED = 'game-aborted',
+  REQUEST_DICT = 'request-dict',
+  HAS_DICT = 'has-dict'
 }
 
 export default IpcTypes

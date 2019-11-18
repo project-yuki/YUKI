@@ -3,14 +3,16 @@ declare namespace yuki {
     process: (context: T, next: (newContext: T) => void) => void
   }
 
-  export type MeCabPatterns = Array<{
+  export type MeCabPattern = {
     word: string;
     abbr: string;
     kana: string;
-  }>
+  }
+
+  export type MeCabPatterns = Array<MeCabPattern>
 
   export interface DictResult {
-    found: boolean
+    found?: boolean
     word?: string
     content?: string
   }

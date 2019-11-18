@@ -25,7 +25,7 @@
   },
   "mecab": {
     "enable": true,
-    "path": "E:\\yuki\\libraries\\pos\\mecab-ipadic"
+    "path": "C:\\YUKI\\libraries\\pos\\mecab-ipadic"
   },
   "onlineApis": [
     {
@@ -69,6 +69,12 @@
       "dictPath": "C:\\YUKI\\yuki\\lib\\dict\\jb",
       "enable": true,
       "path": "C:\\JBeijing7"
+    }
+  },
+  "dictionaries": {
+    "lingoes": {
+      "enable": true,
+      "path": "C:\\YUKI\\libraries\\dict\\lingoes\\njcd.db"
     }
   }
 }

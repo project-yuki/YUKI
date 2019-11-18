@@ -9,6 +9,7 @@ export default class LingoesDict {
     this.config = config
     if (this.config.enable) {
       this.db = new sqlite3.Database(this.config.path)
+      debug('loaded db file from path: %s', this.config.path)
     }
   }
 
@@ -16,10 +17,16 @@ export default class LingoesDict {
     if (!this.db) return
 
     this.db.all('SELECT content from entry where word = ?', word, (err, rows) => {
-      if (err) callback({ found: false })
-      if (!rows || rows.length === 0) callback({ found: false })
+      debug('raw rows from sqlite: %s -> %o', word, rows)
 
-      debug('raw rows from sqlite: %s -> %s', word, rows)
+      if (err) {
+        callback({ found: false })
+        return
+      }
+      if ((!rows) || rows.length === 0) {
+        callback({ found: false })
+        return
+      }
 
       callback({
         found: true,

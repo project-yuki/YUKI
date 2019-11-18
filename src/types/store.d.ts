@@ -79,5 +79,7 @@ declare namespace yuki {
   export interface TranslatorViewState {
     isButtonsShown: boolean
     pauseNewText: boolean
+    dict: DictResult
+    isGetDictResult: boolean
   }
 }
