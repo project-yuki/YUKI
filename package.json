@@ -17,8 +17,8 @@
     "test": "npm run unit && npm run e2e",
     "unit:main": "cross-env NODE_ENV=none karma start test/unit/karma.main.conf.js",
     "unit:renderer": "cross-env NODE_ENV=none karma start test/unit/karma.renderer.conf.js",
-    "rebuild": "electron-rebuild",
-    "postinstall": "",
+    "rebuild": "electron-builder install-app-deps",
+    "postinstall": "npm run rebuild",
     "tsc": "tsc --noEmit"
   },
   "build": {
@@ -104,7 +104,6 @@
     "electron": "^4.0.3",
     "electron-builder": "^20.39.0",
     "electron-debug": "^1.5.0",
-    "electron-rebuild": "^1.8.6",
     "fibers": "^4.0.1",
     "file-loader": "^1.1.11",
     "hard-source-webpack-plugin": "^0.13.1",

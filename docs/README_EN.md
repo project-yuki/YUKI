@@ -66,7 +66,6 @@ After installing Node.js and yarn, run the following commands in any folder:
     git clone https://github.com/project-yuki/YUKI.git
     cd yuki
     yarn
-    yarn rebuild
     yarn dev
 
 ## License
