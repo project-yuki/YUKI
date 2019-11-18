@@ -8,4 +8,15 @@ declare namespace yuki {
     abbr: string;
     kana: string;
   }>
+
+  export interface DictResult {
+    found: boolean
+    word?: string
+    content?: string
+  }
+
+  export interface DictOptions {
+    dict: string
+    word: string
+  }
 }

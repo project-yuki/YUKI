@@ -79,7 +79,7 @@ export default class Hooker {
 
   private buildApplication () {
     applicationBuilder = new ApplicationBuilder<yuki.TextOutputObject>()
-    //applicationBuilder.use(new TextMergerMiddleware())
+    // applicationBuilder.use(new TextMergerMiddleware())
     applicationBuilder.use(
       new TextMergerMiddleware(
         ConfigManager.getInstance().get<yuki.Config.Texts>('texts').merger
