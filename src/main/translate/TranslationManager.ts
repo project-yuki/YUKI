@@ -17,6 +17,7 @@ export default class TranslationManager {
   public initializeApis (
     apis: yuki.Config.Default['onlineApis']
   ): TranslationManager {
+    this.apis = []
     for (const api of apis) {
       try {
         if (api.external && api.jsFile) {
