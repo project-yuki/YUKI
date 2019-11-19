@@ -10,6 +10,7 @@ export default class LingoesDict {
   ) {
     xml2js.parseString(content, (err, result: any) => {
       if (err) callback()
+
       const refinedResult: yuki.LingoesPattern = {}
       let parseResult: any = { ...result }
       if (!parseResult.C) {
@@ -96,6 +97,9 @@ export default class LingoesDict {
                 // Error, stop parsing
                 break
               }
+            }
+            if (typeof definitionResult[definitionResult.length - 1] === 'string') {
+              oneDefinition.explanations.push(oneExplanation)
             }
           }
           refinedResult.definitions.push(oneDefinition)

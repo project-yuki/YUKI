@@ -3,6 +3,7 @@
 
 import { expect } from 'chai'
 import * as path from 'path'
+import * as util from 'util'
 import LingoesDict from '../../../../src/main/translate/LingoesDict'
 
 describe('LingoesDict', () => {
@@ -35,6 +36,26 @@ describe('LingoesDict', () => {
         '""}}]},{"partOfSpeech":"(H12","explanations":[{"content":")用于强调或调整语气(带有不' +
         '容忽视之意)。","example":{"sentence":"一見識(いっけんしき·いちけんしき)·一考察(いちこうさ' +
         'つ)。","content":""}}]}]}}'))
+        lingoes.close()
+        done()
+      } catch (e) {
+        lingoes.close()
+        return done(e)
+      }
+    })
+  })
+
+  it('returns correct pattern if found - 2', (done) => {
+    const lingoes = new LingoesDict({
+      enable: true,
+      path: path.resolve(__dirname, '../../../../../libraries/dict/lingoes/njcd.db')
+    })
+
+    lingoes.find('ゲーム', (result) => {
+      try {
+        // tslint:disable-next-line: no-console
+        console.log(util.inspect(result, false, null, true /* enable colors */))
+        expect(result).to.deep.equal(JSON.parse('{}'))
         lingoes.close()
         done()
       } catch (e) {
