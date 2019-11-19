@@ -1,4 +1,10 @@
 {
+  "dictionaries": {
+    "lingoes": {
+      "enable": true,
+      "path": "C:\\YUKI\\libraries\\dict\\lingoes\\njcd.db"
+    }
+  },
   "language": "zh",
   "librariesRepoUrl": "https://github.com/project-yuki/libraries/raw/master/_pack/",
   "localeChangers": {
@@ -69,12 +75,6 @@
       "dictPath": "C:\\YUKI\\yuki\\lib\\dict\\jb",
       "enable": true,
       "path": "C:\\JBeijing7"
-    }
-  },
-  "dictionaries": {
-    "lingoes": {
-      "enable": true,
-      "path": "C:\\YUKI\\libraries\\dict\\lingoes\\njcd.db"
     }
   }
 }
