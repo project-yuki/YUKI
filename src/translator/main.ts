@@ -67,4 +67,10 @@ function next () {
       store.dispatch('Hooks/mergeTranslation', message)
     }
   )
+  ipcRenderer.on(
+    IpcTypes.HAS_DICT,
+    (event: Electron.Event, message: yuki.DictResult) => {
+      store.dispatch('View/setDict', message)
+    }
+  )
 }

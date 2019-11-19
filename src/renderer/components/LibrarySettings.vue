@@ -9,7 +9,8 @@
     "pleaseSelect1": "请选择目录下的",
     "pleaseSelect2": "",
     "nowDownloading": "正在下载",
-    "installed": "安装完成，重启生效"
+    "installed": "安装完成，重启生效",
+    "lingoes": "灵格斯词典"
   },
   "en": {
     "appLibrariesSettings": "App Libraries Settings",
@@ -19,7 +20,8 @@
     "pleaseSelect1": "Please select",
     "pleaseSelect2": "in the directory",
     "nowDownloading": "Now downloading",
-    "installed": "installed. Restart to take effect"
+    "installed": "installed. Restart to take effect",
+    "lingoes": "Lingoes Dictionary (ja to zh-CN)"
   }
 }
 </i18n>
@@ -47,6 +49,24 @@
       </v-col>
       <v-col cols="2">
         <v-switch :label="$t('enable')" v-model="tempLibraries.mecab.enable" inset></v-switch>
+      </v-col>
+    </v-row>
+
+    <p class="text-h2">{{$t('lingoes')}}</p>
+    <v-row>
+      <v-col cols="10">
+        <v-text-field
+          :label="$t('path')"
+          v-model="tempLibraries.dictionaries.lingoes.path"
+          readonly
+          outlined
+          rounded
+          append-icon="mdi-dots-horizontal"
+          @click:append="requestPath('lingoes', 'njcd.db', 'njcd.db')"
+        />
+      </v-col>
+      <v-col cols="2">
+        <v-switch :label="$t('enable')" v-model="tempLibraries.dictionaries.lingoes.enable" inset></v-switch>
       </v-col>
     </v-row>
 
@@ -103,7 +123,7 @@ export default class LibrarySettings extends Vue {
   @(namespace('Config').State('librariesBaseStorePath'))
   public librariesBaseStorePath!: string
 
-  public tempLibraries: yuki.Config.Libraries = {
+  public tempLibraries: yuki.Config.Libraries & { dictionaries: yuki.Config.Dictionaries } = {
     librariesRepoUrl: '',
     mecab: {
       enable: false,
@@ -115,6 +135,13 @@ export default class LibrarySettings extends Vue {
         path: '',
         traditionalChinese: false,
         dictPath: ''
+      }
+    },
+
+    dictionaries: {
+      lingoes: {
+        enable: false,
+        path: ''
       }
     }
   }
@@ -147,10 +174,17 @@ export default class LibrarySettings extends Vue {
           return
         }
 
-        this.tempLibraries[library].path = join(path.substring(
-          0,
-          path.indexOf(filename) - 1
-        ), suffix)
+        if (library === 'mecab') {
+          this.tempLibraries[library].path = join(path.substring(
+            0,
+            path.indexOf(filename) - 1
+          ), suffix)
+        } else if (library === 'lingoes') {
+          this.tempLibraries.dictionaries[library].path = join(
+            path.substring(0,path.indexOf(filename) - 1),
+            suffix
+          )
+        }
       }
     )
     ipcRenderer.send(IpcTypes.REQUEST_PATH_WITH_FILE, filename)
@@ -201,6 +235,9 @@ export default class LibrarySettings extends Vue {
       ...this.defaultConfig.translators.jBeijing
     }
     this.tempLibraries.librariesRepoUrl = this.defaultConfig.librariesRepoUrl
+    this.tempLibraries.dictionaries.lingoes = {
+      ...this.defaultConfig.dictionaries.lingoes
+    }
   }
 }
 </script>

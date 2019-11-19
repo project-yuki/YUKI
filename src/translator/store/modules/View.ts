@@ -2,7 +2,9 @@ import { Commit } from 'vuex'
 
 const viewState: yuki.TranslatorViewState = {
   isButtonsShown: true,
-  pauseNewText: false
+  pauseNewText: false,
+  dict: {},
+  isGetDictResult: false
 }
 
 const mutations = {
@@ -17,6 +19,18 @@ const mutations = {
     payload: { value: boolean }
   ) {
     state.pauseNewText = payload.value
+  },
+  SET_DICT (
+    state: yuki.TranslatorViewState,
+    payload: { value: yuki.DictResult }
+  ) {
+    state.dict = payload.value
+    state.isGetDictResult = true
+  },
+  CLEAR_DICT (
+    state: yuki.TranslatorViewState
+  ) {
+    state.isGetDictResult = false
   }
 }
 
@@ -26,6 +40,12 @@ const actions = {
   },
   setPauseNewText ({ commit }: { commit: Commit }, value: boolean) {
     commit('SET_PAUSE_NEW_TEXT', { value })
+  },
+  setDict ({ commit }: { commit: Commit }, value: yuki.DictResult) {
+    commit('SET_DICT', { value })
+  },
+  clearDict ({ commit }: { commit: Commit }) {
+    commit('CLEAR_DICT')
   }
 }
 

@@ -70,7 +70,6 @@
     git clone https://github.com/project-yuki/YUKI.git
     cd yuki
     yarn
-    yarn rebuild
     yarn dev
 
 ## 许可证

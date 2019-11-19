@@ -37,6 +37,6 @@ describe('Downloader', () => {
 
     setTimeout(() => {
       downloader.abort()
-    }, 500)
+    }, 100)
   }).timeout(30000)
 })

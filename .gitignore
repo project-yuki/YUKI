@@ -12,3 +12,4 @@ thumbs.db
 config/games.json
 config/gui.json
 config/texts.json
+lib/dict/lingoes

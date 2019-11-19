@@ -1,4 +1,10 @@
 {
+  "dictionaries": {
+    "lingoes": {
+      "enable": true,
+      "path": "C:\\YUKI\\libraries\\dict\\lingoes\\njcd.db"
+    }
+  },
   "language": "zh",
   "librariesRepoUrl": "https://github.com/project-yuki/libraries/raw/master/_pack/",
   "localeChangers": {
@@ -25,7 +31,7 @@
   },
   "mecab": {
     "enable": true,
-    "path": "E:\\yuki\\libraries\\pos\\mecab-ipadic"
+    "path": "C:\\YUKI\\libraries\\pos\\mecab-ipadic"
   },
   "onlineApis": [
     {

@@ -175,6 +175,7 @@ const actions = {
         commit('SET_HOOK_TEXT', { hookNum: hook.handle, text })
       }
       if (state.currentDisplayHookIndex === hook.handle) {
+        dispatch('View/clearDict', {}, { root: true })
         if (state.isMecabEnable) {
           ipcRenderer.send(IpcTypes.REQUEST_TRANSLATION, {
             id: state.texts[hook.handle.toString()].length - 1, text: originalText
