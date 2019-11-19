@@ -28,13 +28,8 @@ export default class Game extends EventEmitter {
   }
 
   public async start () {
-    try {
-      await this.execGameProcess()
-      this.registerHookerWithPid()
-    } catch (e) {
-      this.emit('abort')
-      this.emit('exited')
-    }
+    this.execGameProcess()
+    this.registerHookerWithPid()
   }
 
   public getPids () {
@@ -51,20 +46,10 @@ export default class Game extends EventEmitter {
   }
 
   private execGameProcess () {
-    return new Promise((resolve, reject) => {
-      this.getRawExecStringOrDefault()
-      this.replaceExecStringTokensWithActualValues()
-      debug('exec string: %s', this.execString)
-      exec(this.execString, (err, stdout, stderr) => {
-        if (err) {
-          debug('program exited unexpectedly with code %d', err.code)
-          reject()
-        }
-        if (stdout) debug('program stdout: %s', stdout)
-        if (stderr) debug('program stderr: %s', stderr)
-        resolve()
-      })
-    })
+    this.getRawExecStringOrDefault()
+    this.replaceExecStringTokensWithActualValues()
+    debug('exec string: %s', this.execString)
+    exec(this.execString)
   }
 
   private getRawExecStringOrDefault () {
