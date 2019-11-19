@@ -12,24 +12,30 @@
   <div v-if="isGetDictResult" class="dict" :style="{top: `${dictDivY}px`, height: `${dictDivHeight}px`}">
     <div class="titlebar">
       <p class="text-h2">{{dict.word}}</p>
-      <v-btn
-      text
-      icon
-      small
-      class="manipulate-button-close"
-      @click="closeDictWindow"
-      color="#FFFFFF"
-      >
+      <p class="text-p" style="margin-left: 12px" v-if="dict.content && dict.content.kana">{{dict.content.kana.join(',')}}</p>
+      <v-btn text icon small class="manipulate-button-close" @click="closeDictWindow" color="#FFFFFF">
         <v-icon dark>mdi-close</v-icon>
       </v-btn>
     </div>
-    <p class="text-p">{{dict.content}}</p>
+    <div v-if="dict.content && dict.content.definitions">
+      <template v-for="(definition, index) in dict.content.definitions">
+        <v-divider dark></v-divider>
+
+        <p class="text-p" style="color: #ff9e80">{{definition.partOfSpeech}}</p>
+        <div v-if="definition.explanations" v-for="(explanation, eIndex) in definition.explanations" :key="`dict-${index}-${eIndex}`">
+          <p class="text-h3" style="color: #ffeb3b" v-if="explanation.content">{{explanation.content}}</p>
+          <p class="text-p" v-if="explanation.example.sentence">{{explanation.example.sentence}} -> {{explanation.example.content}}</p>
+        </div>
+      </template>
+    </div>
   </div>
 </div>
 </template>
 
 <script lang="ts">
-import { ipcRenderer } from 'electron'
+import {
+  ipcRenderer
+} from 'electron'
 import Vue from 'vue'
 import {
   Component,
@@ -72,7 +78,10 @@ export default class MecabText extends Vue {
     this.dictDivY = event.clientY + 16
     this.dictDivHeight = document.body.clientHeight - this.dictDivY - 8
     this.closeDictWindow()
-    ipcRenderer.send(IpcTypes.REQUEST_DICT, { dict: 'lingoes', word: pattern.word })
+    ipcRenderer.send(IpcTypes.REQUEST_DICT, {
+      dict: 'lingoes',
+      word: pattern.word
+    })
   }
 
   public closeDictWindow () {
@@ -88,8 +97,8 @@ export default class MecabText extends Vue {
 
 .dict {
   position: fixed;
-  width: 80%;
-  left: 10%;
+  width: 50%;
+  left: 25%;
   background-color: rgb(13, 71, 161);
   overflow-x: hidden;
   overflow-y: scroll;
@@ -100,6 +109,7 @@ export default class MecabText extends Vue {
 .titlebar {
   width: 100%;
   height: 48px;
+  display: flex;
 }
 
 .manipulate-button-close {
