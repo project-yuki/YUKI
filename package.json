@@ -71,6 +71,7 @@
     "vuetify-dialog": "^1.0.0-alpha.5",
     "vuex": "^3.0.1",
     "wanakana": "^4.0.2",
+    "xml2js": "^0.4.22",
     "xterm": "^4.2.0-vscode1",
     "xterm-addon-fit": "^0.3.0"
   },
@@ -85,6 +86,7 @@
     "@types/request-promise-native": "^1.0.15",
     "@types/sqlite3": "^3.1.5",
     "@types/vue-color": "^2.4.1",
+    "@types/xml2js": "^0.4.5",
     "ajv": "^6.5.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",

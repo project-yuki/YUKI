@@ -14,11 +14,25 @@ declare namespace yuki {
   export interface DictResult {
     found?: boolean
     word?: string
-    content?: string
+    content?: LingoesPattern
   }
 
   export interface DictOptions {
     dict: string
     word: string
+  }
+
+  export interface LingoesPattern {
+    kana?: Array<String>
+    definitions?: Array<{
+      partOfSpeech: string,
+      explanations: Array<{
+        content: string,
+        example: {
+          sentence: string,
+          content: string
+        }
+      }>
+    }>
   }
 }
