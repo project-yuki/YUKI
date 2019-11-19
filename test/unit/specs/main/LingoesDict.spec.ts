@@ -53,9 +53,23 @@ describe('LingoesDict', () => {
 
     lingoes.find('ゲーム', (result) => {
       try {
-        // tslint:disable-next-line: no-console
-        console.log(util.inspect(result, false, null, true /* enable colors */))
-        expect(result).to.deep.equal(JSON.parse('{}'))
+        expect(result).to.deep.equal({
+          found: true,
+          word: 'ゲーム',
+          content: {
+            definitions: [
+              {
+                partOfSpeech: undefined,
+                explanations: [
+                  {
+                    content: 'game游戏。比赛。',
+                    example: { sentence: '', content: '' }
+                  }
+                ]
+              }
+            ]
+          }
+        })
         lingoes.close()
         done()
       } catch (e) {
