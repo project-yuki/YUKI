@@ -51,6 +51,7 @@ export default class DefaultConfig extends Config {
         }
       ],
       translators: { jBeijing: { enable: false, path: '', dictPath: '' } },
+      dictionaries: { lingoes: { enable: false, path: '' } },
       mecab: { enable: false, path: '' },
       librariesRepoUrl:
         'https://github.com/project-yuki/libraries/raw/master/_pack/',
