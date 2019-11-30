@@ -13,7 +13,8 @@
     "editLocaleChanger": "编辑区域转换器",
     "actions": "操作",
     "escapePatterns": "转义段",
-    "gamePath": "游戏所在路径"
+    "gamePath": "游戏所在路径",
+    "noLineBreak": "禁止换行"
   },
   "en": {
     "localeChangerSettings": "Locale Changer Settings",
@@ -27,7 +28,8 @@
     "editLocaleChanger": "Edit Locale Changer",
     "actions": "Actions",
     "escapePatterns": "Escape Patterns",
-    "gamePath": "The path where game is located"
+    "gamePath": "The path where game is located",
+    "noLineBreak": "No Line Break"
   }
 }
 </i18n>
@@ -92,6 +94,7 @@
                   auto-grow
                   v-model="editedItem.exec"
                   :label="$t('executionType')"
+                  :rules="[noLineBreakRule]"
                 ></v-textarea>
               </v-col>
             </v-row>
@@ -101,7 +104,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" text @click="closeDialog">{{$t('cancel')}}</v-btn>
-          <v-btn color="blue darken-1" text @click="finishDialog">{{$t('ok')}}</v-btn>
+          <v-btn color="blue darken-1" text :disabled="!canSave" @click="finishDialog">{{$t('ok')}}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -128,6 +131,8 @@ type TempLocaleChangerItem = yuki.Config.LocaleChangerItem & {
   id: string
 }
 
+type VuetifyRule = (v?: string) => (boolean | string)
+
 @Component
 export default class LocaleChangerSettings extends Vue {
   public tableColumns: Array<{text: string, value: string, width?: number}> = []
@@ -144,6 +149,9 @@ export default class LocaleChangerSettings extends Vue {
     id: ''
   }
   public editedItem: TempLocaleChangerItem = { ...this.itemPattern }
+
+  public noLineBreakRule!: VuetifyRule
+  public canSave: boolean = true
 
   public mounted () {
     this.tableColumns = [
@@ -170,6 +178,10 @@ export default class LocaleChangerSettings extends Vue {
         width: 96
       }
     ]
+    this.noLineBreakRule = (v) => {
+      if ((v || '').indexOf('\n') === -1) return true
+      else return this.$i18n.t('noLineBreak').toString()
+    }
   }
 
   public closeDialog () {
@@ -220,6 +232,15 @@ export default class LocaleChangerSettings extends Vue {
           id: key
         })
       }
+    }
+  }
+
+  @Watch('editedItem.exec')
+  public checkCanSave (newValue: string) {
+    if (this.noLineBreakRule(newValue) === true) {
+      this.canSave = true
+    } else {
+      this.canSave = false
     }
   }
 
