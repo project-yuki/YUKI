@@ -38,7 +38,8 @@ declare namespace yuki {
 
   export interface GuiState {
     noGame: boolean
-    debugMessages: string[]
+    debugMessages: string[],
+    isGameStartingEnded: boolean
   }
 
   export interface TranslatorHookState {

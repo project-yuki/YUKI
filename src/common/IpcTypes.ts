@@ -16,6 +16,7 @@ enum IpcTypes {
   REQUEST_REMOVE_GAME = 'request-remove-game',
   HAS_REMOVED_GAME = 'has-removed-game',
   REQUEST_RUN_GAME = 'request-run-game',
+  HAS_RUNNING_GAME = 'has-running-game',
   REQUEST_TRANSLATION = 'request-translation',
   HAS_TRANSLATION = 'has-translation',
   APP_EXIT = 'app-exit',

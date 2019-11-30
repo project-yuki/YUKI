@@ -2,7 +2,8 @@ const MAX_DEBUG_MESSAGES_COLUMNS = 1000
 
 const guiState: yuki.GuiState = {
   noGame: false,
-  debugMessages: []
+  debugMessages: [],
+  isGameStartingEnded: false
 }
 
 const mutations = {
@@ -14,6 +15,9 @@ const mutations = {
     if (state.debugMessages.length > MAX_DEBUG_MESSAGES_COLUMNS) {
       state.debugMessages.shift()
     }
+  },
+  SET_GAME_STARTING_ENDED (state: yuki.GuiState, payload: { value: boolean }) {
+    state.isGameStartingEnded = payload.value
   }
 }
 

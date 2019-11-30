@@ -84,8 +84,8 @@ export default class Game extends EventEmitter {
       return
     }
     this.injectProcessByPid()
-    this.emit('started', this)
     this.registerProcessExitCallback()
+    this.emit('started', this)
   }
 
   private findPids () {

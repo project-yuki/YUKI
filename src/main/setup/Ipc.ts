@@ -39,10 +39,11 @@ export default function (mainWindow: Electron.BrowserWindow) {
   ipcMain.on(
     IpcTypes.REQUEST_RUN_GAME,
     (event: Electron.Event, game: yuki.Game) => {
-      mainWindow.hide()
-
       runningGame = new Game(game)
       runningGame.on('started', () => {
+        mainWindow.hide()
+        mainWindow.webContents.send(IpcTypes.HAS_RUNNING_GAME)
+
         if (translatorWindow) translatorWindow.close()
         translatorWindow = new TranslatorWindow()
         translatorWindow.setGame(runningGame)
