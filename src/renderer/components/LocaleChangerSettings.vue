@@ -153,7 +153,7 @@ export default class LocaleChangerSettings extends Vue {
   public noLineBreakRule!: VuetifyRule
   public canSave: boolean = true
 
-  public mounted () {
+  public beforeMount () {
     this.tableColumns = [
       {
         text: 'ID',
