@@ -13,7 +13,7 @@
 </i18n>
 
 <template>
-  <div class="small-margin fixed-scroll">
+  <div :class="classObject">
     <v-btn type="primary" @click="openInputHookDialog">{{$t('addHook')}}</v-btn>
 
     <v-dialog v-model="openInputHook" max-width="500px">
@@ -36,13 +36,7 @@
       </v-card>
     </v-dialog>
 
-    <yk-hook-info
-      v-for="hook in orderedHooks"
-      :hook="hook"
-      :isChosen="isChosen(hook.handle)"
-      :key="hook.handle + '-info'"
-      class="hook-info"
-    />
+    <yk-hook-info v-for="hook in orderedHooks" :hook="hook" :isChosen="isChosen(hook.handle)" :key="hook.handle + '-info'" class="hook-info" />
   </div>
 </template>
 
@@ -100,6 +94,16 @@ export default class HookSettings extends Vue {
   public texts!: string[]
   @(namespace('Hooks').State('currentDisplayHookIndex'))
   public currentIndex!: number
+  @(namespace('View').State('isWindowTooHigh'))
+  public isWindowTooHigh!: boolean
+
+  get classObject () {
+    return {
+      'small-margin': true,
+      'fixed-scroll': !this.isWindowTooHigh,
+      'fixed-scroll-margin-top': this.isWindowTooHigh
+    }
+  }
 
   public openInputHookDialog () {
     this.openInputHook = true

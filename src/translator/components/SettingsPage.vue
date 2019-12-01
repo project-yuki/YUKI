@@ -37,83 +37,62 @@
 </i18n>
 
 <template>
-  <div class="small-margin fixed-scroll">
-    <v-row>
-      <v-col cols="3">
-        <div class="text-h3 text-center">{{$t('originalText')}}</div>
-      </v-col>
-      <v-col cols="8">
-        <p style="color: white">{{$t('size')}}</p>
-        <v-slider
-          class="margin-top"
-          thumb-label="always"
-          ticks
-          min="1"
-          max="36"
-          v-model="originalTextSize"
-        ></v-slider>
-      </v-col>
-    </v-row>
+<div :class="classObject">
+  <v-row>
+    <v-col cols="3">
+      <div class="text-h3 text-center">{{$t('originalText')}}</div>
+    </v-col>
+    <v-col cols="8">
+      <p style="color: white">{{$t('size')}}</p>
+      <v-slider class="margin-top" thumb-label="always" ticks min="1" max="36" v-model="originalTextSize"></v-slider>
+    </v-col>
+  </v-row>
 
-    <v-row class="margin-top">
-      <v-col cols="3">
-        <div class="text-h3 text-center">{{$t('translatedText')}}</div>
-      </v-col>
-      <v-col cols="4">
-        <p style="color: white">{{$t('size')}}</p>
-        <v-slider
-          class="margin-top"
-          thumb-label="always"
-          ticks
-          min="1"
-          max="36"
-          v-model="translationTextSize"
-        ></v-slider>
-      </v-col>
-      <v-col cols="4">
-        <p style="color: white">{{$t('margin')}}</p>
-        <v-slider
-          class="margin-top"
-          thumb-label="always"
-          ticks
-          min="1"
-          max="36"
-          v-model="translationTextMargin"
-        ></v-slider>
-      </v-col>
-    </v-row>
+  <v-row class="margin-top">
+    <v-col cols="3">
+      <div class="text-h3 text-center">{{$t('translatedText')}}</div>
+    </v-col>
+    <v-col cols="4">
+      <p style="color: white">{{$t('size')}}</p>
+      <v-slider class="margin-top" thumb-label="always" ticks min="1" max="36" v-model="translationTextSize"></v-slider>
+    </v-col>
+    <v-col cols="4">
+      <p style="color: white">{{$t('margin')}}</p>
+      <v-slider class="margin-top" thumb-label="always" ticks min="1" max="36" v-model="translationTextMargin"></v-slider>
+    </v-col>
+  </v-row>
 
-    <v-row class="margin-top">
-      <v-col cols="3">
-        <div class="text-h3 text-center">{{$t('backgroundColor')}}</div>
-      </v-col>
-      <v-col cols="9">
-        <chrome-picker v-model="backgroundColor"></chrome-picker>
-      </v-col>
-    </v-row>
+  <v-row class="margin-top">
+    <v-col cols="3">
+      <div class="text-h3 text-center">{{$t('backgroundColor')}}</div>
+    </v-col>
+    <v-col cols="9">
+      <chrome-picker v-model="backgroundColor"></chrome-picker>
+    </v-col>
+  </v-row>
 
-    <v-row class="margin-top">
-      <v-col cols="3">
-        <div class="text-h3 text-center">{{$t('help')}}</div>
-      </v-col>
-      <v-col cols="8">
-        <div class="helpers">
-          <div v-for="item in helperItems">
-            <v-btn text icon dark large>
-              <v-icon dark>{{item.icon}}</v-icon>
-            </v-btn>
-            <p style="color: white" class="text-helper">{{$t(item.text)}}</p>
-          </div>
+  <v-row class="margin-top">
+    <v-col cols="3">
+      <div class="text-h3 text-center">{{$t('help')}}</div>
+    </v-col>
+    <v-col cols="8">
+      <div class="helpers">
+        <div v-for="item in helperItems">
+          <v-btn text icon dark large>
+            <v-icon dark>{{item.icon}}</v-icon>
+          </v-btn>
+          <p style="color: white" class="text-helper">{{$t(item.text)}}</p>
         </div>
-      </v-col>
-    </v-row>
+      </div>
+    </v-col>
+  </v-row>
 
-    <v-row class="margin-top">
-      <v-col cols="12" align="center">
-        <v-btn color="primary" @click="toggleDevTools">{{$t('toggleDevTools')}}</v-btn>
-      </v-col>
-    </v-row>
-  </div>
+  <v-row class="margin-top">
+    <v-col cols="12" align="center">
+      <v-btn color="primary" @click="toggleDevTools">{{$t('toggleDevTools')}}</v-btn>
+    </v-col>
+  </v-row>
+</div>
 </template>
 
 <script lang="ts">
@@ -186,16 +165,53 @@ export default class HookSettings extends Vue {
   @namespace('Config').Getter('getBackgroundColor')
   public getBackgroundColor!: () => string
 
-  public helperItems: Array<{text: string, icon: string}> = [
-    { text: 'previousText', icon: 'mdi-chevron-left' },
-    { text: 'nextText', icon: 'mdi-chevron-right' },
-    { text: 'returnToLatestText', icon: 'mdi-chevron-triple-right' },
-    { text: 'alwaysOnTop', icon: 'mdi-lock' },
-    { text: 'notAlwaysOnTop', icon: 'mdi-lock-open-outline' },
-    { text: 'hide', icon: 'mdi-close' },
-    { text: 'pauseNewText', icon: 'mdi-pause' },
-    { text: 'restoreNewText', icon: 'mdi-play' }
+  @(namespace('View').State('isWindowTooHigh'))
+  public isWindowTooHigh!: boolean
+
+  public helperItems: Array < {
+    text: string,
+    icon: string
+  } > = [{
+    text: 'previousText',
+    icon: 'mdi-chevron-left'
+  },
+  {
+    text: 'nextText',
+    icon: 'mdi-chevron-right'
+  },
+  {
+    text: 'returnToLatestText',
+    icon: 'mdi-chevron-triple-right'
+  },
+  {
+    text: 'alwaysOnTop',
+    icon: 'mdi-lock'
+  },
+  {
+    text: 'notAlwaysOnTop',
+    icon: 'mdi-lock-open-outline'
+  },
+  {
+    text: 'hide',
+    icon: 'mdi-close'
+  },
+  {
+    text: 'pauseNewText',
+    icon: 'mdi-pause'
+  },
+  {
+    text: 'restoreNewText',
+    icon: 'mdi-play'
+  }
   ]
+
+  get classObject () {
+    return {
+      'small-margin': true,
+      'fixed-scroll': !this.isWindowTooHigh,
+      'fixed-scroll-margin-top': this.isWindowTooHigh
+    }
+  }
 
   public beforeRouteEnter (to: Route, from: Route, next: () => void) {
     const newHeight = Math.trunc(

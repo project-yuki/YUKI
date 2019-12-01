@@ -18,8 +18,20 @@
       <yk-titlebar></yk-titlebar>
     </div>
     <div id="content">
+      <div id="buttons-top" class="buttons" v-if="isButtonsShown && isWindowTooHigh">
+        <v-btn small text dark to="/translate" style="width: 32%">{{$t('translate')}}</v-btn>
+        <v-btn small text dark to="/hooks" style="width: 32%">{{$t('textHookSettings')}}</v-btn>
+        <v-btn
+          small
+          text
+          dark
+          to="/settings"
+          color="white"
+          style="width: 32%"
+        >{{$t('translatorSettings')}}</v-btn>
+      </div>
       <router-view></router-view>
-      <div id="buttons" v-if="isButtonsShown">
+      <div id="buttons-bottom" class="buttons" v-if="isButtonsShown && (!isWindowTooHigh)">
         <v-btn small text dark to="/translate" style="width: 32%">{{$t('translate')}}</v-btn>
         <v-btn small text dark to="/hooks" style="width: 32%">{{$t('textHookSettings')}}</v-btn>
         <v-btn
@@ -61,6 +73,8 @@ import YkTitlebar from '@/components/Titlebar.vue'
 export default class App extends Vue {
   @(namespace('View').State('isButtonsShown'))
   public isButtonsShown!: boolean
+  @(namespace('View').State('isWindowTooHigh'))
+  public isWindowTooHigh!: boolean
 
   @(namespace('Hooks').Getter('getTextByHandleAndId'))
   public getTextByHandleAndId!: (handle: number, id: number) => string
@@ -118,6 +132,11 @@ export default class App extends Vue {
     const newHeight = document.body.offsetHeight + offset
     const window = remote.getCurrentWindow()
     const width = window.getSize()[0]
+    if (newHeight > 640) {
+      this.$store.dispatch('View/setWindowTooHigh', true)
+    } else {
+      this.$store.dispatch('View/setWindowTooHigh', false)
+    }
     window.setSize(width, newHeight)
   }
 
@@ -133,7 +152,7 @@ export default class App extends Vue {
 
   public updated () {
     if (this.$router.currentRoute.path === '/translate') {
-      if (this.isButtonsShown) {
+      if (this.isButtonsShown && (!this.isWindowTooHigh)) {
         this.$nextTick(() => {
           this.updateWindowHeight(24)
         })
@@ -237,14 +256,19 @@ body {
   margin-top: 32px;
 }
 
-#app #content #buttons {
+#app #content #buttons-top {
+  width: 100%;
+  margin-left: 16px;
+}
+
+#app #content #buttons-bottom {
   position: fixed;
   bottom: 0;
   width: 100%;
   left: 16px;
 }
 
-#app #content #buttons .v-btn {
+#app #content .buttons .v-btn {
   text-align: center;
 }
 
@@ -253,6 +277,17 @@ body {
   padding: 16px;
   position: fixed;
   top: 32px;
+  width: 100%;
+  height: 88%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.fixed-scroll-margin-top {
+  margin: 0 auto;
+  padding: 16px;
+  position: fixed;
+  top: 64px;
   width: 100%;
   height: 88%;
   overflow-x: hidden;
