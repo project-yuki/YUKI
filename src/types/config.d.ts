@@ -83,6 +83,7 @@ declare namespace yuki {
         originalText: FontStyle;
         translationText: TranslationTextStyle;
         background: string;
+        renderMode: 'transparent' | 'translucent';
       }
     }
 

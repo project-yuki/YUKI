@@ -15,6 +15,7 @@ export default class TranslatorWindow {
   private game!: Game
 
   private isRealClose = false
+  private config!: yuki.Config.Gui['translatorWindow']
 
   constructor () {
     this.create()
@@ -39,6 +40,8 @@ export default class TranslatorWindow {
   }
 
   private create () {
+    this.config = ConfigManager.getInstance().get<yuki.Config.Gui>('gui')
+                  .translatorWindow
     this.window = new BrowserWindow({
       webPreferences: {
         defaultFontFamily: {
@@ -48,8 +51,7 @@ export default class TranslatorWindow {
         }
       },
       show: false,
-      alwaysOnTop: ConfigManager.getInstance().get<yuki.Config.Gui>('gui')
-        .translatorWindow.alwaysOnTop,
+      alwaysOnTop: this.config.alwaysOnTop,
       transparent: true,
       frame: false
     })
@@ -61,7 +63,10 @@ export default class TranslatorWindow {
     )
 
     this.window.on('ready-to-show', () => {
-      ElectronVibrancy.SetVibrancy(this.window, 0)
+      // choose translucent as default, unless assigning transparent explicitly
+      if (this.config.renderMode !== 'transparent') {
+        ElectronVibrancy.SetVibrancy(this.window, 0)
+      }
 
       debug('subscribing hooker events...')
       this.subscribeHookerEvents()
