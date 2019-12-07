@@ -71,4 +71,10 @@ function next () {
       store.commit('Gui/SET_GAME_STARTING_ENDED', { value: true })
     }
   )
+  ipcRenderer.on(
+    IpcTypes.HAS_PROCESSES,
+    (event: Electron.Event, processes: yuki.Processes) => {
+      store.commit('Gui/SET_PROCESSES', { value: processes })
+    }
+  )
 }

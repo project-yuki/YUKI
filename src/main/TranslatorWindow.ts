@@ -1,4 +1,5 @@
 import { BrowserWindow } from 'electron'
+import BaseGame from './BaseGame'
 import ConfigManager from './config/ConfigManager'
 import Game from './Game'
 import Hooker from './Hooker'
@@ -12,7 +13,7 @@ export default class TranslatorWindow {
       : `file://${__dirname}/translator.html`
 
   private window!: Electron.BrowserWindow
-  private game!: Game
+  private game!: BaseGame
 
   private isRealClose = false
   private config!: yuki.Config.Gui['translatorWindow']
@@ -31,7 +32,7 @@ export default class TranslatorWindow {
     this.window.close()
   }
 
-  public setGame (game: Game) {
+  public setGame (game: BaseGame) {
     this.game = game
   }
 

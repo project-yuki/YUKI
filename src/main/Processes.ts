@@ -1,13 +1,10 @@
 import { exec } from 'child_process'
-const debug = require('debug')('yuki:taskList')
+const debug = require('debug')('yuki:processes')
 
-interface ITask {name: string, pid: number}
-export type Tasks = ITask[]
-
-export default class TaskList {
+export default class Processes {
   public static async get () {
-    return new Promise<Tasks>((resolve, reject) => {
-      exec(TaskList.TASK_LIST_COMMAND,
+    return new Promise<yuki.Processes>((resolve, reject) => {
+      exec(Processes.TASK_LIST_COMMAND,
         (err, stdout, stderr) => {
           if (err) {
             debug('exec failed !> %s', err)
@@ -15,12 +12,12 @@ export default class TaskList {
             return
           }
 
-          if (this.findsTaskIn(stdout)) {
-            const result = this.parseTasksFrom(stdout)
-            debug('get tasks: %o', result)
+          if (this.findsProcessIn(stdout)) {
+            const result = this.parseProcessesFrom(stdout)
+            debug('get %d processes', result.length)
             resolve(result)
           } else {
-            debug('exec failed. no task')
+            debug('exec failed. no process')
             reject()
           }
         }
@@ -29,27 +26,27 @@ export default class TaskList {
   }
   private static TASK_LIST_COMMAND = 'tasklist /nh /fo csv /fi "sessionname eq Console"'
 
-  private static findsTaskIn (value: string) {
+  private static findsProcessIn (value: string) {
     return value.startsWith('"')
   }
 
-  private static parseTasksFrom (value: string) {
-    const tasks: Tasks = []
+  private static parseProcessesFrom (value: string) {
+    const processes: yuki.Processes = []
 
     const regexResult = value.match(/"([^"]+)"/g)
     if (!regexResult) return []
 
-    let onePair: ITask = { name: '', pid: -1 }
+    let onePair: yuki.Process = { name: '', pid: -1 }
     for (let i = 0; i < regexResult.length; i++) {
       if (i % 5 === 0) {// process name
         onePair.name = regexResult[i].substr(1, regexResult[i].length - 2)
       } else if (i % 5 === 1) {// process id
         onePair.pid = parseInt(regexResult[i].substr(1, regexResult[i].length - 2), 10)
-        tasks.push(onePair)
+        processes.push(onePair)
         onePair = { name: '', pid: -1 }
       }
     }
 
-    return tasks
+    return processes
   }
 }

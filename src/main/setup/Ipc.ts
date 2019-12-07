@@ -3,15 +3,18 @@ import IpcTypes from '../../common/IpcTypes'
 const debug = require('debug')('yuki:ipc')
 import { extname } from 'path'
 import { format } from 'util'
+import BaseGame from '../BaseGame'
 import ConfigManager from '../config/ConfigManager'
 import DownloaderFactory from '../DownloaderFactory'
 import Game from '../Game'
+import GameFromProcess from '../GameFromProcess'
 import Hooker from '../Hooker'
+import Processes from '../Processes'
 import DictManager from '../translate/DictManager'
 import TranslationManager from '../translate/TranslationManager'
 import TranslatorWindow from '../TranslatorWindow'
 
-let runningGame: Game
+let runningGame: BaseGame
 let translatorWindow: TranslatorWindow | null
 
 export default function (mainWindow: Electron.BrowserWindow) {
@@ -38,8 +41,12 @@ export default function (mainWindow: Electron.BrowserWindow) {
 
   ipcMain.on(
     IpcTypes.REQUEST_RUN_GAME,
-    (event: Electron.Event, game: yuki.Game) => {
-      runningGame = new Game(game)
+    (event: Electron.Event, game?: yuki.Game, process?: yuki.Process) => {
+      if (game) {
+        runningGame = new Game(game)
+      } else if (process) {
+        runningGame = new GameFromProcess(process)
+      } else return
       runningGame.on('started', () => {
         mainWindow.hide()
         mainWindow.webContents.send(IpcTypes.HAS_RUNNING_GAME)
@@ -215,6 +222,17 @@ export default function (mainWindow: Electron.BrowserWindow) {
     IpcTypes.REQUEST_DOWNLOAD_LIBRARY,
     (event: Electron.Event, packName: string) => {
       DownloaderFactory.makeLibraryDownloader(packName).start()
+    }
+  )
+
+  ipcMain.on(
+    IpcTypes.REQUEST_PROCESSES,
+    (event: Electron.Event) => {
+      Processes.get().then((processes) => {
+        event.sender.send(IpcTypes.HAS_PROCESSES, processes)
+      }).catch(() => {
+        event.sender.send(IpcTypes.HAS_PROCESSES, [])
+      })
     }
   )
 }

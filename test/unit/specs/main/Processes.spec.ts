@@ -3,11 +3,11 @@
 
 import { expect } from 'chai'
 import * as _ from 'lodash'
-import TaskList from '../../../../src/main/TaskList'
+import Processes from '../../../../src/main/Processes'
 
-describe('TaskList', () => {
-  it('returns tasks that include explorer.exe', (done) => {
-    TaskList.get().then((result) => {
+describe('Processes', () => {
+  it('returns processes that include explorer.exe', (done) => {
+    Processes.get().then((result) => {
       try {
         // tslint:disable-next-line: no-unused-expression
         expect(_.some(result, { name: 'explorer.exe' })).to.be.true
