@@ -167,6 +167,15 @@ export default class TranslatePage extends Vue {
     const newHeight = document.body.offsetHeight + offset
     const window = remote.getCurrentWindow()
     const width = window.getSize()[0]
+    if (newHeight > 640) {
+      this.$nextTick(() => {
+        this.$store.dispatch('View/setWindowTooHigh', true)
+      })
+    } else {
+      this.$nextTick(() => {
+        this.$store.dispatch('View/setWindowTooHigh', false)
+      })
+    }
     window.setSize(width, newHeight)
   }
 

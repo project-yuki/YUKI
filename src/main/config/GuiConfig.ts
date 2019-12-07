@@ -41,7 +41,8 @@ export default class GuiConfig extends Config {
           color: 'white',
           margin: 18
         },
-        background: '#000000BD'
+        background: '#000000BD',
+        renderMode: 'translucent'
       }
     }
   }

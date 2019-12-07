@@ -23,7 +23,7 @@
     <v-card-subtitle>{{game.code}}</v-card-subtitle>
     <v-card-text>{{game.path}}</v-card-text>
     <v-card-actions>
-      <v-btn rounded color="primary" min-width="40%" @click.stop="handleRunGame">
+      <v-btn rounded color="primary" min-width="40%" @click.stop="handleRunGame" :loading="showLoaders" :disabled="showLoaders">
         {{$t('run')}}
         <v-icon right dark>mdi-play</v-icon>
       </v-btn>
@@ -64,7 +64,8 @@
 import Vue from 'vue'
 import {
   Component,
-  Prop
+  Prop,
+  Watch
 } from 'vue-property-decorator'
 import {
   namespace,
@@ -87,10 +88,24 @@ export default class HookSettingsHookInfo extends Vue {
   public defaultConfig!: yuki.ConfigState['default']
   @(namespace('Config').State('games'))
   public gamesConfig!: yuki.ConfigState['games']
+  @(namespace('Gui').State('isGameStartingEnded'))
+  public isGameStartingEnded!: yuki.GuiState['isGameStartingEnded']
 
   public selectedLocaleChanger: string = ''
   public code: string = ''
   public showExpansion: boolean = false
+  public showLoaders: boolean = false
+
+  @Watch('isGameStartingEnded', {
+    immediate: true,
+    deep: true
+  })
+  public checkGameStartingEnded (newValue: boolean) {
+    this.showLoaders = false
+    if (newValue === true) {
+      this.$store.commit('Gui/SET_GAME_STARTING_ENDED', { value: false })
+    }
+  }
 
   public handleDeleteConfirm () {
     this.$dialog.confirm({
@@ -109,6 +124,7 @@ export default class HookSettingsHookInfo extends Vue {
     })
   }
   public handleRunGame () {
+    this.showLoaders = true
     ipcRenderer.send(IpcTypes.REQUEST_RUN_GAME, this.game)
   }
   public handleDeleteGame () {

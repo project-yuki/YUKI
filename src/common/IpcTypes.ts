@@ -16,6 +16,7 @@ enum IpcTypes {
   REQUEST_REMOVE_GAME = 'request-remove-game',
   HAS_REMOVED_GAME = 'has-removed-game',
   REQUEST_RUN_GAME = 'request-run-game',
+  HAS_RUNNING_GAME = 'has-running-game',
   REQUEST_TRANSLATION = 'request-translation',
   HAS_TRANSLATION = 'has-translation',
   APP_EXIT = 'app-exit',
@@ -31,7 +32,9 @@ enum IpcTypes {
   HAS_NEW_DEBUG_MESSAGE = 'has-new-debug-message',
   GAME_ABORTED = 'game-aborted',
   REQUEST_DICT = 'request-dict',
-  HAS_DICT = 'has-dict'
+  HAS_DICT = 'has-dict',
+  REQUEST_PROCESSES = 'request-processes',
+  HAS_PROCESSES = 'has-processes'
 }
 
 export default IpcTypes

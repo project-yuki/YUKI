@@ -35,4 +35,14 @@ declare namespace yuki {
       }>
     }>
   }
+  
+  export interface Process {
+    name: string, 
+    pid: number
+  }
+  export type Processes = Process[]
+  export interface ProcessWithText extends Process {
+    text: string
+  }
+  export type ProcessesWithText = ProcessWithText[]
 }

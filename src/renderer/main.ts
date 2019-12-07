@@ -62,6 +62,19 @@ function next () {
     IpcTypes.GAME_ABORTED,
     () => {
       vue.$dialog.notify.error(vue.$i18n.t('gameAborted').toString())
+      store.commit('Gui/SET_GAME_STARTING_ENDED', { value: true })
+    }
+  )
+  ipcRenderer.on(
+    IpcTypes.HAS_RUNNING_GAME,
+    () => {
+      store.commit('Gui/SET_GAME_STARTING_ENDED', { value: true })
+    }
+  )
+  ipcRenderer.on(
+    IpcTypes.HAS_PROCESSES,
+    (event: Electron.Event, processes: yuki.Processes) => {
+      store.commit('Gui/SET_PROCESSES', { value: processes })
     }
   )
 }
