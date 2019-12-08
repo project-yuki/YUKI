@@ -17,6 +17,9 @@ export default class TextInterceptorMiddleware
     context: yuki.TextOutputObject,
     next: (newContext: yuki.TextOutputObject) => void
   ) {
+    context.text = context.text.replace(/[\x00-\x20]/g, '')
+    context.text = context.text.replace(/_t.*?\//g, '')
+
     if (this.removeAscii) {
       context.text = context.text.replace(/[\x00-\xFF]+/g, '')
       if (context.text === '') return
@@ -26,8 +29,8 @@ export default class TextInterceptorMiddleware
       if (context.text === '') return
     }
     if (this.delineBreak) {
-      context.text = context.text.replace('_r', '')
-      context.text = context.text.replace('<br>', '')
+      context.text = context.text.replace(/_r/g, '')
+      context.text = context.text.replace(/<br>/g, '')
       context.text = context.text.replace(/\s+/g, '')
       if (context.text === '') return
     }
