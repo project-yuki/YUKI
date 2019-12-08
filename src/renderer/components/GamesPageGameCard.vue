@@ -21,7 +21,7 @@
   <v-card :elevation="hover ? 8 : 2">
     <v-card-title>{{game.name}}</v-card-title>
     <v-card-subtitle>{{game.code}}</v-card-subtitle>
-    <v-card-text>{{game.path}}</v-card-text>
+    <v-card-text @click="openFolder">{{game.path}}</v-card-text>
     <v-card-actions>
       <v-btn rounded color="primary" min-width="40%" @click.stop="handleRunGame" :loading="showLoaders" :disabled="showLoaders">
         {{$t('run')}}
@@ -150,6 +150,10 @@ export default class HookSettingsHookInfo extends Vue {
 
     ipcRenderer.send(IpcTypes.REQUEST_SAVE_CONFIG, 'games', savingConfig)
     this.$dialog.notify.success(this.$i18n.t('saveSuccess').toString())
+  }
+
+  public openFolder () {
+    ipcRenderer.send(IpcTypes.REQUEST_OPEN_FOLDER, this.game.path)
   }
 
   public beforeMount () {
