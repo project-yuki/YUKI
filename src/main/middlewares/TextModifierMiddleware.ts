@@ -32,7 +32,7 @@ export default class TextInterceptorMiddleware
       context.text = context.text.replace(/_r/g, '')
       context.text = context.text.replace(/<br>/g, '')
       context.text = context.text.replace(/\s+/g, '')
-    if (context.text === '') return
+      if (context.text === '') return
     }
 
     next(context)
