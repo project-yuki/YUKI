@@ -18,7 +18,7 @@
     "gamePath": "Game Path",
     "nextStep": "Next",
     "pleaseInputSpecialCodeEmptyIfNotNeeded": "Please input special code (empty if not needed)",
-    "specialCode": "H-Code",
+    "specialCode": "Special Code",
     "prevStep": "Prev",
     "finish": "Finish",
     "gameAdded": "Game Added!"
