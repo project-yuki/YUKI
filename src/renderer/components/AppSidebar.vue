@@ -35,7 +35,7 @@
             </v-list-item-content>
           </v-list-item>
 
-          <v-list-group :value="true">
+          <v-list-group :value="false">
             <template v-slot:activator>
               <v-list-item-icon>
                 <v-icon>mdi-settings</v-icon>
@@ -45,21 +45,21 @@
               </v-list-item-content>
             </template>
 
-            <v-list-item to="/settings/localechanger">
+            <v-list-item class="grey lighten-3" to="/settings/localechanger">
               <v-list-item-action>
                 <v-icon>mdi-map-marker</v-icon>
               </v-list-item-action>
               <v-list-item-title>{{$t('localeChangers')}}</v-list-item-title>
             </v-list-item>
 
-            <v-list-item to="/settings/library">
+            <v-list-item class="grey lighten-3" to="/settings/library">
               <v-list-item-action>
                 <v-icon>mdi-apps</v-icon>
               </v-list-item-action>
               <v-list-item-title>{{$t('applicationLibraries')}}</v-list-item-title>
             </v-list-item>
 
-            <v-list-item to="/settings/translator">
+            <v-list-item class="grey lighten-3" to="/settings/translator">
               <v-list-item-action>
                 <v-icon>mdi-translate</v-icon>
               </v-list-item-action>
