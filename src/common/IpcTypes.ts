@@ -34,8 +34,7 @@ enum IpcTypes {
   REQUEST_DICT = 'request-dict',
   HAS_DICT = 'has-dict',
   REQUEST_PROCESSES = 'request-processes',
-  HAS_PROCESSES = 'has-processes',
-  REQUEST_OPEN_FOLDER = 'request-open-folder'
+  HAS_PROCESSES = 'has-processes'
 }
 
 export default IpcTypes
