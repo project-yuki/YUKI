@@ -28,8 +28,8 @@
 
 <template>
   <div>
-    <v-btn rounded large color="primary" @click="saveSettings(true)">{{$t('save')}}</v-btn>
-    <v-btn rounded large color="warning" @click="resetSettings">{{$t('reset')}}</v-btn>
+    <!-- <v-btn rounded large color="primary" @click="saveSettings(true)">{{$t('save')}}</v-btn> -->
+    <!-- <v-btn rounded large color="warning" @click="resetSettings">{{$t('reset')}}</v-btn> -->
     <p class="text-h1">{{$t('appLibrariesSettings')}}</p>
     <p class="text-h2">Textractor</p>
     <p class="text-h3">{{$t('providedByDefault')}}</p>
@@ -48,7 +48,7 @@
         />
       </v-col>
       <v-col cols="2">
-        <v-switch :label="$t('enable')" v-model="tempLibraries.mecab.enable" inset></v-switch>
+        <v-switch :label="$t('enable')" @change="saveSettings(false)" :disabled="canSaveMecab" v-model="tempLibraries.mecab.enable" inset></v-switch>
       </v-col>
     </v-row>
 
@@ -66,7 +66,7 @@
         />
       </v-col>
       <v-col cols="2">
-        <v-switch :label="$t('enable')" v-model="tempLibraries.dictionaries.lingoes.enable" inset></v-switch>
+        <v-switch :label="$t('enable')" @change="saveSettings(false)" :disabled="canSaveLingoes" v-model="tempLibraries.dictionaries.lingoes.enable" inset></v-switch>
       </v-col>
     </v-row>
 
@@ -144,6 +144,14 @@ export default class LibrarySettings extends Vue {
         path: ''
       }
     }
+  }
+
+  get canSaveMecab () {
+    return this.tempLibraries.mecab.path === ''
+  }
+
+  get canSaveLingoes () {
+    return this.tempLibraries.dictionaries.lingoes.path === ''
   }
 
   public jbdictDownloadState: RequestProgress.ProgressState | null = null
