@@ -108,7 +108,7 @@ export default class GamesPage extends Vue {
     deep: true
   })
   public onProcessesUpdate () {
-    if (this.processes.length !== 0) {
+    if (this.processes.length !== 0 && this.showLoaders === true) {
       this.showDialog = true
       this.showLoaders = false
     }
