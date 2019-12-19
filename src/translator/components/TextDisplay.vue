@@ -6,6 +6,7 @@
       </v-col>
       <v-col cols="10">
         <div
+          class="textBoder"
           :style="{
             color: translationTextStyle.color, 
             fontSize: `${translationTextStyle.fontSize}px`
@@ -49,5 +50,9 @@ export default class TextDisplay extends Vue {
 
 .margin-top {
   margin-top: 24px;
+}
+
+.textBoder {
+  text-shadow: 0 0 0.2em rgb(0, 46, 251);
 }
 </style>
