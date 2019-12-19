@@ -5,13 +5,15 @@
     "run": "运行",
     "confirmDelete": "确认删除？",
     "deleteSuccess": "删除成功！",
-    "saveSuccess": "保存成功！"
+    "saveSuccess": "保存成功！",
+    "openFolder": "打开文件夹"
   },
   "en": {
     "run": "Run",
     "confirmDelete": "Are you sure to delete this game?",
     "deleteSuccess": "Successfully deleted!",
-    "saveSuccess": "Successfully saved!"
+    "saveSuccess": "Successfully saved!",
+    "openFolder": "Open game folder"
   }
 }
 </i18n>
@@ -21,7 +23,7 @@
   <v-card :elevation="hover ? 8 : 2">
     <v-card-title>{{game.name}}</v-card-title>
     <v-card-subtitle>{{game.code}}</v-card-subtitle>
-    <v-card-text @click="openFolder">{{game.path}}</v-card-text>
+    <v-card-text>{{game.path}}</v-card-text>
     <v-card-actions>
       <v-btn rounded color="primary" min-width="40%" @click.stop="handleRunGame" :loading="showLoaders" :disabled="showLoaders">
         {{$t('run')}}
@@ -53,6 +55,10 @@
           <v-btn @click="save">
             {{$t('save')}}
           </v-btn>
+
+          <v-btn @click="openFolder">
+            {{$t('openFolder')}}
+          </v-btn>
         </v-container>
       </div>
     </v-expand-transition>
@@ -73,7 +79,8 @@ import {
 } from 'vuex-class'
 
 import {
-  ipcRenderer
+  ipcRenderer,
+  remote
 } from 'electron'
 import IpcTypes from '../../common/IpcTypes'
 
@@ -153,7 +160,7 @@ export default class HookSettingsHookInfo extends Vue {
   }
 
   public openFolder () {
-    ipcRenderer.send(IpcTypes.REQUEST_OPEN_FOLDER, this.game.path)
+    remote.shell.showItemInFolder(this.game.path)
   }
 
   public beforeMount () {

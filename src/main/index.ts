@@ -70,10 +70,16 @@ function createWindow () {
       }
     },
     icon: iconPath,
-    frame: false
+    frame: false,
+    show: false
   })
 
   mainWindow.loadURL(mainWinURL)
+
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.webContents.openDevTools()
+    mainWindow.show()
+  })
 
   mainWindow.on('close', () => {
     if (!mainWindow) return

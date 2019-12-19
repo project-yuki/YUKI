@@ -31,6 +31,7 @@ export default class TextInterceptorMiddleware
     if (this.delineBreak) {
       context.text = context.text.replace(/_r/g, '')
       context.text = context.text.replace(/<br>/g, '')
+      context.text = context.text.replace(/#n/g, '')
       context.text = context.text.replace(/\s+/g, '')
       if (context.text === '') return
     }

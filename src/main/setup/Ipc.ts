@@ -235,14 +235,6 @@ export default function (mainWindow: Electron.BrowserWindow) {
       })
     }
   )
-  
-  ipcMain.on(
-    IpcTypes.REQUEST_OPEN_FOLDER,
-    (event: Electron.Event, gamePath: string) => {
-      const { shell } = require('electron')
-      shell.showItemInFolder(gamePath)
-    }
-  )
 }
 
 function sendConfig (configName: string, event: Electron.Event) {

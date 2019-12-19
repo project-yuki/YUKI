@@ -44,6 +44,7 @@
       :headers="tableColumns"
       :items="tempLocaleChangers"
       disable-sort
+      hide-default-footer
       class="elevation-1"
     >
       <template v-slot:top>

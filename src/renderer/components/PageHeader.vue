@@ -6,7 +6,7 @@
       <v-btn icon class="manipulate-button" @click="minimizeWindow">
         <v-icon>mdi-window-minimize</v-icon>
       </v-btn>
-      <v-btn icon class="manipulate-button" @click="closeWindow">
+      <v-btn icon class="manipulate-button" @click="hideWindow">
         <v-icon>mdi-window-close</v-icon>
       </v-btn>
     </v-app-bar>
@@ -31,6 +31,9 @@ export default class PageContent extends Vue {
   @Prop(String) public title!: string
 
   public minimizeWindow () {
+    remote.getCurrentWindow().minimize()
+  }
+  public hideWindow () {
     remote.getCurrentWindow().hide()
   }
   public closeWindow () {
