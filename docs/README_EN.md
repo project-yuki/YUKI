@@ -19,11 +19,10 @@
 
 ![how it looks](https://raw.githubusercontent.com/project-yuki/yuki/master/.github/imgs/how_it_looks.jpg)
 
-## WARNING
+## Download
 
-Project YUKI is more like a propose than an actual working progress. Since I'm not a professor in either NodeJS or C++, this project can be in ugly slow progress ¯\\\_(ツ)\_/¯
-
-However, if you're interested in the same idea, forks and PRs are sincerely welcomed ╰(\*°▽°\*)╯
+1. Click [Here](https://github.com/project-yuki/YUKI/releases)
+2. Click " > Assets " under the description of latest version, and the first ZIP file is the compiled version of YUKI
 
 ## Motivation
 
@@ -51,13 +50,8 @@ So, using Electron as frontend and traditional Windows API (Text Hooker wrapped 
 
 ## TODO
 
-- [x] Technical feasibility assessment
-- [x] Wrapping text hooker as a native Node module
-- [x] Main window UI
-- [x] Text window UI
-- [x] Online translator API call
-- [x] JBeijing translator DLL access
-- [ ] Others: [planning repo](https://github.com/project-yuki/planning/issues)
+- [planning repo](https://github.com/project-yuki/planning/issues)
+- [planning of various versions](https://github.com/project-yuki/YUKI/projects)
 
 ## Usage
 

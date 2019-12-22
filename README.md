@@ -19,11 +19,14 @@
 
 ![它看起来的样子](https://raw.githubusercontent.com/project-yuki/YUKI/master/.github/imgs/how_it_looks.jpg)
 
-## 警告！
+## 下载
 
-与实际正在推进的项目相比，YUKI 更像是一个倡议。因为我本人并不是 Node.js 或者 C++方面的专家，所以本项目很可能只会以极其缓慢的进度向前推进... ¯\\\_(ツ)\_/¯
+1. 点击[这里](https://github.com/project-yuki/YUKI/releases)
+2. 点开最新版本介绍下面的 " > Assets "，第一个 ZIP 文件就是编译后的 YUKI :)
 
-但是，如果你和我一样对本项目感兴趣，欢迎各种 fork 和 PR！ ╰(\*°▽°\*)╯
+## 文档
+
+- [YUKI 配置文件详解](/docs/ConfigFiles_CN.md)
 
 ## 挖坑的动力
 
@@ -49,19 +52,10 @@
 - 自定义在线 API 翻译获取方式: URL、请求方法、请求报头格式、响应的解析方式等
 - 支持扩展
 
-## 文档
-
-- [YUKI 配置文件详解](/docs/ConfigFiles_CN.md)
-
 ## 计划
 
-- [x] 技术可行性评估
-- [x] 把文本提取器包装成 Node.js 原生组件
-- [x] 主窗口 UI
-- [x] 文本展示窗口 UI
-- [x] 在线翻译 API 调用
-- [x] J 北京翻译 DLL 调用
-- [ ] 其它最新的：[计划仓库（英文）](https://github.com/project-yuki/planning/issues)
+- [计划仓库（英文）](https://github.com/project-yuki/planning/issues)
+- [各版本计划（英文）](https://github.com/project-yuki/YUKI/projects)
 
 ## 尝个鲜？
 
