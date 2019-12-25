@@ -23,7 +23,11 @@ const configState: any = {
       color: '',
       margin: 0
     },
-    background: ''
+    background: '',
+    autoHideTitlebar: false,
+    mecab: {
+      showRomaji: false
+    }
   }
 }
 
@@ -36,6 +40,12 @@ const getters = {
   },
   getBackgroundColor: (state: yuki.TranslatorConfigState) => () => {
     return state.gui.background
+  },
+  getAutoHideTitlebar: (state: yuki.TranslatorConfigState) => () => {
+    return state.gui.autoHideTitlebar
+  },
+  getMecab: (state: yuki.TranslatorConfigState) => () => {
+    return state.gui.mecab
   }
 }
 
@@ -91,6 +101,18 @@ const mutations = {
     payload: { color: { hex8: string } }
   ) {
     state.gui.background = payload.color.hex8
+  },
+  SET_MECAB_SHOW_ROMAJI (
+    state: yuki.TranslatorConfigState,
+    payload: { value: boolean }
+  ) {
+    state.gui.mecab.showRomaji = payload.value
+  },
+  SET_AUTO_HIDE_TITLEBAR (
+    state: yuki.TranslatorConfigState,
+    payload: { value: boolean }
+  ) {
+    state.gui.autoHideTitlebar = payload.value
   },
   SAVE_GUI_CONFIG (state: yuki.TranslatorConfigState) {
     if (!isSavingConfig) {

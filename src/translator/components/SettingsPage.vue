@@ -15,7 +15,9 @@
     "notAlwaysOnTop": "窗口非置顶",
     "hide": "窗口隐藏（当有新文本时恢复）",
     "pauseNewText": "暂停新文本获取",
-    "restoreNewText": "恢复新文本获取"
+    "restoreNewText": "恢复新文本获取",
+    "showRomaji": "显示罗马音",
+    "autoHideTitlebar": "自动隐藏标题栏"
   },
   "en": {
     "originalText": "Original Text",
@@ -31,90 +33,121 @@
     "notAlwaysOnTop": "Not Always On Top",
     "hide": "Hide Window (Restore When New Text Comes)",
     "pauseNewText": "Pause New Text Coming",
-    "restoreNewText": "Restore New Text Coming"
+    "restoreNewText": "Restore New Text Coming",
+    "showRomaji": "Show Romaji",
+    "autoHideTitlebar": "Automatically Hide Titlebar"
   }
 }
 </i18n>
 
 <template>
-<div :class="classObject">
-  <v-row>
-    <v-col cols="3">
-      <div class="text-h3 text-center">{{$t('originalText')}}</div>
-    </v-col>
-    <v-col cols="8">
-      <p style="color: white">{{$t('size')}}</p>
-      <v-slider class="margin-top" thumb-label="always" ticks min="1" max="36" v-model="originalTextSize"></v-slider>
-    </v-col>
-  </v-row>
+  <div :class="classObject">
+    <v-row>
+      <v-col cols="3">
+        <div class="text-h3 text-center">{{$t('window')}}</div>
+      </v-col>
+      <v-col cols="4" style="display: flex">
+        <v-switch v-model="autoHideTitlebar" style="margin-top: 0"></v-switch>
+        <p style="color: white" class="text-center">{{$t('autoHideTitlebar')}}</p>
+      </v-col>
+    </v-row>
 
-  <v-row class="margin-top">
-    <v-col cols="3">
-      <div class="text-h3 text-center">{{$t('translatedText')}}</div>
-    </v-col>
-    <v-col cols="4">
-      <p style="color: white">{{$t('size')}}</p>
-      <v-slider class="margin-top" thumb-label="always" ticks min="1" max="36" v-model="translationTextSize"></v-slider>
-    </v-col>
-    <v-col cols="4">
-      <p style="color: white">{{$t('margin')}}</p>
-      <v-slider class="margin-top" thumb-label="always" ticks min="1" max="36" v-model="translationTextMargin"></v-slider>
-    </v-col>
-  </v-row>
+    <v-row class="margin-top">
+      <v-col cols="3">
+        <div class="text-h3 text-center">{{$t('originalText')}}</div>
+      </v-col>
+      <v-col cols="8">
+        <p style="color: white">{{$t('size')}}</p>
+        <v-slider
+          class="margin-top"
+          thumb-label="always"
+          ticks
+          min="1"
+          max="36"
+          v-model="originalTextSize"
+        ></v-slider>
+      </v-col>
+    </v-row>
 
-  <v-row class="margin-top">
-    <v-col cols="3">
-      <div class="text-h3 text-center">{{$t('backgroundColor')}}</div>
-    </v-col>
-    <v-col cols="9">
-      <chrome-picker v-model="backgroundColor"></chrome-picker>
-    </v-col>
-  </v-row>
+    <v-row class="margin-top">
+      <v-col cols="3">
+        <div class="text-h3 text-center">{{$t('translatedText')}}</div>
+      </v-col>
+      <v-col cols="4">
+        <p style="color: white">{{$t('size')}}</p>
+        <v-slider
+          class="margin-top"
+          thumb-label="always"
+          ticks
+          min="1"
+          max="36"
+          v-model="translationTextSize"
+        ></v-slider>
+      </v-col>
+      <v-col cols="4">
+        <p style="color: white">{{$t('margin')}}</p>
+        <v-slider
+          class="margin-top"
+          thumb-label="always"
+          ticks
+          min="1"
+          max="36"
+          v-model="translationTextMargin"
+        ></v-slider>
+      </v-col>
+    </v-row>
 
-  <v-row class="margin-top">
-    <v-col cols="3">
-      <div class="text-h3 text-center">{{$t('help')}}</div>
-    </v-col>
-    <v-col cols="8">
-      <div class="helpers">
-        <div v-for="item in helperItems">
-          <v-btn text icon dark large>
-            <v-icon dark>{{item.icon}}</v-icon>
-          </v-btn>
-          <p style="color: white" class="text-helper">{{$t(item.text)}}</p>
+    <v-row class="margin-top">
+      <v-col cols="3">
+        <div class="text-h3 text-center">MeCab</div>
+      </v-col>
+      <v-col cols="4" style="display: flex">
+        <v-switch v-model="showRomaji" style="margin-top: 0"></v-switch>
+        <p style="color: white" class="text-center">{{$t('showRomaji')}}</p>
+      </v-col>
+    </v-row>
+
+    <v-row class="margin-top">
+      <v-col cols="3">
+        <div class="text-h3 text-center">{{$t('backgroundColor')}}</div>
+      </v-col>
+      <v-col cols="9">
+        <chrome-picker v-model="backgroundColor"></chrome-picker>
+      </v-col>
+    </v-row>
+
+    <v-row class="margin-top">
+      <v-col cols="3">
+        <div class="text-h3 text-center">{{$t('help')}}</div>
+      </v-col>
+      <v-col cols="8">
+        <div class="helpers">
+          <div v-for="item in helperItems" :key="`helper-item-${item.text}`">
+            <v-btn text icon dark large>
+              <v-icon dark>{{item.icon}}</v-icon>
+            </v-btn>
+            <p style="color: white" class="text-helper">{{$t(item.text)}}</p>
+          </div>
         </div>
-      </div>
-    </v-col>
-  </v-row>
+      </v-col>
+    </v-row>
 
-  <v-row class="margin-top">
-    <v-col cols="12" align="center">
-      <v-btn color="primary" @click="toggleDevTools">{{$t('toggleDevTools')}}</v-btn>
-    </v-col>
-  </v-row>
-</div>
+    <v-row class="margin-top">
+      <v-col cols="12" align="center">
+        <v-btn color="primary" @click="toggleDevTools">{{$t('toggleDevTools')}}</v-btn>
+      </v-col>
+    </v-row>
+  </div>
 </template>
 
 <script lang="ts">
-import {
-  remote
-} from 'electron'
+import { remote } from 'electron'
 import Vue from 'vue'
-import {
-  Component,
-  Watch
-} from 'vue-property-decorator'
-import {
-  Route
-} from 'vue-router'
-import {
-  namespace,
-  State
-} from 'vuex-class'
+import { Component, Watch } from 'vue-property-decorator'
+import { Route } from 'vue-router'
+import { namespace, State } from 'vuex-class'
 
-import {
-  Chrome
-} from 'vue-color'
+import { Chrome } from 'vue-color'
 
 @Component({
   components: {
@@ -158,51 +191,73 @@ export default class HookSettings extends Vue {
     })
     this.$store.commit('Config/SAVE_GUI_CONFIG')
   }
+  get showRomaji () {
+    return this.getMecab().showRomaji
+  }
+  set showRomaji (value: boolean) {
+    this.$store.commit('Config/SET_MECAB_SHOW_ROMAJI', {
+      value
+    })
+    this.$store.commit('Config/SAVE_GUI_CONFIG')
+  }
+  get autoHideTitlebar () {
+    return this.getAutoHideTitlebar()
+  }
+  set autoHideTitlebar (value: boolean) {
+    this.$store.commit('Config/SET_AUTO_HIDE_TITLEBAR', {
+      value
+    })
+    this.$store.commit('Config/SAVE_GUI_CONFIG')
+  }
   @namespace('Config').Getter('getOriginalText')
   public getOriginalText!: () => yuki.FontStyle
   @namespace('Config').Getter('getTranslationText')
   public getTranslationText!: () => yuki.TranslationTextStyle
   @namespace('Config').Getter('getBackgroundColor')
   public getBackgroundColor!: () => string
+  @namespace('Config').Getter('getMecab')
+  public getMecab!: () => yuki.Config.Gui['translatorWindow']['mecab']
+  @namespace('Config').Getter('getAutoHideTitlebar')
+  public getAutoHideTitlebar!: () => boolean
 
-  @(namespace('View').State('isWindowTooHigh'))
-  public isWindowTooHigh!: boolean
+  @namespace('View').State('isWindowTooHigh') public isWindowTooHigh!: boolean
 
-  public helperItems: Array < {
-    text: string,
-    icon: string
-  } > = [{
-    text: 'previousText',
-    icon: 'mdi-chevron-left'
-  },
-  {
-    text: 'nextText',
-    icon: 'mdi-chevron-right'
-  },
-  {
-    text: 'returnToLatestText',
-    icon: 'mdi-chevron-triple-right'
-  },
-  {
-    text: 'alwaysOnTop',
-    icon: 'mdi-lock'
-  },
-  {
-    text: 'notAlwaysOnTop',
-    icon: 'mdi-lock-open-outline'
-  },
-  {
-    text: 'hide',
-    icon: 'mdi-close'
-  },
-  {
-    text: 'pauseNewText',
-    icon: 'mdi-pause'
-  },
-  {
-    text: 'restoreNewText',
-    icon: 'mdi-play'
-  }
+  public helperItems: Array<{
+    text: string;
+    icon: string;
+  }> = [
+    {
+      text: 'previousText',
+      icon: 'mdi-chevron-left'
+    },
+    {
+      text: 'nextText',
+      icon: 'mdi-chevron-right'
+    },
+    {
+      text: 'returnToLatestText',
+      icon: 'mdi-chevron-triple-right'
+    },
+    {
+      text: 'alwaysOnTop',
+      icon: 'mdi-lock'
+    },
+    {
+      text: 'notAlwaysOnTop',
+      icon: 'mdi-lock-open-outline'
+    },
+    {
+      text: 'hide',
+      icon: 'mdi-close'
+    },
+    {
+      text: 'pauseNewText',
+      icon: 'mdi-pause'
+    },
+    {
+      text: 'restoreNewText',
+      icon: 'mdi-play'
+    }
   ]
 
   get classObject () {

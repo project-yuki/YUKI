@@ -1,12 +1,4 @@
 {
-  "dictionaries": {
-    "lingoes": {
-      "enable": true,
-      "path": "C:\\YUKI\\libraries\\dict\\lingoes\\njcd.db"
-    }
-  },
-  "language": "zh",
-  "librariesRepoUrl": "https://github.com/project-yuki/libraries/raw/master/_pack/",
   "localeChangers": {
     "alphaROMdiE": {
       "enable": false,
@@ -28,10 +20,6 @@
       "exec": "C:\\ntleas046_x64\\x86\\ntleas.exe %GAME_PATH%",
       "name": "Ntleas"
     }
-  },
-  "mecab": {
-    "enable": true,
-    "path": "C:\\YUKI\\libraries\\pos\\mecab-ipadic"
   },
   "onlineApis": [
     {
@@ -76,5 +64,17 @@
       "enable": true,
       "path": "C:\\JBeijing7"
     }
-  }
+  },
+  "dictionaries": {
+    "lingoes": {
+      "enable": true,
+      "path": "C:\\YUKI\\libraries\\dict\\lingoes\\njcd.db"
+    }
+  },
+  "mecab": {
+    "enable": true,
+    "path": "C:\\YUKI\\libraries\\pos\\mecab-ipadic"
+  },
+  "librariesRepoUrl": "https://github.com/project-yuki/libraries/raw/master/_pack/",
+  "language": "zh"
 }

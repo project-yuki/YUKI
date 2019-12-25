@@ -19,23 +19,16 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import {
-  Component,
-  Prop
-} from 'vue-property-decorator'
-import {
-  namespace
-} from 'vuex-class'
+import { Component, Prop } from 'vue-property-decorator'
+import { namespace } from 'vuex-class'
 
 @Component
 export default class TextDisplay extends Vue {
-  @Prop(String)
-  public name!: string
-  @Prop(String)
-  public translation!: string
+  @Prop(String) public name!: string
+  @Prop(String) public translation!: string
 
   @namespace('Config').State('gui')
-  public guiConfig!: any
+  public guiConfig!: yuki.Config.Gui['translatorWindow']
 
   get translationTextStyle () {
     return this.guiConfig.translationText

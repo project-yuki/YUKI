@@ -66,6 +66,10 @@ declare namespace yuki {
       originalText: FontStyle;
       translationText: TranslationTextStyle;
       background: string;
+      mecab: {
+        showRomaji: boolean;
+      }
+      autoHideTitlebar: boolean;
     }
   }
 
