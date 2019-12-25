@@ -55,7 +55,7 @@ export default class ConfigManager {
       return this.nameToConfigMap[configName].getFilename()
     } catch (e) {
       debug('no config named %s', configName)
-      return ''
+      return 'default'
     }
   }
 }

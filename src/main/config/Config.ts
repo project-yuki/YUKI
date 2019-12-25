@@ -1,7 +1,8 @@
-import { app } from 'electron'
+import { app, ipcMain } from 'electron'
 import * as fs from 'fs'
 import * as jsonfile from 'jsonfile'
 import * as path from 'path'
+import IpcTypes from '../../common/IpcTypes'
 const debug = require('debug')('yuki:config')
 
 abstract class Config {
@@ -12,38 +13,35 @@ abstract class Config {
 
   protected config: any
 
+  protected filePath!: string
+  protected isSaving: boolean = false
+
   public init () {
-    if (!fs.existsSync(
-      path.resolve(global.__baseDir, `config/${this.getFilename()}.json`))) {
-      this.config = this.getDefaultObject()
-      this.save()
-    } else {
-      this.load()
-    }
+    this.filePath = path.resolve(global.__baseDir, `config/${this.getFilename()}.json`)
+    this.load()
+    this.save()
+    debug('%s loaded with pre-save', this.filePath)
+    this.registerWatchCallback()
     return this
   }
 
-  public abstract getFilename (): string
-
   public load () {
-    const filePath = path.resolve(global.__baseDir, `config/${this.getFilename()}.json`)
     try {
-      this.config = jsonfile.readFileSync(filePath)
-      debug('%s loaded', filePath)
+      this.config = {
+        ...this.getDefaultObject(),
+        ...jsonfile.readFileSync(this.filePath)
+      }
     } catch (e) {
-      debug('%s loads failed !> %s', filePath, e)
-      app.exit(-2)
+      debug('%s loads failed !> %s', this.filePath, e)
     }
   }
 
   public save () {
-    const filePath = path.resolve(global.__baseDir, `config/${this.getFilename()}.json`)
     try {
-      jsonfile.writeFileSync(filePath, this.config, Config.FILE_OPTIONS)
-      debug('%s saved', filePath)
+      jsonfile.writeFileSync(this.filePath, this.config, Config.FILE_OPTIONS)
+      debug('%s saved', this.filePath)
     } catch (e) {
-      debug('%s saves failed !> %s', filePath, e)
-      app.exit(-2)
+      debug('%s saves failed !> %s', this.filePath, e)
     }
   }
 
@@ -56,7 +54,22 @@ abstract class Config {
     this.save()
   }
 
+  public abstract getFilename (): string
+
   protected abstract getDefaultObject (): object
+
+  private registerWatchCallback () {
+    fs.watch(this.filePath, {}, () => {
+      if (this.isSaving) return
+      try {
+        debug('%s changed. reloading...', this.getFilename())
+        this.load()
+        ipcMain.emit(IpcTypes.RELOAD_CONFIG, this.getFilename())
+      } catch (e) {
+        return
+      }
+    })
+  }
 }
 
 export default Config

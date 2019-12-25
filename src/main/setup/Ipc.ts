@@ -91,6 +91,23 @@ export default function (mainWindow: Electron.BrowserWindow) {
     sendConfig(name, event)
   })
 
+  ipcMain.on(IpcTypes.RELOAD_CONFIG, (name: string) => {
+    const configName = ConfigManager.getInstance().getFilename(name)
+    debug('reloading config %s', configName)
+    mainWindow.webContents.send(
+      IpcTypes.HAS_CONFIG,
+      configName,
+      ConfigManager.getInstance().get(configName)
+    )
+    if (translatorWindow) {
+      translatorWindow.getWindow().webContents.send(
+        IpcTypes.HAS_CONFIG,
+        configName,
+        ConfigManager.getInstance().get(configName)
+      )
+    }
+  })
+
   function requestGame (event: Electron.Event) {
     if (translatorWindow) {
       debug('request config %o', translatorWindow.getGameInfo())
