@@ -39,6 +39,9 @@ const getters = {
   },
   getBackgroundColor: (state: yuki.TranslatorConfigState) => () => {
     return state.gui.background
+  },
+  getMecab: (state: yuki.TranslatorConfigState) => () => {
+    return state.gui.mecab
   }
 }
 
@@ -94,6 +97,12 @@ const mutations = {
     payload: { color: { hex8: string } }
   ) {
     state.gui.background = payload.color.hex8
+  },
+  SET_MECAB_SHOW_ROMAJI (
+    state: yuki.TranslatorConfigState,
+    payload: { value: boolean }
+  ) {
+    state.gui.mecab.showRomaji = payload.value
   },
   SAVE_GUI_CONFIG (state: yuki.TranslatorConfigState) {
     if (!isSavingConfig) {
