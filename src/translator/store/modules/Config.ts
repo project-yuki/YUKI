@@ -23,7 +23,10 @@ const configState: any = {
       color: '',
       margin: 0
     },
-    background: ''
+    background: '',
+    mecab: {
+      showRomaji: false
+    }
   }
 }
 

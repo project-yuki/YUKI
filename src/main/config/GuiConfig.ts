@@ -42,7 +42,10 @@ export default class GuiConfig extends Config {
           margin: 18
         },
         background: '#000000BD',
-        renderMode: 'translucent'
+        renderMode: 'translucent',
+        mecab: {
+          showRomaji: false
+        }
       }
     }
   }

@@ -2,6 +2,7 @@ import * as fs from 'fs'
 import * as path from 'path'
 const debug = require('debug')('yuki:mecab')
 const toHiragana = require('wanakana').toHiragana
+const toRomaji = require('wanakana').toRomaji
 
 interface IMeCab {
   parseSync: (text: string) => string[][]
@@ -79,6 +80,10 @@ export default class MecabMiddleware
       result += pattern.word
     }
     return result
+  }
+
+  public static kanaToRomaji (kana: string): string {
+    return toRomaji(kana)
   }
 
   private mecab: IMeCab | undefined

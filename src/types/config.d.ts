@@ -84,6 +84,9 @@ declare namespace yuki {
         translationText: TranslationTextStyle;
         background: string;
         renderMode: 'transparent' | 'translucent';
+        mecab: {
+          showRomaji: boolean;
+        }
       }
     }
 
