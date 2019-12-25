@@ -27,7 +27,8 @@
     "toggleDevTools": "切换开发人员工具",
     "debugMessages": "调试信息",
     "debugMsg": "调试信息",
-    "description": "说明"
+    "description": "说明",
+    "window": "窗口"
   },
   "en": {
     "YUKIGalgameTranslator": "Galgame Translator",
@@ -57,6 +58,7 @@
     "toggleDevTools": "Toggle Dev Tools",
     "debugMessages": "Debug Messages",
     "debugMsg": "Debug Msg",
-    "description": "Description"
+    "description": "Description",
+    "window": "Window"
   }
 }

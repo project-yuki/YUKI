@@ -16,7 +16,8 @@
     "hide": "窗口隐藏（当有新文本时恢复）",
     "pauseNewText": "暂停新文本获取",
     "restoreNewText": "恢复新文本获取",
-    "showRomaji": "显示罗马音"
+    "showRomaji": "显示罗马音",
+    "autoHideTitlebar": "自动隐藏标题栏"
   },
   "en": {
     "originalText": "Original Text",
@@ -33,7 +34,8 @@
     "hide": "Hide Window (Restore When New Text Comes)",
     "pauseNewText": "Pause New Text Coming",
     "restoreNewText": "Restore New Text Coming",
-    "showRomaji": "Show Romaji"
+    "showRomaji": "Show Romaji",
+    "autoHideTitlebar": "Automatically Hide Titlebar"
   }
 }
 </i18n>
@@ -41,6 +43,16 @@
 <template>
   <div :class="classObject">
     <v-row>
+      <v-col cols="3">
+        <div class="text-h3 text-center">{{$t('window')}}</div>
+      </v-col>
+      <v-col cols="4" style="display: flex">
+        <v-switch v-model="autoHideTitlebar" style="margin-top: 0"></v-switch>
+        <p style="color: white" class="text-center">{{$t('autoHideTitlebar')}}</p>
+      </v-col>
+    </v-row>
+
+    <v-row class="margin-top">
       <v-col cols="3">
         <div class="text-h3 text-center">{{$t('originalText')}}</div>
       </v-col>
@@ -188,6 +200,15 @@ export default class HookSettings extends Vue {
     })
     this.$store.commit('Config/SAVE_GUI_CONFIG')
   }
+  get autoHideTitlebar () {
+    return this.getAutoHideTitlebar()
+  }
+  set autoHideTitlebar (value: boolean) {
+    this.$store.commit('Config/SET_AUTO_HIDE_TITLEBAR', {
+      value
+    })
+    this.$store.commit('Config/SAVE_GUI_CONFIG')
+  }
   @namespace('Config').Getter('getOriginalText')
   public getOriginalText!: () => yuki.FontStyle
   @namespace('Config').Getter('getTranslationText')
@@ -196,6 +217,8 @@ export default class HookSettings extends Vue {
   public getBackgroundColor!: () => string
   @namespace('Config').Getter('getMecab')
   public getMecab!: () => yuki.Config.Gui['translatorWindow']['mecab']
+  @namespace('Config').Getter('getAutoHideTitlebar')
+  public getAutoHideTitlebar!: () => boolean
 
   @namespace('View').State('isWindowTooHigh') public isWindowTooHigh!: boolean
 
