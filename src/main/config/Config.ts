@@ -26,13 +26,16 @@ abstract class Config {
   }
 
   public load () {
+    let fileContent
     try {
-      this.config = {
-        ...this.getDefaultObject(),
-        ...jsonfile.readFileSync(this.filePath)
-      }
+      fileContent = jsonfile.readFileSync(this.filePath)
     } catch (e) {
       debug('%s loads failed !> %s', this.filePath, e)
+      fileContent = {}
+    }
+    this.config = {
+      ...this.getDefaultObject(),
+      ...fileContent
     }
   }
 
