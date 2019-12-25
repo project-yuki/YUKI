@@ -69,6 +69,7 @@ declare namespace yuki {
       mecab: {
         showRomaji: boolean;
       }
+      autoHideTitlebar: boolean;
     }
   }
 

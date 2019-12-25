@@ -14,10 +14,10 @@
 
 <template>
   <v-app id="app">
-    <div id="top">
+    <div id="top" v-if="showTitlebar">
       <yk-titlebar></yk-titlebar>
     </div>
-    <div id="content">
+    <div id="content" :style="{marginTop: showTitlebar ? '32px' : '0'}">
       <div id="buttons-top" class="buttons" v-if="isButtonsShown && isWindowTooHigh">
         <v-btn small text dark to="/translate" style="width: 32%">{{$t('translate')}}</v-btn>
         <v-btn small text dark to="/hooks" style="width: 32%">{{$t('textHookSettings')}}</v-btn>
@@ -67,6 +67,10 @@ export default class App extends Vue {
     return this.getBackgroundColor()
   }
 
+  get showTitlebar () {
+    return !this.getAutoHideTitlebar() || this.isButtonsShown
+  }
+
   get currentId () {
     return this.getLastIndexByHandle(this.currentIndex)
   }
@@ -75,6 +79,8 @@ export default class App extends Vue {
   }
   @namespace('View').State('isButtonsShown') public isButtonsShown!: boolean
   @namespace('View').State('isWindowTooHigh') public isWindowTooHigh!: boolean
+  @namespace('Config').Getter('getAutoHideTitlebar')
+  public getAutoHideTitlebar!: () => boolean
 
   @namespace('Hooks').Getter('getTextByHandleAndId')
   public getTextByHandleAndId!: (handle: number, id: number) => string
@@ -114,7 +120,10 @@ export default class App extends Vue {
       this.$store.dispatch('View/setButtonsShown', true)
     })
     document.addEventListener('mouseleave', () => {
-      if (this.currentOriginText !== '') {
+      if (
+        this.$router.currentRoute.path === '/translate' &&
+        this.currentOriginText !== ''
+      ) {
         this.$store.dispatch('View/setButtonsShown', false)
       }
     })
@@ -143,7 +152,10 @@ export default class App extends Vue {
   }
 
   public updated () {
-    if (this.$router.currentRoute.path === '/translate' && !this.isGetDictResult) {
+    if (
+      this.$router.currentRoute.path === '/translate' &&
+      !this.isGetDictResult
+    ) {
       if (this.isButtonsShown && !this.isWindowTooHigh) {
         this.$nextTick(() => {
           this.updateWindowHeight(24)
@@ -242,10 +254,6 @@ body {
   width: 100%;
   z-index: 999;
   top: 0;
-}
-
-#app #content {
-  margin-top: 32px;
 }
 
 #app #content #buttons-top {
