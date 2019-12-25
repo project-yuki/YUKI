@@ -49,18 +49,10 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import {
-  Component,
-  Watch
-} from 'vue-property-decorator'
-import {
-  namespace
-} from 'vuex-class'
+import { Component, Watch } from 'vue-property-decorator'
+import { namespace } from 'vuex-class'
 
-import {
-  ipcRenderer,
-  remote
-} from 'electron'
+import { ipcRenderer, remote } from 'electron'
 import IpcTypes from '../common/IpcTypes'
 
 import YkTitlebar from '@/components/Titlebar.vue'
@@ -71,27 +63,8 @@ import YkTitlebar from '@/components/Titlebar.vue'
   }
 })
 export default class App extends Vue {
-  @(namespace('View').State('isButtonsShown'))
-  public isButtonsShown!: boolean
-  @(namespace('View').State('isWindowTooHigh'))
-  public isWindowTooHigh!: boolean
-
-  @(namespace('Hooks').Getter('getTextByHandleAndId'))
-  public getTextByHandleAndId!: (handle: number, id: number) => string
-  @(namespace('Hooks').Getter('getLastIndexByHandle'))
-  public getLastIndexByHandle!: (handle: number) => number
-
-  @(namespace('Hooks').State('currentDisplayHookIndex'))
-  public currentIndex!: number
-
-  @(namespace('Config').Getter('getBackgroundColor'))
-  public getBackgroundColor!: () => string
   get backgroundColor () {
     return this.getBackgroundColor()
-  }
-  @Watch('backgroundColor')
-  public onBackgroundColorChange () {
-    document.body.style.backgroundColor = this.backgroundColor
   }
 
   get currentId () {
@@ -99,6 +72,25 @@ export default class App extends Vue {
   }
   get currentOriginText () {
     return this.getTextByHandleAndId(this.currentIndex, this.currentId)
+  }
+  @namespace('View').State('isButtonsShown') public isButtonsShown!: boolean
+  @namespace('View').State('isWindowTooHigh') public isWindowTooHigh!: boolean
+
+  @namespace('Hooks').Getter('getTextByHandleAndId')
+  public getTextByHandleAndId!: (handle: number, id: number) => string
+  @namespace('Hooks').Getter('getLastIndexByHandle')
+  public getLastIndexByHandle!: (handle: number) => number
+
+  @namespace('Hooks').State('currentDisplayHookIndex')
+  public currentIndex!: number
+
+  @namespace('Config').Getter('getBackgroundColor')
+  public getBackgroundColor!: () => string
+
+  @namespace('View').State('isGetDictResult') public isGetDictResult!: boolean
+  @Watch('backgroundColor')
+  public onBackgroundColorChange () {
+    document.body.style.backgroundColor = this.backgroundColor
   }
 
   public mounted () {
@@ -151,8 +143,8 @@ export default class App extends Vue {
   }
 
   public updated () {
-    if (this.$router.currentRoute.path === '/translate') {
-      if (this.isButtonsShown && (!this.isWindowTooHigh)) {
+    if (this.$router.currentRoute.path === '/translate' && !this.isGetDictResult) {
+      if (this.isButtonsShown && !this.isWindowTooHigh) {
         this.$nextTick(() => {
           this.updateWindowHeight(24)
         })
