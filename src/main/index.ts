@@ -77,7 +77,8 @@ function createWindow () {
   mainWindow.loadURL(mainWinURL)
 
   mainWindow.once('ready-to-show', () => {
-    mainWindow.webContents.openDevTools()
+    if (!mainWindow) return
+
     mainWindow.show()
   })
 
