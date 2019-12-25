@@ -207,7 +207,11 @@ export default function (mainWindow: Electron.BrowserWindow) {
     IpcTypes.REQUEST_TRANSLATION,
     (event: Electron.Event, message: { id: number, text: string }) => {
       TranslationManager.getInstance().translate(message.text, (translation) => {
-        event.sender.send(IpcTypes.HAS_TRANSLATION, { id: message.id, translation })
+        try {
+          event.sender.send(IpcTypes.HAS_TRANSLATION, { id: message.id, translation })
+        } catch (e) {
+          return
+        }
       })
     }
   )
