@@ -96,6 +96,8 @@
                   v-model="editedItem.exec"
                   :label="$t('executionType')"
                   :rules="[noLineBreakRule]"
+                  append-icon="mdi-dots-horizontal"
+                  @click:append="requestPath('*.exe')"
                 ></v-textarea>
               </v-col>
             </v-row>
@@ -126,6 +128,9 @@ import {
 import {
   ipcRenderer
 } from 'electron'
+import {
+  join
+} from 'path'
 import IpcTypes from '../../common/IpcTypes'
 
 type TempLocaleChangerItem = yuki.Config.LocaleChangerItem & {
@@ -185,6 +190,17 @@ export default class LocaleChangerSettings extends Vue {
     }
   }
 
+  public requestPath (filename: string) {
+    ipcRenderer.once(
+      IpcTypes.HAS_PATH_WITH_FILE,
+      (event: Electron.Event, path: string) => {
+        this.editedItem.exec = join(
+          '"'+path+'"' + ' %GAME_PATH%'
+        )
+      }
+    )
+    ipcRenderer.send(IpcTypes.REQUEST_PATH_WITH_FILE, filename)
+  }
   public closeDialog () {
     this.showDialog = false
   }
