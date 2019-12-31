@@ -1,16 +1,17 @@
 <template>
   <div class="three-columns">
-    <v-btn
-      text
-      icon
-      large
-      dark
-      v-if="isPreviousTextValid"
-      @click="goToPreviousText"
-      class="navigation-button"
-    >
-      <v-icon dark>mdi-chevron-left</v-icon>
-    </v-btn>
+    <div v-if="isPreviousTextValid" class="navigation-button">
+      <v-btn text icon large dark @click="goToPreviousText">
+        <v-icon dark>mdi-chevron-left</v-icon>
+      </v-btn>
+
+      <v-btn text icon large dark @click="incTextSize">
+        <v-icon dark>mdi-format-font-size-increase</v-icon>
+      </v-btn>
+      <v-btn text icon large dark @click="decTextSize">
+        <v-icon dark>mdi-format-font-size-decrease</v-icon>
+      </v-btn>
+    </div>
     <div class="navigation-button" v-else></div>
 
     <v-container style="flex: 1;">
@@ -89,6 +90,9 @@ export default class TranslatePage extends Vue {
   @namespace('Config').Getter('getOriginalText')
   public getOriginalText!: () => yuki.FontStyle
 
+  @(namespace("Config").Getter("getTranslationText"))
+  public getTranslationText!: () => yuki.TranslationTextStyle
+
   @namespace('Hooks').State('isMecabEnable')
   public isMecabEnable!: boolean
 
@@ -99,6 +103,21 @@ export default class TranslatePage extends Vue {
   }
   get originalTextSize () {
     return this.getOriginalText().fontSize
+  }
+  set originalTextSize(size: number) {
+    this.$store.commit("Config/SET_ORIGINAL_TEXT_SIZE", {
+      size
+    })
+    this.$store.commit('Config/SAVE_GUI_CONFIG')
+  }
+  get translationTextSize() {
+    return this.getTranslationText().fontSize;
+  }
+  set translationTextSize(size: number) {
+    this.$store.commit("Config/SET_TRANSLATION_TEXT_SIZE", {
+      size
+    })
+    this.$store.commit('Config/SAVE_GUI_CONFIG')
   }
 
   get currentOriginText () {
@@ -153,6 +172,18 @@ export default class TranslatePage extends Vue {
     while (this.isNextTextValid) {
       this.idOffset++
     }
+  }
+  public incTextSize() {
+    if (this.originalTextSize < 36)
+      this.originalTextSize = this.originalTextSize + 1
+    if (this.translationTextSize < 36)
+      this.translationTextSize = this.translationTextSize + 1
+  }
+  public decTextSize() {
+    if (this.originalTextSize > 1)
+      this.originalTextSize = this.originalTextSize - 1
+    if (this.translationTextSize > 1)
+      this.translationTextSize = this.translationTextSize - 1
   }
 
   public beforeRouteEnter (to: Route, from: Route, next: () => void) {
