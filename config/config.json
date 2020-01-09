@@ -41,7 +41,7 @@
       "name": "有道"
     },
     {
-      "enable": true,
+      "enable": false,
       "method": "POST",
       "name": "谷歌",
       "requestBodyFormat": "X{\"q\": %TEXT%, \"sl\": \"ja\", \"tl\": \"zh-CN\"}",
