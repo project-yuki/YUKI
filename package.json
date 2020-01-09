@@ -35,7 +35,7 @@
       "dict/**/*",
       "lib/**/*",
       "config/youdaoApi.js",
-      "config/hjdictApi.js",
+      "config/baiduApi.js",
       "config/qqApi.js"
     ],
     "win": {
