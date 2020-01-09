@@ -21,7 +21,7 @@ export default class DefaultConfig extends Config {
         {
           enable: true,
           external: true,
-          jsFile: 'config\\hjdictApi.js',
+          jsFile: 'config\\youdaoApi.js',
           name: '有道'
         },
         {
