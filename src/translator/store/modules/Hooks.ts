@@ -125,9 +125,27 @@ const mutations = {
     state.translations[state.currentDisplayHookIndex] = {
       ...state.translations[state.currentDisplayHookIndex],
       [payload.id.toString()]: {
-        ...state.translations[state.currentDisplayHookIndex][payload.id.toString()],
+        ...state.translations[state.currentDisplayHookIndex][
+          payload.id.toString()
+        ],
         ...payload.translation
       }
+    }
+  },
+  INIT_TRANSLATION_PLACEHOLDERS (
+    state: yuki.TranslatorHookState,
+    payload: yuki.TranslationMessage
+  ) {
+    const lastIndex = Object.keys(state.translations[state.currentDisplayHookIndex]).length
+    if (lastIndex <= 0) return
+
+    state.translations[state.currentDisplayHookIndex] = {
+      ...state.translations[state.currentDisplayHookIndex],
+      [payload.id.toString()]: Object.keys(
+        state.translations[state.currentDisplayHookIndex][
+          (payload.id - 1).toString()
+        ]
+      ).reduce((p, c) => { p[c] = '...'; return p }, {})
     }
   },
   SET_MECAB_ENABLE (
@@ -176,6 +194,9 @@ const actions = {
       }
       if (state.currentDisplayHookIndex === hook.handle) {
         dispatch('View/clearDict', {}, { root: true })
+        commit('INIT_TRANSLATION_PLACEHOLDERS', {
+          id: state.texts[hook.handle.toString()].length - 1
+        })
         if (state.isMecabEnable) {
           ipcRenderer.send(IpcTypes.REQUEST_TRANSLATION, {
             id: state.texts[hook.handle.toString()].length - 1, text: originalText
