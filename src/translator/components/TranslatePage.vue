@@ -51,6 +51,7 @@ import Component from 'vue-class-component'
 import { Prop, Watch } from 'vue-property-decorator'
 import { Route } from 'vue-router'
 import { namespace } from 'vuex-class'
+import { updateWindowHeight } from '../common/Window'
 
 import YkHookSettings from '@/components/HookSettings.vue'
 import YkMecabText from '@/components/MecabText.vue'
@@ -197,46 +198,27 @@ export default class TranslatePage extends Vue {
   }
 
   public beforeRouteEnter (to: Route, from: Route, next: () => void) {
-    const newHeight = document.body.offsetHeight + 24
-    const window = remote.getCurrentWindow()
-    const width = window.getSize()[0]
-    window.setSize(width, newHeight)
+    updateWindowHeight(this, true, 24)
     next()
-  }
-
-  public updateWindowHeight (offset: number) {
-    const newHeight = document.body.offsetHeight + offset
-    const window = remote.getCurrentWindow()
-    const width = window.getSize()[0]
-    if (newHeight > 640) {
-      this.$nextTick(() => {
-        this.$store.dispatch('View/setWindowTooHigh', true)
-      })
-    } else {
-      this.$nextTick(() => {
-        this.$store.dispatch('View/setWindowTooHigh', false)
-      })
-    }
-    window.setSize(width, newHeight)
   }
 
   @Watch('isButtonShown')
   public onButtonShownChanged () {
     if (this.isButtonsShown) {
-      this.updateWindowHeight(24)
+      updateWindowHeight(this, true, 24)
     } else {
-      this.updateWindowHeight(0)
+      updateWindowHeight(this, true, 0)
     }
   }
 
   public updated () {
     if (this.isButtonsShown) {
       this.$nextTick(() => {
-        this.updateWindowHeight(24)
+        updateWindowHeight(this, true, 24)
       })
     } else {
       this.$nextTick(() => {
-        this.updateWindowHeight(0)
+        updateWindowHeight(this, true, 0)
       })
     }
   }

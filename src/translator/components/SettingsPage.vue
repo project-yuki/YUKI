@@ -148,6 +148,7 @@ import { Route } from 'vue-router'
 import { namespace, State } from 'vuex-class'
 
 import { Chrome } from 'vue-color'
+import { updateWindowHeight } from '../common/Window'
 
 @Component({
   components: {
@@ -269,12 +270,11 @@ export default class HookSettings extends Vue {
   }
 
   public beforeRouteEnter (to: Route, from: Route, next: () => void) {
-    const newHeight = Math.trunc(
-      remote.screen.getPrimaryDisplay().size.height * 0.6
+    updateWindowHeight(
+      this,
+      false,
+      Math.trunc(remote.screen.getPrimaryDisplay().size.height * 0.6)
     )
-    const window = remote.getCurrentWindow()
-    const width = window.getSize()[0]
-    window.setSize(width, newHeight)
     next()
   }
 

@@ -56,6 +56,7 @@ import { ipcRenderer, remote } from 'electron'
 import IpcTypes from '../common/IpcTypes'
 
 import YkTitlebar from '@/components/Titlebar.vue'
+import { updateWindowHeight } from './common/Window'
 
 @Component({
   components: {
@@ -129,18 +130,6 @@ export default class App extends Vue {
     })
   }
 
-  public updateWindowHeight (offset: number) {
-    const newHeight = document.body.offsetHeight + offset
-    const window = remote.getCurrentWindow()
-    const width = window.getSize()[0]
-    if (newHeight > 640) {
-      this.$store.dispatch('View/setWindowTooHigh', true)
-    } else {
-      this.$store.dispatch('View/setWindowTooHigh', false)
-    }
-    window.setSize(width, newHeight)
-  }
-
   @Watch('currentIndex')
   public onCurrentIndexChanged () {
     this.$store.dispatch('View/setButtonsShown', false)
@@ -158,11 +147,11 @@ export default class App extends Vue {
     ) {
       if (this.isButtonsShown && !this.isWindowTooHigh) {
         this.$nextTick(() => {
-          this.updateWindowHeight(24)
+          updateWindowHeight(this, true, 24)
         })
       } else {
         this.$nextTick(() => {
-          this.updateWindowHeight(0)
+          updateWindowHeight(this, true, 0)
         })
       }
     }
