@@ -72,6 +72,7 @@ import { Component, Prop, Watch } from 'vue-property-decorator'
 import { namespace } from 'vuex-class'
 import IpcTypes from '../../common/IpcTypes'
 import MecabMiddleware from '../../main/middlewares/MeCabMiddleware'
+import { updateWindowHeight } from '../common/Window'
 
 @Component
 export default class MecabText extends Vue {
@@ -141,31 +142,18 @@ export default class MecabText extends Vue {
   public checkGetDictResult (newValue: boolean) {
     if (newValue === true) {
       this.$nextTick(() => {
-        const newHeight = Math.trunc(
-          remote.screen.getPrimaryDisplay().size.height * 0.6
+        const newHeight = updateWindowHeight(
+          this,
+          false,
+          Math.trunc(remote.screen.getPrimaryDisplay().size.height * 0.6)
         )
-        const window = remote.getCurrentWindow()
-        const width = window.getSize()[0]
-        window.setSize(width, newHeight)
         this.dictDivHeight = newHeight - this.dictDivY - 32
       })
     } else {
       this.$nextTick(() => {
-        this.updateWindowHeight(24)
+        updateWindowHeight(this, true, 24)
       })
     }
-  }
-
-  public updateWindowHeight (offset: number) {
-    const newHeight = document.body.offsetHeight + offset
-    const window = remote.getCurrentWindow()
-    const width = window.getSize()[0]
-    if (newHeight > 640) {
-      this.$store.dispatch('View/setWindowTooHigh', true)
-    } else {
-      this.$store.dispatch('View/setWindowTooHigh', false)
-    }
-    window.setSize(width, newHeight)
   }
 }
 </script>

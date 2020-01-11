@@ -13,19 +13,19 @@ export default class DefaultConfig extends Config {
       },
       onlineApis: [
         {
-          enable: false,
+          enable: true,
           external: true,
-          jsFile: 'config\\hjdictApi.js',
-          name: '沪江'
+          jsFile: 'config\\baiduApi.js',
+          name: '百度'
         },
         {
           enable: true,
           external: true,
-          jsFile: 'config\\hjdictApi.js',
+          jsFile: 'config\\youdaoApi.js',
           name: '有道'
         },
         {
-          enable: true,
+          enable: false,
           method: 'POST',
           name: '谷歌',
           requestBodyFormat: 'X{"q": %TEXT%, "sl": "ja", "tl": "zh-CN"}',

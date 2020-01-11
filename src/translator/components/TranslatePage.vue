@@ -44,21 +44,14 @@
 </template>
 
 <script lang="ts">
-import {
-  remote
-} from 'electron'
+import { remote } from 'electron'
+import * as _ from 'lodash'
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import {
-  Prop,
-  Watch
-} from 'vue-property-decorator'
-import {
-  Route
-} from 'vue-router'
-import {
-  namespace
-} from 'vuex-class'
+import { Prop, Watch } from 'vue-property-decorator'
+import { Route } from 'vue-router'
+import { namespace } from 'vuex-class'
+import { updateWindowHeight } from '../common/Window'
 
 import YkHookSettings from '@/components/HookSettings.vue'
 import YkMecabText from '@/components/MecabText.vue'
@@ -71,16 +64,20 @@ import YkTextDisplay from '@/components/TextDisplay.vue'
   }
 })
 export default class TranslatePage extends Vue {
-  @namespace('View').State('isButtonsShown')
-  public isButtonsShown!: boolean
+  @namespace('View').State('isButtonsShown') public isButtonsShown!: boolean
 
   @namespace('Hooks').Getter('getTextByHandleAndId')
   public getTextByHandleAndId!: (handle: number, id: number) => string
   @namespace('Hooks').Getter('getPatternsByHandleAndId')
-  public getPatternsByHandleAndId!: (handle: number, id: number) => yuki.MeCabPatterns
+  public getPatternsByHandleAndId!: (
+    handle: number,
+    id: number
+  ) => yuki.MeCabPatterns
   @namespace('Hooks').Getter('getTranslationsByHandleAndId')
-  public getTranslationsByHandleAndId!:
-    (handle: number, id: number) => yuki.Translations['translations']
+  public getTranslationsByHandleAndId!: (
+    handle: number,
+    id: number
+  ) => yuki.Translations['translations']
   @namespace('Hooks').Getter('getLastIndexByHandle')
   public getLastIndexByHandle!: (handle: number) => number
 
@@ -90,11 +87,10 @@ export default class TranslatePage extends Vue {
   @namespace('Config').Getter('getOriginalText')
   public getOriginalText!: () => yuki.FontStyle
 
-  @(namespace("Config").Getter("getTranslationText"))
+  @namespace('Config').Getter('getTranslationText')
   public getTranslationText!: () => yuki.TranslationTextStyle
 
-  @namespace('Hooks').State('isMecabEnable')
-  public isMecabEnable!: boolean
+  @namespace('Hooks').State('isMecabEnable') public isMecabEnable!: boolean
 
   public idOffset: number = 0
 
@@ -104,17 +100,17 @@ export default class TranslatePage extends Vue {
   get originalTextSize () {
     return this.getOriginalText().fontSize
   }
-  set originalTextSize(size: number) {
-    this.$store.commit("Config/SET_ORIGINAL_TEXT_SIZE", {
+  set originalTextSize (size: number) {
+    this.$store.commit('Config/SET_ORIGINAL_TEXT_SIZE', {
       size
     })
     this.$store.commit('Config/SAVE_GUI_CONFIG')
   }
-  get translationTextSize() {
-    return this.getTranslationText().fontSize;
+  get translationTextSize () {
+    return this.getTranslationText().fontSize
   }
-  set translationTextSize(size: number) {
-    this.$store.commit("Config/SET_TRANSLATION_TEXT_SIZE", {
+  set translationTextSize (size: number) {
+    this.$store.commit('Config/SET_TRANSLATION_TEXT_SIZE', {
       size
     })
     this.$store.commit('Config/SAVE_GUI_CONFIG')
@@ -122,44 +118,55 @@ export default class TranslatePage extends Vue {
 
   get currentOriginText () {
     return this.getTextByHandleAndId(
-      this.currentIndex, this.getLastIndexByHandle(this.currentIndex) + this.idOffset
+      this.currentIndex,
+      this.getLastIndexByHandle(this.currentIndex) + this.idOffset
     )
   }
   get currentPatterns () {
     return this.getPatternsByHandleAndId(
-      this.currentIndex, this.getLastIndexByHandle(this.currentIndex) + this.idOffset
+      this.currentIndex,
+      this.getLastIndexByHandle(this.currentIndex) + this.idOffset
     )
   }
   get currentTranslations () {
     return this.getTranslationsByHandleAndId(
-      this.currentIndex, this.getLastIndexByHandle(this.currentIndex) + this.idOffset
+      this.currentIndex,
+      this.getLastIndexByHandle(this.currentIndex) + this.idOffset
     )
   }
 
   get isPreviousTextValid () {
     if (this.isMecabEnable) {
-      return this.getPatternsByHandleAndId(
-        this.currentIndex,
-        this.getLastIndexByHandle(this.currentIndex) + this.idOffset - 1
-      ).length !== 0
+      return (
+        this.getPatternsByHandleAndId(
+          this.currentIndex,
+          this.getLastIndexByHandle(this.currentIndex) + this.idOffset - 1
+        ).length !== 0
+      )
     } else {
-      return this.getTextByHandleAndId(
-        this.currentIndex,
-        this.getLastIndexByHandle(this.currentIndex) + this.idOffset - 1
-      ) !== ''
+      return (
+        this.getTextByHandleAndId(
+          this.currentIndex,
+          this.getLastIndexByHandle(this.currentIndex) + this.idOffset - 1
+        ) !== ''
+      )
     }
   }
   get isNextTextValid () {
     if (this.isMecabEnable) {
-      return this.getPatternsByHandleAndId(
-        this.currentIndex,
-        this.getLastIndexByHandle(this.currentIndex) + this.idOffset + 1
-      ).length !== 0
+      return (
+        this.getPatternsByHandleAndId(
+          this.currentIndex,
+          this.getLastIndexByHandle(this.currentIndex) + this.idOffset + 1
+        ).length !== 0
+      )
     } else {
-      return this.getTextByHandleAndId(
-        this.currentIndex,
-        this.getLastIndexByHandle(this.currentIndex) + this.idOffset + 1
-      ) !== ''
+      return (
+        this.getTextByHandleAndId(
+          this.currentIndex,
+          this.getLastIndexByHandle(this.currentIndex) + this.idOffset + 1
+        ) !== ''
+      )
     }
   }
   public goToPreviousText () {
@@ -173,60 +180,45 @@ export default class TranslatePage extends Vue {
       this.idOffset++
     }
   }
-  public incTextSize() {
-    if (this.originalTextSize < 36)
+  public incTextSize () {
+    if (this.originalTextSize < 36) {
       this.originalTextSize = this.originalTextSize + 1
-    if (this.translationTextSize < 36)
+    }
+    if (this.translationTextSize < 36) {
       this.translationTextSize = this.translationTextSize + 1
+    }
   }
-  public decTextSize() {
-    if (this.originalTextSize > 1)
+  public decTextSize () {
+    if (this.originalTextSize > 1) {
       this.originalTextSize = this.originalTextSize - 1
-    if (this.translationTextSize > 1)
+    }
+    if (this.translationTextSize > 1) {
       this.translationTextSize = this.translationTextSize - 1
+    }
   }
 
   public beforeRouteEnter (to: Route, from: Route, next: () => void) {
-    const newHeight = document.body.offsetHeight + 24
-    const window = remote.getCurrentWindow()
-    const width = window.getSize()[0]
-    window.setSize(width, newHeight)
+    updateWindowHeight(this, true, 24)
     next()
-  }
-
-  public updateWindowHeight (offset: number) {
-    const newHeight = document.body.offsetHeight + offset
-    const window = remote.getCurrentWindow()
-    const width = window.getSize()[0]
-    if (newHeight > 640) {
-      this.$nextTick(() => {
-        this.$store.dispatch('View/setWindowTooHigh', true)
-      })
-    } else {
-      this.$nextTick(() => {
-        this.$store.dispatch('View/setWindowTooHigh', false)
-      })
-    }
-    window.setSize(width, newHeight)
   }
 
   @Watch('isButtonShown')
   public onButtonShownChanged () {
     if (this.isButtonsShown) {
-      this.updateWindowHeight(24)
+      updateWindowHeight(this, true, 24)
     } else {
-      this.updateWindowHeight(0)
+      updateWindowHeight(this, true, 0)
     }
   }
 
   public updated () {
     if (this.isButtonsShown) {
       this.$nextTick(() => {
-        this.updateWindowHeight(24)
+        updateWindowHeight(this, true, 24)
       })
     } else {
       this.$nextTick(() => {
-        this.updateWindowHeight(0)
+        updateWindowHeight(this, true, 0)
       })
     }
   }

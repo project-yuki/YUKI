@@ -4,12 +4,12 @@
   "zh": {
     "underConstruction": "开发中m( _ _ )m",
     "pleaseModifyConfigurationFile": "请通过修改配置文件 config\\config.json 来配置翻译器",
-    "defaultTranslators": "（默认提供腾讯，沪江，谷歌，有道，彩云翻译）"
+    "defaultTranslators": "（默认提供腾讯，百度，谷歌，有道，彩云翻译）"
   },
   "en": {
     "underConstruction": "Under construction m( _ _ )m",
     "pleaseModifyConfigurationFile": "Please modify configuration file config\\config.json to configure translators",
-    "defaultTranslators": "（Defualt translators are QQ, HuJiang, Google, YouDao. These are all Japanese-Chinese translators）"
+    "defaultTranslators": "（Defualt translators are QQ, Baidu, Google, YouDao. These are all Japanese-Chinese translators）"
   }
 }
 </i18n>
