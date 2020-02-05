@@ -24,6 +24,7 @@ install:
   - git reset --hard HEAD
   - yarn
   - node --version
+  - npm install -g npm@6.11.3
 
 build_script:
   #- yarn test
