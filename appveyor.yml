@@ -21,10 +21,10 @@ init:
 
 install:
   - ps: Install-Product node 10 x86
+  - npm install -g npm@6.11.3
   - git reset --hard HEAD
   - yarn
   - node --version
-  - npm install -g npm@6.11.3
 
 build_script:
   #- yarn test
