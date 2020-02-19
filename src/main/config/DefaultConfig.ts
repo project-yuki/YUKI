@@ -13,7 +13,7 @@ export default class DefaultConfig extends Config {
       },
       onlineApis: [
         {
-          enable: true,
+          enable: false,
           external: true,
           jsFile: 'config\\baiduApi.js',
           name: '百度'
