@@ -234,8 +234,8 @@ export default function (mainWindow: Electron.BrowserWindow) {
 
   ipcMain.on(
     IpcTypes.HAS_DOWNLOAD_COMPLETE,
-    (packName: string) => {
-      mainWindow.webContents.send(IpcTypes.HAS_DOWNLOAD_COMPLETE, packName)
+    (packName: string, err: string | undefined) => {
+      mainWindow.webContents.send(IpcTypes.HAS_DOWNLOAD_COMPLETE, packName, err)
     }
   )
 

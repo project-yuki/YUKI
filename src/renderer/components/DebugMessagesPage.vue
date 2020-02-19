@@ -2,50 +2,49 @@
 <i18n>
 {
   "zh": {
-    "maxColumns": "最大行数"
+    "log": "日志",
+    "maxColumns": "最大行数",
+    "copyToClipboard": "复制到剪贴板",
+    "logCopied": "已复制日志"
   },
   "en": {
-    "maxColumns": "Max Columns"
+    "log": "Log",
+    "maxColumns": "Max Columns",
+    "copyToClipboard": "Copy To Clipboard",
+    "logCopied": "Log Copied"
   }
 }
 </i18n>
 
 <template>
-<div>
-  <yk-page-header :title="$t('debugMessages')" />
-  <yk-page-content>
-    <div class="console" id="terminal"></div>
-    <p class="text-h3">{{$t('maxColumns')}}</p>
-    <p>1000</p>
-  </yk-page-content>
-</div>
+  <div>
+    <yk-page-header :title="$t('debugMessages')" />
+    <yk-page-content>
+      <v-toolbar text color="white">
+        <v-toolbar-title>{{$t('log')}}</v-toolbar-title>
+        <v-divider class="mx-4" inset vertical></v-divider>
+        <p class="vertical-center">{{$t('maxColumns')}}: 1000</p>
+        <v-spacer></v-spacer>
+        <v-btn color="primary" dark class="mb-2" @click="copyToClipboard">{{$t('copyToClipboard')}}</v-btn>
+      </v-toolbar>
+      <div class="console" id="terminal"></div>
+    </yk-page-content>
+  </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import {
-  Component,
-  Watch
-} from 'vue-property-decorator'
-import {
-  namespace,
-  State
-} from 'vuex-class'
+import { Component, Watch } from 'vue-property-decorator'
+import { namespace, State } from 'vuex-class'
 
-import {
-  ipcRenderer
-} from 'electron'
+import { clipboard, ipcRenderer } from 'electron'
 import IpcTypes from '../../common/IpcTypes'
 
 import YkPageContent from '@/components/PageContent.vue'
 import YkPageHeader from '@/components/PageHeader.vue'
 
-import {
-  Terminal
-} from 'xterm'
-import {
-  FitAddon
-} from 'xterm-addon-fit'
+import { Terminal } from 'xterm'
+import { FitAddon } from 'xterm-addon-fit'
 
 @Component({
   components: {
@@ -58,7 +57,7 @@ export default class DebugMessagesPage extends Vue {
   public resizeEventListern!: EventListener
   public fitAddon!: FitAddon
 
-  @(namespace('Gui').State('debugMessages'))
+  @namespace('Gui').State('debugMessages')
   public debugMessages!: yuki.GuiState['debugMessages']
 
   @Watch('debugMessages', {
@@ -70,6 +69,16 @@ export default class DebugMessagesPage extends Vue {
       this.term.writeln(this.debugMessages[this.debugMessages.length - 1])
       this.term.scrollToBottom()
     }
+  }
+
+  public copyToClipboard () {
+    const plainText = [...this.debugMessages]
+    plainText.forEach((value, index) => {
+      // tslint:disable-next-line:no-control-regex
+      plainText[index] = value.replace(/\[[^m]+m/g, '')
+    })
+    clipboard.writeText(plainText.join('\r\n'))
+    this.$dialog.notify.success(this.$i18n.t('logCopied').toString())
   }
 
   public mounted () {
@@ -89,7 +98,6 @@ export default class DebugMessagesPage extends Vue {
   public beforeDestroy () {
     this.term.dispose()
   }
-
 }
 </script>
 

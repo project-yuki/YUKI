@@ -10,7 +10,8 @@
     "pleaseSelect2": "",
     "nowDownloading": "正在下载",
     "installed": "安装完成，重启生效",
-    "lingoes": "灵格斯词典"
+    "lingoes": "灵格斯词典",
+    "failed": "下载失败"
   },
   "en": {
     "appLibrariesSettings": "App Libraries Settings",
@@ -21,7 +22,8 @@
     "pleaseSelect2": "in the directory",
     "nowDownloading": "Now downloading",
     "installed": "installed. Restart to take effect",
-    "lingoes": "Lingoes Dictionary (ja to zh-CN)"
+    "lingoes": "Lingoes Dictionary (ja to zh-CN)",
+    "failed": "Download failed"
   }
 }
 </i18n>
@@ -48,7 +50,13 @@
         />
       </v-col>
       <v-col cols="2">
-        <v-switch :label="$t('enable')" @change="saveSettings(false)" :disabled="canSaveMecab" v-model="tempLibraries.mecab.enable" inset></v-switch>
+        <v-switch
+          :label="$t('enable')"
+          @change="saveSettings(false)"
+          :disabled="canSaveMecab"
+          v-model="tempLibraries.mecab.enable"
+          inset
+        ></v-switch>
       </v-col>
     </v-row>
 
@@ -66,7 +74,13 @@
         />
       </v-col>
       <v-col cols="2">
-        <v-switch :label="$t('enable')" @change="saveSettings(false)" :disabled="canSaveLingoes" v-model="tempLibraries.dictionaries.lingoes.enable" inset></v-switch>
+        <v-switch
+          :label="$t('enable')"
+          @change="saveSettings(false)"
+          :disabled="canSaveLingoes"
+          v-model="tempLibraries.dictionaries.lingoes.enable"
+          inset
+        ></v-switch>
       </v-col>
     </v-row>
 
@@ -82,7 +96,13 @@
         />
       </v-col>
       <v-col cols="2" class="vertical-center">
-        <v-btn color="primary" @click="startDownload('dict.jb')" outlined rounded>
+        <v-btn
+          color="primary"
+          @click="startDownload('dict.jb')"
+          :disabled="downloading.dictjb"
+          outlined
+          rounded
+        >
           {{$t('download')}}&nbsp;
           <v-icon>mdi-cloud-download</v-icon>
         </v-btn>
@@ -93,21 +113,11 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import {
-  Component,
-  Watch
-} from 'vue-property-decorator'
-import {
-  namespace,
-  State
-} from 'vuex-class'
+import { Component, Watch } from 'vue-property-decorator'
+import { namespace, State } from 'vuex-class'
 
-import {
-  ipcRenderer
-} from 'electron'
-import {
-  join
-} from 'path'
+import { ipcRenderer } from 'electron'
+import { join } from 'path'
 import IpcTypes from '../../common/IpcTypes'
 
 import YkDownloadProgress from '@/components/DownloadProgress.vue'
@@ -118,12 +128,14 @@ import YkDownloadProgress from '@/components/DownloadProgress.vue'
   }
 })
 export default class LibrarySettings extends Vue {
-  @(namespace('Config').State('default'))
+  @namespace('Config').State('default')
   public defaultConfig!: yuki.ConfigState['default']
-  @(namespace('Config').State('librariesBaseStorePath'))
+  @namespace('Config').State('librariesBaseStorePath')
   public librariesBaseStorePath!: string
 
-  public tempLibraries: yuki.Config.Libraries & { dictionaries: yuki.Config.Dictionaries } = {
+  public tempLibraries: yuki.Config.Libraries & {
+    dictionaries: yuki.Config.Dictionaries;
+  } = {
     librariesRepoUrl: '',
     mecab: {
       enable: false,
@@ -146,6 +158,10 @@ export default class LibrarySettings extends Vue {
     }
   }
 
+  public downloading: { dictjb: boolean } = {
+    dictjb: false
+  }
+
   get canSaveMecab () {
     return this.tempLibraries.mecab.path === ''
   }
@@ -154,7 +170,7 @@ export default class LibrarySettings extends Vue {
     return this.tempLibraries.dictionaries.lingoes.path === ''
   }
 
-  public jbdictDownloadState: RequestProgress.ProgressState | null = null
+  public jbdictDownloadState: RequestProgress.ProgressState | boolean = false
 
   public remainingDownloadTaskCount = 0
 
@@ -174,22 +190,24 @@ export default class LibrarySettings extends Vue {
       IpcTypes.HAS_PATH_WITH_FILE,
       (event: Electron.Event, path: string) => {
         if (path.indexOf(filename) === -1) {
-          this.$dialog.notify.error(`${
-            this.$i18n.t('pleaseSelect1').toString()
-          } ${filename} ${
-            this.$i18n.t('pleaseSelect2').toString()
-          }!`)
+          this.$dialog.notify.error(
+            `${this.$i18n
+              .t('pleaseSelect1')
+              .toString()} ${filename} ${this.$i18n
+              .t('pleaseSelect2')
+              .toString()}!`
+          )
           return
         }
 
         if (library === 'mecab') {
-          this.tempLibraries[library].path = join(path.substring(
-            0,
-            path.indexOf(filename) - 1
-          ), suffix)
+          this.tempLibraries[library].path = join(
+            path.substring(0, path.indexOf(filename) - 1),
+            suffix
+          )
         } else if (library === 'lingoes') {
           this.tempLibraries.dictionaries[library].path = join(
-            path.substring(0,path.indexOf(filename) - 1),
+            path.substring(0, path.indexOf(filename) - 1),
             suffix
           )
         }
@@ -199,35 +217,59 @@ export default class LibrarySettings extends Vue {
   }
 
   public startDownload (packName: string) {
-    ipcRenderer.on(IpcTypes.HAS_DOWNLOAD_PROGRESS,
-      (event: Electron.Event, name: string, state: RequestProgress.ProgressState) => {
+    const _this = this
+    ipcRenderer.on(
+      IpcTypes.HAS_DOWNLOAD_PROGRESS,
+      (
+        event: Electron.Event,
+        name: string,
+        state: RequestProgress.ProgressState
+      ) => {
         switch (name) {
           case 'dict.jb':
             this.jbdictDownloadState = state
             break
         }
-      })
-    ipcRenderer.on(IpcTypes.HAS_DOWNLOAD_COMPLETE,
-      (event: Electron.Event, name: string) => {
-        this.$dialog.notify.success(`${name} ${this.$i18n.t('installed').toString()}`)
-        switch (name) {
-          case 'dict.jb':
-            this.resetSettings()
-            this.jbdictDownloadState = null
-            this.tempLibraries.translators.jBeijing.dictPath =
-              `${this.librariesBaseStorePath}\\dict\\jb`
-            this.saveSettings(false)
-            break
-        }
+      }
+    )
+    ipcRenderer.on(
+      IpcTypes.HAS_DOWNLOAD_COMPLETE,
+      (event: Electron.Event, name: string, err: string | undefined) => {
         this.remainingDownloadTaskCount--
         if (this.remainingDownloadTaskCount <= 0) {
           ipcRenderer.removeAllListeners(IpcTypes.HAS_DOWNLOAD_PROGRESS)
           ipcRenderer.removeAllListeners(IpcTypes.HAS_DOWNLOAD_COMPLETE)
         }
-      })
+        this.downloading[name.replace('.', '')] = false
 
-    this.$dialog.notify.info(`${this.$i18n.t('nowDownloading').toString()} ${packName}...`)
+        if (err) {
+          _this.$dialog.notify.error(
+            `${name} ${_this.$i18n.t('failed').toString()}: ${err}`
+          )
+          return
+        }
+
+        _this.$dialog.notify.success(
+          `${name} ${_this.$i18n.t('installed').toString()}`
+        )
+        switch (name) {
+          case 'dict.jb':
+            this.resetSettings()
+            this.jbdictDownloadState = false
+            this.tempLibraries.translators.jBeijing.dictPath = `${
+              this.librariesBaseStorePath
+            }\\dict\\jb`
+            this.saveSettings(false)
+            break
+        }
+      }
+    )
+
+    this.$dialog.notify.info(
+      `${this.$i18n.t('nowDownloading').toString()} ${packName}...`
+    )
     this.remainingDownloadTaskCount++
+    this.downloading[packName.replace('.', '')] = true
     ipcRenderer.send(IpcTypes.REQUEST_DOWNLOAD_LIBRARY, packName)
   }
 

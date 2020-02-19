@@ -7,15 +7,11 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import {
-  Component
-} from 'vue-property-decorator'
+import { Component } from 'vue-property-decorator'
 
 import YkAppSidebar from '@/components/AppSidebar.vue'
 
-import {
-  ipcRenderer
-} from 'electron'
+import { ipcRenderer } from 'electron'
 import IpcTypes from '../common/IpcTypes'
 
 @Component({
@@ -77,5 +73,9 @@ body,
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
+}
+
+.vertical-center {
+  margin: auto;
 }
 </style>
