@@ -234,11 +234,24 @@ export default class LibrarySettings extends Vue {
     )
     ipcRenderer.on(
       IpcTypes.HAS_DOWNLOAD_COMPLETE,
-      (event: Electron.Event, name: string, err: string) => {
+      (event: Electron.Event, name: string, err: string | undefined) => {
+        this.remainingDownloadTaskCount--
+        if (this.remainingDownloadTaskCount <= 0) {
+          ipcRenderer.removeAllListeners(IpcTypes.HAS_DOWNLOAD_PROGRESS)
+          ipcRenderer.removeAllListeners(IpcTypes.HAS_DOWNLOAD_COMPLETE)
+        }
+        this.downloading[name.replace('.', '')] = false
+
+        if (err) {
+          _this.$dialog.notify.error(
+            `${name} ${_this.$i18n.t('failed').toString()}: ${err}`
+          )
+          return
+        }
+
         _this.$dialog.notify.success(
           `${name} ${_this.$i18n.t('installed').toString()}`
         )
-        this.downloading[name.replace('.', '')] = false
         switch (name) {
           case 'dict.jb':
             this.resetSettings()
@@ -248,11 +261,6 @@ export default class LibrarySettings extends Vue {
             }\\dict\\jb`
             this.saveSettings(false)
             break
-        }
-        this.remainingDownloadTaskCount--
-        if (this.remainingDownloadTaskCount <= 0) {
-          ipcRenderer.removeAllListeners(IpcTypes.HAS_DOWNLOAD_PROGRESS)
-          ipcRenderer.removeAllListeners(IpcTypes.HAS_DOWNLOAD_COMPLETE)
         }
       }
     )

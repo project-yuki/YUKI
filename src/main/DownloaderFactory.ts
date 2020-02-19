@@ -28,6 +28,7 @@ export default class DownloaderFactory {
       ipcMain.emit(IpcTypes.HAS_DOWNLOAD_PROGRESS, packName, state)
     }).onError((err) => {
       debug('yuki:downloader:library')('[%s] download error !> %s', packName, err)
+      ipcMain.emit(IpcTypes.HAS_DOWNLOAD_COMPLETE, packName, err.toString())
     }).onEnd(() => {
       debug('yuki:downloader:library')('[%s] download complete', packName)
       extract(
