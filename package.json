@@ -36,7 +36,9 @@
       "lib/**/*",
       "config/youdaoApi.js",
       "config/baiduApi.js",
-      "config/qqApi.js"
+      "config/qqApi.js",
+      "config/newBaiduApi.js",
+      "config/azureApi.js"
     ],
     "win": {
       "icon": "build/icons/icon.png"
