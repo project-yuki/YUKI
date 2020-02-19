@@ -27,6 +27,7 @@
 ## 文档
 
 - [YUKI 配置文件详解](/docs/ConfigFiles_CN.md)
+- [YUKI 常见问题](/docs/FAQ_CN.md)
 
 ## 挖坑的动力
 
