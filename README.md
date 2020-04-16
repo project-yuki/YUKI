@@ -63,7 +63,7 @@
 安装好 Node.js 和 yarn 后，随便找个文件夹，运行以下代码：
 
     git clone https://github.com/project-yuki/YUKI.git
-    cd yuki
+    cd YUKI
     yarn
     yarn dev
 
