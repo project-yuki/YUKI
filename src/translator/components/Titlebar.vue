@@ -1,5 +1,5 @@
 <template>
-  <div class="titlebar">
+  <div class="titlebar" id="titlebar">
     <p class="text-h3 title">YUKI GALGAME TRANSLATOR</p>
     <v-btn
       v-if="pauseNewText"
@@ -69,6 +69,8 @@ import {
   namespace
 } from 'vuex-class'
 
+const drag = require('electron-drag');
+
 @Component
 export default class Titlebar extends Vue {
   @namespace('View').State('pauseNewText')
@@ -98,6 +100,15 @@ export default class Titlebar extends Vue {
     this.setPauseNewText(false)
     this.isHideWindowValid = true
   }
+
+  public mounted() {
+    if (drag.supported)
+      drag('#titlebar')
+    else {
+      const el = document.querySelector('#titlebar') as HTMLElement;
+      el.style['-webkit-app-region'] = 'drag';
+    }
+  }
 }
 </script>
 
@@ -109,7 +120,7 @@ export default class Titlebar extends Vue {
 
 .titlebar {
   width: 100%;
-  -webkit-app-region: drag;
+ /* -webkit-app-region: drag; */
   background-color: rgba(13, 71, 161, 0.8);
   text-align: center;
   height: 32px;
