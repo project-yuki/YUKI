@@ -47,6 +47,12 @@
       "name": "腾讯"
     },
     {
+      "enable": false,
+      "external": true,
+      "jsFile": "config\\tencentApi.js",
+      "name": "TMT"
+    },
+    {
       "enable": true,
       "external": true,
       "jsFile": "config\\youdaoApi.js",
