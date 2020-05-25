@@ -11,7 +11,7 @@
           >{{pattern.word}}</div>
           <div
             :style="{color: abbrToColor(pattern.abbr), fontSize: `${originalTextSize*0.6}px`}"
-          >{{pattern.abbr !== "undefined" ? pattern.abbr : "&nbsp;"}}</div>
+          >{{pattern.abbr !== "undefined" && pattern.abbr !== 'w' ? pattern.abbr : "&nbsp;"}}</div>
         </div>
       </div>
     </v-row>

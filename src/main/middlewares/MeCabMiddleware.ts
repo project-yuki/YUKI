@@ -117,13 +117,35 @@ export default class MecabMiddleware
 
     const results = this.mecab.parseSync(context.text)
     const usefulResult = []
+    let toMergeLetters = ''
     for (const result of results) {
+      const abbr = MecabMiddleware.KANJI_TO_ABBR_MAP[result[1]]
+
+      if (abbr === 'w') {
+        toMergeLetters += result[0]
+        continue
+      }
+
+      if (abbr !== 'w' && toMergeLetters !== '') {
+        usefulResult.push(
+          `${toMergeLetters},w,`
+        )
+        toMergeLetters = ''
+      }
+
       let kana = toHiragana(result[8])
       if (kana === result[0]) kana = ''
       usefulResult.push(
-        `${result[0]},${MecabMiddleware.KANJI_TO_ABBR_MAP[result[1]]},${kana}`
+        `${result[0]},${abbr},${kana}`
       )
     }
+
+    if (toMergeLetters !== '') {
+      usefulResult.push(
+        `${toMergeLetters},w,`
+      )
+    }
+
     context.text = `$${usefulResult.join('|')}`
     next(context)
   }

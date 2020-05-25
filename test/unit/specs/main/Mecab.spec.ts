@@ -48,4 +48,25 @@ describe('MeCab', () => {
       MecabMiddleware.stringToObject('ボクに選択の余地は無かった。')
     ).to.deep.equal([])
   })
+
+  it('merges letter(w) patterns', (done) => {
+    const mecabMiddleware = new MecabMiddleware({
+      enable: true,
+      path: path.resolve(__dirname, '../../../../../libraries/pos/mecab-ipadic')
+    })
+
+    mecabMiddleware.process(
+      { text: 'ボクに選択の余地、無かった。。。！' },
+      (newContext) => {
+        try {
+          expect(newContext.text).to.deep.equal(
+            '$ボク,n,ぼく|に,p,|選択,n,せんたく|の,p,|余地,n,よち|、,w,|無かっ,adj,なかっ|た,aux,|。。。！,w,'
+          )
+        } catch (e) {
+          return done(e)
+        }
+        done()
+      }
+    )
+  })
 })
