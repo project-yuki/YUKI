@@ -45,6 +45,8 @@ export default class Downloader {
     if (fs.existsSync(this.saveToPath)) {
       fs.unlinkSync(this.saveToPath)
     }
+
+    this.errorCallback(new Error('download aborted'))
   }
 
   public onProgress (callback: (state: RequestProgress.ProgressState) => void) {
