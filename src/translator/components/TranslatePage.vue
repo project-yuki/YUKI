@@ -14,7 +14,7 @@
     </div>
     <div class="navigation-button" v-else></div>
 
-    <v-container style="flex: 1;">
+    <v-container fluid style="flex: 1;">
       <div v-if="isMecabEnable" class="text-center">
         <yk-mecab-text :patterns="currentPatterns"></yk-mecab-text>
       </div>

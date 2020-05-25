@@ -1,5 +1,5 @@
 <template>
-  <div class="titlebar">
+  <div class="titlebar" :style="{'-webkit-app-region': dragStyle}">
     <p class="text-h3 title">YUKI GALGAME TRANSLATOR</p>
     <v-btn
       v-if="pauseNewText"
@@ -60,25 +60,31 @@
 </template>
 
 <script lang="ts">
-import {
-  remote
-} from 'electron'
+import { remote } from 'electron'
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import {
-  namespace
-} from 'vuex-class'
+import { namespace } from 'vuex-class'
 
 @Component
 export default class Titlebar extends Vue {
-  @namespace('View').State('pauseNewText')
-  public pauseNewText!: boolean
+  get shouldEnableDrag () {
+    return !this.getAutoHideTitlebar() || this.$route.path !== '/translate'
+  }
+
+  get dragStyle () {
+    return this.shouldEnableDrag ? 'drag' : 'no-drag'
+  }
+
+  @namespace('View').State('pauseNewText') public pauseNewText!: boolean
   @namespace('View').Action('setPauseNewText')
   public setPauseNewText!: (value: boolean) => void
 
   public isHideWindowValid: boolean = true
 
   public isAlwaysOnTop = remote.getCurrentWindow().isAlwaysOnTop()
+
+  @namespace('Config').Getter('getAutoHideTitlebar')
+  public getAutoHideTitlebar!: () => boolean
   public closeWindow () {
     remote.getCurrentWindow().hide()
   }
@@ -109,7 +115,6 @@ export default class Titlebar extends Vue {
 
 .titlebar {
   width: 100%;
-  -webkit-app-region: drag;
   background-color: rgba(13, 71, 161, 0.8);
   text-align: center;
   height: 32px;

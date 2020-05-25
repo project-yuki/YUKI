@@ -17,7 +17,7 @@
     "pauseNewText": "暂停新文本获取",
     "restoreNewText": "恢复新文本获取",
     "showRomaji": "显示罗马音",
-    "autoHideTitlebar": "自动隐藏标题栏"
+    "autoHideTitlebar": "自动隐藏标题栏（开启后，将禁用翻译页面的标题栏拖拽操作）"
   },
   "en": {
     "originalText": "Original Text",
@@ -35,7 +35,7 @@
     "pauseNewText": "Pause New Text Coming",
     "restoreNewText": "Restore New Text Coming",
     "showRomaji": "Show Romaji",
-    "autoHideTitlebar": "Automatically Hide Titlebar"
+    "autoHideTitlebar": "Automatically Hide Titlebar (dragging titlebar will be disabled in tranlate page)"
   }
 }
 </i18n>
@@ -46,7 +46,7 @@
       <v-col cols="3">
         <div class="text-h3 text-center">{{$t('window')}}</div>
       </v-col>
-      <v-col cols="4" style="display: flex">
+      <v-col cols="8" style="display: flex">
         <v-switch v-model="autoHideTitlebar" style="margin-top: 0"></v-switch>
         <p style="color: white" class="text-center">{{$t('autoHideTitlebar')}}</p>
       </v-col>

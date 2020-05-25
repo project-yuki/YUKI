@@ -121,10 +121,7 @@ export default class App extends Vue {
       this.$store.dispatch('View/setButtonsShown', true)
     })
     document.addEventListener('mouseleave', () => {
-      if (
-        this.$router.currentRoute.path === '/translate' &&
-        this.currentOriginText !== ''
-      ) {
+      if (this.$route.path === '/translate' && this.currentOriginText !== '') {
         this.$store.dispatch('View/setButtonsShown', false)
       }
     })
@@ -141,10 +138,7 @@ export default class App extends Vue {
   }
 
   public updated () {
-    if (
-      this.$router.currentRoute.path === '/translate' &&
-      !this.isGetDictResult
-    ) {
+    if (this.$route.path === '/translate' && !this.isGetDictResult) {
       if (this.isButtonsShown && !this.isWindowTooHigh) {
         this.$nextTick(() => {
           updateWindowHeight(this, true, 24)
