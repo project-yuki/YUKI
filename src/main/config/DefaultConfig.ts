@@ -13,12 +13,6 @@ export default class DefaultConfig extends Config {
       },
       onlineApis: [
         {
-          enable: false,
-          external: true,
-          jsFile: 'config\\baiduApi.js',
-          name: '百度'
-        },
-        {
           enable: true,
           external: true,
           jsFile: 'config\\youdaoApi.js',
@@ -48,6 +42,30 @@ export default class DefaultConfig extends Config {
           external: true,
           jsFile: 'config\\qqApi.js',
           name: '腾讯'
+        },
+        {
+          enable: false,
+          external: true,
+          jsFile: 'config\\tencentApi.js',
+          name: '腾讯云'
+        },
+        {
+          enable: false,
+          external: true,
+          jsFile: 'config\\azureApi.js',
+          name: 'Azure'
+        },
+        {
+          enable: false,
+          external: true,
+          jsFile: 'config\\baiduApi.js',
+          name: '百度'
+        },
+        {
+          enable: false,
+          external: true,
+          jsFile: 'config\\newBaiduApi.js',
+          name: '百度开放平台'
         }
       ],
       translators: { jBeijing: { enable: false, path: '', dictPath: '' } },

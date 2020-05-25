@@ -1,12 +1,4 @@
 {
-  "dictionaries": {
-    "lingoes": {
-      "enable": true,
-      "path": "C:\\YUKI\\libraries\\dict\\lingoes\\njcd.db"
-    }
-  },
-  "language": "zh",
-  "librariesRepoUrl": "https://github.com/project-yuki/libraries/raw/master/_pack/",
   "localeChangers": {
     "alphaROMdiE": {
       "enable": false,
@@ -29,17 +21,7 @@
       "name": "Ntleas"
     }
   },
-  "mecab": {
-    "enable": true,
-    "path": "C:\\YUKI\\libraries\\pos\\mecab-ipadic"
-  },
   "onlineApis": [
-    {
-      "enable": true,
-      "external": true,
-      "jsFile": "config\\baiduApi.js",
-      "name": "百度"
-    },
     {
       "enable": true,
       "external": true,
@@ -50,7 +32,7 @@
       "enable": false,
       "external": true,
       "jsFile": "config\\tencentApi.js",
-      "name": "TMT"
+      "name": "腾讯云"
     },
     {
       "enable": true,
@@ -74,6 +56,24 @@
       "requestHeaders": "{\"X-Authorization\": \"token 3975l6lr5pcbvidl6jl2\"}",
       "responseBodyPattern": "J%RESPONSE%.target",
       "url": "https://api.interpreter.caiyunai.com/v1/translator"
+    },
+    {
+      "enable": false,
+      "external": true,
+      "jsFile": "config\\azureApi.js",
+      "name": "Azure"
+    },
+    {
+      "enable": false,
+      "external": true,
+      "jsFile": "config\\baiduApi.js",
+      "name": "百度"
+    },
+    {
+      "enable": false,
+      "external": true,
+      "jsFile": "config\\newBaiduApi.js",
+      "name": "百度开放平台"
     }
   ],
   "translators": {
@@ -82,5 +82,17 @@
       "enable": true,
       "path": "C:\\JBeijing7"
     }
-  }
+  },
+  "dictionaries": {
+    "lingoes": {
+      "enable": true,
+      "path": "C:\\YUKI\\libraries\\dict\\lingoes\\njcd.db"
+    }
+  },
+  "mecab": {
+    "enable": true,
+    "path": "C:\\YUKI\\libraries\\pos\\mecab-ipadic"
+  },
+  "librariesRepoUrl": "https://github.com/project-yuki/libraries/raw/master/_pack/",
+  "language": "zh"
 }
