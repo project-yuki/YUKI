@@ -18,7 +18,7 @@ describe('ExternalApi', () => {
       '悠真くんを攻略すれば２１０円か。なるほどなぁ…',
       (translation) => {
         try {
-          expect(translation).to.equal('攻略悠真的话就是210元啊。原来如此啊')
+          expect(translation).to.equal('攻略悠真的话是210日元啊。原来如此啊……')
         } catch (e) {
           return done(e)
         }
@@ -39,13 +39,13 @@ describe('ExternalApi', () => {
       '悠真くんを攻略すれば２１０円か。なるほどなぁ…',
       (translation1) => {
         try {
-          expect(translation1).to.equal('攻略悠真的话就是210元啊。原来如此啊')
+          expect(translation1).to.equal('攻略悠真的话是210日元啊。原来如此啊……')
           qq.translate(
           'はいっ、今日は柚子の入浴剤が入ってました。お湯も少し白くて温泉みたいでしたよ？',
           (translation2) => {
             try {
               expect(translation2).to.equal(
-                '是，今天放了柚子的入浴剂。热水也有点白，像温泉一样呢？'
+                '是的，今天放了柚子的沐浴剂。热水也有点白，就像温泉一样呢？'
               )
               done()
             } catch (e) {

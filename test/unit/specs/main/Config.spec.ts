@@ -27,16 +27,21 @@ describe('Config', () => {
   it('loads if file exists', () => {
     const Config = makeLoadTestingConfig()
     Config.prototype.getFilename = () => 'valid/path/name'
+    // tslint:disable-next-line: no-empty
+    Config.prototype.getDefaultObject = () => {}
 
     const testConfig = new Config().init()
 
+    // tslint:disable-next-line: no-console
+    console.log(testConfig.get())
     expect(testConfig.get()).to.deep.equal(expected)
   })
 
   const makeLoadTestingConfig = () =>
     ConfigInjector({
       fs: {
-        existsSync: () => true
+        existsSync: () => true,
+        watch: () => ''
       },
       jsonfile: {
         readFileSync: () => expected
@@ -64,6 +69,9 @@ describe('Config', () => {
           fileWritten = true
         }
       },
+      fs: {
+        watch: () => ''
+      },
       path: {
         resolve: () => 'invalid/path/name'
       }
@@ -72,6 +80,8 @@ describe('Config', () => {
   it('saves after calling save()', () => {
     const Config = makeSaveTestingConfig()
     Config.prototype.getFilename = () => 'valid/path/name'
+    // tslint:disable-next-line: no-empty
+    Config.prototype.getDefaultObject = () => {}
 
     const testConfig = new Config().init()
 
@@ -86,6 +96,8 @@ describe('Config', () => {
   it('sets & saves after calling set()', () => {
     const Config = makeSaveTestingConfig()
     Config.prototype.getFilename = () => 'valid/path/name'
+    // tslint:disable-next-line: no-empty
+    Config.prototype.getDefaultObject = () => {}
 
     const testConfig = new Config().init()
 
@@ -95,7 +107,8 @@ describe('Config', () => {
   const makeSaveTestingConfig = () =>
     ConfigInjector({
       fs: {
-        existsSync: () => true
+        existsSync: () => true,
+        watch: () => ''
       },
       jsonfile: {
         readFileSync: () => expected,

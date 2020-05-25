@@ -16,7 +16,7 @@ describe('Api', () => {
       '悠真くんを攻略すれば２１０円か。なるほどなぁ…',
       (translation) => {
         try {
-          expect(translation).to.equal('捉住To君的话是210日元吗？我知道了')
+          expect(translation).to.equal('如果捕获了尤马坤，则为210日元。我知道了 ...')
         } catch (e) {
           return done(e)
         }
@@ -58,7 +58,7 @@ describe('Api', () => {
             expect(translations).to.deep.equal({
               original: '悠真くんを攻略すれば２１０円か。なるほどなぁ…',
               translations: {
-                googleCN: '捉住To君的话是210日元吗？我知道了',
+                googleCN: '如果捕获了尤马坤，则为210日元。我知道了 ...',
                 caiyun: '攻下悠真的话是210日元吗。 原来如此'
               }
             })
@@ -141,7 +141,7 @@ describe('Api', () => {
             expect(translations).to.deep.equal({
               original: '悠真くんを攻略すれば２１０円か。なるほどなぁ…',
               translations: {
-                googleCN: '捉住To君的话是210日元吗？我知道了'
+                googleCN: '如果捕获了尤马坤，则为210日元。我知道了 ...'
               }
             })
           } catch (e) {
