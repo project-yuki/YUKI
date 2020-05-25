@@ -61,7 +61,7 @@
       "url": "https://translate.google.cn/m"
     },
     {
-      "enable": true,
+      "enable": false,
       "method": "POST",
       "name": "彩云",
       "requestBodyFormat": "J{\"source\": %TEXT%, \"trans_type\": \"ja2zh\", \"request_id\": \"demo\", \"detect\": \"true\"}",

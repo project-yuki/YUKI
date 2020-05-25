@@ -55,13 +55,12 @@ describe('Api', () => {
           // tslint:disable-next-line: no-console
           console.log(translations)
           try {
-            expect(translations).to.deep.equal({
-              original: '悠真くんを攻略すれば２１０円か。なるほどなぁ…',
-              translations: {
-                googleCN: '如果捕获了尤马坤，则为210日元。我知道了 ...',
-                caiyun: '攻下悠真的话是210日元吗。 原来如此'
-              }
-            })
+            expect(translations.original).to.equal('悠真くんを攻略すれば２１０円か。なるほどなぁ…')
+            expect(translations.translations.googleCN).to.equal('如果捕获了尤马坤，则为210日元。我知道了 ...')
+            expect(translations.translations.caiyun).to.be.oneOf([
+              '攻下悠真的话是210日元吗。 原来如此',
+              undefined
+            ])
           } catch (e) {
             return done(e)
           }

@@ -33,7 +33,7 @@ export default class DefaultConfig extends Config {
           url: 'https://translate.google.cn/m'
         },
         {
-          enable: true,
+          enable: false,
           method: 'POST',
           name: '彩云',
           requestBodyFormat:
