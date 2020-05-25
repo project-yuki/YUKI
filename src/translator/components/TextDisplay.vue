@@ -1,19 +1,24 @@
 <template>
   <div :style="{marginTop: `${translationTextStyle.margin}px`}">
-    <v-row no-gutters>
-      <v-col cols="2" align="center">
-        <div class="name" :style="{fontSize: `${translationTextStyle.fontSize}px`}">{{name}}</div>
-      </v-col>
-      <v-col cols="10">
-        <div
-          class="textBoder"
-          :style="{
+    <div>
+      <div
+        class="name"
+        :style="{
+          fontSize: `${translationTextStyle.fontSize}px`, 
+          width: '96px',
+          float: 'left'
+        }"
+      >{{name}}</div>
+      <div
+        class="textBoder"
+        :style="{
             color: translationTextStyle.color, 
-            fontSize: `${translationTextStyle.fontSize}px`
+            fontSize: `${translationTextStyle.fontSize}px`,
+            marginLeft: '100px',
+            textAlign: 'center'
           }"
-        >{{translation}}</div>
-      </v-col>
-    </v-row>
+      >{{translation}}</div>
+    </div>
   </div>
 </template>
 
