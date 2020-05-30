@@ -116,7 +116,11 @@ export default class Api implements yuki.Translator {
     const scriptString = this.config.responseBodyPattern
       .substring(1)
       .replace('%RESPONSE%', `result = response`)
-    vm.runInNewContext(scriptString, this.responseVmContext)
+    try {
+      vm.runInNewContext(scriptString, this.responseVmContext)
+    } catch (e) {
+      return `ERR: ${e}`
+    }
     return this.responseVmContext.result
   }
 

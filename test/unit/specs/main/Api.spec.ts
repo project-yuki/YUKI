@@ -59,7 +59,7 @@ describe('Api', () => {
             expect(translations.translations.googleCN).to.equal('如果捕获了尤马坤，则为210日元。我知道了 ...')
             expect(translations.translations.caiyun).to.be.oneOf([
               '攻下悠真的话是210日元吗。 原来如此',
-              undefined
+              "ERR: TypeError: Cannot read property 'target' of undefined"
             ])
           } catch (e) {
             return done(e)
