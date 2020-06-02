@@ -39,7 +39,8 @@
       "config/qqApi.js",
       "config/newBaiduApi.js",
       "config/azureApi.js",
-      "config/tencentApi.js"
+      "config/tencentApi.js",
+      "config/yeekitApi.js"
     ],
     "win": {
       "icon": "build/icons/icon.png"

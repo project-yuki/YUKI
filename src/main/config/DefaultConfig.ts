@@ -19,6 +19,12 @@ export default class DefaultConfig extends Config {
           name: '有道'
         },
         {
+          enable: true,
+          external: true,
+          jsFile: 'config\\yeekitApi.js',
+          name: 'YEEKIT'
+        },
+        {
           enable: false,
           method: 'POST',
           name: '谷歌',
