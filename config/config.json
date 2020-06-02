@@ -58,6 +58,14 @@
       "url": "https://api.interpreter.caiyunai.com/v1/translator"
     },
     {
+      "enable": true,
+      "method": "POST",
+      "name": "必应",
+      "requestBodyFormat": "X{\"fromLang\": \"ja\", \"to\": \"zh-Hans\", \"text\": %TEXT%}",
+      "responseBodyPattern": "J%RESPONSE%[0].translations[0].text",
+      "url": "https://cn.bing.com/ttranslatev3"
+    },
+    {
       "enable": false,
       "external": true,
       "jsFile": "config\\azureApi.js",

@@ -50,6 +50,14 @@ export default class DefaultConfig extends Config {
           name: '腾讯云'
         },
         {
+          enable: true,
+          method: 'POST',
+          name: '必应',
+          requestBodyFormat: 'X{"fromLang": "ja", "to": "zh-Hans", "text": %TEXT%}',
+          responseBodyPattern: 'J%RESPONSE%[0].translations[0].text',
+          url: 'https://cn.bing.com/ttranslatev3'
+        },
+        {
           enable: false,
           external: true,
           jsFile: 'config\\azureApi.js',
