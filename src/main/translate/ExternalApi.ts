@@ -69,6 +69,9 @@ export default class ExternalApi implements yuki.Translator {
         const hash = crypto.createHash('md5')
         return hash.update(data).digest(encoding)
       },
+      base64toutf8: (data: string): string => {
+        return Buffer.from(data, "base64").toString("utf-8");
+      },
       crypto: {
         createHash: crypto.createHash,
         createHmac: crypto.createHmac

@@ -50,12 +50,9 @@
     },
     {
       "enable": false,
-      "method": "POST",
-      "name": "彩云",
-      "requestBodyFormat": "J{\"source\": %TEXT%, \"trans_type\": \"ja2zh\", \"request_id\": \"demo\", \"detect\": \"true\"}",
-      "requestHeaders": "{\"X-Authorization\": \"token 3975l6lr5pcbvidl6jl2\"}",
-      "responseBodyPattern": "J%RESPONSE%.target",
-      "url": "https://api.interpreter.caiyunai.com/v1/translator"
+      "external": true,
+      "jsFile": "config\\caiyunApi.js",
+      "name": "彩云"
     },
     {
       "enable": false,
