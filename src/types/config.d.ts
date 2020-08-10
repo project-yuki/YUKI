@@ -65,6 +65,7 @@ declare namespace yuki {
       modifier: {
         removeAscii: boolean;
         deduplicate: boolean;
+        deduplicateCount: number;
         delineBreak: boolean;
       }
       merger: {
