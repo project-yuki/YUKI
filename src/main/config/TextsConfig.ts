@@ -22,6 +22,7 @@ export default class TextsConfig extends Config {
       modifier: {
         removeAscii: false,
         deduplicate: false,
+        deduplicateCount: 0, 
         delineBreak: false
       },
       merger: {

@@ -3,13 +3,18 @@ const debug = require('debug')('yuki:textInterceptor')
 export default class TextInterceptorMiddleware
   implements yuki.Middleware<yuki.TextOutputObject> {
   private removeAscii: boolean
-  private deduplicate: boolean
+  private deduplicateRegex: RegExp | undefined
   private delineBreak: boolean
 
   constructor (config: yuki.Config.Texts['modifier']) {
     this.removeAscii = config.removeAscii
-    this.deduplicate = config.deduplicate
     this.delineBreak = config.delineBreak
+
+    if (config.deduplicate) {
+      this.deduplicateRegex = /([^]+?)\1+/g
+    } else if (config.deduplicateCount > 0) {
+      this.deduplicateRegex = new RegExp(`([^]){${config.deduplicateCount}}\\1`, 'g')
+    }
     debug('initialized')
   }
 
@@ -24,8 +29,8 @@ export default class TextInterceptorMiddleware
       context.text = context.text.replace(/[\x00-\xFF]+/g, '')
       if (context.text === '') return
     }
-    if (this.deduplicate) {
-      context.text = context.text.replace(/([^]+?)\1+/g, '$1')
+    if (this.deduplicateRegex) {
+      context.text = context.text.replace(this.deduplicateRegex, '$1')
       if (context.text === '') return
     }
     if (this.delineBreak) {
