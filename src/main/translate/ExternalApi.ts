@@ -63,14 +63,12 @@ export default class ExternalApi implements yuki.Translator {
 
   private createVmContext () {
     this.responseVmContext = vm.createContext({
+      Buffer,
       Request: request,
       text: '',
       md5: (data: string, encoding: crypto.HexBase64Latin1Encoding) => {
         const hash = crypto.createHash('md5')
         return hash.update(data).digest(encoding)
-      },
-      base64toutf8: (data: string): string => {
-        return Buffer.from(data, "base64").toString("utf-8");
       },
       crypto: {
         createHash: crypto.createHash,

@@ -86,7 +86,7 @@ function randomBrowserId() {
 }
 
 function rocn(str, n = 13) {
-  return str.replace(/[a-zA-Z]/g, function(c) {
+  return str.replace(/[a-zA-Z]/g, function (c) {
     return String.fromCharCode(
       (c <= "Z" ? 90 : 122) >= (c = c.charCodeAt(0) + n) ? c : c - 26
     );
@@ -94,5 +94,5 @@ function rocn(str, n = 13) {
 }
 
 function decrypt(str) {
-  return base64toutf8(rocn(str));
+  return Buffer.from(rocn(str), "base64").toString("utf-8");
 }
