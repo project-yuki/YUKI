@@ -10,7 +10,7 @@ describe('ExternalApi', () => {
     const qq = new ExternalApi({
       enable: true,
       external: true,
-      jsFile: '..\\..\\temp\\qqApi.js',
+      jsFile: '../../temp/qqApi.js',
       name: 'qq'
     })
 
@@ -31,7 +31,7 @@ describe('ExternalApi', () => {
     const qq = new ExternalApi({
       enable: true,
       external: true,
-      jsFile: '..\\..\\temp\\qqApi.js',
+      jsFile: '../../temp/qqApi.js',
       name: 'qq'
     })
 

@@ -3,6 +3,10 @@ import Api from '../../../../src/main/translate/Api'
 import TranslationManager from '../../../../src/main/translate/TranslationManager'
 
 describe('Api', () => {
+  before(() => {
+    (global as any).__baseDir = __dirname
+  })
+
   it('gets translation from form and parses with regex', (done) => {
     const googleCN = new Api({
       name: 'googleCN',
@@ -16,7 +20,7 @@ describe('Api', () => {
       '悠真くんを攻略すれば２１０円か。なるほどなぁ…',
       (translation) => {
         try {
-          expect(translation).to.equal('如果捕获了尤马坤，则为210日元。我知道了 ...')
+          expect(translation).to.equal('如果您捕获尤马坤，它是210日元。我懂了...')
         } catch (e) {
           return done(e)
         }
@@ -36,14 +40,10 @@ describe('Api', () => {
         enable: true
       },
       {
-        enable: true,
-        method: 'POST',
         name: 'caiyun',
-        requestBodyFormat:
-          'J{"source": %TEXT%, "trans_type": "ja2zh", "request_id": "demo", "detect": "true"}',
-        requestHeaders: '{"X-Authorization": "token 3975l6lr5pcbvidl6jl2"}',
-        responseBodyPattern: 'J%RESPONSE%.target',
-        url: 'https://api.interpreter.caiyunai.com/v1/translator'
+        external: true,
+        jsFile: '../../../../config/caiyunApi.js',
+        enable: true
       }
     ]
 
@@ -56,11 +56,8 @@ describe('Api', () => {
           console.log(translations)
           try {
             expect(translations.original).to.equal('悠真くんを攻略すれば２１０円か。なるほどなぁ…')
-            expect(translations.translations.googleCN).to.equal('如果捕获了尤马坤，则为210日元。我知道了 ...')
-            expect(translations.translations.caiyun).to.be.oneOf([
-              '攻下悠真的话是210日元吗。 原来如此',
-              "ERR: TypeError: Cannot read property 'target' of undefined"
-            ])
+            expect(translations.translations.googleCN).to.equal('如果您捕获尤马坤，它是210日元。我懂了...')
+            expect(translations.translations.caiyun).to.equal('攻下悠真的话是210日元吗。原来如此')
           } catch (e) {
             return done(e)
           }
@@ -120,14 +117,10 @@ describe('Api', () => {
         enable: true
       },
       {
-        enable: false,
-        method: 'POST',
         name: 'caiyun',
-        requestBodyFormat: 'J{"source": %TEXT%, "trans_type": "ja2zh", ' +
-                            '"request_id": "web_fanyi", "os_type": "web", ' +
-                            '"dict": "false", "cached": "false", "replaced": "false"}',
-        responseBodyPattern: 'J%RESPONSE%.target',
-        url: 'https://api.interpreter.caiyunai.com/v1/translator'
+        external: true,
+        jsFile: '../../../../config/caiyunApi.js',
+        enable: true
       }
     ]
 
@@ -140,7 +133,8 @@ describe('Api', () => {
             expect(translations).to.deep.equal({
               original: '悠真くんを攻略すれば２１０円か。なるほどなぁ…',
               translations: {
-                googleCN: '如果捕获了尤马坤，则为210日元。我知道了 ...'
+                googleCN: '如果您捕获尤马坤，它是210日元。我懂了...',
+                caiyun: '攻下悠真的话是210日元吗。原来如此'
               }
             })
           } catch (e) {
