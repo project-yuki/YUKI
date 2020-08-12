@@ -1,0 +1,71 @@
+localeChangers:
+  alphaROMdiE:
+    enable: false
+    exec: 'C:\Resources\Games\AlphaROMdiE.exe %GAME_PATH%'
+    name: AlphaROMdiE
+  localeEmulator:
+    enable: true
+    exec: 'C:\LocaleEmulator\LEProc.exe %GAME_PATH%'
+    name: Locale Emulator
+  noChanger:
+    enable: false
+    exec: '%GAME_PATH%'
+    name: No Changer
+  ntleas:
+    enable: false
+    exec: 'C:\ntleas046_x64\x86\ntleas.exe %GAME_PATH%'
+    name: Ntleas
+onlineApis:
+  - enable: true
+    external: true
+    jsFile: config\qqApi.js
+    name: 腾讯
+  - enable: false
+    external: true
+    jsFile: config\tencentApi.js
+    name: 腾讯云
+  - enable: true
+    external: true
+    jsFile: config\youdaoApi.js
+    name: 有道
+  - enable: false
+    method: POST
+    name: 谷歌
+    requestBodyFormat: 'X{"q": %TEXT%, "sl": "ja", "tl": "zh-CN"}'
+    responseBodyPattern: 'Rclass="t0">([^<]*)<'
+    url: 'https://translate.google.cn/m'
+  - enable: false
+    method: POST
+    name: 彩云
+    requestBodyFormat: >-
+      J{"source": %TEXT%, "trans_type": "ja2zh", "request_id": "demo", "detect":
+      "true"}
+    requestHeaders: '{"X-Authorization": "token 3975l6lr5pcbvidl6jl2"}'
+    responseBodyPattern: J%RESPONSE%.target
+    url: 'https://api.interpreter.caiyunai.com/v1/translator'
+  - enable: false
+    external: true
+    jsFile: config\azureApi.js
+    name: Azure
+  - enable: false
+    external: true
+    jsFile: config\baiduApi.js
+    name: 百度
+  - enable: false
+    external: true
+    jsFile: config\newBaiduApi.js
+    name: 百度开放平台
+translators:
+  jBeijing:
+    dictPath: 'C:\YUKI\yuki\lib\dict\jb'
+    enable: true
+    path: 'C:\JBeijing7'
+dictionaries:
+  lingoes:
+    enable: true
+    path: 'C:\YUKI\libraries\dict\lingoes\njcd.db'
+mecab:
+  enable: true
+  path: 'C:\YUKI\libraries\pos\mecab-ipadic'
+librariesRepoUrl: 'https://github.com/project-yuki/libraries/raw/master/_pack/'
+language: zh
