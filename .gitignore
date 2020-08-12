@@ -9,8 +9,9 @@ npm-debug.log.*
 thumbs.db
 !.gitkeep
 .vscode/yuki.code-workspace
-config/games.json
-config/gui.json
-config/texts.json
+config/*.json
+config/games.yaml
+config/gui.yaml
+config/texts.yaml
 lib/dict/lingoes
 package-lock.json

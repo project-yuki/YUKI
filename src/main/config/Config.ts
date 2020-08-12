@@ -1,6 +1,6 @@
 import { app, ipcMain } from 'electron'
 import * as fs from 'fs'
-import * as jsonfile from 'jsonfile'
+import { safeDump, safeLoad } from 'js-yaml'
 import * as path from 'path'
 import IpcTypes from '../../common/IpcTypes'
 const debug = require('debug')('yuki:config')
@@ -14,10 +14,12 @@ abstract class Config {
   protected config: any
 
   protected filePath!: string
+  protected filePathOld!: string
   protected isSaving: boolean = false
 
   public init () {
-    this.filePath = path.resolve(global.__baseDir, `config/${this.getFilename()}.json`)
+    this.filePath = path.resolve(global.__baseDir, `config/${this.getFilename()}.yaml`)
+    this.filePathOld = path.resolve(global.__baseDir, `config/${this.getFilename()}.json`)
     this.load()
     this.save()
     debug('%s loaded with pre-save', this.filePath)
@@ -28,7 +30,13 @@ abstract class Config {
   public load () {
     let fileContent
     try {
-      fileContent = jsonfile.readFileSync(this.filePath)
+      let filePath = this.filePath
+      if (!fs.existsSync(this.filePath)) {
+        filePath = this.filePathOld
+      } else {
+        this.filePathOld = ''
+      }
+      fileContent = safeLoad(fs.readFileSync(filePath, { encoding: 'utf-8' }), { json: true }) as Object
     } catch (e) {
       debug('%s loads failed !> %s', this.filePath, e)
       fileContent = {}
@@ -41,10 +49,27 @@ abstract class Config {
 
   public save () {
     try {
-      jsonfile.writeFileSync(this.filePath, this.config, Config.FILE_OPTIONS)
+      Config.FILE_OPTIONS;
+      fs.writeFileSync(
+        this.filePath, 
+        safeDump(
+          this.config,
+          { indent: Config.FILE_OPTIONS.spaces }
+        ).replace("\n", Config.FILE_OPTIONS.EOL)
+      )
       debug('%s saved', this.filePath)
     } catch (e) {
       debug('%s saves failed !> %s', this.filePath, e)
+    }
+
+    try {
+      if (this.filePathOld) {
+        fs.unlinkSync(this.filePathOld)
+        this.filePathOld = ''
+        debug('%s deleted', this.filePathOld)
+      }
+    } catch (e) {
+      debug('%s deletes failed !> %s', this.filePathOld, e)
     }
   }
 
