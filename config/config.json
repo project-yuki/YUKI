@@ -1,4 +1,4 @@
-{
+﻿{
   "localeChangers": {
     "alphaROMdiE": {
       "enable": false,
@@ -74,6 +74,26 @@
       "external": true,
       "jsFile": "config\\newBaiduApi.js",
       "name": "百度开放平台"
+    },
+    {
+      "enable": true,
+      "external": true,
+      "jsFile": "config\\yeekitApi.js",
+      "name": "译库"
+    },
+    {
+      "enable": false,
+      "method": "POST",
+      "name": "小牛",
+      "requestBodyFormat": "J{\"apikey\": \"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\", \"src_text\": %TEXT%, \"from\": \"ja\", \"to\": \"zh\"}",
+      "responseBodyPattern": "J%RESPONSE%.tgt_text",
+      "url": "https://free.niutrans.com/NiuTransServer/translation"
+    },
+    {
+      "enable": false,
+      "external": true,
+      "jsFile": "config\\aliyunApi.js",
+      "name": "阿里云"
     }
   ],
   "translators": {
