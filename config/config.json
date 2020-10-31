@@ -1,4 +1,4 @@
-{
+﻿{
   "localeChangers": {
     "alphaROMdiE": {
       "enable": false,
@@ -74,6 +74,12 @@
       "external": true,
       "jsFile": "config\\newBaiduApi.js",
       "name": "百度开放平台"
+    },
+    {
+      "enable": true,
+      "external": true,
+      "jsFile": "config\\yeekitApi.js",
+      "name": "译库"
     },
     {
       "enable": false,
