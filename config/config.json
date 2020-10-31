@@ -82,6 +82,12 @@
       "requestBodyFormat": "J{\"apikey\": \"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\", \"src_text\": %TEXT%, \"from\": \"ja\", \"to\": \"zh\"}",
       "responseBodyPattern": "J%RESPONSE%.tgt_text",
       "url": "https://free.niutrans.com/NiuTransServer/translation"
+    },
+    {
+      "enable": false,
+      "external": true,
+      "jsFile": "config\\aliyunApi.js",
+      "name": "阿里云"
     }
   ],
   "translators": {
