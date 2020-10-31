@@ -74,6 +74,14 @@
       "external": true,
       "jsFile": "config\\newBaiduApi.js",
       "name": "百度开放平台"
+    },
+    {
+      "enable": false,
+      "method": "POST",
+      "name": "小牛",
+      "requestBodyFormat": "J{\"apikey\": \"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\", \"src_text\": %TEXT%, \"from\": \"ja\", \"to\": \"zh\"}",
+      "responseBodyPattern": "J%RESPONSE%.tgt_text",
+      "url": "https://free.niutrans.com/NiuTransServer/translation"
     }
   ],
   "translators": {
