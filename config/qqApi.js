@@ -1,4 +1,5 @@
 SESSION_URL = "https://fanyi.qq.com/"
+AUTH_URL = "https://fanyi.qq.com/api/aaa123"
 TRANSLATE_URL =
   "https://fanyi.qq.com/api/translate"
 USER_AGENT =
@@ -48,17 +49,17 @@ if (!session) {
   };
 
   initSession = () => {
-    return Request.get(SESSION_URL, {
-      jar: session,
-      gzip: true,
+    return Request.post(AUTH_URL, {
+      json: true,
       headers: {
         Referer: SESSION_URL,
+        Origin: SESSION_URL,
         "User-Agent": USER_AGENT
       }
     })
       .then(body => {
-        qtv = /var qtv = "([^\"]+)";/.exec(body)[1]
-        qtk = /var qtk = "([^\"]+)";/.exec(body)[1]
+        qtv = body.qtv
+        qtk = body.qtk
       })
       .then(requestTranslation)
   };
