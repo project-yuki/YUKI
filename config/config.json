@@ -71,6 +71,14 @@
     },
     {
       "enable": false,
+      "method": "POST",
+      "name": "DeepL",
+      "requestBodyFormat": "X{\"auth_key\":\"#Replace with your auth_key#\",\"text\":%TEXT%,\"target_lang\":\"ZH\"}",
+      "responseBodyPattern": "J%RESPONSE%.translations[0].text",
+      "url": "https://api-free.deepl.com/v2/translate"
+    },
+    {
+      "enable": false,
       "external": true,
       "jsFile": "config\\newBaiduApi.js",
       "name": "百度开放平台"
